@@ -1,0 +1,111 @@
+---
+title: "Spark"
+description: "Spark is a simple but powerful API that allows you to programmatically create multiple projects without launching the PitchPrint design editor."
+---
+
+Spark is a simple but powerful API that allows you to programmatically create multiple projects without launching the PitchPrint design editor.
+
+Consider scenarios where busy clients like Estate Agents who periodically need business cards, Party Planners who need to get those banners with no fuss or Direct Mail markers who need to automate their processes.
+
+In just 3 steps, you can have the Print-ready PDF delivered automatically to your printer.
+
+![](https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/60fa7f1cb37d837a3d0dcb37/file-zv3hTTBc10.png)
+
+#### API Endpoint & Parameters
+
+**\[POST\]** [https://api.pitchprint.com/spark](https://api.pitchprint.com/spark)
+
+##### Header Parameters (Authentication)
+
+<table class="table-striped table-bordered"><tbody><tr><td class="required">Authorization</td><td>Your domain's secret key</td></tr></tbody></table>
+
+##### Body Parameters
+
+<table class="table-striped table-bordered"><tbody><tr><td class="required">designId</td><td>String: Design ID of the PitchPrint's Design template<br>you want to generate the projects from</td></tr><tr><td class="required">records</td><td>Array: An array object containing records of the projects you want to create</td></tr><tr><td class="required">previewOnly<br></td><td>Boolean: If set to true, the system will only<br>generate a preview of the projects and not the<br>PDFs and you won't be charged<br></td></tr></tbody></table>
+
+* * *
+
+##### Sample Code
+
+<?php
+
+$curl = curl\_init();
+
+curl\_setopt\_array($curl, array(
+  CURLOPT\_URL => 'https://api.pitchprint.com/spark',
+  CURLOPT\_RETURNTRANSFER => true,
+  CURLOPT\_ENCODING => '',
+  CURLOPT\_MAXREDIRS => 10,
+  CURLOPT\_TIMEOUT => 0,
+  CURLOPT\_FOLLOWLOCATION => true,
+  CURLOPT\_HTTP\_VERSION => CURL\_HTTP\_VERSION\_1\_1,
+  CURLOPT\_CUSTOMREQUEST => 'POST',
+  CURLOPT\_POSTFIELDS =>'{ "designId": "0efcad4622733fc8e9ce0f41ad0ccfd6", "previewOnly": false, "records": \[{ "name": "Jane Wilcox" }, { "name": "John Doe" }\] }',
+  CURLOPT\_HTTPHEADER => array(
+    'Authorization: (wqUpLHRUtK(C!rUuszfT9n&ivXug5',
+    'Content-Type: application/javascript'
+  ),
+));
+
+$response = curl\_exec($curl);
+
+curl\_close($curl);
+echo $response;
+
+?>
+
+##### Response
+
+{
+    "jobId": "spark\_bf42052bd3dc077ea3d552e7beb4e760",
+    "success": true,
+    "projects": \[
+        {
+            "numPages": 1,
+            "previews": \[
+                "https://s3-eu-west-1.amazonaws.com/pitchprint.io/previews/f11d1d2977a2b7ab5b5725ca09253632\_1.jpg"
+            \],
+            "pdfDownload": "https://pdf.pitchprint.com/f11d1d2977a2b7ab5b5725ca09253632",
+            "autoSaved": false,
+            "meta": {},
+            "userId": "guest",
+            "saveForLater": false,
+            "isvx": true,
+            "id": "f11d1d2977a2b7ab5b5725ca09253632"
+        },
+        {
+            "numPages": 1,
+            "previews": \[
+                "https://s3-eu-west-1.amazonaws.com/pitchprint.io/previews/1c080bfe1beaf028788259a75f494a04\_1.jpg"
+            \],
+            "pdfDownload": "https://pdf.pitchprint.com/1c080bfe1beaf028788259a75f494a04",
+            "autoSaved": false,
+            "meta": {},
+            "userId": "guest",
+            "saveForLater": false,
+            "isvx": true,
+            "id": "1c080bfe1beaf028788259a75f494a04"
+        }
+    \],
+    "receipt": "https://pay.stripe.com/receipts/acct\_1Bcto4JWXrE8rGVG/ch\_1JGK9gJWXrE8rGVG8I7e1izd/rcpt\_Ju8QUp5FDOW2YHyAxoxFjZyGgpm2NOx"
+}
+
+The above sample code generates a unique Certificate for each record replacing the name with the value set in the corresponding record. You can set any value you want to change including loading images.
+
+Enabling the previewOnly option, the system generates the projects without saving them but sends you the previews of the projects and does not charge you for them. The preview limits the returned item to the first 5 records, if your records are more than 5.
+
+##### Cost
+
+Access to this system costs $0.5 per project generated through this API and you will find the receipt URL in the response.
+
+Previews are not billed. So you can test and get a hang of it by setting previewOnly before generating actual PDFs
+
+##### Authentication
+
+We have switched to using the Secret key as your Authorization code. This is easier and faster to implement on your end.
+
+##### Admin
+
+You will find a list of all your Spark jobs in the PitchPrint admin panel and you can download your previously generated projects from there as well.
+
+[https://admin.pitchprint.com/spark](https://admin.pitchprint.com/spark)

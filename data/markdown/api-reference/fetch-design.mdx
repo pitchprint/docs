@@ -1,0 +1,83 @@
+---
+title: "Fetch Design"
+description: "Use this endpoint to fetch the source data for a design associated with your particular domain."
+---
+
+Use this endpoint to fetch the source data for a design associated with your particular domain.
+
+This requires a valid designId as well as the signature parameters to authenticate the call. You can check the fetch designs link to get all the designs in your domain.
+
+Ensure you do not use the categoryId as against a designId. All designs are inside categories.
+
+**\[POST\]**[https://api.pitchprint.io/runtime/fetch-design](https://api.pitchprint.io/runtime/fetch-design)
+
+##### BODY PARAMS
+
+<table class="table-striped table-bordered"><tbody><tr><td class="required">apiKey</td><td>Your domain's api key</td></tr><tr><td class="required">timestamp</td><td>Timestamp generated at runtime</td></tr><tr><td class="required">signature</td><td>Signature = MD5(apikey + secretKey + timestamp)</td></tr><tr><td class="required">designId</td><td>ID of a single design</td></tr></tbody></table>
+
+* * *
+
+##### SAMPLE CODE
+
+<?php
+
+define('PITCH\_APIKEY', 'your-api-key');
+define('PITCH\_SECRETKEY', 'your-secret-key');
+
+function generateSignature () {
+    $timestamp = time();
+    $signature = md5(PITCH\_APIKEY . PITCH\_SECRETKEY . $timestamp);
+    return array ('timestamp'=>$timestamp, 'apiKey'=>PITCH\_APIKEY, 'signature'=>$signature);
+}
+
+$ch = curl\_init();
+curl\_setopt($ch, CURLOPT\_URL, "https://api.pitchprint.io/runtime/fetch-design");
+curl\_setopt($ch, CURLOPT\_POST, true);
+
+$opts = generateSignature();
+$opts\['designId'\] = 'your-design-id-here';
+
+curl\_setopt($ch, CURLOPT\_POSTFIELDS, json\_encode($opts));
+curl\_setopt($ch, CURLOPT\_RETURNTRANSFER, true);
+
+$output = curl\_exec($ch);
+$http\_status = curl\_getinfo($ch, CURLINFO\_HTTP\_CODE);
+$content\_type = curl\_getinfo($ch, CURLINFO\_CONTENT\_TYPE);
+$curlerr = curl\_error($ch);
+curl\_close($ch);
+
+header('Content-Type: application/json');
+
+echo $output;
+
+?>
+
+##### RESPONSE
+
+{
+	data: {
+	    "\_id": "5afb3c7960aa7ff504632367553a3fa2",
+	    "lastModified": "2015-01-12T06:01:20.000Z",
+	    "\_owner": "\*\*\*",
+	    "map": {
+	        "backgroundimages": {
+	            "items": "",
+	            "mode": "exclude"
+	        },
+	        "colors": {
+	            "items": "",
+	            "mode": "exclude"
+	        },
+	        "images": {
+	            "items": "",
+	            "mode": "exclude"
+	        },
+	        "modules": "{}",
+	        "fonts": {
+	            "items": "",
+	            "mode": "exclude"
+	        }
+	    },
+	    "design": { /\*design details here\*/ }
+	}
+}

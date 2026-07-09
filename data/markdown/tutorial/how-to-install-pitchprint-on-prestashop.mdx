@@ -1,0 +1,24 @@
+---
+title: "How To Install PitchPrint On PrestaShop"
+description: "PrestaShop is another opensource cart framework built on PHP. Follow these steps to install the PitchPrint module on a PrestaShop site."
+---
+
+PrestaShop is another opensource cart framework built on PHP. Follow these steps to install the PitchPrint module on a PrestaShop site.
+
+1.  Download PrestaShop here: [https://www.prestashop.com/en/developers-versions#previous-version](https://www.prestashop.com/en/developers-versions#previous-version)
+
+2.  Install and configure PrestaShop on your server following the instructions within the downloaded package.
+3.  Next, download PitchPrint PrestaShop module here: [https://github.com/pitchprint/prestashop/releases](https://github.com/pitchprint/prestashop/releases)
+4.  Unzip the downloaded package and upload it to the modules directory in your newly installed PrestaShop site, make sure the directory pitchprint is inside modules directory and not just the content you upload.
+5.  Set the permission on folder “site/modules/pitchprint/uploads/files” to 777. [After installation, please take some time to read and implement our security measures here](https://docs.pitchprint.com/article/49-security-measures).
+6.  Now navigate to your PrestaShop admin and on the right menu, click Modules. Then search for PitchPrint in the listed modules or use the search box and type in pitchprint
+7.  Click the Install button to install the module and after that, click to Configure the newly installed PitchPrint module.
+8.  Next, let’s generate the PitchPrint keys. Navigate in a new window tab to [https://admin.pitchprint.com/register](https://admin.pitchprint.com/register) and create an account or [login](https://admin.pitchprint.com/login) here if you already have an account
+9.  Then navigate to the [domains page](https://admin.pitchprint.com/domains) and add a new domain. Don’t worry you can still use it for localhost testing if you are not ready to go live yet. Provide your intended domain url, not a localhost. You should now have a pair of API and Secret Key.
+10.  Back to your PrestaShop Admin, you will copy and paste the API and Secret keys generated above into the PitchPrint configuration boxes. Leave blank the JavaScript and CSS customization boxes for now and save.
+11.  Now navigate to Catalog – > Products page and click “edit” on the right menu against any product in your admin. On the product details page, you will find PitchPrint on the left menu at the bottom. Click it to assign one of your designs to the product. To create more designs, you need to go to the [PitchPrint Designs](https://admin.pitchprint.com/designs) page. Save.
+
+     ![](https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/58fe2a7b2c7d3a057f887fff/file-L9DXnY14LB.png)
+
+12.  Navigate to your store front and check the product has the Customize button. If it does not, please read more on our troubleshooting page or send us a ticket.
+13.  When an order is placed, you should find the design download links against each product in the order.

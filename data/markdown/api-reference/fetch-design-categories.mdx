@@ -1,0 +1,62 @@
+---
+title: "Fetch Design Categories"
+description: "Use this endpoint to fetch all the design categories associated with your particular domain."
+---
+
+Use this endpoint to fetch all the design categories associated with your particular domain.
+
+The only parameters required are the signature parameters to authenticate the call.
+
+**\[POST\]** [https://api.pitchprint.io/runtime/fetch-design-categories](https://api.pitchprint.io/runtime/fetch-design-categories)
+
+##### BODY PARAMS
+
+<table class="table-striped table-bordered"><tbody><tr><td class="required">apiKey</td><td>Your domain's api key</td></tr><tr><td class="required">timestamp</td><td>Timestamp generated at runtime</td></tr><tr><td class="required">signature</td><td>Signature = MD5(apikey + secretKey + timestamp)</td></tr></tbody></table>
+
+* * *
+
+##### SAMPLE CODE
+
+<?php
+
+define('PITCH\_APIKEY', 'your-api-key');
+define('PITCH\_SECRETKEY', 'your-secret-key');
+
+function generateSignature () {
+    $timestamp = time();
+    $signature = md5(PITCH\_APIKEY . PITCH\_SECRETKEY . $timestamp);
+    return array ('timestamp'=>$timestamp, 'apiKey'=>PITCH\_APIKEY, 'signature'=>$signature);
+}
+
+$ch = curl\_init();
+curl\_setopt($ch, CURLOPT\_URL, "https://api.pitchprint.io/runtime/fetch-design-categories");
+curl\_setopt($ch, CURLOPT\_POST, true);
+
+$opts = generateSignature();
+$opts\['designId'\] = 'your-design-id-here';
+
+curl\_setopt($ch, CURLOPT\_POSTFIELDS, json\_encode($opts));
+curl\_setopt($ch, CURLOPT\_RETURNTRANSFER, true);
+
+$output = curl\_exec($ch);
+$http\_status = curl\_getinfo($ch, CURLINFO\_HTTP\_CODE);
+$content\_type = curl\_getinfo($ch, CURLINFO\_CONTENT\_TYPE);
+$curlerr = curl\_error($ch);
+curl\_close($ch);
+
+header('Content-Type: application/json');
+
+echo $output;
+
+?>
+
+##### RESPONSE
+
+{
+	\[
+    		"id": "5afb3c7960aa7ff839dhs3767553a3fa2",
+    		"title": "Business Cards",
+    		"created": 1522140375,
+    		"modules": ""
+	\]
+}

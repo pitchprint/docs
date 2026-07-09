@@ -3,8 +3,8 @@
 .env.local
 .env.*.local
 
-# Generated output
-data/
-
 # OS / editor
 .DS_Store
+
+# Node
+node_modules/

@@ -1,0 +1,59 @@
+---
+title: "Fetch User Projects"
+description: "Use this endpoint to fetch all projects linked to a user."
+---
+
+Use this endpoint to fetch all projects linked to a user.
+
+**\[POST\]** [https://api.pitchprint.com/runtime/fetch-user-project](https://api.pitchprint.com/runtime/fetch-user-project)
+
+**BODY PARAMS**
+
+<table class="hs-table"><colgroup><col width="282"><col><col></colgroup><tbody><tr><td style="width: 282px;">Secret Key</td><td>Your domain's secret key</td></tr><tr><td>userId</td><td>The unique <strong>userId</strong> of the user.</td></tr></tbody></table>
+
+* * *
+
+**SAMPLE CODE**
+
+curl --location 'https://api.pitchprint.com/runtime/fetch-user-projects' \\
+--header 'Authorization: secr\_jBlUI0uksoZgXlQq4igUSRoUs#AfVF' \\
+--header 'Content-Type: application/json' \\
+--data '{
+    "userId": "5629946986554"
+}'
+
+**RESPONSE**
+
+{
+    "data": \[
+        {
+            "product": {
+                "name": "mens vest",
+                "id": 6734621474874,
+                "title": "Mens Vest",
+                "url": "pitchprint.myshopify.com/collections/frontpage/products/mens-vest"
+            },
+            "apiKey": "pitchprint.myshopify.com",
+            "lastEdit": 1732172100,
+            "pageLength": 1,
+            "mode": "new",
+            "created": 1732172100,
+            "userData": {
+                "name": "undefined undefined"
+            },
+            "userId": "5629946986554",
+            "\_id": "d8b63bf34ec40b4a555c5fcb0a577324e6",
+            "saveForLater": false,
+            "designId": "6e4439d8ce445bde13e2c546dd0a45c7",
+            "title": "Men's Vest (3D)"
+        },
+
+        {
+             ...another project
+        },
+
+        {
+             ...another project
+        },
+     \],
+}

@@ -1,0 +1,31 @@
+---
+title: "PPCLIENT PROPS"
+description: "You can define project-specific customization properties using the global window.PPCLIENT object. These can be set in the following ways:"
+---
+
+# PPCLIENT Properties
+
+You can define project-specific customization properties using the global `window.PPCLIENT` object. These can be set in the following ways:
+
+window.PPCLIENT = {};
+// or individually:
+window.PPCLIENT\["propertyName"\] = "value";
+
+<table class="hs-table"><colgroup><col><col><col width="242"></colgroup><tbody><tr><th>Property</th><th>Type</th><th style="width: 242px;">Description</th></tr><tr><td><code class="inline-code">customImageSelector</code></td><td><code class="inline-code">string</code></td><td>Custom CSS selector for preview images in the project view.</td></tr><tr><td><code class="inline-code">customThumbSelector</code></td><td><code class="inline-code">string</code></td><td>Custom CSS selector for preview thumbnails in the project view.</td></tr><tr><td><code class="inline-code">smartSizeSelector</code></td><td><code class="inline-code">string</code></td><td>Custom CSS selector for Smart Sizes module (e.g., for selecting sizes).</td></tr><tr><td><code class="inline-code">quantitySelector</code></td><td><code class="inline-code">string</code></td><td>Custom CSS selector for quantity input or page count selector.</td></tr><tr><td><code class="inline-code">userAccountPath</code></td><td><code class="inline-code">string</code></td><td>Custom URL path to direct users to view saved designs.</td></tr><tr><td><code class="inline-code">customAccountDivSel</code></td><td><code class="inline-code">string</code></td><td>Custom selector to embed the Saved Designs section on a page.</td></tr><tr><td><code class="inline-code">hideObserverablePreview</code></td><td><code class="inline-code">boolean</code></td><td>Whether to hide preview images in observable design states.</td></tr><tr><td><code class="inline-code">createDesignLabel</code></td><td><code class="inline-code">string</code></td><td>Unknown — potentially affects label for design creation (platform-specific).</td></tr><tr><td><code class="inline-code">customCartButtonSelector</code></td><td><code class="inline-code">string</code></td><td>Custom CSS selector for the Add to Cart button.</td></tr><tr><td><code class="inline-code">langEdits</code></td><td><code class="inline-code">object</code></td><td>Object to override language labels/text in the UI.</td></tr><tr><td><code class="inline-code">customizationRequired</code></td><td><code class="inline-code">boolean</code></td><td>If <code class="inline-code">true</code> , users must customize the design before adding it to cart.</td></tr></tbody></table>
+
+window.PPCLIENT = {
+  customImageSelector: ".product-preview img",
+  customThumbSelector: ".preview-thumbnails img",
+  smartSizeSelector: "#smart-size-options",
+  quantitySelector: "#page-count",
+  userAccountPath: "/my-account/saved-designs",
+  customAccountDivSel: "#saved-designs-wrapper",
+  hideObserverablePreview: true,
+  createDesignLabel: "Create Design",
+  customCartButtonSelector: ".add-to-cart-btn",
+  langEdits: {
+    "Customize": "Personalize",
+    "Add to Cart": "Buy Now"
+  },
+  customizationRequired: true
+};

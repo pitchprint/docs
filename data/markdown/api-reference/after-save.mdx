@@ -1,0 +1,26 @@
+---
+title: "After Save"
+description: "So what happens next after our customer clicks the Save Button in the designer?"
+---
+
+So what happens next after our customer clicks the Save Button in the designer?
+
+The designer automatically generates all the design pages, saves the project on our servers, generates a PDF File, then comes back to you with all these details.
+
+An event is dispatched **"project-saved"**, which we want to handle with our event **"projectSaved"**.
+
+//Function to run once the user has saved their project
+var projectSaved = (\_val) => {
+	let \_data = \_val.data;
+	if (\_data && \_data.previews && \_data.previews.length) {
+		\_previewDiv.innerHTML = \_data.previews.reduce((\_str, \_prev) => \`${\_str}<img src="${\_prev}">\`, '');
+	}
+};
+
+And what we did here is simply get the data property of the event, which has a property named **previews**, a collection of the project's preview pages
+
+We then created image elements, setting the URL to the preview path and inserted them in our preview div.
+
+From here on, you can integrate as you like to your web application. You have the projectId, the preview images, source, number of pages and most information you need to identify this special customization so it goes along with the product to the cart.
+
+Good luck with the integration and if you get stuck, we are simply an email away!
