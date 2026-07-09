@@ -5,9 +5,14 @@
   "type": "module",
   "description": "Help Scout Docs API client using Basic Auth",
   "scripts": {
-    "example": "node --env-file=.env scripts/example.js"
+    "example": "node --env-file=.env scripts/example.js",
+    "convert": "node scripts/convert-to-markdown.js"
   },
   "engines": {
     "node": ">=20.6.0"
+  },
+  "dependencies": {
+    "turndown": "^7.2.4",
+    "turndown-plugin-gfm": "^1.0.2"
   }
 }
