@@ -6,7 +6,8 @@
   "description": "Help Scout Docs API client using Basic Auth",
   "scripts": {
     "example": "node --env-file=.env scripts/example.js",
-    "convert": "node scripts/convert-to-markdown.js"
+    "convert": "node scripts/convert-to-markdown.js",
+    "publish": "node scripts/publish-to-docs.js"
   },
   "engines": {
     "node": ">=20.6.0"

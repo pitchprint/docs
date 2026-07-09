@@ -9,12 +9,181 @@
   },
   "favicon": "/favicon.svg",
   "navigation": {
-    "pages": [
+    "tabs": [
       {
-        "group": "Getting Started",
-        "pages": [
-          "index",
-          "quickstart"
+        "tab": "Guides",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "index",
+              "quickstart"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Documentation",
+            "pages": [
+              "documentation/3d",
+              "documentation/3d-studio",
+              "documentation/3d-view-introduction",
+              "documentation/add-previews-project-file-links-to-shopify-email-notifications",
+              "documentation/ai-outpainting",
+              "documentation/ai-sketch-to-image",
+              "documentation/ai-smart-replace",
+              "documentation/ai-structure",
+              "documentation/ai-upscale",
+              "documentation/ai-image-generator",
+              "documentation/bigcommerce",
+              "documentation/canvas-adjuster-module",
+              "documentation/data-form-module",
+              "documentation/design-observables",
+              "documentation/design-selector-module",
+              "documentation/faq",
+              "documentation/foil-accent",
+              "documentation/how-to-add-a-placeholder-image-for-mask-shapes",
+              "documentation/integrating-canvas-adjuster-to-a-wordpress-store",
+              "documentation/integrating-canvas-adjuster-to-an-opencart-store",
+              "documentation/localstorage-trigger",
+              "documentation/how-to-use-page-count-module",
+              "documentation/page-loader-module",
+              "documentation/pdf-uploader",
+              "documentation/picture-editor",
+              "documentation/remi-module",
+              "documentation/shuffle-module",
+              "documentation/single-double-sided-module",
+              "documentation/swatch-module",
+              "documentation/tags",
+              "documentation/template-color-module",
+              "documentation/upgrading-to-version-9",
+              "documentation/variable-data-module"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Tutorial",
+        "groups": [
+          {
+            "group": "Tutorial",
+            "pages": [
+              "tutorial/3d-uv-mapping",
+              "tutorial/3d-views",
+              "tutorial/add-fonts-inside-editor",
+              "tutorial/adding-grommets",
+              "tutorial/adding-qr-codes",
+              "tutorial/design-editor",
+              "tutorial/admin-settings",
+              "tutorial/using-ai-imaginate",
+              "tutorial/all-about-colors",
+              "tutorial/automation-sending-your-pdf-file-to-printer",
+              "tutorial/backup-of-how-to-install-pitchprint-on-opencart-draft",
+              "tutorial/browser-compatibility",
+              "tutorial/calendar-design",
+              "tutorial/color-palette",
+              "tutorial/element-colour-chain",
+              "tutorial/creating-designs-using-svgs",
+              "tutorial/creating-text-art",
+              "tutorial/custom-mask",
+              "tutorial/data-form-video",
+              "tutorial/design-configuration",
+              "tutorial/design-item-and-page-tags",
+              "tutorial/display-modes",
+              "tutorial/web2print-options-missing-in-opencart-admin",
+              "tutorial/getting-started-with-pitchprint",
+              "tutorial/ghostscript-arguments",
+              "tutorial/grommets",
+              "tutorial/helptip-bubbles",
+              "tutorial/how-to-add-your-own-fonts",
+              "tutorial/how-to-attach-customer-designs-to-email-wp",
+              "tutorial/how-to-change-the-app-labels-and-texts",
+              "tutorial/how-to-create-a-baby-s-arrival-design-template",
+              "tutorial/how-to-create-a-clickable-mask",
+              "tutorial/how-to-create-a-collage-iphone-case-design-template",
+              "tutorial/how-to-create-a-design",
+              "tutorial/how-to-create-an-svg-for-use-as-mask",
+              "tutorial/how-to-create-colour-chains",
+              "tutorial/how-to-create-templates-using-svg-shapes",
+              "tutorial/how-to-email-artwork-to-customers",
+              "tutorial/how-to-enable-pixabay-image-search",
+              "tutorial/how-to-enable-the-customization-form",
+              "tutorial/how-to-import-designs",
+              "tutorial/how-to-install-pitchprint-on-bigcommerce",
+              "tutorial/how-to-install-pitchprint-on-ecwid",
+              "tutorial/how-to-install-pitchprint-on-ekm",
+              "tutorial/magento-installation",
+              "tutorial/how-to-install-pitchprint-on-odoo",
+              "tutorial/how-to-install-pitchprint-on-opencart",
+              "tutorial/how-to-install-pitchprint-on-prestashop",
+              "tutorial/how-to-install-pitchprint-on-wix",
+              "tutorial/how-to-install-pitchprint-on-wordpress",
+              "tutorial/how-to-save-your-svgs-for-use-in-pitchprint",
+              "tutorial/how-to-show-customer-design-previews-on-email-wordpress",
+              "tutorial/how-to-update-design-with-customer-data",
+              "tutorial/image-chain",
+              "tutorial/item-chain",
+              "tutorial/item-hooks",
+              "tutorial/layouts-v10",
+              "tutorial/make-reference",
+              "tutorial/managing-your-designs",
+              "tutorial/managing-your-domains",
+              "tutorial/reels-data-form",
+              "tutorial/mobile-phone-layouts",
+              "tutorial/pdf-rendering",
+              "tutorial/personalize-button-no-showing",
+              "tutorial/photo-print-module",
+              "tutorial/photo-resolution-check",
+              "tutorial/pitchprint-for-shopify-getting-started",
+              "tutorial/pitchprint-on-3dcart",
+              "tutorial/backgrounds",
+              "tutorial/remove-background",
+              "tutorial/security-measures",
+              "tutorial/smart-size-design",
+              "tutorial/smart-sizes",
+              "tutorial/spark",
+              "tutorial/sticky-items",
+              "tutorial/text-to-svg",
+              "tutorial/template-colour-designs",
+              "tutorial/text-box-formatting",
+              "tutorial/text-styles",
+              "tutorial/types-of-pitchprint-designs",
+              "tutorial/webhooks",
+              "tutorial/which-framework-should-i-pick"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "API Reference",
+            "pages": [
+              "api-reference/adding-pages-programmatically",
+              "api-reference/after-save",
+              "api-reference/auth-signature",
+              "api-reference/clone-project",
+              "api-reference/designer-ready-method",
+              "api-reference/events",
+              "api-reference/fetch-design",
+              "api-reference/fetch-design-categories",
+              "api-reference/fetch-design-previews",
+              "api-reference/fetch-designs",
+              "api-reference/fetch-project",
+              "api-reference/fetch-user-projects",
+              "api-reference/generate-your-auth-keys",
+              "api-reference/initialization-options",
+              "api-reference/integration",
+              "api-reference/introduction",
+              "api-reference/custom-integration-my-account",
+              "api-reference/ppclient-props",
+              "api-reference/render-pdf-raster"
+            ]
+          }
         ]
       }
     ],

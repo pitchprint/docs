@@ -8,7 +8,7 @@
     "popularity": 5,
     "publicUrl": "https://docs.pitchprint.com/article/25-faq",
     "public": true,
-    "viewCount": 16975,
+    "viewCount": 16976,
     "lastPublishedAt": "2018-10-18T13:11:52Z",
     "changeOrigin": "unknown",
     "name": "Frequently asked questions",
@@ -102,7 +102,7 @@
     "popularity": 2.1,
     "publicUrl": "https://docs.pitchprint.com/article/99-webhooks",
     "public": true,
-    "viewCount": 7131,
+    "viewCount": 7132,
     "lastPublishedAt": "2022-05-10T10:56:31Z",
     "changeOrigin": "unknown",
     "name": "Webhooks",
@@ -1145,7 +1145,7 @@
     "popularity": 0.8,
     "publicUrl": "https://docs.pitchprint.com/article/77-how-to-attach-customer-designs-to-email-wp",
     "public": true,
-    "viewCount": 2624,
+    "viewCount": 2625,
     "lastPublishedAt": "2021-01-22T12:53:20Z",
     "changeOrigin": "unknown",
     "name": "How to attach customer designs to email (Word Press)",
@@ -1975,29 +1975,6 @@
     "updatedAt": "2023-09-14T06:38:15Z"
   },
   {
-    "id": "650aefc469e29e0014ac7bd9",
-    "number": 152,
-    "text": "<p>A clickable mask is an image placeholder that is mainly used in products such as photo prints, canvas prints and promotional items to name a few.</p><br><p>To make use of this feature please follow the steps below:</p><p>Go to the <a href=\"https://admin.pitchprint.com/designs\" target=\"_blank\">designs</a> page open an existing design OR create a new one.</p><p>For the shape you can either draw your own or import some of our readily available shapes:</p><p>To draw click on the button shown below:</p><p><img  src=\"https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/6538a7075929497d15ca11f5/file-dDADTmHIHT.png\" style=\"max-width: 100%; \" /></p><p>When you click on the button a menu will open up as depicted below:</p><p><img  src=\"https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/6538a7465d28e52158f5213e/file-Yylt6bjLv7.png\" style=\"max-width: 100%; \" /></p><p>Draw your desired shape and click on the <i><b>mouse click icon</b></i> to exit drawing mode.</p><p>To import shapes go to the <a href=\"https://admin.pitchprint.com/pictures\" target=\"_blank\">pictures</a> tab. Create a new category or open an existing one. Click on import. Select <b><i>Plain Shapes Great for masking</i></b> from the drop down list select the item(s) you need and click import as shown below:</p><p><img  src=\"https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/6538a790d8bb8c0afe6e1446/file-QSEjUeWxSn.png\" style=\"max-width: 100%; \" /></p><p>Once you have your shape(s). Add the shape(s) to the canvas. Click on the shape. Go to the item menu and enable <i><b>Clickable Mask </b></i>as shown below:</p><p><img  src=\"https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/650afa599446233b9352802b/file-EosphRVy4W.png\" style=\"width: 100%; max-width: 100%; \" /></p><p>Once complete your shape will now become an image placeholder which your customers can use to insert their images. </p><br><blockquote><p>Please note the clickable mask can only house raster(png, tiff, jpg etc.) images, vector images will not work inside your clickable mask.</p></blockquote>",
-    "hasDraft": false,
-    "collectionId": "58fd98042c7d3a057f887b63",
-    "popularity": 0.3,
-    "publicUrl": "https://docs.pitchprint.com/article/152-how-to-create-a-clickable-mask",
-    "public": true,
-    "viewCount": 928,
-    "lastPublishedAt": "2023-10-25T05:29:03Z",
-    "changeOrigin": "hs-app-ui",
-    "name": "How to create a clickable mask",
-    "slug": "how-to-create-a-clickable-mask",
-    "status": "published",
-    "categories": [
-      "58fd98262c7d3a057f887b67"
-    ],
-    "createdBy": 339322,
-    "createdAt": "2023-09-20T13:12:36Z",
-    "updatedBy": 339322,
-    "updatedAt": "2026-02-25T08:50:16Z"
-  },
-  {
     "id": "64e4a6ba97d36a08d5e4a0c4",
     "number": 145,
     "text": "<p>The Mini display will show the canvas alone without any UI element. It provides a quick and easy means to customize a product by bringing out the elements in a form close to the add to cart button.</p><div class=\"video video-wistia video-responsive\" style=\"aspect-ratio:0.562493;\"><iframe src=\"https://fast.wistia.net/embed/iframe/2ffyovfl6a?videoFoam=false\" width=\"100%\" height=\"100%\" frameBorder=\"0\" allowtransparency=\"true\" scrolling=\"no\" className=\"wistia_embed\" name=\"wistia_embed\" msallowfullscreen=\"true\" webkitallowfullscreen=\"true\" mozallowfullscreen=\"true\" allow=\"autoplay; fullscreen\"></iframe></div>",
@@ -2006,7 +1983,7 @@
     "popularity": 0.3,
     "publicUrl": "https://docs.pitchprint.com/article/145-reels-data-form",
     "public": true,
-    "viewCount": 927,
+    "viewCount": 928,
     "lastPublishedAt": "2023-09-14T06:41:45Z",
     "changeOrigin": "hs-app-ui",
     "name": "Mini Display Mode",
@@ -2037,6 +2014,29 @@
     "createdAt": "2023-08-22T12:14:50Z",
     "updatedBy": 205509,
     "updatedAt": "2023-09-14T06:41:45Z"
+  },
+  {
+    "id": "650aefc469e29e0014ac7bd9",
+    "number": 152,
+    "text": "<p>A clickable mask is an image placeholder that is mainly used in products such as photo prints, canvas prints and promotional items to name a few.</p><br><p>To make use of this feature please follow the steps below:</p><p>Go to the <a href=\"https://admin.pitchprint.com/designs\" target=\"_blank\">designs</a> page open an existing design OR create a new one.</p><p>For the shape you can either draw your own or import some of our readily available shapes:</p><p>To draw click on the button shown below:</p><p><img  src=\"https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/6538a7075929497d15ca11f5/file-dDADTmHIHT.png\" style=\"max-width: 100%; \" /></p><p>When you click on the button a menu will open up as depicted below:</p><p><img  src=\"https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/6538a7465d28e52158f5213e/file-Yylt6bjLv7.png\" style=\"max-width: 100%; \" /></p><p>Draw your desired shape and click on the <i><b>mouse click icon</b></i> to exit drawing mode.</p><p>To import shapes go to the <a href=\"https://admin.pitchprint.com/pictures\" target=\"_blank\">pictures</a> tab. Create a new category or open an existing one. Click on import. Select <b><i>Plain Shapes Great for masking</i></b> from the drop down list select the item(s) you need and click import as shown below:</p><p><img  src=\"https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/6538a790d8bb8c0afe6e1446/file-QSEjUeWxSn.png\" style=\"max-width: 100%; \" /></p><p>Once you have your shape(s). Add the shape(s) to the canvas. Click on the shape. Go to the item menu and enable <i><b>Clickable Mask </b></i>as shown below:</p><p><img  src=\"https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/650afa599446233b9352802b/file-EosphRVy4W.png\" style=\"width: 100%; max-width: 100%; \" /></p><p>Once complete your shape will now become an image placeholder which your customers can use to insert their images. </p><br><blockquote><p>Please note the clickable mask can only house raster(png, tiff, jpg etc.) images, vector images will not work inside your clickable mask.</p></blockquote>",
+    "hasDraft": false,
+    "collectionId": "58fd98042c7d3a057f887b63",
+    "popularity": 0.3,
+    "publicUrl": "https://docs.pitchprint.com/article/152-how-to-create-a-clickable-mask",
+    "public": true,
+    "viewCount": 928,
+    "lastPublishedAt": "2023-10-25T05:29:03Z",
+    "changeOrigin": "hs-app-ui",
+    "name": "How to create a clickable mask",
+    "slug": "how-to-create-a-clickable-mask",
+    "status": "published",
+    "categories": [
+      "58fd98262c7d3a057f887b67"
+    ],
+    "createdBy": 339322,
+    "createdAt": "2023-09-20T13:12:36Z",
+    "updatedBy": 339322,
+    "updatedAt": "2026-02-25T08:50:16Z"
   },
   {
     "id": "65000a1ae8ed5e770a6f599e",
@@ -2394,7 +2394,7 @@
     "popularity": 0.1,
     "publicUrl": "https://docs.pitchprint.com/article/165-using-ai-imaginate",
     "public": true,
-    "viewCount": 246,
+    "viewCount": 247,
     "lastPublishedAt": "2025-05-29T07:52:34Z",
     "changeOrigin": "hs-app-ui",
     "name": "AI-Imaginate: Text to Image AI Tool",
@@ -2668,29 +2668,6 @@
     "updatedAt": "2025-05-29T08:07:00Z"
   },
   {
-    "id": "683817d277c5ef50dfd8ec97",
-    "number": 169,
-    "text": "<div data-html-block><div style=\"padding:50.63% 0 0 0;position:relative;\" class=\"wistia_responsive_padding\"><div style=\"height:100%;left:0;position:absolute;top:0;width:100%;\" class=\"wistia_responsive_wrapper\"><iframe height=\"100%\" width=\"100%\" name=\"wistia_embed\" class=\"wistia_embed\" scrolling=\"no\" frameborder=\"0\" allow=\"autoplay; fullscreen\" title=\"Add Fonts Video\" src=\"https://fast.wistia.net/embed/iframe/8fjcu0vja4?web_component=true&amp;seo=true\"></iframe></div></div>\n</div><p> With Google Fonts integrated, you can add fonts directly within the editor.</p>",
-    "hasDraft": false,
-    "collectionId": "58fd98042c7d3a057f887b63",
-    "popularity": 0,
-    "publicUrl": "https://docs.pitchprint.com/article/169-add-fonts-inside-editor",
-    "public": true,
-    "viewCount": 93,
-    "lastPublishedAt": "2025-05-29T08:20:02Z",
-    "changeOrigin": "hs-app-ui",
-    "name": "Add Fonts - Inside Editor",
-    "slug": "add-fonts-inside-editor",
-    "status": "published",
-    "categories": [
-      "58fd98772c7d3a057f887b6a"
-    ],
-    "createdBy": 205509,
-    "createdAt": "2025-05-29T08:16:18Z",
-    "updatedBy": 205509,
-    "updatedAt": "2025-05-29T08:20:02Z"
-  },
-  {
     "id": "68382104f4551006f4b55d17",
     "number": 172,
     "text": "<div data-html-block><div style=\"padding:50.63% 0 0 0;position:relative;\" class=\"wistia_responsive_padding\"><div style=\"height:100%;left:0;position:absolute;top:0;width:100%;\" class=\"wistia_responsive_wrapper\"><iframe height=\"100%\" width=\"100%\" name=\"wistia_embed\" class=\"wistia_embed\" scrolling=\"no\" frameborder=\"0\" allow=\"autoplay; fullscreen\" title=\"Reference elements Video\" src=\"https://fast.wistia.net/embed/iframe/wgux768fhf?web_component=true&amp;seo=true\"></iframe></div></div>\n</div><p>This is enabled for items that are not necessarily part of the design but you want to use as a guide.</p>",
@@ -2712,6 +2689,29 @@
     "createdAt": "2025-05-29T08:55:32Z",
     "updatedBy": 205509,
     "updatedAt": "2025-05-29T08:57:17Z"
+  },
+  {
+    "id": "683817d277c5ef50dfd8ec97",
+    "number": 169,
+    "text": "<div data-html-block><div style=\"padding:50.63% 0 0 0;position:relative;\" class=\"wistia_responsive_padding\"><div style=\"height:100%;left:0;position:absolute;top:0;width:100%;\" class=\"wistia_responsive_wrapper\"><iframe height=\"100%\" width=\"100%\" name=\"wistia_embed\" class=\"wistia_embed\" scrolling=\"no\" frameborder=\"0\" allow=\"autoplay; fullscreen\" title=\"Add Fonts Video\" src=\"https://fast.wistia.net/embed/iframe/8fjcu0vja4?web_component=true&amp;seo=true\"></iframe></div></div>\n</div><p> With Google Fonts integrated, you can add fonts directly within the editor.</p>",
+    "hasDraft": false,
+    "collectionId": "58fd98042c7d3a057f887b63",
+    "popularity": 0,
+    "publicUrl": "https://docs.pitchprint.com/article/169-add-fonts-inside-editor",
+    "public": true,
+    "viewCount": 93,
+    "lastPublishedAt": "2025-05-29T08:20:02Z",
+    "changeOrigin": "hs-app-ui",
+    "name": "Add Fonts - Inside Editor",
+    "slug": "add-fonts-inside-editor",
+    "status": "published",
+    "categories": [
+      "58fd98772c7d3a057f887b6a"
+    ],
+    "createdBy": 205509,
+    "createdAt": "2025-05-29T08:16:18Z",
+    "updatedBy": 205509,
+    "updatedAt": "2025-05-29T08:20:02Z"
   },
   {
     "id": "683821c2f4551006f4b55d18",
@@ -2864,75 +2864,6 @@
     "updatedAt": "2026-03-10T12:35:22Z"
   },
   {
-    "id": "66389d474c3ddc1d4e7a32a2",
-    "number": 156,
-    "text": "<p>In order to use our plugin, it requires you to have <a href=\"https://woocommerce.com/woocommerce/\" target=\"_blank\">Woocommerce</a> installed on your WordPress admin. Follow these steps to install WordPress, then WooCommerce and finally GleamPrint.</p><br><ol><li>Download and install WordPress: <a href=\"https://wordpress.org/\">http://wordpress.org</a></li><li><p>After installing WordPress, login to your WordPress admin portal and install WooCommerce.</p><p>To do this, you can either install manually or install within the WordPress admin panel by searching for “WooCommerce” in the Plugins -&gt; Add New -&gt; and then search field.</p><p>Optionally, you can download it manually here: <a href=\"http://downloads.wordpress.org/plugin/woocommerce.zip\" target=\"_blank\">http://downloads.wordpress.org/plugin/woocommerce.zip</a> and install manually if you so choose.</p></li><li>Once, you have installed both WordPress and WooCommerce, you can then install GleamPrint through the same procedure as above. Search for “Gleamprint” in Plugins -&gt; Add New -&gt; and then type “GleamPrint” into the search field.</li><li>Activate both the WooCommerce and GleamPrint plugins under Admin -&gt; Plugins -&gt; Installed Plugins.</li><li>GleamPrint mainly focuses on products created through woocommerce, so you need to create a product. Go to Products -&gt; Add New -&gt; and then start creating your product, once you&#39;ve added all the necessary information like Title, Description, Price etc. You should now set a product image, when setting a product image be sure to set one that has a cut out section, because GleamPrint will then be creating a foil accent behind the product image.</li><li><p>On the right side of the Add New Product section you&#39;ll find the following. Choose the gradient you prefer, be sure to either give your product the light reflection movement or can you keep it simple yet elegant. </p><p style=\"text-align: center;\" class=\"align-center\"><img  src=\"https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/6638ac075027f87fcc6be32d/file-02Cgt9TOsY.png\" style=\"width: 374px; max-width: 100%; text-align: center;\" /></p></li><li><p>When you&#39;ve decided on the gradient and also the animation state, you can now publish your product. It should resemble the following. </p><p style=\"text-align: center;\" class=\"align-center\"><img  src=\"https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/6638b5545027f87fcc6be330/file-y2hCTjB6Ot.png\" style=\"width: 100%; max-width: 100%; text-align: center;\" /></p></li><li><p>Fun fact! once the product as been published and then navigate back to the Add New Product Page. You are now able to choose the gradient and preview how it would like without the animation, see below. </p><p style=\"text-align: center;\" class=\"align-center\"><img  src=\"https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/6638b7815ae8353469c6b4da/file-yUlTni8ddx.png\" style=\"width: 368px; max-width: 100%; text-align: center;\" /></p></li><li>Some </li></ol>",
-    "hasDraft": true,
-    "collectionId": "58fd98042c7d3a057f887b63",
-    "popularity": 0,
-    "publicUrl": "https://docs.pitchprint.com/article/156-foil-accent",
-    "public": false,
-    "viewCount": 0,
-    "lastPublishedAt": "2024-05-06T09:32:09Z",
-    "changeOrigin": "hsapp-js",
-    "name": "GleamPrint For WordPress",
-    "slug": "foil-accent",
-    "status": "notpublished",
-    "categories": [
-      "58fd98042c7d3a057f887b64"
-    ],
-    "createdBy": 635556,
-    "createdAt": "2024-05-06T09:05:11Z",
-    "updatedBy": 635556,
-    "updatedAt": "2024-05-23T12:28:49Z"
-  },
-  {
-    "id": "650054b0ddadbc21e1dafff6",
-    "number": 150,
-    "text": "<h2>Is Javascript Enabled</h2>",
-    "hasDraft": true,
-    "collectionId": "58fd98042c7d3a057f887b63",
-    "popularity": 0,
-    "publicUrl": "https://docs.pitchprint.com/article/150-personalize-button-no-showing",
-    "public": false,
-    "viewCount": 0,
-    "lastPublishedAt": "2023-09-12T13:40:38Z",
-    "changeOrigin": "hsapp-js",
-    "name": "Personalize button not showing?",
-    "slug": "personalize-button-no-showing",
-    "status": "notpublished",
-    "categories": [
-      "58fd98772c7d3a057f887b6a"
-    ],
-    "createdBy": 635556,
-    "createdAt": "2023-09-12T12:08:16Z",
-    "updatedBy": 635556,
-    "updatedAt": "2023-09-12T13:40:38Z"
-  },
-  {
-    "id": "59db298e042863379ddc7f76",
-    "number": 73,
-    "text": "",
-    "hasDraft": false,
-    "collectionId": "58fd98042c7d3a057f887b63",
-    "popularity": 0,
-    "publicUrl": "https://docs.pitchprint.com/article/73-how-to-email-artwork-to-customers",
-    "public": false,
-    "viewCount": 0,
-    "lastPublishedAt": "2017-10-09T08:14:12Z",
-    "changeOrigin": "unknown",
-    "name": "How to email artwork to customers",
-    "slug": "how-to-email-artwork-to-customers",
-    "status": "notpublished",
-    "categories": [
-      "58fd985f2c7d3a057f887b69"
-    ],
-    "createdBy": 205509,
-    "createdAt": "2017-10-09T07:47:26Z",
-    "updatedBy": 205509,
-    "updatedAt": "2017-10-09T08:14:12Z"
-  },
-  {
     "id": "5d6cc73f04286350aeeb513e",
     "number": 117,
     "text": "<p><strong>What is 3D studio?</strong></p><p>3D studio is a tool that helps you upload your own 3D models or add 3D models that are available from pitchprint.</p><p><strong>Which file types can I upload?</strong></p><p>Pitchprint only accepts .obj file types.</p>",
@@ -3028,6 +2959,75 @@
     "createdAt": "2020-09-08T09:07:17Z",
     "updatedBy": 188184,
     "updatedAt": "2020-09-15T09:49:02Z"
+  },
+  {
+    "id": "66389d474c3ddc1d4e7a32a2",
+    "number": 156,
+    "text": "<p>In order to use our plugin, it requires you to have <a href=\"https://woocommerce.com/woocommerce/\" target=\"_blank\">Woocommerce</a> installed on your WordPress admin. Follow these steps to install WordPress, then WooCommerce and finally GleamPrint.</p><br><ol><li>Download and install WordPress: <a href=\"https://wordpress.org/\">http://wordpress.org</a></li><li><p>After installing WordPress, login to your WordPress admin portal and install WooCommerce.</p><p>To do this, you can either install manually or install within the WordPress admin panel by searching for “WooCommerce” in the Plugins -&gt; Add New -&gt; and then search field.</p><p>Optionally, you can download it manually here: <a href=\"http://downloads.wordpress.org/plugin/woocommerce.zip\" target=\"_blank\">http://downloads.wordpress.org/plugin/woocommerce.zip</a> and install manually if you so choose.</p></li><li>Once, you have installed both WordPress and WooCommerce, you can then install GleamPrint through the same procedure as above. Search for “Gleamprint” in Plugins -&gt; Add New -&gt; and then type “GleamPrint” into the search field.</li><li>Activate both the WooCommerce and GleamPrint plugins under Admin -&gt; Plugins -&gt; Installed Plugins.</li><li>GleamPrint mainly focuses on products created through woocommerce, so you need to create a product. Go to Products -&gt; Add New -&gt; and then start creating your product, once you&#39;ve added all the necessary information like Title, Description, Price etc. You should now set a product image, when setting a product image be sure to set one that has a cut out section, because GleamPrint will then be creating a foil accent behind the product image.</li><li><p>On the right side of the Add New Product section you&#39;ll find the following. Choose the gradient you prefer, be sure to either give your product the light reflection movement or can you keep it simple yet elegant. </p><p style=\"text-align: center;\" class=\"align-center\"><img  src=\"https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/6638ac075027f87fcc6be32d/file-02Cgt9TOsY.png\" style=\"width: 374px; max-width: 100%; text-align: center;\" /></p></li><li><p>When you&#39;ve decided on the gradient and also the animation state, you can now publish your product. It should resemble the following. </p><p style=\"text-align: center;\" class=\"align-center\"><img  src=\"https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/6638b5545027f87fcc6be330/file-y2hCTjB6Ot.png\" style=\"width: 100%; max-width: 100%; text-align: center;\" /></p></li><li><p>Fun fact! once the product as been published and then navigate back to the Add New Product Page. You are now able to choose the gradient and preview how it would like without the animation, see below. </p><p style=\"text-align: center;\" class=\"align-center\"><img  src=\"https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/6638b7815ae8353469c6b4da/file-yUlTni8ddx.png\" style=\"width: 368px; max-width: 100%; text-align: center;\" /></p></li><li>Some </li></ol>",
+    "hasDraft": true,
+    "collectionId": "58fd98042c7d3a057f887b63",
+    "popularity": 0,
+    "publicUrl": "https://docs.pitchprint.com/article/156-foil-accent",
+    "public": false,
+    "viewCount": 0,
+    "lastPublishedAt": "2024-05-06T09:32:09Z",
+    "changeOrigin": "hsapp-js",
+    "name": "GleamPrint For WordPress",
+    "slug": "foil-accent",
+    "status": "notpublished",
+    "categories": [
+      "58fd98042c7d3a057f887b64"
+    ],
+    "createdBy": 635556,
+    "createdAt": "2024-05-06T09:05:11Z",
+    "updatedBy": 635556,
+    "updatedAt": "2024-05-23T12:28:49Z"
+  },
+  {
+    "id": "650054b0ddadbc21e1dafff6",
+    "number": 150,
+    "text": "<h2>Is Javascript Enabled</h2>",
+    "hasDraft": true,
+    "collectionId": "58fd98042c7d3a057f887b63",
+    "popularity": 0,
+    "publicUrl": "https://docs.pitchprint.com/article/150-personalize-button-no-showing",
+    "public": false,
+    "viewCount": 0,
+    "lastPublishedAt": "2023-09-12T13:40:38Z",
+    "changeOrigin": "hsapp-js",
+    "name": "Personalize button not showing?",
+    "slug": "personalize-button-no-showing",
+    "status": "notpublished",
+    "categories": [
+      "58fd98772c7d3a057f887b6a"
+    ],
+    "createdBy": 635556,
+    "createdAt": "2023-09-12T12:08:16Z",
+    "updatedBy": 635556,
+    "updatedAt": "2023-09-12T13:40:38Z"
+  },
+  {
+    "id": "59db298e042863379ddc7f76",
+    "number": 73,
+    "text": "",
+    "hasDraft": false,
+    "collectionId": "58fd98042c7d3a057f887b63",
+    "popularity": 0,
+    "publicUrl": "https://docs.pitchprint.com/article/73-how-to-email-artwork-to-customers",
+    "public": false,
+    "viewCount": 0,
+    "lastPublishedAt": "2017-10-09T08:14:12Z",
+    "changeOrigin": "unknown",
+    "name": "How to email artwork to customers",
+    "slug": "how-to-email-artwork-to-customers",
+    "status": "notpublished",
+    "categories": [
+      "58fd985f2c7d3a057f887b69"
+    ],
+    "createdBy": 205509,
+    "createdAt": "2017-10-09T07:47:26Z",
+    "updatedBy": 205509,
+    "updatedAt": "2017-10-09T08:14:12Z"
   },
   {
     "id": "6874d66aee127e5c5addb3dd",
