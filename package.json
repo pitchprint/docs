@@ -1,0 +1,13 @@
+{
+  "name": "helpscout-docs-client",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Help Scout Docs API client using Basic Auth",
+  "scripts": {
+    "example": "node --env-file=.env scripts/example.js"
+  },
+  "engines": {
+    "node": ">=20.6.0"
+  }
+}
