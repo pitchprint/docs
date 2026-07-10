@@ -1,0 +1,16 @@
+---
+title: "Designer ready method"
+description: "We have implemented an easy way of integrating your custom code to the editor using the the ppDesignerInitialized method which can be hooked to the global pa..."
+---
+
+We have implemented an easy way of integrating your custom code to the editor using the the ppDesignerInitialized method which can be hooked to the global page. This method is invoked once the app has started and the event bus is ready for use.
+
+window.ppDesignerInitialized = function(\_class) &#123;
+	if (\_class.name === 'client') &#123;
+		// this was invoked by the client
+	&#125; else if (\_class.name === 'frame') &#123;
+		// this was invoked by the frame
+	&#125;
+&#125;
+
+As explained in the section  [Events](https://docs.pitchprint.com/article/90-events), version 9 loads the app in an iFrame, which is created by a client class sitting on the parent page (your page). Both the frame and client gets to invoke your function if placed in the customJs section of your [settings page](https://admin.pitchprint.io/settings).

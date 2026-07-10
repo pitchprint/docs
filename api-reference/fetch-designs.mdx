@@ -1,0 +1,74 @@
+---
+title: "Fetch Designs"
+description: "Use this endpoint to fetch all the designs under a category."
+---
+
+Use this endpoint to fetch all the designs under a category.
+
+**\[POST\]** [https://api.pitchprint.io/runtime/fetch-designs](https://api.pitchprint.io/runtime/fetch-designs)
+
+##### BODY PARAMS
+
+&lt;table class="table-striped table-bordered">&lt;tbody>&lt;tr>&lt;td class="required">apiKey&lt;/td>&lt;td>Your domain's api key&lt;/td>&lt;/tr>&lt;tr>&lt;td class="required">timestamp&lt;/td>&lt;td>Timestamp generated at runtime&lt;/td>&lt;/tr>&lt;tr>&lt;td class="required">signature&lt;/td>&lt;td>Signature = MD5(apikey + secretKey + timestamp)&lt;/td>&lt;/tr>&lt;tr>&lt;td class="required">categoryId&lt;/td>&lt;td>ID of a design category&lt;/td>&lt;/tr>&lt;/tbody>&lt;/table>
+
+* * *
+
+##### SAMPLE CODE
+
+&lt;?php
+
+define('PITCH\_APIKEY', 'your-api-key');
+define('PITCH\_SECRETKEY', 'your-secret-key');
+
+function generateSignature () &#123;
+    $timestamp = time();
+    $signature = md5(PITCH\_APIKEY . PITCH\_SECRETKEY . $timestamp);
+    return array ('timestamp'=>$timestamp, 'apiKey'=>PITCH\_APIKEY, 'signature'=>$signature);
+&#125;
+
+$ch = curl\_init();
+curl\_setopt($ch, CURLOPT\_URL, "https://api.pitchprint.io/runtime/fetch-designs");
+curl\_setopt($ch, CURLOPT\_POST, true);
+
+$opts = generateSignature();
+$opts\['categoryId'\] = 'your-category-id-here';
+
+curl\_setopt($ch, CURLOPT\_POSTFIELDS, json\_encode($opts));
+curl\_setopt($ch, CURLOPT\_RETURNTRANSFER, true);
+
+$output = curl\_exec($ch);
+$http\_status = curl\_getinfo($ch, CURLINFO\_HTTP\_CODE);
+$content\_type = curl\_getinfo($ch, CURLINFO\_CONTENT\_TYPE);
+$curlerr = curl\_error($ch);
+curl\_close($ch);
+
+header('Content-Type: application/json');
+
+echo $output;
+
+?>
+
+##### RESPONSE
+
+&#123;
+	data: &#123;
+		categoryId: "cat-id",
+		items: \[
+			&#123;
+				designId: "\*\*\*\*\*\*K83RU7R",
+				version: 9,
+				unit: "cm",
+				lastModified:1485934721,
+				title: "design title",
+				previews: \[
+					"https://pitchprint.io/previews/design\_id\_1.jpg",
+					"https://pitchprint.io/previews/design\_id\_2.jpg"
+				\]
+				... more design data
+			&#125;,
+			&#123;
+				...another design
+			&#125;
+		\]
+	&#125;
+&#125;

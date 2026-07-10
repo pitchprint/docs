@@ -1,0 +1,13 @@
+# Environment / secrets
+.env
+.env.local
+.env.*.local
+
+# OS / editor
+.DS_Store
+
+# Node
+node_modules/
+
+# Data
+data/

@@ -1,0 +1,225 @@
+---
+title: "My Account - Saved Projects"
+description: "The \"My Account - Saved Projects\" section demonstrates how to integrate the \"My Account\" feature into your custom website, allowing customers to view their s..."
+---
+
+The "My Account - Saved Projects" section demonstrates how to integrate the "My Account" feature into your custom website, allowing customers to view their saved projects.
+
+### Getting started
+
+First, you need at least one HTML page loaded from your site where you will load the app. If you already have a website, this will naturally serve as your My Account page template.
+
+The HTML page will look something like this, one button takes you to the App, while the other goes to the My Account section.
+
+&lt;html>
+
+&lt;body>
+   &lt;div class="main-container">
+      &lt;div class="container">
+       &lt;button id="launch\_btn"> Launch App &lt;/button>
+       &lt;button id="my-account"> My Account &lt;/button>
+      &lt;/div>
+
+       &lt;div class="modal hidden">
+         &lt;h2> Saved Projects> &lt;/h2>
+         &lt;div id="content">&lt;/div>
+       &lt;/div>
+     &lt;/div>
+&lt;/body>
+&lt;/html>
+
+_Your layout may differ from ours, this serves as a guide for structuring your HTML page._
+
+_The complete integration of the app can be found here:_ [_https://docs.pitchprint.com/article/88-integration_](https://docs.pitchprint.com/article/88-integration)
+
+Now we move to JavaScript.
+
+### **Initializing PitchPrint**
+
+We will begin by initializing PitchPrint. This has already been explained in the app integration section. We have added the userId, which will be useful for saving projects under the correct accounts.
+
+var ppClient = new PitchPrintClient(&#123;
+  apiKey: "f80b84b4eb5cc81a140cb90f52e824f6", //Kindly provide your own APIKey
+  designId: "d42302b363615e5572feae8060eed01c", //Change this to your designId
+  userId: "37063281-a764-4b5b-8163-cec7ab1884a9", //This will be your customers userId's
+  custom: true,
+&#125;);
+
+### Setting up client and form input
+
+This JavaScript function, `doClient` , initializes a PitchPrint client and sets up event handling for session saving.
+
+function doClient() &#123;
+  \_productId = "";
+  let \_store = window.localStorage.getItem("pprint-custom") || &#123;&#125;;
+  if (typeof \_store === "string") \_store = JSON.parse(\_store);
+  let \_cValues = \_store\[\_productId\] || &#123;&#125;;
+  if (typeof \_cValues === "string") \_cValues = \_decode(\_cValues);
+  if (!document.getElementById("\_pitchprint"))
+    \_cartForm.insertAdjacentHTML(
+      "afterbegin",
+      \`&lt;input id="\_pitchprint" name="properties\[\_pitchprint\]" type="hidden" value="$&#123;
+        \_cValues.projectId || ""
+      &#125;">\`
+    );
+
+  window.ppclient = new PitchPrintClient(&#123;
+    userId: window.\_\_st.cid,
+    designId: \_values.designId,
+    mode:
+      \_cValues.type === "u" ? "upload" : \_cValues.projectId ? "edit" : "new",
+    projectId: \_cValues.projectId || "",
+    apiKey: "",
+    product: &#123;
+      id: \_productId,
+      name: window.\_\_st.pageurl.split("/").pop().split("-").join(" "),
+    &#125;,
+  &#125;);
+
+  window.ppclient.on("session-saved", \_saveSession);
+&#125;
+
+### Modal functionality
+
+This is an optional step, following our layout.
+
+// add an event listener for when the my account button is clicked to show modal
+
+const openModalBtn = document.getElementById("my-account");
+const modal = document.querySelector(".modal");
+
+const openModal = function () &#123;
+  modal.classList.remove("hidden");
+&#125;;
+
+openModalBtn.addEventListener("click", openModal);
+ppClient.on("app-validated", appValidated);
+
+### Fetching Projects from the API
+
+This JavaScript code fetches recent projects from an API and displays them on a webpage. Here's a summary of its functionality:
+
+-   A `POST`  request is made to `https://api.pitchprint.io/client/fetch-recent`  with a JSON body containing a token for authentication.
+-   The response is parsed as JSON.
+
+const apiURL = "https://api.pitchprint.io/client/fetch-recent";
+
+fetch(apiURL, &#123;
+  method: "POST",
+  headers: &#123;
+    "Content-Type": "application/json",
+  &#125;,
+  body: JSON.stringify(&#123;
+    saveForLater: "",
+    // add your own token, go to devTools > Application then localStorage > pptoken
+    token:
+      "d41b6c2602ed7c2d401a37422511cb82:c9767277725223a2ccb6f04699ca93d4b61d4ec7295075e69b1a30aa091ba6abd2ffca0c2e60aa0dbc08127850792257f46842fbc9a14ce738e1658f01ab913e292fc5060751d6ca35781df9efa9856b4aa80bb70580a44e2c3f9f5fb5cd2ae1583766a0d077b6b04d7c1785b5c8136e778748f4c35511a2b7936eca613278412ab774c2425ae931e73114f998070cb3810533db94a3f68818178dc4bf4cefa9f8c72ad54f3025f73a6314538d6ea2c30b1f1f904b57cf2d7f54329dd5a0316f9028547dccddfa26dfd56c3da7a08c7171ac3988406384d64d0c7728b2d7074b",
+  &#125;),
+&#125;)
+  .then((res) => res.json())
+  .then((data) => &#123;
+    console.log(data);
+
+-   For each project, a `div`  element is created and styled.
+-   The project's image, title, and user ID are displayed within the `div` .
+-   Two buttons are added: "View" and "Delete".
+
+ const contentPreview = document.getElementById("content");
+
+    if (data.data.length > 0) &#123;
+      // sort projects by date, newly added display on top
+      const projects = data.data.reverse();
+
+      projects.forEach((project) => &#123;
+        const projectDiv = document.createElement("div");
+
+        // Style your layout as you like
+        projectDiv.style.backgroundColor = "white";
+        projectDiv.style.padding = "10px";
+        projectDiv.style.borderRadius = "10px";
+        projectDiv.style.boxShadow = "0 5px 10px rgba(0, 0, 0, 0.1)";
+        projectDiv.style.margin = "15px";
+
+        projectDiv.innerHTML += \`&lt;img class="project-img" src="https://s3-eu-west-1.amazonaws.com/pitchprint.io/previews/$&#123;project.id&#125;\_1.jpg" />\`;
+
+        projectDiv.innerHTML += \`&lt;h3>Project Title: $&#123;project.title&#125;&lt;/h3>\`;
+        projectDiv.innerHTML += \`&lt;p>&lt;b>User Id:&lt;/b> $&#123;project.userId&#125;&lt;/p>\`;
+        projectDiv.innerHTML += \`&lt;button class="view-btn">View&lt;/button>\`;
+        projectDiv.innerHTML += \`&lt;button class="delete-btn">Delete&lt;/button>\`;
+
+To edit the project
+
+// to edit the project, add a path to your product page
+        projectDiv.querySelector(".view-btn").addEventListener("click", () => &#123;
+          window.location.href = \`index.html?id=$&#123;project.id&#125;\`;
+        &#125;);
+
+        let \_projects = window.localStorage.getItem("pprint-projects") || &#123;&#125;;
+
+        if (typeof \_projects === "string") \_projects = JSON.parse(\_projects);
+        \_projects\[project.id\] = project;
+        window.localStorage.setItem(
+          "pprint-projects",
+          JSON.stringify(\_projects)
+        );
+
+To Delete the project
+
+ projectDiv
+          .querySelector(".delete-btn")
+          .addEventListener("click", async () => &#123;
+            const confirmDelete = confirm(
+              "Are you sure you want to delete this project?"
+            );
+            if (!confirmDelete) return;
+
+            try &#123;
+              // Send DELETE request to the API
+              const response = await fetch(
+                \`https://api.pitchprint.io/client/fetch-recent/$&#123;project.id&#125;\`,
+                &#123;
+                  method: "POST",
+                  headers: &#123;
+                    "Content-Type": "application/json",
+                  &#125;,
+                  body: JSON.stringify(&#123;
+                    saveForLater: "",
+                    // add your own token, go to devTools > Application then localStorage > pptoken
+                    token:
+                     "d41b6c2602ed7c2d401a37422511cb82:c9767277725223a2ccb6f04699ca93d4b61d4ec7295075e69b1a30aa091ba6abd2ffca0c2e60aa0dbc08127850792257f46842fbc9a14ce738e1658f01ab913e292fc5060751d6ca35781df9efa9856b4aa80bb70580a44e2c3f9f5fb5cd2ae1583766a0d077b6b04d7c1785b5c8136e778748f4c35511a2b7936eca613278412ab774c2425ae931e73114f998070cb3810533db94a3f68818178dc4bf4cefa9f8c72ad54f3025f73a6314538d6ea2c30b1f1f904b57cf2d7f54329dd5a0316f9028547dccddfa26dfd56c3da7a08c7171ac3988406384d64d0c7728b2d7074b",
+                  &#125;),
+                &#125;
+              );
+
+              if (!response.ok) &#123;
+                throw new Error("Failed to delete project from API");
+              &#125;
+
+              // Delete from local storage
+              let \_projects =
+                window.localStorage.getItem("pprint-projects") || &#123;&#125;;
+
+              if (typeof \_projects === "string")
+                \_projects = JSON.parse(\_projects);
+              delete \_projects\[project.id\];
+              window.localStorage.setItem(
+                "pprint-projects",
+                JSON.stringify(\_projects)
+              );
+
+              // Remove the project div from the DOM
+              projectDiv.remove();
+            &#125; catch (error) &#123;
+              console.error("Error deleting project:", error);
+              alert("Error deleting project. Please try again.");
+            &#125;
+            // RELOAD WINDOW
+            window.location.reload();
+          &#125;);
+
+        contentPreview.appendChild(projectDiv);
+      &#125;);
+    &#125;
+  &#125;);
+
+Please reach out to us via [support@pitchprint.com](mailto:support@pitchprint.com) or live chat inside PitchPrint Admin Dashboard, should you encounter any issues or need some support.
