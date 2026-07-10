@@ -30,10 +30,7 @@ async function readTitle(filePath, fallback) {
   return match ? match[1] : fallback;
 }
 
-const tabs = [
-  // Preserve the starter's Getting Started pages.
-  { tab: "Guides", groups: [{ group: "Getting Started", pages: ["index", "quickstart"] }] },
-];
+const tabs = [];
 
 for (const { dir, tab } of SECTIONS) {
   const srcSection = join(srcDir, dir);
