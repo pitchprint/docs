@@ -1,0 +1,41 @@
+---
+title: "How to show customer design previews on email (WordPress)"
+description: "The following is an article on having your customer's designs shown as previews on emails."
+---
+
+The following is an article on having your customer's designs shown as previews on emails.
+
+> **Note: This code has been written only for Woocommerce Cart plugin with WordPress.**
+
+Kindly follow these instructions:
+
+1.  Move your email template to your theme folder so you may edit it.
+    1.  Backend -> Woocommerce -> Settings -> Emails -> Select Template -> Copy file to theme.
+    2.  Remember theme template location to use in the following step.
+2.  Place the below code before the **woocommerce\_email\_order\_details** action call of your desired email template file (location of file remembered in above step).
+
+/\* PitchPrint Preview Start\*/
+
+function pp\_show\_previews($item\_id, $item) &#123;
+
+    $meta = wc\_get\_order\_item\_meta($item\_id, '\_w2p\_set\_option');
+
+    if ($meta) &#123;
+
+        $ppData =  (strpos($meta,'%7') !== FALSE) ? json\_decode(urldecode($meta)) : json\_decode($meta);
+
+        echo '&lt;br/>
+              &lt;img src="https://pitchprint.io/previews/' . $ppData->projectId . '\_1.jpg" width="150px" />
+              &lt;br/>';
+
+    &#125;
+
+&#125;
+
+add\_action( 'woocommerce\_order\_item\_meta\_start', 'pp\_show\_previews', 10, 2 );
+
+/\* PitchPrint Preview End\*/
+
+Run a test by emailing yourself on an order, with a PitchPrint design item and the selected status you chose for your template/s.
+
+That's it! Contact support if you need any further assistance with the above.
