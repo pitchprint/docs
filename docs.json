@@ -1,11 +1,11 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mintlify Starter Kit",
+  "name": "PitchPrint",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#6022E7",
+    "light": "#8B5CF6",
+    "dark": "#4C1BC4"
   },
   "favicon": "/favicon.svg",
   "navigation": {
@@ -242,13 +242,13 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
+          "anchor": "Website",
+          "href": "https://pitchprint.com",
+          "icon": "globe"
         },
         {
           "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
+          "href": "https://pitchprint.com/blog",
           "icon": "newspaper"
         }
       ]
@@ -262,13 +262,13 @@
     "links": [
       {
         "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "href": "mailto:support@pitchprint.com"
       }
     ],
     "primary": {
       "type": "button",
       "label": "Dashboard",
-      "href": "https://app.mintlify.com"
+      "href": "https://app.pitchprint.com"
     }
   },
   "contextual": {
@@ -285,9 +285,9 @@
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "x": "https://x.com/pitchprint",
+      "github": "https://github.com/pitchprint",
+      "linkedin": "https://linkedin.com/company/pitchprint"
     }
   }
 }
