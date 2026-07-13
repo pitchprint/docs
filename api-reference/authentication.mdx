@@ -18,25 +18,29 @@ All the three parameters are sent along to the server for authentication with th
 Each time you want to make a request, you are required to generate a new signature.
 Please ensure to protect the script that generates the signature to ensure that only scripts with right privileges can make that call.
 
-&lt;?php
-	define('PITCH\_APIKEY', 'your-api-key');
-	define('PITCH\_SECRETKEY', 'your-secret-key');
+```php
+<?php
+	define('PITCH_APIKEY', 'your-api-key');
+	define('PITCH_SECRETKEY', 'your-secret-key');
 
-	function generateSignature () &#123;
+	function generateSignature () {
 		$timestamp = time();
-		$signature = md5(PITCH\_APIKEY . PITCH\_SECRETKEY . $timestamp);
-		return array ('timestamp'=>$timestamp, 'apiKey'=>PITCH\_APIKEY, 'signature'=>$signature);
-	&#125;
+		$signature = md5(PITCH_APIKEY . PITCH_SECRETKEY . $timestamp);
+		return array ('timestamp'=>$timestamp, 'apiKey'=>PITCH_APIKEY, 'signature'=>$signature);
+	}
 ?>
+```
 
+```javascript
 var md5 = require('MD5');		//Note, you need the MDS module
 
-function generateSignature () &#123;
-	var \_timestamp = Math.floor(Date.now() / 1000),
-	\_apiKey = 'your-api-key',
-	\_secretKey = 'your-secret-key',
-	\_signature;
+function generateSignature () {
+	var _timestamp = Math.floor(Date.now() / 1000),
+	_apiKey = 'your-api-key',
+	_secretKey = 'your-secret-key',
+	_signature;
 
-	\_signature = md5(\_apiKey + \_secretKey + \_signature);
-	return &#123; timestamp: \_timestamp, apiKey: \_apiKey, signature: \_signature &#125;;
-&#125;
+	_signature = md5(_apiKey + _secretKey + _signature);
+	return { timestamp: _timestamp, apiKey: _apiKey, signature: _signature };
+}
+```

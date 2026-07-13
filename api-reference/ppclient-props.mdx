@@ -7,13 +7,28 @@ description: "You can define project-specific customization properties using the
 
 You can define project-specific customization properties using the global `window.PPCLIENT` object. These can be set in the following ways:
 
-window.PPCLIENT = &#123;&#125;;
+```javascript
+window.PPCLIENT = {};
 // or individually:
-window.PPCLIENT\["propertyName"\] = "value";
+window.PPCLIENT["propertyName"] = "value";
+```
 
-&lt;table class="hs-table">&lt;colgroup>&lt;col>&lt;col>&lt;col width="242">&lt;/colgroup>&lt;tbody>&lt;tr>&lt;th>Property&lt;/th>&lt;th>Type&lt;/th>&lt;th style="width: 242px;">Description&lt;/th>&lt;/tr>&lt;tr>&lt;td>&lt;code class="inline-code">customImageSelector&lt;/code>&lt;/td>&lt;td>&lt;code class="inline-code">string&lt;/code>&lt;/td>&lt;td>Custom CSS selector for preview images in the project view.&lt;/td>&lt;/tr>&lt;tr>&lt;td>&lt;code class="inline-code">customThumbSelector&lt;/code>&lt;/td>&lt;td>&lt;code class="inline-code">string&lt;/code>&lt;/td>&lt;td>Custom CSS selector for preview thumbnails in the project view.&lt;/td>&lt;/tr>&lt;tr>&lt;td>&lt;code class="inline-code">smartSizeSelector&lt;/code>&lt;/td>&lt;td>&lt;code class="inline-code">string&lt;/code>&lt;/td>&lt;td>Custom CSS selector for Smart Sizes module (e.g., for selecting sizes).&lt;/td>&lt;/tr>&lt;tr>&lt;td>&lt;code class="inline-code">quantitySelector&lt;/code>&lt;/td>&lt;td>&lt;code class="inline-code">string&lt;/code>&lt;/td>&lt;td>Custom CSS selector for quantity input or page count selector.&lt;/td>&lt;/tr>&lt;tr>&lt;td>&lt;code class="inline-code">userAccountPath&lt;/code>&lt;/td>&lt;td>&lt;code class="inline-code">string&lt;/code>&lt;/td>&lt;td>Custom URL path to direct users to view saved designs.&lt;/td>&lt;/tr>&lt;tr>&lt;td>&lt;code class="inline-code">customAccountDivSel&lt;/code>&lt;/td>&lt;td>&lt;code class="inline-code">string&lt;/code>&lt;/td>&lt;td>Custom selector to embed the Saved Designs section on a page.&lt;/td>&lt;/tr>&lt;tr>&lt;td>&lt;code class="inline-code">hideObserverablePreview&lt;/code>&lt;/td>&lt;td>&lt;code class="inline-code">boolean&lt;/code>&lt;/td>&lt;td>Whether to hide preview images in observable design states.&lt;/td>&lt;/tr>&lt;tr>&lt;td>&lt;code class="inline-code">createDesignLabel&lt;/code>&lt;/td>&lt;td>&lt;code class="inline-code">string&lt;/code>&lt;/td>&lt;td>Unknown — potentially affects label for design creation (platform-specific).&lt;/td>&lt;/tr>&lt;tr>&lt;td>&lt;code class="inline-code">customCartButtonSelector&lt;/code>&lt;/td>&lt;td>&lt;code class="inline-code">string&lt;/code>&lt;/td>&lt;td>Custom CSS selector for the Add to Cart button.&lt;/td>&lt;/tr>&lt;tr>&lt;td>&lt;code class="inline-code">langEdits&lt;/code>&lt;/td>&lt;td>&lt;code class="inline-code">object&lt;/code>&lt;/td>&lt;td>Object to override language labels/text in the UI.&lt;/td>&lt;/tr>&lt;tr>&lt;td>&lt;code class="inline-code">customizationRequired&lt;/code>&lt;/td>&lt;td>&lt;code class="inline-code">boolean&lt;/code>&lt;/td>&lt;td>If &lt;code class="inline-code">true&lt;/code> , users must customize the design before adding it to cart.&lt;/td>&lt;/tr>&lt;/tbody>&lt;/table>
+| Property | Type | Description |
+| --- | --- | --- |
+| `customImageSelector` | `string` | Custom CSS selector for preview images in the project view. |
+| `customThumbSelector` | `string` | Custom CSS selector for preview thumbnails in the project view. |
+| `smartSizeSelector` | `string` | Custom CSS selector for Smart Sizes module (e.g., for selecting sizes). |
+| `quantitySelector` | `string` | Custom CSS selector for quantity input or page count selector. |
+| `userAccountPath` | `string` | Custom URL path to direct users to view saved designs. |
+| `customAccountDivSel` | `string` | Custom selector to embed the Saved Designs section on a page. |
+| `hideObserverablePreview` | `boolean` | Whether to hide preview images in observable design states. |
+| `createDesignLabel` | `string` | Unknown — potentially affects label for design creation (platform-specific). |
+| `customCartButtonSelector` | `string` | Custom CSS selector for the Add to Cart button. |
+| `langEdits` | `object` | Object to override language labels/text in the UI. |
+| `customizationRequired` | `boolean` | If `true` , users must customize the design before adding it to cart. |
 
-window.PPCLIENT = &#123;
+```javascript
+window.PPCLIENT = {
   customImageSelector: ".product-preview img",
   customThumbSelector: ".preview-thumbnails img",
   smartSizeSelector: "#smart-size-options",
@@ -23,9 +38,10 @@ window.PPCLIENT = &#123;
   hideObserverablePreview: true,
   createDesignLabel: "Create Design",
   customCartButtonSelector: ".add-to-cart-btn",
-  langEdits: &#123;
+  langEdits: {
     "Customize": "Personalize",
     "Add to Cart": "Buy Now"
-  &#125;,
+  },
   customizationRequired: true
-&#125;;
+};
+```

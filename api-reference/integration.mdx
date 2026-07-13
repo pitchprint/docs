@@ -11,20 +11,24 @@ The PitchPrint app relies on a few libraries and we have made efforts to bundle 
 
 So for a start, let's assume you are starting with an empty html page like this:
 
-&lt;html>
-	&lt;title>PitchPrint Sample SDK &lt;/title>
-	&lt;head>
+```html
+<html>
+	<title>PitchPrint Sample SDK </title>
+	<head>
 
-	&lt;/head>
-	&lt;body>
+	</head>
+	<body>
 
-	&lt;/body>
-&lt;/html>
+	</body>
+</html>
+```
 
 PitchPrint relies on jQuery Blueimp uploader for file upload. So at the header, first load your jQuery, then add the PitchPrint client file as follows..
 
-&lt;script src="https://code.jquery.com/jquery-3.1.1.min.js">&lt;/script>
-&lt;script src="https://pitchprint.io/rsc/js/client.js">&lt;/script>
+```html
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://pitchprint.io/rsc/js/client.js"></script>
+```
 
 Now load your page in a browser and check the browser console that there is no error whatsoever from PitchPrint and also check the resources > scripts tab and ensure the files are loaded. We suggest using Chrome developer tool for this.
 
@@ -36,46 +40,54 @@ After that, we write out javaScript code to do the magic..
 
 First, we need to get our elements into variables so we can use them later on, as follows:
 
-var \_launchButton = document.getElementById('launch\_btn'),
-	\_previewDiv = document.getElementById('pp\_preview\_div'),
-	\_loaderDiv = document.getElementById('pp\_loader\_div');
+```javascript
+var _launchButton = document.getElementById('launch_btn'),
+	_previewDiv = document.getElementById('pp_preview_div'),
+	_loaderDiv = document.getElementById('pp_loader_div');
+```
 
 #### Initialize PitchPrint client
 
 Next, we need to initialize the PitchPrint client class, which will return us a reference () to interact with the app..
 
-var ppclient = new PitchPrintClient(&#123;
+```javascript
+var ppclient = new PitchPrintClient({
 	apiKey: 'f80b84b4eb5cc81a140cb90f52e824f6',	//Kindly provide your own APIKey
 	designId: '3d8f3899904ef2392795c681091600d0',	//Change this to your designId
 	custom: true,
 	isvx: true
-&#125;);
+});
+```
 
 #### Define our event handler functions
 
 These are the two functions we are going to define to handle the app validated and project saved events..
 
+```javascript
 //Function to run once the app is validated (ready to be used)
-var appValidated = () => &#123;
-	\_launchButton.removeAttribute('disabled');				//Enable the Launch button
-	\_launchButton.onclick = () => ppclient.showApp();		//Attach event listener to the button when clicked to show the app
-	\_loaderDiv.style.display = 'none';						//Hide the loader
-&#125;;
+var appValidated = () => {
+	_launchButton.removeAttribute('disabled');				//Enable the Launch button
+	_launchButton.onclick = () => ppclient.showApp();		//Attach event listener to the button when clicked to show the app
+	_loaderDiv.style.display = 'none';						//Hide the loader
+};
 
 //Function to run once the user has saved their project
-var projectSaved = (\_val) => &#123;
-	let \_data = \_val.data;									//You can console.log the \_data variable to see all that's passed down
-	if (\_data && \_data.previews && \_data.previews.length) &#123;
-		\_previewDiv.innerHTML = \_data.previews.reduce((\_str, \_prev) => \`$&#123;\_str&#125;&lt;img src="$&#123;\_prev&#125;">\`, '');		//Show the preview images
-	&#125;
-&#125;;
+var projectSaved = (_val) => {
+	let _data = _val.data;									//You can console.log the _data variable to see all that's passed down
+	if (_data && _data.previews && _data.previews.length) {
+		_previewDiv.innerHTML = _data.previews.reduce((_str, _prev) => `${_str}<img src="${_prev}">`, '');		//Show the preview images
+	}
+};
+```
 
 #### Attach events to the app
 
 So here, we are going to attach events to the PitchPrint client class, such that if any of the events happen, it calls out functions
 
+```javascript
 ppclient.on('app-validated', appValidated);
 ppclient.on('project-saved', projectSaved);
+```
 
 #### Test our app
 
@@ -96,3 +108,20 @@ Use the designId inside the code snippet as shown above.
 Save, reload page and ensure everything works fine.
 
 Next, we will explain what happens next when the customer saves their design.
+
+## Related articles
+
+<CardGroup cols={2}>
+  <Card title="Introduction" icon="circle-info" href="/api-reference/introduction">
+    Overview of what PitchPrint is and how it works.
+  </Card>
+  <Card title="Generate your auth keys" icon="key" href="/api-reference/generate-your-auth-keys">
+    Create the API and Secret keys needed to integrate the app.
+  </Card>
+  <Card title="After Save" icon="floppy-disk" href="/api-reference/after-save">
+    Handle the project-saved event and use the returned data.
+  </Card>
+  <Card title="My Account - Saved Projects" icon="user" href="/api-reference/custom-integration-my-account">
+    Add a My Account page so customers can view their saved projects.
+  </Card>
+</CardGroup>

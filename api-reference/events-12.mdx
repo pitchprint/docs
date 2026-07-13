@@ -1,115 +1,124 @@
 ---
 title: "Events"
-description: "PitchPrint is built on  T3 Javascript Frameworkhttp://t3js.org/ and adheres to its core philosophy of modular design. To this end, everything on the PitchPri..."
+description: "PitchPrint is built on  T3 Javascript Frameworkhttp://t3js.org/ and adheres to its core philosophy of modular design. To this end, everything on the PitchPri..."
 ---
 
-PitchPrint is built on  [T3 Javascript Framework](http://t3js.org/) and adheres to its core philosophy of modular design. To this end, everything on the PitchPrint app is actually a module and are loosely coupled, which means modules don't talk directly to each other. They simply broadcast events and any interested listener can plug in and perform an action based on the event.
+PitchPrint is built on  [T3 Javascript Framework](http://t3js.org/) and adheres to its core philosophy of modular design. To this end, everything on the PitchPrint app is actually a module and are loosely coupled, which means modules don't talk directly to each other. They simply broadcast events and any interested listener can plug in and perform an action based on the event.
 
-There is only one custom event pipe in PitchPrint and is based on the  [T3's EventTarget object.](http://t3js.org/docs/api/event-target)
+There is only one custom event pipe in PitchPrint and is based on the  [T3's EventTarget object.](http://t3js.org/docs/api/event-target)
 
-This can be accessed easily via the designer once it has been  [instantiated as described here](http://docs.pitchprint.com/article/7-integration/#initialize).
+This can be accessed easily via the designer once it has been  [instantiated as described here](http://docs.pitchprint.com/article/7-integration/#initialize).
 
 JavaScript
 
+```javascript
 var iEvents = designer.events;
+```
 
-> If you are on any of our frameworks, you can use the  [designer ready method to hook your events](http://docs.pitchprint.com/article/60-designer-ready-method)
+> If you are on any of our frameworks, you can use the  [designer ready method to hook your events](http://docs.pitchprint.com/article/60-designer-ready-method)
 
 Developers can attach listeners to this object.
 
 Adds a new event handler for a particular type of event.
 
-function doSomething(\_e) &#123;
+```javascript
+function doSomething(_e) {
 	//Do something when this function is called..
-	//\_e contains the event dispatched with its data
-&#125;
+	//_e contains the event dispatched with its data
+}
 iEvents.on('after-show', doSomething);
+```
 
 Or talk to the app by firing an event!
 
+```javascript
 iEvents.fire('show-preview', null);
+```
 
 #### Events you can listen for
 
 List of events your app can listen for
 
+```javascript
 // 'resize' - Dispatched when the window is resized.
-iEvents.on('resize', \_doSomething);
+iEvents.on('resize', _doSomething);
 
 // 'window-focused' - Dispatched when the window gains focus
-iEvents.on('window-focused', \_doSomething);
+iEvents.on('window-focused', _doSomething);
 
 // 'fonts-loaded' - Dispatched when all fonts have been loaded
-iEvents.on('fonts-loaded', \_doSomething);
+iEvents.on('fonts-loaded', _doSomething);
 
 // 'before-show' - Dispatched before the editor is lunched
-iEvents.on('before-show', \_doSomething);
+iEvents.on('before-show', _doSomething);
 
 // 'after-show' - Dispatched when the editor is fully lunched
-iEvents.on('after-show', \_doSomething);
+iEvents.on('after-show', _doSomething);
 
 // 'design-loaded' - Dispatched when a design has been loaded to canvas
-iEvents.on('design-loaded', \_doSomething);
+iEvents.on('design-loaded', _doSomething);
 
 // 'app-shown' - Dispatched when the editor has been displayed
-iEvents.on('app-shown', \_doSomething);
+iEvents.on('app-shown', _doSomething);
 
 // 'app-closed' - Dispatched when the editor has been closed
-iEvents.on('app-closed', \_doSomething);
+iEvents.on('app-closed', _doSomething);
 
 // 'app-client-pageCount' - Dispatched when number of pages has changed.
-iEvents.on('app-client-pageCount', \_doSomething);
+iEvents.on('app-client-pageCount', _doSomething);
 
 // 'app-client-templateChange' - Dispatched when the template image is changed
-iEvents.on('app-client-templateChange', \_doSomething);
+iEvents.on('app-client-templateChange', _doSomething);
 
 // 'app-client-canvasResized' - Dispatched when page dimensions are changed
-iEvents.on('app-client-canvasResized', \_doSomething);
+iEvents.on('app-client-canvasResized', _doSomething);
 
 // 'page-created' - Dispatched when a page has been added
-iEvents.on('page-created', \_doSomething);
+iEvents.on('page-created', _doSomething);
 
 // 'page-select-end' - Dispatched when another page is selected
-iEvents.on('page-select-end', \_doSomething);
+iEvents.on('page-select-end', _doSomething);
 
 // 'before-start-save' - Dispatched before the app start saving
-iEvents.on('before-save', \_doSomething);
+iEvents.on('before-save', _doSomething);
 
 // 'project-saved' - Dispatched when the project has been saved and pdf..
 //  ..is being generated. It passes an JSON data with the project details:
 // source: 'strgified JSON of the project source code',
 // projectId: 'string',
 // numPages: number of pages in the project,
-// previews: \[\] array of the page previews,
+// previews: [] array of the page previews,
 // meta: Additional meta data relating to the project
-iEvents.on('project-saved', \_doSomething);
+iEvents.on('project-saved', _doSomething);
 
 // 'stage-adjusted' - Dispatched when current canvas size adjusts
-iEvents.on('stage-adjusted', \_doSomething);
+iEvents.on('stage-adjusted', _doSomething);
 
 // 'before-preview' - Dispatched before the preview is shown
-// In your \_doSomething function, you can set this variable to true to prevent
+// In your _doSomething function, you can set this variable to true to prevent
 // PPCLIENT.designer.getModel().runtime.act.overidePreview = true;
-iEvents.on('before-preview', \_doSomething);
+iEvents.on('before-preview', _doSomething);
 
 // 'module-initialized' - Dispatched when a module has finished initializing
-iEvents.on('module-initialized', \_doSomething);
+iEvents.on('module-initialized', _doSomething);
 
 // 'lib-ready' - Dispatched when the library files have all been loaded
-iEvents.on('lib-ready', \_doSomething);
+iEvents.on('lib-ready', _doSomething);
 
 // 'design-before-loading-pages' - Dispatched just before the designer loads
 // the pages unto canvas..
-iEvents.on('design-before-loading-pages', \_doSomething);
+iEvents.on('design-before-loading-pages', _doSomething);
 
 // 'design-before-after-pages' - Dispatched just after the designer loads
 // the pages unto canvas..
-iEvents.on('design-after-loading-pages', \_doSomething);
+iEvents.on('design-after-loading-pages', _doSomething);
+```
 
 #### Events you can fire
 
 List of events your app can dispatch to PitchPrint
 
+```javascript
 // 'show-preview' - Show design preview
 iEvents.fire('show-preview');
 
@@ -146,10 +155,10 @@ iEvents.fire('redo');
 iEvents.fire('show-editor');
 
 // 'load-design' - Load design
-iEvents.fire('load-design', \_designJsonData);
+iEvents.fire('load-design', _designJsonData);
 
 // 'load-design-by-id' - Load design by designId
-iEvents.fire('load-design-by-id', \_designId);
+iEvents.fire('load-design-by-id', _designId);
 
 // 'show-preset-form' - Show the preset form
 iEvents.fire('show-preset-form');
@@ -173,7 +182,7 @@ iEvents.fire('show-welcome');
 iEvents.fire('reload-app');
 
 // 'select-page' - Change to page.. Parameter is page index
-iEvents.fire('select-page', \_idx);
+iEvents.fire('select-page', _idx);
 
 // 'page-swap-dimension' - Swap the current page dimension
 // Between potrait and landscape
@@ -194,16 +203,16 @@ iEvents.fire('fit');
 // 'load-image' - Will load an image unto the canvas
 // Be reminded, if the image source is not CORS compliant,
 // It will taint the canvas. Read more here:
-// https://developer.mozilla.org/en-US/docs/Web/HTML/CORS\_enabled\_image
-// http://enable-cors.org/server\_apache.html
-iEvents.fire('load-image', &#123;
-  url: \_imageUrl,
+// https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image
+// http://enable-cors.org/server_apache.html
+iEvents.fire('load-image', {
+  url: _imageUrl,
   type: 'image' || 'shape',
-  canvas: \_canvas /\* Optional. If null, it is loaded unto current canvas \*/
-&#125;);
+  canvas: _canvas /* Optional. If null, it is loaded unto current canvas */
+});
 
 // 'new-text' - Adds a new text to the current canvas
-iEvents.fire('new-text', &#123;
+iEvents.fire('new-text', {
   text: 'This is my text',
   type: 'i-text' || 'textbox',
   fontFamily: 'Arial',
@@ -216,16 +225,16 @@ iEvents.fire('new-text', &#123;
   opacity: 1,
   angle: 0,
   scale: 1,
-  canvas: \_canvas /\* Optional. If null, it is loaded unto current canvas \*/
-&#125;);
+  canvas: _canvas /* Optional. If null, it is loaded unto current canvas */
+});
 
 // 'flash-show' - Show a flash message. The delay before hide is in ms
 // icons: ok, warning, cancel, error, font-size, info, help, zip
-iEvents.fire('flash-show', &#123;
+iEvents.fire('flash-show', {
   text: 'This is a flash',
   icon: 'info',
   delay: 3000
-&#125;);
+});
 
 // 'flash-hide' - Hides the flash message if the hide delay has not
 iEvents.fire('flash-hide');
@@ -233,35 +242,35 @@ iEvents.fire('flash-hide');
 // 'dialog-show' - Shows a dialog box. You can pass in your own function
 // to either of the buttons or just 'close' to close the dialog.
 // in your function, you will need to dispatch 'dialog-hide' to close it
-iEvents.fire('dialog-show', &#123;
+iEvents.fire('dialog-show', {
   text: 'Do you want to continue?',
-  buttons: &#123;
-    ok: &#123;
+  buttons: {
+    ok: {
       label: 'Yep',
       click: yourFunction || 'close'
-    &#125;,
-    cancel: &#123;
+    },
+    cancel: {
       label: 'Nahh',
       click: yourFunction || 'close'
-    &#125;
-  &#125;
-&#125;);
+    }
+  }
+});
 
 // 'dialog-show-top' - Shows a dialog on top of the app
-iEvents.fire('dialog-show-top', &#123;
+iEvents.fire('dialog-show-top', {
   title: 'Dialog Title',
   content: 'Do you want to continue?',
-  buttons: &#123;
-    ok: &#123;
+  buttons: {
+    ok: {
       label: 'Yep',
       click: yourFunction || 'close'
-    &#125;,
-    cancel: &#123;
+    },
+    cancel: {
       label: 'Nahh',
       click: yourFunction || 'close'
-    &#125;
-  &#125;
-&#125;);
+    }
+  }
+});
 
 // 'dialog-hide' - Hides the current dialog
 iEvents.fire('dialog-hide');
@@ -273,23 +282,23 @@ iEvents.fire('context-show');
 iEvents.fire('context-hide');
 
 // 'alert-modal' - Show a loading modal window
-iEvents.fire('alert-modal', \_message);
+iEvents.fire('alert-modal', _message);
 
 // 'alert-hide-modal' - Hide current modal window
-iEvents.fire('alert-hide-modal', \_message);
+iEvents.fire('alert-hide-modal', _message);
 
 // 'add-panel' - Creates a new panel on the left panel stack
 // Button is optional, you can add button by firing the event 'create-panel-btn'
-// Ensure your \_jQueryElement has class "pp-hidden" so it will not appear when added
+// Ensure your _jQueryElement has class "pp-hidden" so it will not appear when added
 // Until the button is clicked to show it or you fire up "select-panel"
-iEvents.fire('add-panel', &#123;
+iEvents.fire('add-panel', {
   id: 'uniquePanel',
-  element: \_jQueryElement,
-  button: &#123;
+  element: _jQueryElement,
+  button: {
     icon: 'texture',
     tip: 'tooltip message'
-  &#125;
-&#125;);
+  }
+});
 
 // 'select-panel' - Shows a panel and hides the current one
 iEvents.fire('select-panel', 'uniquePanel');
@@ -298,23 +307,24 @@ iEvents.fire('select-panel', 'uniquePanel');
 iEvents.fire('hide-panel');
 
 // 'create-panel-btn' - Creates a panel button (top left button set)
-iEvents.fire('create-panel-btn', &#123;
+iEvents.fire('create-panel-btn', {
   dt: 'data-type',
   tip: 'toolTip message',
   icon: 'icon'
-&#125;);
+});
 
 // 'create-primary-btn' - Creates a panel button (top right button set)
-iEvents.fire('create-primary-btn', &#123;
+iEvents.fire('create-primary-btn', {
   dt: 'data-type',
   tip: 'toolTip message',
   icon: 'icon',
   attr: ''
-&#125;);
+});
 
 // 'create-secondary-btn' - Creates a panel button (bottom center button set)
-iEvents.fire('create-secondary-btn', &#123;
+iEvents.fire('create-secondary-btn', {
   dt: 'data-type',
   tip: 'toolTip message',
   icon: 'icon'
-&#125;);
+});
+```
