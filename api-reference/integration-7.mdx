@@ -1,0 +1,230 @@
+---
+title: "Integration"
+description: "To start with, you need at least an html page loaded from your site where you will load the app unto. If you already have a website in place, this will natur..."
+---
+
+To start with, you need at least an html page loaded from your site where you will load the app unto. If you already have a website in place, this will naturally be your products page template.
+
+> The code you are about to create can be downloaded here:  [https://github.com/synergiclabs/pitchprint/blob/master/sdk/index.php](https://github.com/synergiclabs/pitchprint/blob/master/sdk/index.php)
+
+The PitchPrint app relies on a few libraries and we have made efforts to bundle them all into a single file.
+
+So for a start, let's assume you are starting with an empty html page like this:
+
+&lt;html>
+	&lt;title>PitchPrint Sample&lt;/title>
+	&lt;head>
+
+	&lt;/head>
+	&lt;body>
+
+	&lt;/body>
+&lt;/html>
+
+PitchPrint relies on jQuery. So at the header, first load your jQuery, then add the PitchPrint app file as follows..
+
+&lt;script src="https://code.jquery.com/jquery-3.1.1.min.js">&lt;/script>
+&lt;script src="https://dta8vnpq1ae34.cloudfront.net/app/83/js/app.js">&lt;/script>
+
+&lt;script type="text/javascript">
+		//Our code goes here... ;)
+&lt;/script>
+
+Here, we loaded jQuery from the jQuery servers as well as pprint.js from our own CDN. The file pprint.js is the main PitchPrint app file and should be loaded only after jQuery has been loaded. This order is important, so if you already have jQuery included somewhere in your page, please ensure you only load pprint.js after that.
+
+Now load your page in a browser and check the browser console that there is no error whatsoever from PitchPrint and also check the resources > scripts tab and ensure the files are loaded. We suggest using Chrome developer tool for this.
+
+In the following steps, all the JavaScipt code will go inside the script tag replacing the comment  **_"//Our code goes here"_**
+
+#### Let's define our variables
+
+> **Global Variables**
+> Kindly note, defining global variables is not the best way to code JavaScript but for simplicity's sake, we can indulge in this here.
+
+First, we need to define all our variables that we need to use as follows:
+
+var cdnBase = 'https://dta8vnpq1ae34.cloudfront.net/',
+    rscBase = 'https://s3.amazonaws.com/pitchprint.rsc/',
+    apiBase = 'https://pitchprint.net/api/front/',
+    buildPath = 'app/83/',
+    langCode = 'en',
+    apiKey = 'f80b84b4eb5cc81a140cb90f52e824f6',
+    appApiUrl = 'https://pitchprint.net/api/front/',
+    designId = 'ab73e4cc5b80b05facfca35cca40d318',
+    lang,
+    designer,
+    mode = 'new',
+    userId = 'guest',
+    projectSource,
+    previews,
+    numPages,
+    projectId,
+    config,
+    designerShown,
+    validationData,
+    version = "8.3.0";
+
+#### Load validation and config details
+
+> **version 8.3 Changes**
+>
+>
+> In the prior versions, this step is done by the designer but we have decided to bring this to the client code because it is important to load the configuration details before the designer is initialized. So this is the first step
+> Also please note the change in the urls
+
+Here, we are going to call up an endpoint on PitchPrint server, creating a project session as well as loading some data which we need to pass along to the designer. This function does just that:
+
+function validate() &#123;
+  $.ajax( &#123;
+    url: apiBase + 'validate',
+    type: 'POST',
+    dataType: 'json',
+    xhrFields: &#123; withCredentials: true &#125;
+    data: &#123;
+      userId: userId,
+      apiKey: apiKey,
+      version: version,
+      config: true
+    &#125;,
+    success: function(\_data) &#123;
+      if (!\_data.error) &#123;
+        validationData = \_data.validation;
+        config = \_data.config;
+        loadLanguage();
+      &#125; else &#123;
+        alert(\_data);
+      &#125;
+    &#125;,
+    error: function(\_e) &#123;
+      console.log(\_e);
+    &#125;
+  &#125; );
+&#125;
+
+So now we have both the validationData and config, we stored them in variables. Next we should load the language file.. but first, let's create a call to this function when the page is ready. This is our entry point.
+
+$(function() &#123;
+	validate();
+&#125;)
+
+#### Load the language file
+
+function loadLanguage () &#123;
+  $.ajax( &#123;
+    type: 'GET',
+    dataType: 'json',
+    url: cdnBase + buildPath + 'lang/' + (langCode || 'en'),
+    cache: true,
+    success: function(\_r) &#123;
+      lang = \_r;
+    &#125;
+  &#125;);
+&#125;
+
+This is a simple ajax GET call that loads the file from our CDN and interprets it as a JSON file. Remember you can change the langCode value to your own language.
+
+Ok, at this point, you can save your file and run it in the browser. If you have it opened already, just reload the browser but first ensure you have your Chrome debugger launched. After the page loads, check the network tab. You should see 4 files loaded on the network tab. First is the page, then the jQuery file, followed by PitchPrint and finally the language file.
+
+![](https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/58fb7df70428634b4a3285ed/file-7k6sXTFrBu.png)
+
+#### Initialize the editor
+
+function initEditor() &#123;
+  designer = new pprint.designer(&#123;
+    apiKey: apiKey,
+    apiBase: apiBase,
+    cdnBase: cdnBase,
+    rscBase: rscBase,
+    buildPath: buildPath,
+    parentDiv: '#pp\_inline\_div',
+    mode: mode,
+    config: config,
+    lang: lang,
+    langCode: langCode,
+    userId: userId,
+    product: &#123; title: 'Sample Card', id: '' &#125;,
+    designId: designId,
+    validationData: validationData,
+    autoInitialize: true,
+    isUserproject: false,
+    isAdmin: false,
+    onLibReady: onLibReady,
+    autoShow: false,
+    onSave: onSave,
+    onShown: onShown
+  &#125;);
+&#125;
+
+All the parameters passed in are defined in in this documentation under the topic editor parameters. There you can read more. And we have assigned the editor to a variable labelled  **designer**.
+
+So now, where and when do we call this function? We call it immediately after the language file has loaded, in the success callback of the ajax call. So we add it to the loadLanguage function so it now looks like this:
+
+function loadLanguage () &#123;
+  $.ajax( &#123;
+    type: 'GET',
+    dataType: 'json',
+    url: rscCdn + 'lang/' + (langCode || 'en'),
+    cache: true,
+    success: function(\_r) &#123;
+      	lang = \_r;
+      	initEditor();
+    &#125;
+  &#125;);
+&#125;
+
+So now, should I save the file and see the editor load? No not yet, just a few more important steps. We need to invoke it to  **"show"** by clicking a button.
+
+#### Invoking the editor
+
+Ok, next we need to create that button, that users need to click to show the editor and start their customization. To do that, let's add the following to the body section of our html page:
+
+&lt;div id="pp\_inline\_div" style="width:1200px; height: 0; margin: 0 auto; position: relative; overflow: hidden;">&lt;/div>
+&lt;button id="launch\_btn" onclick="showDesigner();" >Launch Designer&lt;/button>
+
+The first line is the element into which we will load the editor and the second one is the button that we will click to call showDesigner function. So let's add our showDesigner function like this:
+
+function showDesigner() &#123;
+	if (!designerShown) &#123;
+		TweenLite.to($('#pp\_inline\_div'), 0.6, &#123; 'height': ($(window).height() - 150), ease: Power2.easeOut, onComplete: function() &#123;
+			designer.show();
+			$('#launch\_btn').hide();
+		&#125; &#125; );
+	&#125; else &#123;
+		designer.resume();
+	&#125;
+&#125;
+
+In this function, we check if the designer has not been shown before, then we animate the container div's height, which was initially 0. If designer has been shown before, we just call up the resume function on the designer. BUT before testing, just 3 more functions to add..
+
+function onShown() &#123;
+	designerShown = true;
+&#125;
+function onReady() &#123;
+	$('#launch\_btn').show();
+&#125;
+function onSave() &#123;
+&#125;
+
+These functions are called by the designer when it is shown and when it is ready. The third one will be explained in the next topic..  _After saving_
+
+Now you can save and test your work! If it doesn't load, kindly try loading it from a web server.
+
+To test, click the Launch Designer button. And your designer should show like this. If not, please open a ticket and let us know.
+
+![](https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/58fb7e242c7d3a057f8877bf/file-6v2HybG3aD.png)
+
+#### Using your own credentials
+
+For simplicity, we have used our own demo-credentials, that is API key and designId. Now you should change these to yours, the one you created in the previous topic.
+
+So in the variables definition, change the apiKey value to your own apiKey.
+
+To get your designId, navigate to the  **[designs page](https://pitchprint.net/admin/designs)**. And check against your category, you should find the button labelled More options. Open it and click "Export Design List" as shown:
+
+![](https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/58fb7e4c0428634b4a3285ee/file-kctmbGvcfW.png)
+
+When you click this, it will generate all the designs under that category for you as a JSON file. Download the file and you will see "id" value against your design. Get that value and change your designId from ours to your own.
+
+Save, reload page and ensure everything works fine.
+
+Next, we will explain what happens next when the customer saves their design.

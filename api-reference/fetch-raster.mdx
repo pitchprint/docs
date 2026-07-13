@@ -1,0 +1,59 @@
+---
+title: "Fetch Raster"
+description: "Use this endpoint to fetch the high resolution image files for a project associated with your particular domain. The response is a zipped file so it needs to..."
+---
+
+Use this endpoint to fetch the high resolution image files for a project associated with your particular domain. The response is a zipped file so it needs to be handled as such.
+
+This requires a valid projectId as well as the signature parameters to authenticate the call.
+
+**\[POST\]** [https://pitchprint.net/api/runtime/fetch-raster](https://pitchprint.net/api/runtime/fetch-raster)
+
+##### BODY PARAMS
+
+&lt;table class="table-striped table-bordered">&lt;tbody>&lt;tr>&lt;td class="required">apiKey&lt;/td>&lt;td>Your domain's api key&lt;/td>&lt;/tr>&lt;tr>&lt;td class="required">timestamp&lt;/td>&lt;td>Timestamp generated at runtime&lt;/td>&lt;/tr>&lt;tr>&lt;td class="required">signature&lt;/td>&lt;td>Signature = MD5(apikey + secretKey + timestamp)&lt;/td>&lt;/tr>&lt;tr>&lt;td class="required">projectId&lt;/td>&lt;td>ID of a project&lt;/td>&lt;/tr>&lt;/tbody>&lt;/table>
+
+* * *
+
+##### SAMPLE CODE
+
+&lt;?php
+
+define('PITCH\_APIKEY', 'your-api-key');
+define('PITCH\_SECRETKEY', 'your-secret-key');
+
+function generateSignature () &#123;
+    $timestamp = time();
+    $signature = md5(PITCH\_APIKEY . PITCH\_SECRETKEY . $timestamp);
+    return array ('timestamp'=>$timestamp, 'apiKey'=>PITCH\_APIKEY, 'signature'=>$signature);
+&#125;
+
+$ch = curl\_init();
+curl\_setopt($ch, CURLOPT\_URL, 'https://pitchprint.net/api/runtime/fetch-raster');
+curl\_setopt($ch, CURLOPT\_POST, true);
+
+$opts = generateSignature();
+$opts\['projectId'\] = 'your-project-id-here';
+
+curl\_setopt($ch, CURLOPT\_POSTFIELDS, http\_build\_query($opts));
+curl\_setopt($ch, CURLOPT\_RETURNTRANSFER, true);
+curl\_setopt($ch, CURLOPT\_FOLLOWLOCATION, true);
+
+$output = curl\_exec($ch);
+curl\_close($ch);
+
+header('Content-Description: File Transfer');
+header('Content-Type: application/zip');
+header('Content-Disposition: attachment; filename=projectRaster.zip');
+header('Content-Transfer-Encoding: binary');
+header('Expires: 0');
+header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+header('Pragma: public');
+header('Content-Length: ' . strlen($output));
+
+ob\_clean();
+flush();
+echo $output;
+flush();
+
+?>

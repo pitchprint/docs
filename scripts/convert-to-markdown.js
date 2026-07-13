@@ -27,7 +27,7 @@ const COLLECTION = {
   DOCUMENTATION: "58fd98042c7d3a057f887b63",
   DEVELOPER_KB: "5b76b1cf0428631d7a8a1704",
   DEVELOPER_HUB: "5ae45f3a2c7d3a3f981f0b35",
-  LEGACY_DEV_HUB: "58f79a282c7d3a057f886156", // "v8 - old - DO NOT USE" — excluded
+  LEGACY_DEV_HUB: "58f79a282c7d3a057f886156", // "v8 - old - DO NOT USE" — included in API Reference
 };
 
 // Categories (within Documentation) that count as tutorials — "How-to heavy".
@@ -45,18 +45,75 @@ const SECTION_DIRS = {
   "API Reference": "api-reference",
 };
 
+// Help Scout category id -> sidebar group name.
+const CATEGORY_NAMES = {
+  "58fd98432c7d3a057f887b68": "What is PitchPrint?",
+  "58fd98530428634b4a3289b4": "Installation guide",
+  "58fd985f2c7d3a057f887b69": "Sample Solutions",
+  "58fd98262c7d3a057f887b67": "Admin Guide",
+  "58fd98772c7d3a057f887b6a": "Tips 'n Tricks",
+  "58fd986a0428634b4a3289b5": "Using Modules",
+  "58fd98042c7d3a057f887b64": "General",
+  "5b76b1f10428631d7a8a1706": "Front End",
+  "5b76b1cf0428631d7a8a1705": "Developer Knowledge Base",
+  "5ae45f570428631126f17b4c": "Integrating PitchPrint",
+  "5ae45f652c7d3a3f981f0b37": "Designer API",
+  "5ae45f720428631126f17b4d": "Runtime API",
+};
+
+// Sidebar group order within each section's tab. Groups not listed here fall to
+// the end, alphabetically.
+const GROUP_ORDER = {
+  Documentation: ["What is PitchPrint?", "Using Modules", "General"],
+  Tutorial: ["Installation guide", "Admin Guide", "Tips 'n Tricks", "Sample Solutions"],
+  "API Reference": [
+    "Integrating PitchPrint",
+    "Designer API",
+    "Runtime API",
+    "Front End",
+    "Developer Knowledge Base",
+    "Legacy (v8)",
+  ],
+};
+
 /** Which section folder an article belongs in (null = skip). */
 function sectionFor(article) {
-  if (article.collectionId === COLLECTION.LEGACY_DEV_HUB) return null;
+  // All developer collections — including the legacy "v8 - old" one — are API Reference.
   if (
     article.collectionId === COLLECTION.DEVELOPER_HUB ||
-    article.collectionId === COLLECTION.DEVELOPER_KB
+    article.collectionId === COLLECTION.DEVELOPER_KB ||
+    article.collectionId === COLLECTION.LEGACY_DEV_HUB
   ) {
     return "API Reference";
   }
   const cats = article.categories || [];
   if (cats.some((id) => TUTORIAL_CATEGORY_IDS.has(id))) return "Tutorial";
   return "Documentation";
+}
+
+/** Which sidebar group (within its section) an article belongs in. */
+function groupFor(article, section) {
+  // Legacy v8 developer articles get their own group so they don't blur into
+  // the current API docs (they share category names with the current ones).
+  if (article.collectionId === COLLECTION.LEGACY_DEV_HUB) return "Legacy (v8)";
+
+  const cats = article.categories || [];
+  if (section === "Tutorial") {
+    const id = cats.find((c) => TUTORIAL_CATEGORY_IDS.has(c));
+    return CATEGORY_NAMES[id] || "General";
+  }
+  const named = cats.map((c) => CATEGORY_NAMES[c]).find(Boolean);
+  return named || "General";
+}
+
+/** Order a section's group names by GROUP_ORDER, then alphabetically. */
+function orderGroups(section, names) {
+  const order = GROUP_ORDER[section] || [];
+  return [...names].sort((a, b) => {
+    const ia = order.indexOf(a);
+    const ib = order.indexOf(b);
+    return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib) || a.localeCompare(b);
+  });
 }
 
 // --- HTML -> Markdown converter ---------------------------------------------
@@ -88,6 +145,8 @@ function fileNameFor(article, used) {
 function tidy(markdown) {
   return markdown
     .replace(/ /g, " ") // &nbsp; -> normal space
+    .replace(/(?<!!)\[\]\([^)]*\)/g, "") // drop empty-text links (HTML anchor artifacts), keep ![](img)
+    .replace(/^#{1,6}\s*$/gm, "") // drop empty heading lines (leftover anchors)
     .replace(/[ \t]+$/gm, "")
     .replace(/\n{3,}/g, "\n\n")
     .trim();
@@ -155,6 +214,8 @@ let skipped = 0;
 let empty = 0;
 const perSection = {};
 const usedNames = {}; // dir -> Set
+// groups[section][group] = [{ path, title }] — the nav manifest we emit.
+const groups = {};
 
 for (const article of articles) {
   const section = sectionFor(article);
@@ -182,9 +243,25 @@ for (const article of articles) {
   await mkdir(join(outDir, dir), { recursive: true });
   await writeFile(join(outDir, dir, `${slug}.mdx`), `${frontmatter}\n\n${body}\n`, "utf8");
 
+  const group = groupFor(article, section);
+  groups[section] ??= {};
+  groups[section][group] ??= [];
+  groups[section][group].push({ path: `${dir}/${slug}`, title: article.name || "Untitled" });
+
   written += 1;
   perSection[dir] = (perSection[dir] || 0) + 1;
 }
+
+// Emit an ordered nav manifest for the publish step: one entry per section,
+// groups ordered by GROUP_ORDER, pages sorted by title within each group.
+const manifest = {};
+for (const [section, groupMap] of Object.entries(groups)) {
+  manifest[section] = orderGroups(section, Object.keys(groupMap)).map((group) => ({
+    group,
+    pages: groupMap[group].sort((a, b) => a.title.localeCompare(b.title)),
+  }));
+}
+await writeFile(join(outDir, "nav-manifest.json"), JSON.stringify(manifest, null, 2) + "\n", "utf8");
 
 console.log(`Converted ${written} articles into ${outDir}`);
 for (const [dir, count] of Object.entries(perSection)) {

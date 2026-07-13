@@ -1,0 +1,70 @@
+---
+title: "Fetch Designs"
+description: "Use this endpoint to fetch all the designs associated with your particular domain."
+---
+
+Use this endpoint to fetch all the designs associated with your particular domain.
+
+The only parameters required are the signature parameters to authenticate the call.
+
+**\[POST\]** [https://pitchprint.net/api/runtime/fetch-designs](https://pitchprint.net/api/runtime/fetch-designs)
+
+##### BODY PARAMS
+
+&lt;table class="table-striped table-bordered">&lt;tbody>&lt;tr>&lt;td class="required">apiKey&lt;/td>&lt;td>Your domain's api key&lt;/td>&lt;/tr>&lt;tr>&lt;td class="required">timestamp&lt;/td>&lt;td>Timestamp generated at runtime&lt;/td>&lt;/tr>&lt;tr>&lt;td class="required">signature&lt;/td>&lt;td>Signature = MD5(apikey + secretKey + timestamp)&lt;/td>&lt;/tr>&lt;/tbody>&lt;/table>
+
+* * *
+
+##### SAMPLE CODE
+
+&lt;?php
+
+define('PITCH\_APIKEY', 'your-api-key');
+define('PITCH\_SECRETKEY', 'your-secret-key');
+
+function generateSignature () &#123;
+    $timestamp = time();
+    $signature = md5(PITCH\_APIKEY . PITCH\_SECRETKEY . $timestamp);
+    return array ('timestamp'=>$timestamp, 'apiKey'=>PITCH\_APIKEY, 'signature'=>$signature);
+&#125;
+
+$ch = curl\_init();
+curl\_setopt($ch, CURLOPT\_URL, 'https://pitchprint.net/api/runtime/fetch-designs');
+curl\_setopt($ch, CURLOPT\_POST, true);
+
+$opts = generateSignature();
+
+curl\_setopt($ch, CURLOPT\_POSTFIELDS, http\_build\_query($opts));
+curl\_setopt($ch, CURLOPT\_RETURNTRANSFER, true);
+
+$output = curl\_exec($ch);
+$http\_status = curl\_getinfo($ch, CURLINFO\_HTTP\_CODE);
+$content\_type = curl\_getinfo($ch, CURLINFO\_CONTENT\_TYPE);
+$curlerr = curl\_error($ch);
+curl\_close($ch);
+
+header('Content-Type: application/json');
+
+echo $output;
+
+?>
+
+##### RESPONSE
+
+\[&#123;
+    "title": "Business Cards",
+    "id": "761f4e66d4a1b8965df66061dc959175",
+    "designs": \[&#123;
+        "id": "a01d14b9ea64d9161e09cd932e83e96b",
+        "title": "Alpha Potraits",
+        "thumbnail": "https://s3.amazonaws.com/pitchprint.rsc/images/designs/a01d14b9ea64d9161e09cd932e83e96b\_1.jpg"
+    &#125;, &#123;
+        "id": "1e6690fba14da73d96fb25b8eaef2a39",
+        "title": "Green Leaf",
+        "thumbnail": "https://s3.amazonaws.com/pitchprint.rsc/images/designs/1e6690fba14da73d96fb25b8eaef2a39\_1.jpg"
+    &#125;, &#123;
+        "id": "5afb3c7960aa7ff504632367553a3fa2",
+        "title": "Standard Business Card",
+        "thumbnail": "https://s3.amazonaws.com/pitchprint.rsc/images/designs/5afb3c7960aa7ff504632367553a3fa2\_1.jpg"
+    &#125;\]
+&#125;\]
