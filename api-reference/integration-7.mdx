@@ -11,24 +11,28 @@ The PitchPrint app relies on a few libraries and we have made efforts to bundle 
 
 So for a start, let's assume you are starting with an empty html page like this:
 
-&lt;html>
-	&lt;title>PitchPrint Sample&lt;/title>
-	&lt;head>
+```html
+<html>
+	<title>PitchPrint Sample</title>
+	<head>
 
-	&lt;/head>
-	&lt;body>
+	</head>
+	<body>
 
-	&lt;/body>
-&lt;/html>
+	</body>
+</html>
+```
 
 PitchPrint relies on jQuery. So at the header, first load your jQuery, then add the PitchPrint app file as follows..
 
-&lt;script src="https://code.jquery.com/jquery-3.1.1.min.js">&lt;/script>
-&lt;script src="https://dta8vnpq1ae34.cloudfront.net/app/83/js/app.js">&lt;/script>
+```html
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://dta8vnpq1ae34.cloudfront.net/app/83/js/app.js"></script>
 
-&lt;script type="text/javascript">
+<script type="text/javascript">
 		//Our code goes here... ;)
-&lt;/script>
+</script>
+```
 
 Here, we loaded jQuery from the jQuery servers as well as pprint.js from our own CDN. The file pprint.js is the main PitchPrint app file and should be loaded only after jQuery has been loaded. This order is important, so if you already have jQuery included somewhere in your page, please ensure you only load pprint.js after that.
 
@@ -43,6 +47,7 @@ In the following steps, all the JavaScipt code will go inside the script tag rep
 
 First, we need to define all our variables that we need to use as follows:
 
+```javascript
 var cdnBase = 'https://dta8vnpq1ae34.cloudfront.net/',
     rscBase = 'https://s3.amazonaws.com/pitchprint.rsc/',
     apiBase = 'https://pitchprint.net/api/front/',
@@ -63,6 +68,7 @@ var cdnBase = 'https://dta8vnpq1ae34.cloudfront.net/',
     designerShown,
     validationData,
     version = "8.3.0";
+```
 
 #### Load validation and config details
 
@@ -74,52 +80,58 @@ var cdnBase = 'https://dta8vnpq1ae34.cloudfront.net/',
 
 Here, we are going to call up an endpoint on PitchPrint server, creating a project session as well as loading some data which we need to pass along to the designer. This function does just that:
 
-function validate() &#123;
-  $.ajax( &#123;
+```javascript
+function validate() {
+  $.ajax( {
     url: apiBase + 'validate',
     type: 'POST',
     dataType: 'json',
-    xhrFields: &#123; withCredentials: true &#125;
-    data: &#123;
+    xhrFields: { withCredentials: true }
+    data: {
       userId: userId,
       apiKey: apiKey,
       version: version,
       config: true
-    &#125;,
-    success: function(\_data) &#123;
-      if (!\_data.error) &#123;
-        validationData = \_data.validation;
-        config = \_data.config;
+    },
+    success: function(_data) {
+      if (!_data.error) {
+        validationData = _data.validation;
+        config = _data.config;
         loadLanguage();
-      &#125; else &#123;
-        alert(\_data);
-      &#125;
-    &#125;,
-    error: function(\_e) &#123;
-      console.log(\_e);
-    &#125;
-  &#125; );
-&#125;
+      } else {
+        alert(_data);
+      }
+    },
+    error: function(_e) {
+      console.log(_e);
+    }
+  } );
+}
+```
 
 So now we have both the validationData and config, we stored them in variables. Next we should load the language file.. but first, let's create a call to this function when the page is ready. This is our entry point.
 
-$(function() &#123;
+```javascript
+$(function() {
 	validate();
-&#125;)
+})
+```
 
 #### Load the language file
 
-function loadLanguage () &#123;
-  $.ajax( &#123;
+```javascript
+function loadLanguage () {
+  $.ajax( {
     type: 'GET',
     dataType: 'json',
     url: cdnBase + buildPath + 'lang/' + (langCode || 'en'),
     cache: true,
-    success: function(\_r) &#123;
-      lang = \_r;
-    &#125;
-  &#125;);
-&#125;
+    success: function(_r) {
+      lang = _r;
+    }
+  });
+}
+```
 
 This is a simple ajax GET call that loads the file from our CDN and interprets it as a JSON file. Remember you can change the langCode value to your own language.
 
@@ -129,20 +141,21 @@ Ok, at this point, you can save your file and run it in the browser. If you have
 
 #### Initialize the editor
 
-function initEditor() &#123;
-  designer = new pprint.designer(&#123;
+```javascript
+function initEditor() {
+  designer = new pprint.designer({
     apiKey: apiKey,
     apiBase: apiBase,
     cdnBase: cdnBase,
     rscBase: rscBase,
     buildPath: buildPath,
-    parentDiv: '#pp\_inline\_div',
+    parentDiv: '#pp_inline_div',
     mode: mode,
     config: config,
     lang: lang,
     langCode: langCode,
     userId: userId,
-    product: &#123; title: 'Sample Card', id: '' &#125;,
+    product: { title: 'Sample Card', id: '' },
     designId: designId,
     validationData: validationData,
     autoInitialize: true,
@@ -152,25 +165,28 @@ function initEditor() &#123;
     autoShow: false,
     onSave: onSave,
     onShown: onShown
-  &#125;);
-&#125;
+  });
+}
+```
 
 All the parameters passed in are defined in in this documentation under the topic editor parameters. There you can read more. And we have assigned the editor to a variable labelled  **designer**.
 
 So now, where and when do we call this function? We call it immediately after the language file has loaded, in the success callback of the ajax call. So we add it to the loadLanguage function so it now looks like this:
 
-function loadLanguage () &#123;
-  $.ajax( &#123;
+```javascript
+function loadLanguage () {
+  $.ajax( {
     type: 'GET',
     dataType: 'json',
     url: rscCdn + 'lang/' + (langCode || 'en'),
     cache: true,
-    success: function(\_r) &#123;
-      	lang = \_r;
+    success: function(_r) {
+      	lang = _r;
       	initEditor();
-    &#125;
-  &#125;);
-&#125;
+    }
+  });
+}
+```
 
 So now, should I save the file and see the editor load? No not yet, just a few more important steps. We need to invoke it to  **"show"** by clicking a button.
 
@@ -178,32 +194,38 @@ So now, should I save the file and see the editor load? No not yet, just a few m
 
 Ok, next we need to create that button, that users need to click to show the editor and start their customization. To do that, let's add the following to the body section of our html page:
 
-&lt;div id="pp\_inline\_div" style="width:1200px; height: 0; margin: 0 auto; position: relative; overflow: hidden;">&lt;/div>
-&lt;button id="launch\_btn" onclick="showDesigner();" >Launch Designer&lt;/button>
+```html
+<div id="pp_inline_div" style="width:1200px; height: 0; margin: 0 auto; position: relative; overflow: hidden;"></div>
+<button id="launch_btn" onclick="showDesigner();" >Launch Designer</button>
+```
 
 The first line is the element into which we will load the editor and the second one is the button that we will click to call showDesigner function. So let's add our showDesigner function like this:
 
-function showDesigner() &#123;
-	if (!designerShown) &#123;
-		TweenLite.to($('#pp\_inline\_div'), 0.6, &#123; 'height': ($(window).height() - 150), ease: Power2.easeOut, onComplete: function() &#123;
+```javascript
+function showDesigner() {
+	if (!designerShown) {
+		TweenLite.to($('#pp_inline_div'), 0.6, { 'height': ($(window).height() - 150), ease: Power2.easeOut, onComplete: function() {
 			designer.show();
-			$('#launch\_btn').hide();
-		&#125; &#125; );
-	&#125; else &#123;
+			$('#launch_btn').hide();
+		} } );
+	} else {
 		designer.resume();
-	&#125;
-&#125;
+	}
+}
+```
 
 In this function, we check if the designer has not been shown before, then we animate the container div's height, which was initially 0. If designer has been shown before, we just call up the resume function on the designer. BUT before testing, just 3 more functions to add..
 
-function onShown() &#123;
+```javascript
+function onShown() {
 	designerShown = true;
-&#125;
-function onReady() &#123;
-	$('#launch\_btn').show();
-&#125;
-function onSave() &#123;
-&#125;
+}
+function onReady() {
+	$('#launch_btn').show();
+}
+function onSave() {
+}
+```
 
 These functions are called by the designer when it is shown and when it is ready. The third one will be explained in the next topic..  _After saving_
 

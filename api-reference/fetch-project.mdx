@@ -11,60 +11,68 @@ This requires a valid projectId as well as the signature parameters to authentic
 
 ##### BODY PARAMS
 
-&lt;table class="table-striped table-bordered">&lt;tbody>&lt;tr>&lt;td class="required">apiKey&lt;/td>&lt;td>Your domain's api key&lt;/td>&lt;/tr>&lt;tr>&lt;td class="required">timestamp&lt;/td>&lt;td>Timestamp generated at runtime&lt;/td>&lt;/tr>&lt;tr>&lt;td class="required">signature&lt;/td>&lt;td>Signature = MD5(apikey + secretKey + timestamp)&lt;/td>&lt;/tr>&lt;tr>&lt;td class="required">projectId&lt;/td>&lt;td>ID of a single project&lt;/td>&lt;/tr>&lt;/tbody>&lt;/table>
+| Parameter | Description |
+| --- | --- |
+| `apiKey` *(required)* | Your domain's api key |
+| `timestamp` *(required)* | Timestamp generated at runtime |
+| `signature` *(required)* | Signature = MD5(apikey + secretKey + timestamp) |
+| `projectId` *(required)* | ID of a single project |
 
 * * *
 
 ##### SAMPLE CODE
 
-&lt;?php
+```php
+<?php
 
-define('PITCH\_APIKEY', 'your-api-key');
-define('PITCH\_SECRETKEY', 'your-secret-key');
+define('PITCH_APIKEY', 'your-api-key');
+define('PITCH_SECRETKEY', 'your-secret-key');
 
-function generateSignature () &#123;
+function generateSignature () {
     $timestamp = time();
-    $signature = md5(PITCH\_APIKEY . PITCH\_SECRETKEY . $timestamp);
-    return array ('timestamp'=>$timestamp, 'apiKey'=>PITCH\_APIKEY, 'signature'=>$signature);
-&#125;
+    $signature = md5(PITCH_APIKEY . PITCH_SECRETKEY . $timestamp);
+    return array ('timestamp'=>$timestamp, 'apiKey'=>PITCH_APIKEY, 'signature'=>$signature);
+}
 
-$ch = curl\_init();
-curl\_setopt($ch, CURLOPT\_URL, "https://api.pitchprint.io/runtime/fetch-project");
-curl\_setopt($ch, CURLOPT\_POST, true);
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, "https://api.pitchprint.io/runtime/fetch-project");
+curl_setopt($ch, CURLOPT_POST, true);
 
 $opts = generateSignature();
-$opts\['projectId'\] = 'your-project-id-here';
+$opts['projectId'] = 'your-project-id-here';
 
-curl\_setopt($ch, CURLOPT\_POSTFIELDS, json\_encode($opts));
-curl\_setopt($ch, CURLOPT\_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($opts));
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-$output = curl\_exec($ch);
-$http\_status = curl\_getinfo($ch, CURLINFO\_HTTP\_CODE);
-$content\_type = curl\_getinfo($ch, CURLINFO\_CONTENT\_TYPE);
-$curlerr = curl\_error($ch);
-curl\_close($ch);
+$output = curl_exec($ch);
+$http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+$content_type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
+$curlerr = curl_error($ch);
+curl_close($ch);
 
 header('Content-Type: application/json');
 
 echo $output;
 
 ?>
+```
 
 ##### RESPONSE
 
-&#123;
-	data: &#123;
-	    "\_id": "835a460c916dec74f02adef0e4a9dce9",
+```json
+{
+	data: {
+	    "_id": "835a460c916dec74f02adef0e4a9dce9",
 	    "version": "8.0.0",
-	    "\_author": "guest",
+	    "_author": "guest",
 	    "showPresetForm": false,
 	    "hideBackgroundPanel": false,
 	    "hideTextPanel": false,
 	    "hideImagePanel": false,
-	    "product": &#123;
+	    "product": {
 	        "id": "28",
 	        "name": "HTC Touch HD"
-	    &#125;,
+	    },
 	    "disableImageClick": false,
 	    "designId": "74b9c1f4cfbbec8f59245304d7f7332c",
 	    "projectId": "835a460c916dec74f02adef0e4a9dce9",
@@ -74,8 +82,8 @@ echo $output;
 	    "scaling": 0.28826764436296975,
 	    "unit": "cm",
 	    "welcomeMsg": "Welcome to your creative side.",
-	    "pages": \[&#123;
-	        "pageData": &#123;
+	    "pages": [{
+	        "pageData": {
 	            "scaling": 1,
 	            "title": "Front",
 	            "render": true,
@@ -83,66 +91,66 @@ echo $output;
 	            "fWidth": 67.249,
 	            "fHeight": 77,
 	            "bleed": null,
-	            "hfoldlines": \[
+	            "hfoldlines": [
 
-	            \],
-	            "vfoldlines": \[
+	            ],
+	            "vfoldlines": [
 
-	            \],
-	            "mlines": \[
+	            ],
+	            "mlines": [
 
-	            \],
-	            "clines": \[
+	            ],
+	            "clines": [
 
-	            \],
+	            ],
 	            "templateSource": "//s3.amazonaws.com/pitchprint.cdn/sc4iafdqds5uvb958b9yva849/userfiles/uploadedimages/admin/g511m1di5lqq8xph5z3jw555660694445.png",
 	            "templateTint": "",
 	            "foregroundIsMask": false,
-	            "foregroundDimension": &#123;
+	            "foregroundDimension": {
 	                "top": 0,
 	                "left": 0,
 	                "right": 0,
 	                "bottom": 0,
 	                "width": -1,
 	                "height": -1
-	            &#125;,
-	            "canvasDimension": &#123;
+	            },
+	            "canvasDimension": {
 	                "top": 10,
 	                "left": 16,
 	                "right": 16.249,
 	                "bottom": 12,
 	                "width": 35,
 	                "height": 55
-	            &#125;,
-	            "fillData": &#123;
+	            },
+	            "fillData": {
 	                "type": "color",
-	                "colorData": &#123;
+	                "colorData": {
 	                    "type": "solid",
-	                    "colors": \[&#123;
-	                        "rgb": &#123;
+	                    "colors": [{
+	                        "rgb": {
 	                            "r": 255,
 	                            "g": 0,
 	                            "b": 0
-	                        &#125;,
-	                        "cmyk": &#123;
+	                        },
+	                        "cmyk": {
 
-	                        &#125;,
+	                        },
 	                        "spot": "",
-	                        "hex": &#123;
-	                            "hex": &#123;
+	                        "hex": {
+	                            "hex": {
 	                                "hex": 16711680
-	                            &#125;
-	                        &#125;
-	                    &#125;\],
-	                    "positions": \[
+	                            }
+	                        }
+	                    }],
+	                    "positions": [
 	                        1
-	                    \],
-	                    "alphas": \[
+	                    ],
+	                    "alphas": [
 	                        1
-	                    \],
+	                    ],
 	                    "rotation": 0
-	                &#125;,
-	                "imageData": &#123;
+	                },
+	                "imageData": {
 	                    "url": "//s3.amazonaws.com/pitchprint.cdn/sc4iafdqds5uvb958b9yva849/resources/backgroundimages/asdlbbugpcyyi3zbpgfyxvuw598458796296/UL564169777688885417.jpg",
 	                    "thumbnail": "",
 	                    "fillmode": "",
@@ -150,35 +158,35 @@ echo $output;
 	                    "bytes": "",
 	                    "width": 708,
 	                    "height": 768
-	                &#125;,
-	                "strokeData": &#123;
+	                },
+	                "strokeData": {
 	                    "type": "solid",
 	                    "width": 0,
 	                    "alpha": 1,
-	                    "fill": &#123;
+	                    "fill": {
 	                        "type": "solid",
-	                        "colors": \[&#123;
-	                            "hex": &#123;
+	                        "colors": [{
+	                            "hex": {
 	                                "hex": 0
-	                            &#125;
-	                        &#125;\],
-	                        "positions": \[
+	                            }
+	                        }],
+	                        "positions": [
 	                            1
-	                        \],
-	                        "alphas": \[
+	                        ],
+	                        "alphas": [
 	                            1
-	                        \],
+	                        ],
 	                        "rotation": 0
-	                    &#125;
-	                &#125;,
+	                    }
+	                },
 	                "alpha": "0.00"
-	            &#125;,
+	            },
 	            "index": 0
-	        &#125;,
-	        "groups": \[
+	        },
+	        "groups": [
 
-	        \],
-	        "items": \[&#123;
+	        ],
+	        "items": [{
 	            "type": "i-text",
 	            "originX": "center",
 	            "originY": "top",
@@ -206,35 +214,35 @@ echo $output;
 	            "fillRule": "nonzero",
 	            "globalCompositeOperation": "source-over",
 	            "transformMatrix": null,
-	            "fillData": &#123;
+	            "fillData": {
 	                "type": "color",
-	                "colorData": &#123;
+	                "colorData": {
 	                    "type": "solid",
-	                    "colors": \[&#123;
-	                        "rgb": &#123;
+	                    "colors": [{
+	                        "rgb": {
 	                            "r": 255,
 	                            "g": 255,
 	                            "b": 255
-	                        &#125;,
-	                        "cmyk": &#123;
+	                        },
+	                        "cmyk": {
 
-	                        &#125;,
+	                        },
 	                        "spot": "",
-	                        "hex": &#123;
-	                            "hex": &#123;
+	                        "hex": {
+	                            "hex": {
 	                                "hex": 16777215
-	                            &#125;
-	                        &#125;
-	                    &#125;\],
-	                    "positions": \[
+	                            }
+	                        }
+	                    }],
+	                    "positions": [
 	                        1
-	                    \],
-	                    "alphas": \[
+	                    ],
+	                    "alphas": [
 	                        1
-	                    \],
+	                    ],
 	                    "rotation": 0
-	                &#125;,
-	                "imageData": &#123;
+	                },
+	                "imageData": {
 	                    "url": "",
 	                    "thumbnail": "",
 	                    "fillmode": "",
@@ -242,34 +250,34 @@ echo $output;
 	                    "bytes": "",
 	                    "width": -1,
 	                    "height": -1
-	                &#125;,
-	                "strokeData": &#123;
+	                },
+	                "strokeData": {
 	                    "type": "solid",
 	                    "width": 0,
 	                    "alpha": 1,
-	                    "fill": &#123;
+	                    "fill": {
 	                        "type": "solid",
-	                        "colors": \[&#123;
-	                            "hex": &#123;
+	                        "colors": [{
+	                            "hex": {
 	                                "hex": 0
-	                            &#125;
-	                        &#125;\],
-	                        "positions": \[
+	                            }
+	                        }],
+	                        "positions": [
 	                            1
-	                        \],
-	                        "alphas": \[
+	                        ],
+	                        "alphas": [
 	                            1
-	                        \],
+	                        ],
 	                        "rotation": 0
-	                    &#125;
-	                &#125;,
+	                    }
+	                },
 	                "alpha": 1
-	            &#125;,
+	            },
 	            "reference": "44c0f669e1ddab8d508d27f31a3e8489",
 	            "tLocked": false,
 	            "eLocked": false,
 	            "includeInForm": false,
-	            "text": "Click Here\\nTo Edit\\nYour Awesome\\nText",
+	            "text": "Click Here\nTo Edit\nYour Awesome\nText",
 	            "fontSize": 40,
 	            "fontWeight": "bold",
 	            "fontFamily": "Candara",
@@ -278,17 +286,17 @@ echo $output;
 	            "textDecoration": "",
 	            "textAlign": "center",
 	            "textBackgroundColor": "",
-	            "styles": &#123;
+	            "styles": {
 
-	            &#125;,
+	            },
 	            "aWidth": 19.105395820912825,
 	            "aHeight": 17.258313343932162,
 	            "aXpos": 17.535623149620207,
 	            "aYpos": 12.39817140964494,
-	            "svg": "\\t&lt;g transform=\\"translate(143.29 171.82) scale(0.6 0.6)\\">\\n\\t\\t&lt;text font-family=\\"Candara\\" font-size=\\"40\\" font-weight=\\"bold\\" style=\\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: #ffffff; fill-rule: nonzero; opacity: 1;\\" >&lt;tspan x=\\"-85.89\\" y=\\"-82.32\\" fill=\\"#ffffff\\">Click Here&lt;/tspan>&lt;tspan x=\\"-59.81\\" y=\\"-23.56\\" fill=\\"#ffffff\\">To Edit&lt;/tspan>&lt;tspan x=\\"-130.1\\" y=\\"35.2\\" fill=\\"#ffffff\\">Your Awesome&lt;/tspan>&lt;tspan x=\\"-38.32\\" y=\\"93.96\\" fill=\\"#ffffff\\">Text&lt;/tspan>&lt;/text>\\n\\t&lt;/g>\\n"
-	        &#125;\]
-	    &#125;, &#123;
-	        "pageData": &#123;
+	            "svg": "\t<g transform=\"translate(143.29 171.82) scale(0.6 0.6)\">\n\t\t<text font-family=\"Candara\" font-size=\"40\" font-weight=\"bold\" style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: #ffffff; fill-rule: nonzero; opacity: 1;\" ><tspan x=\"-85.89\" y=\"-82.32\" fill=\"#ffffff\">Click Here</tspan><tspan x=\"-59.81\" y=\"-23.56\" fill=\"#ffffff\">To Edit</tspan><tspan x=\"-130.1\" y=\"35.2\" fill=\"#ffffff\">Your Awesome</tspan><tspan x=\"-38.32\" y=\"93.96\" fill=\"#ffffff\">Text</tspan></text>\n\t</g>\n"
+	        }]
+	    }, {
+	        "pageData": {
 	            "scaling": 1,
 	            "title": "Back",
 	            "render": true,
@@ -296,66 +304,66 @@ echo $output;
 	            "fWidth": 67.249,
 	            "fHeight": 77,
 	            "bleed": null,
-	            "hfoldlines": \[
+	            "hfoldlines": [
 
-	            \],
-	            "vfoldlines": \[
+	            ],
+	            "vfoldlines": [
 
-	            \],
-	            "mlines": \[
+	            ],
+	            "mlines": [
 
-	            \],
-	            "clines": \[
+	            ],
+	            "clines": [
 
-	            \],
+	            ],
 	            "templateSource": "//s3.amazonaws.com/pitchprint.cdn/sc4iafdqds5uvb958b9yva849/userfiles/uploadedimages/admin/rrzarhfizhy2lcy58d5ma55933077546.png",
 	            "templateTint": "",
 	            "foregroundIsMask": false,
-	            "foregroundDimension": &#123;
+	            "foregroundDimension": {
 	                "top": 0,
 	                "left": 0,
 	                "right": 0,
 	                "bottom": 0,
 	                "width": -1,
 	                "height": -1
-	            &#125;,
-	            "canvasDimension": &#123;
+	            },
+	            "canvasDimension": {
 	                "top": 10,
 	                "left": 16,
 	                "right": 16.249,
 	                "bottom": 12,
 	                "width": 35,
 	                "height": 55
-	            &#125;,
-	            "fillData": &#123;
+	            },
+	            "fillData": {
 	                "type": "color",
-	                "colorData": &#123;
+	                "colorData": {
 	                    "type": "solid",
-	                    "colors": \[&#123;
-	                        "rgb": &#123;
+	                    "colors": [{
+	                        "rgb": {
 	                            "r": 255,
 	                            "g": 0,
 	                            "b": 0
-	                        &#125;,
-	                        "cmyk": &#123;
+	                        },
+	                        "cmyk": {
 
-	                        &#125;,
+	                        },
 	                        "spot": "",
-	                        "hex": &#123;
-	                            "hex": &#123;
+	                        "hex": {
+	                            "hex": {
 	                                "hex": 16711680
-	                            &#125;
-	                        &#125;
-	                    &#125;\],
-	                    "positions": \[
+	                            }
+	                        }
+	                    }],
+	                    "positions": [
 	                        1
-	                    \],
-	                    "alphas": \[
+	                    ],
+	                    "alphas": [
 	                        1
-	                    \],
+	                    ],
 	                    "rotation": 0
-	                &#125;,
-	                "imageData": &#123;
+	                },
+	                "imageData": {
 	                    "url": "//s3.amazonaws.com/pitchprint.cdn/sc4iafdqds5uvb958b9yva849/resources/backgroundimages/asdlbbugpcyyi3zbpgfyxvuw598458796296/UL564169777688885417.jpg",
 	                    "thumbnail": "",
 	                    "fillmode": "",
@@ -363,40 +371,59 @@ echo $output;
 	                    "bytes": "",
 	                    "width": 708,
 	                    "height": 768
-	                &#125;,
-	                "strokeData": &#123;
+	                },
+	                "strokeData": {
 	                    "type": "solid",
 	                    "width": 0,
 	                    "alpha": 1,
-	                    "fill": &#123;
+	                    "fill": {
 	                        "type": "solid",
-	                        "colors": \[&#123;
-	                            "hex": &#123;
+	                        "colors": [{
+	                            "hex": {
 	                                "hex": 0
-	                            &#125;
-	                        &#125;\],
-	                        "positions": \[
+	                            }
+	                        }],
+	                        "positions": [
 	                            1
-	                        \],
-	                        "alphas": \[
+	                        ],
+	                        "alphas": [
 	                            1
-	                        \],
+	                        ],
 	                        "rotation": 0
-	                    &#125;
-	                &#125;,
+	                    }
+	                },
 	                "alpha": "0.00"
-	            &#125;,
+	            },
 	            "index": 1
-	        &#125;,
-	        "groups": \[
+	        },
+	        "groups": [
 
-	        \],
-	        "items": \[
+	        ],
+	        "items": [
 
-	        \]
-	    &#125;\],
-	    "\_owner": "9a3a11ea5f5fc12e7a41f3098a082cd9",
+	        ]
+	    }],
+	    "_owner": "9a3a11ea5f5fc12e7a41f3098a082cd9",
 	    "lastModified": "2015-08-24T16:37:19.876Z",
 	    "enabled": true
-	&#125;
-&#125;
+	}
+}
+```
+
+## Related articles
+
+<CardGroup cols={2}>
+  <Card title="Fetch User Projects" icon="user" href="/api-reference/fetch-user-projects">
+    List all projects linked to a specific user.
+  </Card>
+  <Card title="Clone Project" icon="clone" href="/api-reference/clone-project">
+    Clone an existing project associated with your domain.
+  </Card>
+  <Card title="Render PDF & Raster" icon="file-pdf" href="/api-reference/render-pdf-raster">
+    Get the rendered PDF or raster image for a project.
+  </Card>
+  <Card title="Auth Signature" icon="key" href="/api-reference/auth-signature">
+    Generate the MD5 signature required to authenticate Runtime API calls.
+  </Card>
+</CardGroup>
+

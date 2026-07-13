@@ -11,49 +11,76 @@ This requires a valid projectId as well as the signature parameters to authentic
 
 ##### BODY PARAMS
 
-&lt;table class="table-striped table-bordered">&lt;tbody>&lt;tr>&lt;td class="required">apiKey&lt;/td>&lt;td>Your domain's api key&lt;/td>&lt;/tr>&lt;tr>&lt;td class="required">timestamp&lt;/td>&lt;td>Timestamp generated at runtime&lt;/td>&lt;/tr>&lt;tr>&lt;td class="required">signature&lt;/td>&lt;td>Signature = MD5(apikey + secretKey + timestamp)&lt;/td>&lt;/tr>&lt;tr>&lt;td class="required">projectId&lt;/td>&lt;td>ID of a single project&lt;/td>&lt;/tr>&lt;/tbody>&lt;/table>
+| Parameter | Required | Description |
+| --- | --- | --- |
+| apiKey | Yes | Your domain's api key |
+| timestamp | Yes | Timestamp generated at runtime |
+| signature | Yes | Signature = MD5(apikey + secretKey + timestamp) |
+| projectId | Yes | ID of a single project |
 
 * * *
 
 ##### SAMPLE CODE
 
-&lt;?php
+```php
+<?php
 
-define('PITCH\_APIKEY', 'your-api-key');
-define('PITCH\_SECRETKEY', 'your-secret-key');
+define('PITCH_APIKEY', 'your-api-key');
+define('PITCH_SECRETKEY', 'your-secret-key');
 
-function generateSignature () &#123;
+function generateSignature () {
     $timestamp = time();
-    $signature = md5(PITCH\_APIKEY . PITCH\_SECRETKEY . $timestamp);
-    return array ('timestamp'=>$timestamp, 'apiKey'=>PITCH\_APIKEY, 'signature'=>$signature);
-&#125;
+    $signature = md5(PITCH_APIKEY . PITCH_SECRETKEY . $timestamp);
+    return array ('timestamp'=>$timestamp, 'apiKey'=>PITCH_APIKEY, 'signature'=>$signature);
+}
 
-$ch = curl\_init();
-curl\_setopt($ch, CURLOPT\_URL, "https://api.pitchprint.io/runtime/clone-project");
-curl\_setopt($ch, CURLOPT\_POST, true);
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, "https://api.pitchprint.io/runtime/clone-project");
+curl_setopt($ch, CURLOPT_POST, true);
 
 $opts = generateSignature();
-$opts\['projectId'\] = 'your-project-id';
+$opts['projectId'] = 'your-project-id';
 
-curl\_setopt($ch, CURLOPT\_POSTFIELDS, json\_encode($opts));
-curl\_setopt($ch, CURLOPT\_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($opts));
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-$output = curl\_exec($ch);
-$http\_status = curl\_getinfo($ch, CURLINFO\_HTTP\_CODE);
-$content\_type = curl\_getinfo($ch, CURLINFO\_CONTENT\_TYPE);
-$curlerr = curl\_error($ch);
-curl\_close($ch);
+$output = curl_exec($ch);
+$http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+$content_type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
+$curlerr = curl_error($ch);
+curl_close($ch);
 
 header('Content-Type: application/json');
 
 echo $output;
 
 ?>
+```
 
 ##### RESPONSE
 
-&#123;
+```json
+{
 	"error": false,
 	"status": 1,
 	"newId": "e7d1ab10b9eb9b142cd4c702f0e1c69f"
-&#125;
+}
+```
+
+## Related articles
+
+<CardGroup cols={2}>
+  <Card title="Fetch Project" icon="file-code" href="/api-reference/fetch-project">
+    Retrieve the source data for a single project by its projectId.
+  </Card>
+  <Card title="Fetch User Projects" icon="user" href="/api-reference/fetch-user-projects">
+    List all projects linked to a specific user.
+  </Card>
+  <Card title="Render PDF & Raster" icon="file-pdf" href="/api-reference/render-pdf-raster">
+    Get the rendered PDF or raster image for a project.
+  </Card>
+  <Card title="Auth Signature" icon="key" href="/api-reference/auth-signature">
+    Generate the MD5 signature required to authenticate Runtime API calls.
+  </Card>
+</CardGroup>
+

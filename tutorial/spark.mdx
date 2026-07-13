@@ -17,78 +17,88 @@ In just 3 steps, you can have the Print-ready PDF delivered automatically to you
 
 ##### Header Parameters (Authentication)
 
-&lt;table class="table-striped table-bordered">&lt;tbody>&lt;tr>&lt;td class="required">Authorization&lt;/td>&lt;td>Your domain's secret key&lt;/td>&lt;/tr>&lt;/tbody>&lt;/table>
+| Parameter | Description |
+| --- | --- |
+| Authorization | Your domain's secret key |
 
 ##### Body Parameters
 
-&lt;table class="table-striped table-bordered">&lt;tbody>&lt;tr>&lt;td class="required">designId&lt;/td>&lt;td>String: Design ID of the PitchPrint's Design template&lt;br>you want to generate the projects from&lt;/td>&lt;/tr>&lt;tr>&lt;td class="required">records&lt;/td>&lt;td>Array: An array object containing records of the projects you want to create&lt;/td>&lt;/tr>&lt;tr>&lt;td class="required">previewOnly&lt;br>&lt;/td>&lt;td>Boolean: If set to true, the system will only&lt;br>generate a preview of the projects and not the&lt;br>PDFs and you won't be charged&lt;br>&lt;/td>&lt;/tr>&lt;/tbody>&lt;/table>
+| Parameter | Description |
+| --- | --- |
+| designId | String: Design ID of the PitchPrint's Design template you want to generate the projects from |
+| records | Array: An array object containing records of the projects you want to create |
+| previewOnly | Boolean: If set to true, the system will only generate a preview of the projects and not the PDFs and you won't be charged |
 
 * * *
 
 ##### Sample Code
 
-&lt;?php
+```php
+<?php
 
-$curl = curl\_init();
+$curl = curl_init();
 
-curl\_setopt\_array($curl, array(
-  CURLOPT\_URL => 'https://api.pitchprint.com/spark',
-  CURLOPT\_RETURNTRANSFER => true,
-  CURLOPT\_ENCODING => '',
-  CURLOPT\_MAXREDIRS => 10,
-  CURLOPT\_TIMEOUT => 0,
-  CURLOPT\_FOLLOWLOCATION => true,
-  CURLOPT\_HTTP\_VERSION => CURL\_HTTP\_VERSION\_1\_1,
-  CURLOPT\_CUSTOMREQUEST => 'POST',
-  CURLOPT\_POSTFIELDS =>'&#123; "designId": "0efcad4622733fc8e9ce0f41ad0ccfd6", "previewOnly": false, "records": \[&#123; "name": "Jane Wilcox" &#125;, &#123; "name": "John Doe" &#125;\] &#125;',
-  CURLOPT\_HTTPHEADER => array(
+curl_setopt_array($curl, array(
+  CURLOPT_URL => 'https://api.pitchprint.com/spark',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS =>'{ "designId": "0efcad4622733fc8e9ce0f41ad0ccfd6", "previewOnly": false, "records": [{ "name": "Jane Wilcox" }, { "name": "John Doe" }] }',
+  CURLOPT_HTTPHEADER => array(
     'Authorization: (wqUpLHRUtK(C!rUuszfT9n&ivXug5',
     'Content-Type: application/javascript'
   ),
 ));
 
-$response = curl\_exec($curl);
+$response = curl_exec($curl);
 
-curl\_close($curl);
+curl_close($curl);
 echo $response;
 
 ?>
+```
 
 ##### Response
 
-&#123;
-    "jobId": "spark\_bf42052bd3dc077ea3d552e7beb4e760",
+```json
+{
+    "jobId": "spark_bf42052bd3dc077ea3d552e7beb4e760",
     "success": true,
-    "projects": \[
-        &#123;
+    "projects": [
+        {
             "numPages": 1,
-            "previews": \[
-                "https://s3-eu-west-1.amazonaws.com/pitchprint.io/previews/f11d1d2977a2b7ab5b5725ca09253632\_1.jpg"
-            \],
+            "previews": [
+                "https://s3-eu-west-1.amazonaws.com/pitchprint.io/previews/f11d1d2977a2b7ab5b5725ca09253632_1.jpg"
+            ],
             "pdfDownload": "https://pdf.pitchprint.com/f11d1d2977a2b7ab5b5725ca09253632",
             "autoSaved": false,
-            "meta": &#123;&#125;,
+            "meta": {},
             "userId": "guest",
             "saveForLater": false,
             "isvx": true,
             "id": "f11d1d2977a2b7ab5b5725ca09253632"
-        &#125;,
-        &#123;
+        },
+        {
             "numPages": 1,
-            "previews": \[
-                "https://s3-eu-west-1.amazonaws.com/pitchprint.io/previews/1c080bfe1beaf028788259a75f494a04\_1.jpg"
-            \],
+            "previews": [
+                "https://s3-eu-west-1.amazonaws.com/pitchprint.io/previews/1c080bfe1beaf028788259a75f494a04_1.jpg"
+            ],
             "pdfDownload": "https://pdf.pitchprint.com/1c080bfe1beaf028788259a75f494a04",
             "autoSaved": false,
-            "meta": &#123;&#125;,
+            "meta": {},
             "userId": "guest",
             "saveForLater": false,
             "isvx": true,
             "id": "1c080bfe1beaf028788259a75f494a04"
-        &#125;
-    \],
-    "receipt": "https://pay.stripe.com/receipts/acct\_1Bcto4JWXrE8rGVG/ch\_1JGK9gJWXrE8rGVG8I7e1izd/rcpt\_Ju8QUp5FDOW2YHyAxoxFjZyGgpm2NOx"
-&#125;
+        }
+    ],
+    "receipt": "https://pay.stripe.com/receipts/acct_1Bcto4JWXrE8rGVG/ch_1JGK9gJWXrE8rGVG8I7e1izd/rcpt_Ju8QUp5FDOW2YHyAxoxFjZyGgpm2NOx"
+}
+```
 
 The above sample code generates a unique Certificate for each record replacing the name with the value set in the corresponding record. You can set any value you want to change including loading images.
 
