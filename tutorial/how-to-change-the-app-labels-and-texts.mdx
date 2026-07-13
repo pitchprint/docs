@@ -17,9 +17,11 @@ This article explains how you can change the language on your specific site with
 2.  Next, navigate to your settings page here:  [https://admin.pitchprint.com/settings](https://admin.pitchprint.com/settings)
 3.  Scroll down to the Custom Javascript section and paste the following code: 
 
-PPCLIENT.langEdits = &#123;
+```javascript
+PPCLIENT.langEdits = {
 	"parameter": "Value text"
-&#125;;
+};
+```
 
 5.  Next, copy the value corresponding with the language text you want to change above in step 1 and replace **_parameter_** with that name. Then type in your new value in place of **_Value Text_**.
 

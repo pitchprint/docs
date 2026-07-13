@@ -12,71 +12,80 @@ Ensure you do not use the categoryId as against a designId. All designs are insi
 
 ##### BODY PARAMS
 
-&lt;table class="table-striped table-bordered">&lt;tbody>&lt;tr>&lt;td class="required">apiKey&lt;/td>&lt;td>Your domain's api key&lt;/td>&lt;/tr>&lt;tr>&lt;td class="required">timestamp&lt;/td>&lt;td>Timestamp generated at runtime&lt;/td>&lt;/tr>&lt;tr>&lt;td class="required">signature&lt;/td>&lt;td>Signature = MD5(apikey + secretKey + timestamp)&lt;/td>&lt;/tr>&lt;tr>&lt;td class="required">designId&lt;/td>&lt;td>ID of a single design&lt;/td>&lt;/tr>&lt;/tbody>&lt;/table>
+| Parameter | Description |
+| --- | --- |
+| apiKey | Your domain's api key |
+| timestamp | Timestamp generated at runtime |
+| signature | Signature = MD5(apikey + secretKey + timestamp) |
+| designId | ID of a single design |
 
 * * *
 
 ##### SAMPLE CODE
 
-&lt;?php
+```php
+<?php
 
-define('PITCH\_APIKEY', 'your-api-key');
-define('PITCH\_SECRETKEY', 'your-secret-key');
+define('PITCH_APIKEY', 'your-api-key');
+define('PITCH_SECRETKEY', 'your-secret-key');
 
-function generateSignature () &#123;
+function generateSignature () {
     $timestamp = time();
-    $signature = md5(PITCH\_APIKEY . PITCH\_SECRETKEY . $timestamp);
-    return array ('timestamp'=>$timestamp, 'apiKey'=>PITCH\_APIKEY, 'signature'=>$signature);
-&#125;
+    $signature = md5(PITCH_APIKEY . PITCH_SECRETKEY . $timestamp);
+    return array ('timestamp'=>$timestamp, 'apiKey'=>PITCH_APIKEY, 'signature'=>$signature);
+}
 
-$ch = curl\_init();
-curl\_setopt($ch, CURLOPT\_URL, 'https://pitchprint.net/api/runtime/fetch-design-source');
-curl\_setopt($ch, CURLOPT\_POST, true);
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, 'https://pitchprint.net/api/runtime/fetch-design-source');
+curl_setopt($ch, CURLOPT_POST, true);
 
 $opts = generateSignature();
-$opts\['designId'\] = 'your-design-id-here';
+$opts['designId'] = 'your-design-id-here';
 
-curl\_setopt($ch, CURLOPT\_POSTFIELDS, http\_build\_query($opts));
-curl\_setopt($ch, CURLOPT\_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($opts));
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-$output = curl\_exec($ch);
-$http\_status = curl\_getinfo($ch, CURLINFO\_HTTP\_CODE);
-$content\_type = curl\_getinfo($ch, CURLINFO\_CONTENT\_TYPE);
-$curlerr = curl\_error($ch);
-curl\_close($ch);
+$output = curl_exec($ch);
+$http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+$content_type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
+$curlerr = curl_error($ch);
+curl_close($ch);
 
 header('Content-Type: application/json');
 
 echo $output;
 
 ?>
+```
 
 ##### RESPONSE
 
-&#123;
-    "\_id": "5afb3c7960aa7ff504632367553a3fa2
-    "\_folder": "761f4e66d4a1b8965df66061dc959175",
+```json
+{
+    "_id": "5afb3c7960aa7ff504632367553a3fa2
+    "_folder": "761f4e66d4a1b8965df66061dc959175",
     "enabled": true,",
     "lastModified": "2015-01-12T06:01:20.000Z",
-    "\_owner": "\*\*\*",
-    "map": &#123;
-        "backgroundimages": &#123;
+    "_owner": "***",
+    "map": {
+        "backgroundimages": {
             "items": "",
             "mode": "exclude"
-        &#125;,
-        "colors": &#123;
+        },
+        "colors": {
             "items": "",
             "mode": "exclude"
-        &#125;,
-        "images": &#123;
+        },
+        "images": {
             "items": "",
             "mode": "exclude"
-        &#125;,
-        "modules": "&#123;&#125;",
-        "fonts": &#123;
+        },
+        "modules": "{}",
+        "fonts": {
             "items": "",
             "mode": "exclude"
-        &#125;
-    &#125;,
-    "design": &#123; /\*design details here\*/ &#125;
-&#125;
+        }
+    },
+    "design": { /*design details here*/ }
+}
+```

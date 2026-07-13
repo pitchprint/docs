@@ -14,106 +14,122 @@ Kindly follow these instructions:
     2.  Remember theme template location to use in the following step.
 2.  Place the below code **at the bottom** of your desired email template file (location of file remembered in above step).
 
-/\* PitchPrint Attachments Start\*/
+```php
+/* PitchPrint Attachments Start*/
 
-/\*
- \* Delete files greater than 5 minutes old
- \*/
-function custom\_delete\_old\_pp\_designs($dir)
-&#123;
+/*
+ * Delete files greater than 5 minutes old
+ */
+function custom_delete_old_pp_designs($dir)
+{
 	$lifeTime = time() - 300;
 
-	foreach (glob("$dir/\*.pdf") as $file) &#123;
-    	if (filemtime($file)  &lt; $lifeTime) unlink($file);
-	&#125;
-&#125;
+	foreach (glob("$dir/*.pdf") as $file) {
+    	if (filemtime($file)  < $lifeTime) unlink($file);
+	}
+}
 
-/\*
- \* Saves PitchPrint items design to your server
- \*/
-function custom\_get\_pp\_pdf($ppPdfBase, $pId, $dest)
-&#123;
-	$file 		= $dest."/MyDesign\_".time().'.pdf';
+/*
+ * Saves PitchPrint items design to your server
+ */
+function custom_get_pp_pdf($ppPdfBase, $pId, $dest)
+{
+	$file 		= $dest."/MyDesign_".time().'.pdf';
 	$getFile 	= "$ppPdfBase=$pId";
 
 	$success 	= copy($getFile, $file);
 
 	if ($success) return $file;
 	return false;
-&#125;
+}
 
-/\*
- \* Returns PP Attachments for email
- \* And empties folder from old pp designs
- \*/
-function custom\_append\_pp\_designs($obj)
-&#123;
+/*
+ * Returns PP Attachments for email
+ * And empties folder from old pp designs
+ */
+function custom_append_pp_designs($obj)
+{
 	$ppFetchPDFBaseUrl  = 'http://pdf.pitchprint.io?id';
-	$pluginUpldDir 		= get\_home\_path().'wp-content/plugins/pitchprint/uploader/files';
-	$data 				= \[\];
+	$pluginUpldDir 		= get_home_path().'wp-content/plugins/pitchprint/uploader/files';
+	$data 				= [];
 
 	// Remove old designs from upload dir
-	custom\_delete\_old\_pp\_designs($pluginUpldDir);
+	custom_delete_old_pp_designs($pluginUpldDir);
 
 	// Fetch all PitchPrint designs in this order
-	foreach ($obj->get\_items() as $item\_id => $item) &#123;
+	foreach ($obj->get_items() as $item_id => $item) {
 
-		$meta = wc\_get\_order\_item\_meta($item\_id, '\_w2p\_set\_option');
+		$meta = wc_get_order_item_meta($item_id, '_w2p_set_option');
 
-		if ($meta) &#123;
-            $ppData =  (strpos($meta,'%7') !== FALSE) ? json\_decode(urldecode($meta)) : json\_decode($meta);
+		if ($meta) {
+            $ppData =  (strpos($meta,'%7') !== FALSE) ? json_decode(urldecode($meta)) : json_decode($meta);
 
-            if ( isset($ppData->files) ) &#123;
+            if ( isset($ppData->files) ) {
 
-             	foreach ($ppData->files as $file) &#123;
+             	foreach ($ppData->files as $file) {
 
-                    $regex = "/http.\*?uploader\\/files/";
+                    $regex = "/http.*?uploader\/files/";
 
-				    $result = preg\_replace($regex, $pluginUpldDir, $file);
+				    $result = preg_replace($regex, $pluginUpldDir, $file);
 
-                    $data\[\] = $result;
+                    $data[] = $result;
 
-                &#125;
+                }
 
-            &#125; else &#123;
+            } else {
 				$pId 	= $ppData->projectId;
-				$data\[\] = custom\_get\_pp\_pdf($ppFetchPDFBaseUrl, $pId, $pluginUpldDir);
-            &#125;
-		&#125;
+				$data[] = custom_get_pp_pdf($ppFetchPDFBaseUrl, $pId, $pluginUpldDir);
+            }
+		}
 
-	&#125;
+	}
 
 	// Return attachments
 	return $data;
-&#125;
+}
 
-function attach\_pitchprint\_designs\_pdf\_to\_email ( $attachments , $id, $object, $new ) &#123;
-	return custom\_append\_pp\_designs($object);
-&#125;
+function attach_pitchprint_designs_pdf_to_email ( $attachments , $id, $object, $new ) {
+	return custom_append_pp_designs($object);
+}
 
-add\_action( 'check\_pitchprint\_item\_need\_attach', 'custom\_attach\_pitchprint\_designs');
+add_action( 'check_pitchprint_item_need_attach', 'custom_attach_pitchprint_designs');
 
-/\*
- \* Check whether we need to append the attachments.
- \*/
-function custom\_attach\_pitchprint\_designs($obj)
-&#123;
-	foreach ($obj->get\_items() as $item\_id => $item) &#123;
+/*
+ * Check whether we need to append the attachments.
+ */
+function custom_attach_pitchprint_designs($obj)
+{
+	foreach ($obj->get_items() as $item_id => $item) {
 
-		$meta = wc\_get\_order\_item\_meta($item\_id, '\_w2p\_set\_option');
+		$meta = wc_get_order_item_meta($item_id, '_w2p_set_option');
 
-		if ($meta) &#123;
+		if ($meta) {
 
-			add\_filter( 'woocommerce\_email\_attachments', 'attach\_pitchprint\_designs\_pdf\_to\_email',10, 4);
+			add_filter( 'woocommerce_email_attachments', 'attach_pitchprint_designs_pdf_to_email',10, 4);
 
 			return true;
-		&#125;
-	&#125;
-&#125;
+		}
+	}
+}
 
-do\_action('check\_pitchprint\_item\_need\_attach', $order);
+do_action('check_pitchprint_item_need_attach', $order);
 
-/\* PitchPrint Attachments End\*/
+/* PitchPrint Attachments End*/
+```
 
 4.  Ensure wp-content/plugins/pitchprint/uploader/files 777 permissions.
 5.  Run a test by emailing yourself on an order, with a PitchPrint design item and the selected status you chose for your template/s.
+
+## Related articles
+
+<CardGroup cols={2}>
+  <Card title="How to show customer design previews on email (WordPress)" icon="image" href="/tutorial/how-to-show-customer-design-previews-on-email-wordpress">
+    Display customer design previews inside WooCommerce order emails.
+  </Card>
+  <Card title="Add previews & project file links to Shopify email notifications" icon="envelope" href="/documentation/add-previews-project-file-links-to-shopify-email-notifications">
+    Add PitchPrint previews and PDF links to Shopify order emails.
+  </Card>
+  <Card title="How to email artwork to customers" icon="envelope" href="/tutorial/how-to-email-artwork-to-customers">
+    Options for emailing finished customer artwork.
+  </Card>
+</CardGroup>

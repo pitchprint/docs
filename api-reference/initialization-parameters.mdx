@@ -7,7 +7,9 @@ _String_
 
 To create an instance of the PitchPrint designer, you call:
 
-	new pprint.designer(parameters);
+```javascript
+new pprint.designer(parameters);
+```
 
 The parameters value is a key-value object and are defined as follows:
 _(values preceded by red asteriks\* are required)_
@@ -89,7 +91,7 @@ _(values preceded by red asteriks\* are required)_
 > **product :** _(object)_
 >
 > The product details passed in as a value-pair object.
-> It is useful when reading through the project design file or you need to identify each project design against your products. It can contain any values you so desire, but we normally use Id and title, so it looks like: &#123;id: 'xyz', title: 'Purple Phamplets'&#125;
+> It is useful when reading through the project design file or you need to identify each project design against your products. It can contain any values you so desire, but we normally use Id and title, so it looks like: `{id: 'xyz', title: 'Purple Phamplets'}`
 
 > **projectId :** _(string)_
 >
@@ -120,7 +122,7 @@ _(values preceded by red asteriks\* are required)_
 >
 > For instance to create a name and phone number fields and have them pre-populated when the app launches, create those text elements in the design, click on each and assign “name” as the name of one, and “phone” for the other in the admin tools panel.
 > Then pass in a userData value of..
-> &#123;name: "John Doe", phone: "123-456-78801"&#125;
+> `{name: "John Doe", phone: "123-456-78801"}`
 >
 > And do not forget to set Populate User Data to true in the admin designer when creating your design.
 

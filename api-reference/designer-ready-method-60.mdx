@@ -9,9 +9,11 @@ So if you are using OpenCart, PrestaShop, Shopify or WordPress, this will get ca
 
 Simply, it's a means of knowing when the designer has been initialized and time to hook up your [events](http://docs.pitchprint.com/article/12-events) to the designer.
 
-window.ppDesignerInitialized = function(\_designer) &#123;
-    var iEvents = \_designer.events;
+```javascript
+window.ppDesignerInitialized = function(_designer) {
+    var iEvents = _designer.events;
     // Now you have access to the event pipeline of the designer...
-&#125;
+}
+```
 
 And whatever code you write, you can always paste it in the custom JavaScript section of the [settings page](https://pitchprint.net/sadmin/settings) under store settings.

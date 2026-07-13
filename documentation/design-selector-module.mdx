@@ -1,6 +1,5 @@
 ---
 title: "Design Selector Module"
-description: "!https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5b2cc8340428632c466b3807/file-m4jCdmY1pq.png"
 ---
 
 ![](https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5b2cc8340428632c466b3807/file-m4jCdmY1pq.png)
@@ -41,21 +40,25 @@ When making use of Custom Integration simply replace the **designId** with a **c
 
 **Default integration with single design:**
 
-var ppclient = new PitchPrintClient(&#123;
+```javascript
+var ppclient = new PitchPrintClient({
 	apiKey: 'f80b84b4eb5cc81a140cb90f52e824f6',	//Kindly provide your own APIKey
 	designId: '3d8f3899904ef2392795c681091600d0',	//Change this to your designId
 	custom: true,
 	isvx: true
-&#125;);
+});
+```
 
 **Integration with a category of designs:**
 
-var ppclient = new PitchPrintClient(&#123;
+```javascript
+var ppclient = new PitchPrintClient({
 	apiKey: 'f80b84b4eb5cc81a140cb90f52e824f6',	//Kindly provide your own APIKey
-	designId: '\*3d8f3899904ef2392795c681091600d0',	//Change this to your categoryId
+	designId: '*3d8f3899904ef2392795c681091600d0',	//Change this to your categoryId
 	custom: true,
 	isvx: true
-&#125;);
+});
+```
 
 And the module will override the default behavior of picking a design before launching the application.
 

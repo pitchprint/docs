@@ -5,7 +5,9 @@ description: "To create an instance of the PitchPrint class, here are the possib
 
 To create an instance of the PitchPrint class, here are the possible options you can pass in:
 
+```javascript
 var ppclient = new PitchPrintClient(options);
+```
 
 The parameters value is a key-value object and are defined as follows:
 
@@ -26,7 +28,7 @@ _(values preceded by red asteriks\* are required)_
 > **product :** _(object)_
 >
 > The product details passed in as a value-pair object.
-> It is useful when reading through the project design file or you need to identify each project design against your products. It can contain any values you so desire, but we normally use Id and title, so it looks like: &#123;id: 'xyz', title: 'Purple Phamplets'&#125;
+> It is useful when reading through the project design file or you need to identify each project design against your products. It can contain any values you so desire, but we normally use Id and title, so it looks like: `{id: 'xyz', title: 'Purple Phamplets'}`
 
 > **langCode :** _(string)_
 >
@@ -81,3 +83,15 @@ _(values preceded by red asteriks\* are required)_
 > **custom :** _(string)_
 >
 > Always set this to true. It allows the class to prevent some default actions which we have baked in for popular frameworks
+
+## Related articles
+
+<CardGroup cols={2}>
+  <Card title="Events" icon="bell" href="/api-reference/events">
+    Listen for and fire events on the PitchPrint client.
+  </Card>
+  <Card title="Designer ready method" icon="code" href="/api-reference/designer-ready-method">
+    Hook your custom code into the editor once the designer is ready.
+  </Card>
+</CardGroup>
+
