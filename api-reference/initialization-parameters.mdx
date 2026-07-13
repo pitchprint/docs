@@ -1,0 +1,137 @@
+---
+title: "Initialization parameters"
+description: "String"
+---
+
+_String_
+
+To create an instance of the PitchPrint designer, you call:
+
+	new pprint.designer(parameters);
+
+The parameters value is a key-value object and are defined as follows:
+_(values preceded by red asteriks\* are required)_
+
+> **\* apiKey :** _(string)_
+>
+> This is the API Key generated from the admin portal and is assigned to your domain. This is what identifies each domain from the other, not the domain name which can be renamed at any time.  [You can generate your apiKey from here](https://pitchprint.net/admin/domains).
+
+> **\* apiBase :** _(string)_
+>
+> This is should always be: "https://pitchprint.net/api/front/", Our application server endpoint. For white-label clients who host their own system, this value changes to their specific servers.
+
+> **\* rscBase :** _(string)_
+>
+> Path to the resources directory for pitchprint. it is "https://s3.amazonaws.com/pitchprint.rsc/"
+
+> **\* cdnBase :** _(string)_
+>
+> The content delivery network path to the rscBase above. This is cached data. It is "https://dta8vnpq1ae34.cloudfront.net/"
+
+> **\* buildPath :** _(string)_
+>
+> "app/83/"
+
+> **lang :** _(string)_
+>
+> The language data in JSON format. When integrating the app into the various frameworks, we observed that we needed the language file even before the application loads. For instance, how do we display the Customize Now button in the various languages even before the app loads? So in such instances, we are expected to load the language file using this Cloudfront URL: 
+>
+> [https://dta8vnpq1ae34.cloudfront.net/app/83/lang/&#123;langCode&#125;](https://dta8vnpq1ae34.cloudfront.net/app/83/lang/&#123;langCode&#125;)
+>
+> where langCode is as defined below.
+>
+> This url sends you a JSON data of the language. This data is used to display button texts, etc, and then passed down to the app as a parameter so the application does not need to load the same data again. If however you fail to pass this, the app will use the langCode to load this data.
+
+> **langCode :** _(string)_
+>
+> Language code the editor should use. If omitted, ‘en’ English will be used. Please note, this is different from the "lang" property defined above. Here is the list of all languages to which PitchPrint has been translated:
+>
+> -   bg – Bulgarian
+> -   ca – Catalan
+> -   cs – Czech
+> -   da – Danish
+> -   nl – Dutch
+> -   fi – Finnish
+> -   fr – French
+> -   de – German
+> -   el – Greek
+> -   he – Hebrew
+> -   hu – Hungarian
+> -   id – Indonesian
+> -   it – Italian
+> -   lv – Latvian
+> -   lt – Lithuanian
+> -   no – Norwegian
+> -   pl – Polish
+> -   pt – Portuguese
+> -   pt-br – Portuguese (Brazilian)
+> -   ru – Russian
+> -   es – Spanish
+> -   sl – Slovak
+> -   sv – Swedish
+> -   tr – Turkish
+> -   vi – Vietnamese
+
+> **designId :** _(string)_
+>
+> This is the ID of the design you intend to load for new projects. To get a listing of all designs under your account, you can call up this endpoint URL from the admin
+
+> **userId :** _(string)_
+>
+> For every user that instantiates the app, a folder is created on the server so their pictures and design projects can be saved and referenced anytime.
+>
+> This is a unique code we use to reference each user. If this value is omitted, we will use ‘guest’ but when they reload the app on a different browser, their images etc are lost so it is advisable you provide a unique ID to identify each user and store their assets separately and safely.
+
+> **mode :** _(string)_
+>
+> The mode in which the app should load. Default value should be "new". But when a user has finished creating a design but has not left the page, they may decide to want to edit again. You should then set this to “edit” just before loading up the editor for editing.
+
+> **product :** _(object)_
+>
+> The product details passed in as a value-pair object.
+> It is useful when reading through the project design file or you need to identify each project design against your products. It can contain any values you so desire, but we normally use Id and title, so it looks like: &#123;id: 'xyz', title: 'Purple Phamplets'&#125;
+
+> **projectId :** _(string)_
+>
+> This is a unique code that should be used to save the project on the server. We advise you leave it blank which gives the server the ease to generate a unique ID of its own. 
+>
+> After a project has been saved, this ID is passed down to you via the onSave function as stated above. You subsequently can pass this in as an ID if you want to edit same project or retrieve the PDF file.
+
+> **autoInitialize :** _(boolean)_
+>
+> There are two steps to getting the PitchPrint app ready for show. 
+>
+> First is validation, where the application connects to the server endpoint to validate the apiKey.
+> The second step is where it loads all the required assets for the particular design.
+>
+> Now, assets are loaded based on the particular design specified.
+> Layouts, images, backgrounds etc are all loaded per design and it is in the initialization step the app does this loading.
+>
+> But there are instances when we do not want the app to load any design yet, for example, were we want the user to select a design from a list before customizing, so we set the designId at runtime based on the particular design they pick from out page. In that instance, you need to set autoInitialize to false, so that the app stops after validation. When they pick their design, you can set the designId and then call the loadLib method for it to initialize based on that set designId. The default value is true.
+
+> **autoShow :** _(boolean)_
+>
+> When set to true, this property allows the designer to launch immediately all the necessary resources have completely loaded.
+> Default value is false, so the user can click a button to launch the designer.
+
+> **autoShow :** _(Object)_
+>
+> When the application loads and is launched, the process checks if a flag to auto populate user data is set to true. If so, the application uses the data in this parameter to auto populate the design using the name attribute set during the design creation or editing to match variables like name, address, phone etc. You can set as many parameters here and reference them using the name attribute of the element used in the design.
+>
+> For instance to create a name and phone number fields and have them pre-populated when the app launches, create those text elements in the design, click on each and assign “name” as the name of one, and “phone” for the other in the admin tools panel.
+> Then pass in a userData value of..
+> &#123;name: "John Doe", phone: "123-456-78801"&#125;
+>
+> And do not forget to set Populate User Data to true in the admin designer when creating your design.
+
+> **design :** _(Object)_
+>
+> If you have already loaded the design source using out api, you can pass it in here, instead of using the designId
+
+> **parentDiv :** _(string)_
+>
+> This parameter allows you to load PitchPrint app into the specified div. This value is the jQuery selector of the div as a string, not a jQuery object, so you can use style selector, parameters or id element selector, like **#my-special-div**
+
+> **validationData :** _(Object)_
+>
+> This data can be gotten when you call the validate end point. It's optional. If you don't pass this in, the designer will call that endpoint and get the data itself
