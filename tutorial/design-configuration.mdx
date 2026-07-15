@@ -1,0 +1,91 @@
+---
+title: "Design Configuration"
+---
+
+## General
+
+1.  **Title**: Your design title.
+2.  **Welcome Message:** This is the message shown when the app loads. You have the option to add plain text or HTML code.
+3.  **Tags:** Use this section to add tags that extend the functionality of the editor.
+4.  **Show Customize Form:** When enabled, this displays a form containing all elements included in the design when it loads. Customers can fill out the form, and their input will update the design accordingly. Please note that if the Welcome Message is enabled, this form will override it.
+5.  **Hide Tabs:** Use this option to hide the Backgrounds, Pictures, or Text tabs. When enabled, the selected tabs will not be visible to the user.
+6.  **Lock Background:** When enabled, customers will **not** be able to change the background.
+7.  **Only Drag an Image to Masks:** When enabled, customers cannot click on images to add them to the canvas. Images can only be added by dragging and dropping them into the masks.
+8.  **Auto Place Image in Masks:** When enabled, uploaded images are automatically placed into the masks. Only the available masks on the canvas will be filled. For example, if there are 5 masks and the customer uploads 6 images, the first 5 images will be placed into the masks, and the 6th image will be added directly to the canvas.
+9.  **Snap to Page Only:** When enabled, items will snap only within the page boundaries and cannot extend beyond them.
+10.  **Uploaded Image Operations:** Allows you to convert images to **grayscale** or **black & white**, and apply **ICC profiles**.
+11.  **Client PDF Download:** When enabled, customers can download the PDF file directly from within the app.
+12.  **Split Masks:** When enabled, all clickable masks within a design will be split into separate PDF pages.
+13.  **Chain Colors:** Allows you to sync colors across elements that share the same chain ID within a design. Once enabled, updating the color of one item will automatically update the color of all items in the same chain.
+14.  **Disable Drag Select:** When enabled, users will not be able to drag to select multiple items at once.
+15.  **DPI Check:** Enables the DPI check for this specific design.
+16.  **Flash Item Dimensions:** Displays the physical dimensions of items while resizing. Please note, this feature is **not available for text items** and only applies to other item types.
+17.  **Show Image Picker on Load:** Automatically displays the image source picker when the editor loads.
+18.  **DPI Value:** Specify the minimum DPI that images must meet for this design.
+19.  **New Text Color:** Specify the color to be applied to new text added to the canvas. Please note that both the **RGB** value and the **CMYK** value must be provided for the PDF.
+20.  **Thumbnail Image:** The thumbnail image used in the Design Selector instead of the original design preview.
+21.  **Default Font:** Select the default font that will be applied to text within the design.
+22.  **Default Tab:** Select the tab that should appear first when the designer loads.
+23.  **Default Background Mode:** Specify the default mode that will be applied to new background images added to the design.
+24.  **Unit:** Select the unit of measurement that will be applied to the design.
+25.  **Limit Text Characters:** Use this field to control which characters users can type in the design. Enter a valid Regex pattern to define the allowed characters.
+26.  **Minimum Font Size:** Set the minimum font size that users are allowed to use for text in the design.
+
+## Resources
+
+Use this panel to manage the resources available in your design. You can include or exclude specific resources, or apply the action to all resources at once. This functionality is available for **Pictures, Backgrounds, Fonts, Text Arts, and Colors**.
+
+## Modules
+
+Each module is already explained in depth on the following [documents](/documentation/data-form-module).
+
+**Page Count:** Links the quantity element on your site to the number of pages in the design. When the design is updated, the quantity will automatically reflect the updated number of pages. Please note that functionality may vary depending on the framework.
+
+**Page Loader:** Allows customers to add, remove, sort, and swap pages within the design, giving them full control over page organization.
+
+**Canvas Adjuster:** Enables customers to sync dimensions from your site into the editor. Dimensions can be either predefined or custom values. When a customer selects or enters a value, the editor updates automatically. Conversely, changes made in the editor will update the product upon submission. Please note that behavior may differ depending on the framework. Currently, native support is available for **drop-downs only**.
+
+**Data Form:** A quick-edit form that allows customers to modify items on the canvas directly through the form.
+
+**Photo Prints:** Photo prints are available in three categories: **Bulk Photo Print**, **Vintage Photo Prints**, and **Photo with Paper Type**.
+
+-   **Photo with Paper Type:** Lets you provide end users with options for size and paper type.
+-   **Bulk Photo Prints:** Allows customers to order multiple quantities of each photo they upload.
+-   **Vintage Photo Prints:** Enables customers to use their uploaded photo as the design itself. The uploaded image will fit directly onto the page of the design and can be edited as needed. The file will match the dimensions of the design where it is placed.
+
+**Note:** Currently, values and options selected in the editor cannot be synced back to the product page. However, this information **is included in the PDF bookmarks**.
+
+**Template Color:** Allows the admin to provide customers with the ability to change the color of the template image within the design.
+
+**Swatch:** Enables you to offer different color combinations as options for each layer of a design.
+
+**Remix:** Allows customers to automatically remix the images in the design and swap them as desired.
+
+**Variable Data:** Provides customers with the ability to upload an Excel or CSV file to prepopulate the design with data from the file. The file should include all field names as column headings. You can choose to compile all records into a single PDF or create a separate PDF for each record.
+
+**Single/Double Sided Module:** This module allows customers to choose how many pages they would like to open in the designer. They have the option to select either a single page or a double-sided layout when starting their design.
+
+## History
+
+The editing history of a design allows you to revert to a previous version if any mistakes are made. A new version is automatically saved each time the design is saved, enabling you to review or restore earlier changes when needed.
+
+## 3D View
+
+This window displays all 3D models available on the domain. From here, you can select and assign a 3D model to the design.
+
+## Related articles
+
+<CardGroup cols={2}>
+  <Card title="Managing your Designs" icon="folder-open" href="/tutorial/managing-your-designs">
+    Create, edit, organize and configure designs and categories in the admin.
+  </Card>
+  <Card title="How To Create A Design" icon="plus" href="/tutorial/how-to-create-a-design">
+    Build your own design template step by step in the standalone editor.
+  </Card>
+  <Card title="Types of PitchPrint design" icon="layer-group" href="/tutorial/types-of-pitchprint-designs">
+    Understand the four canvas layers and the three main design types.
+  </Card>
+  <Card title="How to import designs" icon="file-import" href="/tutorial/how-to-import-designs">
+    Import ready-made designs from the PitchPrint store into your categories.
+  </Card>
+</CardGroup>
