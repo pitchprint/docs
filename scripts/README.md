@@ -138,8 +138,11 @@ within Help Scout's rate limits. If you hit HTTP `429`, lower the concurrency.
 
 ## Known limitations
 
-- A few API Reference articles stored code as prose (not `<pre>` blocks) in Help
-  Scout, so it renders as escaped inline text rather than code blocks.
+- A few articles stored code as prose (not `<pre>` blocks) in Help Scout, so the
+  converter emits it as escaped inline text rather than fenced code blocks. The
+  currently-published pages have been fixed by hand (wrapped in fenced blocks), but
+  re-running `convert`/`publish` would reintroduce the raw output — re-apply the
+  fix, or teach `sanitizeMdx()` to fence these.
 - Images still point at Help Scout's S3 URLs, and internal links use
   `docs.pitchprint.com` URLs — neither is rewritten to local/relative paths yet.
 - API Reference includes 13 articles from the legacy `v8 - old` collection Help

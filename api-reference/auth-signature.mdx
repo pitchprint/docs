@@ -1,58 +1,59 @@
 ---
-title: "Auth Signature"
-description: "Kindly note, all calls to the Runtime API requires a valid signature."
+title: "Authentication"
+description: "How your API Key and Secret Key work, and how to sign Runtime API requests."
 ---
 
-> Kindly note, all calls to the Runtime API requires a valid signature.
+Every call to the Runtime API is authenticated with a signature generated from your domain's keys. Get both keys from the [Domains page](https://admin.pitchprint.io/domains) in your PitchPrint admin.
 
-#### Generate a signature
+| Key | Where it runs |
+| --- | --- |
+| **API Key** | Public-facing. Identifies your domain on each request. |
+| **Secret Key** | Server-side only. Used to build the signature — never sent in a request. |
 
-For your app connect to our Runtime endpoint and fetch data, you need to authenticate your app using the Secret Key that was generated for you when the domain was created alongside the API Key and a timestamp.
+<Warning>
+  Never expose your Secret Key in client-side code, a public repository, or a mobile app bundle. Use it only from your server.
+</Warning>
 
-> You can get your api and secret keys or generate one in our admin [Domains Page](https://admin.pitchprint.io/domains)
+## Generate a signature
 
-All the three parameters are sent along to the server for authentication with the exception of the secret key. What happens is that our server tries to replicate the signature using the secret key in file along with the details sent, to verify if the request is actually coming from you or not. The timestamp allows for one hour window after which the key becomes invalid.
+Append your **API Key + Secret Key + timestamp** and take the MD5 hash of the resulting string — that hash is your signature. The timestamp is a UNIX timestamp (seconds since the epoch) and is valid for a one-hour window, so generate a new signature for each request.
 
-> To generate a signature, you simply append the API Key + Secret Key + Timestamp and calculate the MD5 hash of the string. That is your signature.
->
-> The timestamp is a UNIX time stamp, the number of seconds since the EPOCH
-
-Each time you want to make a request, you are required to generate a new signature.
-Please ensure to protect the script that generates the signature to ensure that only scripts with right privileges can make that call.
+<Warning>
+  Protect the script that generates your signature so that only code with the right privileges can call it — it has access to your Secret Key.
+</Warning>
 
 ```php
 <?php
-	define('PITCH_APIKEY', 'your-api-key');
-	define('PITCH_SECRETKEY', 'your-secret-key');
+    define('PITCH_APIKEY', 'your-api-key');
+    define('PITCH_SECRETKEY', 'your-secret-key');
 
-	function generateSignature () {
-		$timestamp = time();
-		$signature = md5(PITCH_APIKEY . PITCH_SECRETKEY . $timestamp);
-		return array ('timestamp'=>$timestamp, 'apiKey'=>PITCH_APIKEY, 'signature'=>$signature);
-	}
+    function generateSignature () {
+        $timestamp = time();
+        $signature = md5(PITCH_APIKEY . PITCH_SECRETKEY . $timestamp);
+        return array ('timestamp'=>$timestamp, 'apiKey'=>PITCH_APIKEY, 'signature'=>$signature);
+    }
 ?>
 ```
 
 ```javascript
-var md5 = require('MD5');		//Note, you need the MDS module
+const md5 = require('md5'); // you need the md5 module
 
 function generateSignature () {
-	var _timestamp = Math.floor(Date.now() / 1000),
-	_apiKey = 'your-api-key',
-	_secretKey = 'your-secret-key',
-	_signature;
-
-	_signature = md5(_apiKey + _secretKey + _signature);
-	return { timestamp: _timestamp, apiKey: _apiKey, signature: _signature };
+  const timestamp = Math.floor(Date.now() / 1000);
+  const apiKey = 'your-api-key';
+  const secretKey = 'your-secret-key';
+  const signature = md5(apiKey + secretKey + timestamp);
+  return { timestamp, apiKey, signature };
 }
 ```
 
-> The end-point for all runtime calls in version 9 is **https://api.pitchprint.io/runtime/**
+## Sending the request
 
-> **Kindly note, in this version, you need to pass in the parameters as JSON string, not query string pairs. So please observe in the samples, we used**:
->
-> `curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($opts));`
->
+Send `apiKey`, `timestamp` and `signature` — plus any endpoint-specific fields — as a JSON body. The endpoint for all runtime calls is **https://api.pitchprint.io/runtime/**.
+
+<Note>
+  Pass the parameters as a JSON string, not query-string pairs — e.g. `curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($opts));`
+</Note>
 
 ## Related articles
 

@@ -1,29 +1,64 @@
 ---
-title: "Introduction"
-description: "Are you building a website for a print company or have an existing one and will like your end users to customize their print orders on this site? Then welcom..."
+title: "API overview"
+description: "Base URL, authentication, and conventions for the PitchPrint Runtime API."
 ---
 
-Are you building a website for a print company or have an existing one and will like your end users to customize their print orders on this site? Then welcome to **PitchPrint**!
+The PitchPrint Runtime API lets your server fetch designs and projects, clone projects, and render print-ready files for your domain. Use it server-side, authenticated with your domain's **API Key** and **Secret Key**.
 
-**PitchPrint** is a web application that provides your website with a functionality that allows your users to easily customize graphic designs for print products. With our interface, your site becomes the easy-to-use-photoshop for users to customize products such as Business Cards, Flyers, Calendars, TShirts, Mugs, Envelopes, Phone Casings and many more products..
+## Base URL
 
-Our interface loads the front app into your site, handles all uploads and generates the final print-ready PDF or Raster image files. By following the topics listed in this section, you will, at the end have integrated the PitchPrint editing application into your webpage. A sample is shown below:
+All Runtime API calls are made to:
 
-![](https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5ae460af2c7d3a3f981f0b39/file-Dhl8loMw4l.png)
+```
+https://api.pitchprint.io/runtime/
+```
 
-## Related articles
+Rendered files are served from dedicated hosts — `pdf.pitchprint.com` for PDFs and `png.pitchprint.com` (or `jpeg`) for raster images.
 
-<CardGroup cols={2}>
-  <Card title="Generate your auth keys" icon="key" href="/api-reference/generate-your-auth-keys">
-    Create the API and Secret keys needed to integrate the app.
+## Authentication
+
+Every `/runtime/` request is authenticated with a **signature** — the MD5 hash of your API Key, Secret Key and a UNIX timestamp:
+
+```
+signature = MD5(apiKey + secretKey + timestamp)
+```
+
+You send `apiKey`, `timestamp` and `signature` with each request — never the Secret Key itself. See [Authentication](/api-reference/auth-signature) for the full walkthrough and code samples.
+
+<Warning>
+  Your Secret Key must stay server-side. Never expose it in browser code or a public repository.
+</Warning>
+
+## Request format
+
+- Send parameters as a **JSON body** (not query-string pairs) with `Content-Type: application/json`.
+- Requests are **POST**, except file rendering which is **GET**.
+- The `timestamp` is valid for a **one-hour window** — generate a fresh signature for each call.
+
+## Responses
+
+Successful calls return a JSON object with a `data` field:
+
+```json
+{ "data": {} }
+```
+
+Action endpoints such as [Clone Project](/api-reference/clone-project) return a status instead:
+
+```json
+{ "error": false, "status": 1, "newId": "e7d1ab10b9eb9b142cd4c702f0e1c69f" }
+```
+
+## Choose your path
+
+<CardGroup cols={3}>
+  <Card title="Integrating PitchPrint" icon="plug" href="/api-reference/integration">
+    Generate your keys, load the app into your page and handle saved projects.
   </Card>
-  <Card title="Integration" icon="plug" href="/api-reference/integration">
-    Load the PitchPrint app into your page and wire up events.
+  <Card title="Designer API" icon="sliders" href="/api-reference/designer-ready-method">
+    Hook into the editor with methods, properties and events.
   </Card>
-  <Card title="After Save" icon="floppy-disk" href="/api-reference/after-save">
-    Handle the project-saved event and use the returned data.
-  </Card>
-  <Card title="My Account - Saved Projects" icon="user" href="/api-reference/custom-integration-my-account">
-    Add a My Account page so customers can view their saved projects.
+  <Card title="Runtime API" icon="server" href="/api-reference/fetch-designs">
+    Load designs, projects and render PDFs server-side.
   </Card>
 </CardGroup>

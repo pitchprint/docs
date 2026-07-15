@@ -1,23 +1,20 @@
 ---
 title: "Fetch Design Categories"
-description: "Use this endpoint to fetch all the design categories associated with your particular domain."
 ---
 
 Use this endpoint to fetch all the design categories associated with your particular domain.
 
 The only parameters required are the signature parameters to authenticate the call.
 
-**\[POST\]** [https://api.pitchprint.io/runtime/fetch-design-categories](https://api.pitchprint.io/runtime/fetch-design-categories)
+**[POST]** `https://api.pitchprint.io/runtime/fetch-design-categories`
 
 ##### BODY PARAMS
 
 | Parameter | Required | Description |
 | --- | --- | --- |
-| apiKey | Yes | Your domain's api key |
-| timestamp | Yes | Timestamp generated at runtime |
-| signature | Yes | Signature = MD5(apikey + secretKey + timestamp) |
-
-* * *
+| `apiKey` | Yes | Your domain's api key |
+| `timestamp` | Yes | Timestamp generated at runtime |
+| `signature` | Yes | Signature = MD5(apiKey + secretKey + timestamp) |
 
 ##### SAMPLE CODE
 
@@ -38,15 +35,11 @@ curl_setopt($ch, CURLOPT_URL, "https://api.pitchprint.io/runtime/fetch-design-ca
 curl_setopt($ch, CURLOPT_POST, true);
 
 $opts = generateSignature();
-$opts['designId'] = 'your-design-id-here';
 
 curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($opts));
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
 $output = curl_exec($ch);
-$http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-$content_type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
-$curlerr = curl_error($ch);
 curl_close($ch);
 
 header('Content-Type: application/json');
@@ -60,12 +53,14 @@ echo $output;
 
 ```json
 {
-	[
-    		"id": "5afb3c7960aa7ff839dhs3767553a3fa2",
-    		"title": "Business Cards",
-    		"created": 1522140375,
-    		"modules": ""
-	]
+  "data": [
+    {
+      "id": "5afb3c7960aa7ff839dhs3767553a3fa2",
+      "title": "Business Cards",
+      "created": 1522140375,
+      "modules": ""
+    }
+  ]
 }
 ```
 
@@ -85,4 +80,3 @@ echo $output;
     Generate the MD5 signature required to authenticate Runtime API calls.
   </Card>
 </CardGroup>
-

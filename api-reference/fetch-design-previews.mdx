@@ -2,6 +2,19 @@
 title: "Fetch Design Previews"
 ---
 
+Use this endpoint to retrieve the preview images for the designs in your domain.
+
+The only parameters required are the signature parameters to authenticate the call.
+
+**[POST]** `https://api.pitchprint.io/runtime/fetch-design-previews`
+
+##### BODY PARAMS
+
+| Parameter | Required | Description |
+| --- | --- | --- |
+| `apiKey` | Yes | Your domain's api key |
+| `timestamp` | Yes | Timestamp generated at runtime |
+| `signature` | Yes | Signature = MD5(apiKey + secretKey + timestamp) |
 
 ## Related articles
 
