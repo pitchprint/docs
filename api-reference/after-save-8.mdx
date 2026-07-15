@@ -1,0 +1,50 @@
+---
+title: "After save"
+---
+
+So what happens next after our customer clicks the Save Button in the designer?
+
+The designer automatically generates all the design pages, saves the project on our servers, generates a PDF File, then comes back to you with all these details.
+
+This callback is handled by the function we wrote earlier on  **"onSave"**. So this is where we need to do our next plumbing.
+
+But first, let's create a div element that will hold all the image previews and add it to the body like this:
+
+```html
+<div id="pp_preview_div"> </div>
+```
+
+Next, we add this to our onSave function:
+
+```javascript
+function onSave(_val) {
+	mode = 'edit';
+	projectSource = _val.source;
+	projectId = _val.projectId;
+	numPages = _val.numPages;
+	previews = _val.previews;
+
+	//Let's show previews
+	var _prevDiv = $('#pp_preview_div');
+	_prevDiv.empty();
+
+	for (var i=0; i < numPages; i++) {
+		_prevDiv.append('<img style="border: 1px solid #eee; margin: 10px" src="' + rscBase + 'images/previews/' + projectId + '_' + (i+1) + '.jpg" >');
+    //Please note, previews are stored based on design page number, thus (i+1)... page 1, page 2...
+	}
+
+	designer.close(true);
+  //Setting this to true ensures the designer is active but with previews shown.
+
+	//If you pass in false, you will need to collapse the editor or remove it from DOM.
+
+	//Now show the launch button again, change the text to edit
+	$('#launch_btn').show().text('Edit Design');
+}
+```
+
+Calling the close function on the designer simply closes it. Then we change the button label to "Edit Design".
+
+From here on, you can integrate as you like to your web application. You have the projectId, the preview images, source, number of pages and most information you need to identify this special customization so it goes along with the product to the cart.
+
+Good luck with the integration!

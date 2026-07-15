@@ -1,0 +1,91 @@
+---
+title: "Fetch Design"
+---
+
+Use this endpoint to fetch the source data for a design associated with your particular domain.
+
+This requires a valid designId as well as the signature parameters to authenticate the call. You can check the fetch designs link to get all the designs in your domain.
+
+Ensure you do not use the categoryId as against a designId. All designs are inside categories.
+
+**[POST]** `https://api.pitchprint.io/runtime/fetch-design`
+
+##### BODY PARAMS
+
+| Parameter | Required | Description |
+| --- | --- | --- |
+| `apiKey` | Yes | Your domain's api key |
+| `timestamp` | Yes | Timestamp generated at runtime |
+| `signature` | Yes | Signature = MD5(apiKey + secretKey + timestamp) |
+| `designId` | Yes | ID of a single design |
+
+##### SAMPLE CODE
+
+```php
+<?php
+
+define('PITCH_APIKEY', 'your-api-key');
+define('PITCH_SECRETKEY', 'your-secret-key');
+
+function generateSignature () {
+    $timestamp = time();
+    $signature = md5(PITCH_APIKEY . PITCH_SECRETKEY . $timestamp);
+    return array ('timestamp'=>$timestamp, 'apiKey'=>PITCH_APIKEY, 'signature'=>$signature);
+}
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, "https://api.pitchprint.io/runtime/fetch-design");
+curl_setopt($ch, CURLOPT_POST, true);
+
+$opts = generateSignature();
+$opts['designId'] = 'your-design-id-here';
+
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($opts));
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+$output = curl_exec($ch);
+curl_close($ch);
+
+header('Content-Type: application/json');
+
+echo $output;
+
+?>
+```
+
+##### RESPONSE
+
+```json
+{
+  "data": {
+    "_id": "5afb3c7960aa7ff504632367553a3fa2",
+    "lastModified": "2015-01-12T06:01:20.000Z",
+    "_owner": "***",
+    "map": {
+      "backgroundimages": { "items": "", "mode": "exclude" },
+      "colors": { "items": "", "mode": "exclude" },
+      "images": { "items": "", "mode": "exclude" },
+      "modules": "{}",
+      "fonts": { "items": "", "mode": "exclude" }
+    },
+    "design": { }
+  }
+}
+```
+
+## Related articles
+
+<CardGroup cols={2}>
+  <Card title="Fetch Designs" icon="list" href="/api-reference/fetch-designs">
+    List all designs under a given category.
+  </Card>
+  <Card title="Fetch Design Categories" icon="folder" href="/api-reference/fetch-design-categories">
+    List all design categories in your domain.
+  </Card>
+  <Card title="Fetch Design Previews" icon="images" href="/api-reference/fetch-design-previews">
+    Retrieve preview images for your designs.
+  </Card>
+  <Card title="Auth Signature" icon="key" href="/api-reference/auth-signature">
+    Generate the MD5 signature required to authenticate Runtime API calls.
+  </Card>
+</CardGroup>

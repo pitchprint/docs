@@ -1,0 +1,34 @@
+---
+title: "Render PDF & Raster"
+---
+
+At the moment, all PDF and Raster files are being rendered at runtime.
+
+**[GET]** `https://pdf.pitchprint.com/{projectId}`
+
+To get the PNG raster, simply use the `png` or `jpeg` subdomains.
+
+**[GET]** `https://png.pitchprint.com/{projectId}`
+
+##### PATH PARAMS
+
+| Parameter | Description |
+| --- | --- |
+| `projectId` | ID of the project to render |
+
+## Related articles
+
+<CardGroup cols={2}>
+  <Card title="Fetch Project" icon="file-code" href="/api-reference/fetch-project">
+    Retrieve the source data for a single project by its projectId.
+  </Card>
+  <Card title="Fetch User Projects" icon="user" href="/api-reference/fetch-user-projects">
+    List all projects linked to a specific user.
+  </Card>
+  <Card title="Clone Project" icon="clone" href="/api-reference/clone-project">
+    Clone an existing project associated with your domain.
+  </Card>
+  <Card title="Auth Signature" icon="key" href="/api-reference/auth-signature">
+    Generate the MD5 signature required to authenticate Runtime API calls.
+  </Card>
+</CardGroup>

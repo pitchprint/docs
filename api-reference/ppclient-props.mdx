@@ -1,0 +1,46 @@
+---
+title: "PPCLIENT PROPS"
+---
+
+# PPCLIENT Properties
+
+You can define project-specific customization properties using the global `window.PPCLIENT` object. These can be set in the following ways:
+
+```javascript
+window.PPCLIENT = {};
+// or individually:
+window.PPCLIENT["propertyName"] = "value";
+```
+
+| Property | Type | Description |
+| --- | --- | --- |
+| `customImageSelector` | `string` | Custom CSS selector for preview images in the project view. |
+| `customThumbSelector` | `string` | Custom CSS selector for preview thumbnails in the project view. |
+| `smartSizeSelector` | `string` | Custom CSS selector for Smart Sizes module (e.g., for selecting sizes). |
+| `quantitySelector` | `string` | Custom CSS selector for quantity input or page count selector. |
+| `userAccountPath` | `string` | Custom URL path to direct users to view saved designs. |
+| `customAccountDivSel` | `string` | Custom selector to embed the Saved Designs section on a page. |
+| `hideObserverablePreview` | `boolean` | Whether to hide preview images in observable design states. |
+| `createDesignLabel` | `string` | Unknown — potentially affects label for design creation (platform-specific). |
+| `customCartButtonSelector` | `string` | Custom CSS selector for the Add to Cart button. |
+| `langEdits` | `object` | Object to override language labels/text in the UI. |
+| `customizationRequired` | `boolean` | If `true` , users must customize the design before adding it to cart. |
+
+```javascript
+window.PPCLIENT = {
+  customImageSelector: ".product-preview img",
+  customThumbSelector: ".preview-thumbnails img",
+  smartSizeSelector: "#smart-size-options",
+  quantitySelector: "#page-count",
+  userAccountPath: "/my-account/saved-designs",
+  customAccountDivSel: "#saved-designs-wrapper",
+  hideObserverablePreview: true,
+  createDesignLabel: "Create Design",
+  customCartButtonSelector: ".add-to-cart-btn",
+  langEdits: {
+    "Customize": "Personalize",
+    "Add to Cart": "Buy Now"
+  },
+  customizationRequired: true
+};
+```

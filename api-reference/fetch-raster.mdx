@@ -1,0 +1,65 @@
+---
+title: "Fetch Raster"
+---
+
+Use this endpoint to fetch the high resolution image files for a project associated with your particular domain. The response is a zipped file so it needs to be handled as such.
+
+This requires a valid projectId as well as the signature parameters to authenticate the call.
+
+**\[POST\]** [https://pitchprint.net/api/runtime/fetch-raster](https://pitchprint.net/api/runtime/fetch-raster)
+
+##### BODY PARAMS
+
+| Parameter | Description |
+| --- | --- |
+| `apiKey` (required) | Your domain's api key |
+| `timestamp` (required) | Timestamp generated at runtime |
+| `signature` (required) | Signature = MD5(apikey + secretKey + timestamp) |
+| `projectId` (required) | ID of a project |
+
+* * *
+
+##### SAMPLE CODE
+
+```php
+<?php
+
+define('PITCH_APIKEY', 'your-api-key');
+define('PITCH_SECRETKEY', 'your-secret-key');
+
+function generateSignature () {
+    $timestamp = time();
+    $signature = md5(PITCH_APIKEY . PITCH_SECRETKEY . $timestamp);
+    return array ('timestamp'=>$timestamp, 'apiKey'=>PITCH_APIKEY, 'signature'=>$signature);
+}
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, 'https://pitchprint.net/api/runtime/fetch-raster');
+curl_setopt($ch, CURLOPT_POST, true);
+
+$opts = generateSignature();
+$opts['projectId'] = 'your-project-id-here';
+
+curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($opts));
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+
+$output = curl_exec($ch);
+curl_close($ch);
+
+header('Content-Description: File Transfer');
+header('Content-Type: application/zip');
+header('Content-Disposition: attachment; filename=projectRaster.zip');
+header('Content-Transfer-Encoding: binary');
+header('Expires: 0');
+header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+header('Pragma: public');
+header('Content-Length: ' . strlen($output));
+
+ob_clean();
+flush();
+echo $output;
+flush();
+
+?>
+```

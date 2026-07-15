@@ -1,0 +1,126 @@
+---
+title: "Fetch Project"
+---
+
+Use this endpoint to fetch the source data for a project associated with your particular domain.
+
+This requires a valid projectId as well as the signature parameters to authenticate the call.
+
+**[POST]** `https://api.pitchprint.io/runtime/fetch-project`
+
+##### BODY PARAMS
+
+| Parameter | Required | Description |
+| --- | --- | --- |
+| `apiKey` | Yes | Your domain's api key |
+| `timestamp` | Yes | Timestamp generated at runtime |
+| `signature` | Yes | Signature = MD5(apiKey + secretKey + timestamp) |
+| `projectId` | Yes | ID of a single project |
+
+##### SAMPLE CODE
+
+```php
+<?php
+
+define('PITCH_APIKEY', 'your-api-key');
+define('PITCH_SECRETKEY', 'your-secret-key');
+
+function generateSignature () {
+    $timestamp = time();
+    $signature = md5(PITCH_APIKEY . PITCH_SECRETKEY . $timestamp);
+    return array ('timestamp'=>$timestamp, 'apiKey'=>PITCH_APIKEY, 'signature'=>$signature);
+}
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, "https://api.pitchprint.io/runtime/fetch-project");
+curl_setopt($ch, CURLOPT_POST, true);
+
+$opts = generateSignature();
+$opts['projectId'] = 'your-project-id-here';
+
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($opts));
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+$output = curl_exec($ch);
+curl_close($ch);
+
+header('Content-Type: application/json');
+
+echo $output;
+
+?>
+```
+
+##### RESPONSE
+
+```json
+{
+  "data": {
+    "_id": "835a460c916dec74f02adef0e4a9dce9",
+    "version": "8.0.0",
+    "_author": "guest",
+    "showPresetForm": false,
+    "hideBackgroundPanel": false,
+    "hideTextPanel": false,
+    "hideImagePanel": false,
+    "product": { "id": "28", "name": "HTC Touch HD" },
+    "disableImageClick": false,
+    "designId": "74b9c1f4cfbbec8f59245304d7f7332c",
+    "projectId": "835a460c916dec74f02adef0e4a9dce9",
+    "productId": "28",
+    "layout": "default",
+    "title": "Red T-Shirt",
+    "scaling": 0.28826764436296975,
+    "unit": "cm",
+    "welcomeMsg": "Welcome to your creative side.",
+    "pages": [
+      {
+        "pageData": {
+          "title": "Front",
+          "render": true,
+          "fWidth": 67.249,
+          "fHeight": 77,
+          "templateSource": "//s3.amazonaws.com/pitchprint.cdn/.../front.png",
+          "canvasDimension": { "top": 10, "left": 16, "right": 16.249, "bottom": 12, "width": 35, "height": 55 },
+          "index": 0
+        },
+        "groups": [],
+        "items": [
+          {
+            "type": "i-text",
+            "left": 143.29,
+            "top": 101.31,
+            "fill": "#ffffff",
+            "text": "Click Here\nTo Edit\nYour Awesome\nText",
+            "fontSize": 40,
+            "fontWeight": "bold",
+            "fontFamily": "Candara",
+            "textAlign": "center",
+            "includeInForm": false
+          }
+        ]
+      }
+    ],
+    "_owner": "9a3a11ea5f5fc12e7a41f3098a082cd9",
+    "lastModified": "2015-08-24T16:37:19.876Z",
+    "enabled": true
+  }
+}
+```
+
+## Related articles
+
+<CardGroup cols={2}>
+  <Card title="Fetch User Projects" icon="user" href="/api-reference/fetch-user-projects">
+    List all projects linked to a specific user.
+  </Card>
+  <Card title="Clone Project" icon="clone" href="/api-reference/clone-project">
+    Clone an existing project associated with your domain.
+  </Card>
+  <Card title="Render PDF & Raster" icon="file-pdf" href="/api-reference/render-pdf-raster">
+    Get the rendered PDF or raster image for a project.
+  </Card>
+  <Card title="Auth Signature" icon="key" href="/api-reference/auth-signature">
+    Generate the MD5 signature required to authenticate Runtime API calls.
+  </Card>
+</CardGroup>
