@@ -12,3 +12,6 @@ node_modules/
 
 # Data
 data/
+
+# Claude
+.claude/
