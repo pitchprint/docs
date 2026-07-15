@@ -4,18 +4,16 @@ title: "Fetch User Projects"
 
 Use this endpoint to fetch all projects linked to a user.
 
-**\[POST\]** [https://api.pitchprint.com/runtime/fetch-user-project](https://api.pitchprint.com/runtime/fetch-user-project)
+**[POST]** `https://api.pitchprint.com/runtime/fetch-user-projects`
 
-**BODY PARAMS**
+##### BODY PARAMS
 
 | Parameter | Description |
 | --- | --- |
-| Secret Key | Your domain's secret key |
-| userId | The unique **userId** of the user. |
+| `Secret Key` | Your domain's secret key, sent as the `Authorization` header |
+| `userId` | The unique **userId** of the user |
 
-* * *
-
-**SAMPLE CODE**
+##### SAMPLE CODE
 
 ```bash
 curl --location 'https://api.pitchprint.com/runtime/fetch-user-projects' \
@@ -26,41 +24,31 @@ curl --location 'https://api.pitchprint.com/runtime/fetch-user-projects' \
 }'
 ```
 
-**RESPONSE**
+##### RESPONSE
 
 ```json
 {
-    "data": [
-        {
-            "product": {
-                "name": "mens vest",
-                "id": 6734621474874,
-                "title": "Mens Vest",
-                "url": "pitchprint.myshopify.com/collections/frontpage/products/mens-vest"
-            },
-            "apiKey": "pitchprint.myshopify.com",
-            "lastEdit": 1732172100,
-            "pageLength": 1,
-            "mode": "new",
-            "created": 1732172100,
-            "userData": {
-                "name": "undefined undefined"
-            },
-            "userId": "5629946986554",
-            "_id": "d8b63bf34ec40b4a555c5fcb0a577324e6",
-            "saveForLater": false,
-            "designId": "6e4439d8ce445bde13e2c546dd0a45c7",
-            "title": "Men's Vest (3D)"
-        },
-
-        {
-             ...another project
-        },
-
-        {
-             ...another project
-        },
-     ],
+  "data": [
+    {
+      "product": {
+        "name": "mens vest",
+        "id": 6734621474874,
+        "title": "Mens Vest",
+        "url": "pitchprint.myshopify.com/collections/frontpage/products/mens-vest"
+      },
+      "apiKey": "pitchprint.myshopify.com",
+      "lastEdit": 1732172100,
+      "pageLength": 1,
+      "mode": "new",
+      "created": 1732172100,
+      "userData": { "name": "undefined undefined" },
+      "userId": "5629946986554",
+      "_id": "d8b63bf34ec40b4a555c5fcb0a577324e6",
+      "saveForLater": false,
+      "designId": "6e4439d8ce445bde13e2c546dd0a45c7",
+      "title": "Men's Vest (3D)"
+    }
+  ]
 }
 ```
 
@@ -80,4 +68,3 @@ curl --location 'https://api.pitchprint.com/runtime/fetch-user-projects' \
     Generate the MD5 signature required to authenticate Runtime API calls.
   </Card>
 </CardGroup>
-

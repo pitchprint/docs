@@ -4,18 +4,16 @@ title: "Fetch Designs"
 
 Use this endpoint to fetch all the designs under a category.
 
-**\[POST\]** [https://api.pitchprint.io/runtime/fetch-designs](https://api.pitchprint.io/runtime/fetch-designs)
+**[POST]** `https://api.pitchprint.io/runtime/fetch-designs`
 
 ##### BODY PARAMS
 
-| Parameter | Description |
-| --- | --- |
-| apiKey | Your domain's api key |
-| timestamp | Timestamp generated at runtime |
-| signature | Signature = MD5(apikey + secretKey + timestamp) |
-| categoryId | ID of a design category |
-
-* * *
+| Parameter | Required | Description |
+| --- | --- | --- |
+| `apiKey` | Yes | Your domain's api key |
+| `timestamp` | Yes | Timestamp generated at runtime |
+| `signature` | Yes | Signature = MD5(apiKey + secretKey + timestamp) |
+| `categoryId` | Yes | ID of a design category |
 
 ##### SAMPLE CODE
 
@@ -42,9 +40,6 @@ curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($opts));
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
 $output = curl_exec($ch);
-$http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-$content_type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
-$curlerr = curl_error($ch);
 curl_close($ch);
 
 header('Content-Type: application/json');
@@ -58,26 +53,22 @@ echo $output;
 
 ```json
 {
-	data: {
-		categoryId: "cat-id",
-		items: [
-			{
-				designId: "******K83RU7R",
-				version: 9,
-				unit: "cm",
-				lastModified:1485934721,
-				title: "design title",
-				previews: [
-					"https://pitchprint.io/previews/design_id_1.jpg",
-					"https://pitchprint.io/previews/design_id_2.jpg"
-				]
-				... more design data
-			},
-			{
-				...another design
-			}
-		]
-	}
+  "data": {
+    "categoryId": "cat-id",
+    "items": [
+      {
+        "designId": "******K83RU7R",
+        "version": 9,
+        "unit": "cm",
+        "lastModified": 1485934721,
+        "title": "design title",
+        "previews": [
+          "https://pitchprint.io/previews/design_id_1.jpg",
+          "https://pitchprint.io/previews/design_id_2.jpg"
+        ]
+      }
+    ]
+  }
 }
 ```
 
@@ -97,4 +88,3 @@ echo $output;
     Generate the MD5 signature required to authenticate Runtime API calls.
   </Card>
 </CardGroup>
-
