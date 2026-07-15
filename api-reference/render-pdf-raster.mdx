@@ -1,15 +1,20 @@
 ---
 title: "Render PDF & Raster"
-description: "At the moment, all PDF and Raster files are being rendered at runtime."
 ---
 
 At the moment, all PDF and Raster files are being rendered at runtime.
 
-**\[GET\]**[https://pdf.pitchprint.com/projectId](https://pdf.pitchprint.com/projectId)
+**[GET]** `https://pdf.pitchprint.com/{projectId}`
 
-To get the PNG raster, simply use the png or jpeg subdomains
+To get the PNG raster, simply use the `png` or `jpeg` subdomains.
 
-**\[GET\]**[https://png.pitchprint.com/projectId](https://png.pitchprint.com/projectId)
+**[GET]** `https://png.pitchprint.com/{projectId}`
+
+##### PATH PARAMS
+
+| Parameter | Description |
+| --- | --- |
+| `projectId` | ID of the project to render |
 
 ## Related articles
 
@@ -27,4 +32,3 @@ To get the PNG raster, simply use the png or jpeg subdomains
     Generate the MD5 signature required to authenticate Runtime API calls.
   </Card>
 </CardGroup>
-

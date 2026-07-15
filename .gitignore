@@ -1,6 +1,7 @@
 # Environment / secrets
 .env
 .env.local
+.env.example
 .env.*.local
 
 # OS / editor
@@ -11,3 +12,6 @@ node_modules/
 
 # Data
 data/
+
+# Claude
+.claude/

@@ -1,13 +1,12 @@
 ---
 title: "Designer ready method"
-description: "We have implemented an easy way of integrating your custom code to the editor using the the ppDesignerInitialized method which can be hooked to the global pa..."
 ---
 
 We have implemented an easy way of integrating your custom code to the editor using the the ppDesignerInitialized method which can be hooked to the global page. This method is called only via our client integration for cart frameworks. As such, it will not work for custom integration.
 
 So if you are using OpenCart, PrestaShop, Shopify or WordPress, this will get called.
 
-Simply, it's a means of knowing when the designer has been initialized and time to hook up your [events](http://docs.pitchprint.com/article/12-events) to the designer.
+Simply, it's a means of knowing when the designer has been initialized and time to hook up your [events](/api-reference/events) to the designer.
 
 ```javascript
 window.ppDesignerInitialized = function(_designer) {

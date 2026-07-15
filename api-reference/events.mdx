@@ -1,13 +1,12 @@
 ---
 title: "Events"
-description: "Starting with version 9, the PitchPrint app is instantiated in a separate iFrame to sandbox it from your product page as well as prevent styling conflicts wi..."
 ---
 
 Starting with version 9, the PitchPrint app is instantiated in a separate iFrame to sandbox it from your product page as well as prevent styling conflicts with the hosting page. To do this, we created two classes, the  **PitchPrintClient** which is instantiated inside the hosting page and a **PitchPrintFrame** which lives in the iFrame.
 
 The  **PitchPrintClient** class is your entry point into the app. This is the class that handles the creation of the iFrame and some other initialization procedures.
 
-> If you are on any of the cart frameworks, you can use the; [designer ready method to hook your events](https://docs.pitchprint.com/article/91-designer-ready-method)
+> If you are on any of the cart frameworks, you can use the; [designer ready method to hook your events](/api-reference/designer-ready-method)
 
 PitchPrint is built on  [T3 Javascript Framework](http://t3js.org/) and adheres to its core philosophy of modular design. To this end, everything on the PitchPrint app is actually a module and are loosely coupled, which means modules don't talk directly to each other. They simply broadcast events and any interested listener can plug in and perform an action based on the event.
 
