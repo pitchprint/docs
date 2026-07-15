@@ -1,0 +1,49 @@
+---
+title: "Localstorage Trigger"
+---
+
+Recent updates in browser settings have affected how our editor functions in various browsers which has led to us receiving multiple feedback from our customers who were affected by the latest browser security settings which resulted in the customize button not showing in the respective customer stores.
+
+After conducting a series of tests, we found out that Internet Explorer is not compatible with our platform, and this error is experienced by customers due to higher security settings enabled and subsequently blocking access to localStorage.
+
+We have come up with a temporary solution that detects if Internet Explorer is being used as the default browser, if so, the message seen in the image below will appear. Kindly click 'fix this problem' and you will be prompted to the next steps.
+
+![](https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/605b2a10c44f5d025f4476bf/file-A2fNpRPy1x.png)
+
+A popup message will appear that prompts you to update or change browser.
+
+![](https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/605b2d483f70ab34d9ba2829/file-egHidad1nM.png)We can also detect if localStorage is accessible because our platform requires localStorage in order to function.
+
+If you are using any of the following browsers and are experiencing the error mentioned above, Please follow these easy steps below to change your security settings accordingly so as to rectify this error:
+
+**Chrome**
+Chrome users go to [Security settings](chrome://settings/security).
+Please change your settings to Standard protection indicated below:
+
+![](https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/6059de350ad05379b10cfa97/file-Is98XyADd0.png)
+
+**Edge
+**Edge users go to [Privacy settings](edge://settings/privacy).
+Change your settings to Balanced as see on the screenshot below:
+
+![](https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/6059e09e0ad05379b10cfaa6/file-Nb3RGvJNkE.png)
+
+**Firefox**
+Firefox users please go to [Browser privacy](about:preferences#privacy)
+Change your settings to standard as highlighted below:
+
+![](https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/6059e065c44f5d025f446eca/file-hMcEhuTAev.png)
+
+**SAFARI**
+
+Safari users please go to Security Settings,
+Make sure that Enable JavaScript is ticked:
+
+![](https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/605c561bc44f5d025f447d09/file-UKilpa04ng.png)
+
+Then go to Privacy Settings,
+Make sure that Block all cookies is not ticked.
+
+![](https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/6061a2cfd97e2f20e67ce838/file-X0j05vpqEX.png)Once you have updated your security settings as suggested above, your respective browser will not block localStorage going forward and your designs will load correctly.
+
+Please do get in touch with our support team if you need further assistance with the above.
