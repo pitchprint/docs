@@ -364,39 +364,6 @@
               "api-reference/adding-pages-programmatically",
               "api-reference/ppclient-props"
             ]
-          },
-          {
-            "group": "Legacy (v8)",
-            "pages": [
-              {
-                "group": "Getting Started (v8)",
-                "pages": [
-                  "api-reference/introduction-5",
-                  "api-reference/authentication",
-                  "api-reference/generate-your-auth-keys-6",
-                  "api-reference/integration-7"
-                ]
-              },
-              {
-                "group": "Designer API (v8)",
-                "pages": [
-                  "api-reference/initialization-parameters",
-                  "api-reference/designer-ready-method-60",
-                  "api-reference/events-12",
-                  "api-reference/after-save-8"
-                ]
-              },
-              {
-                "group": "Data Fetching (v8)",
-                "pages": [
-                  "api-reference/fetch-design-source",
-                  "api-reference/fetch-designs-30",
-                  "api-reference/fetch-project-source",
-                  "api-reference/fetch-pdf",
-                  "api-reference/fetch-raster"
-                ]
-              }
-            ]
           }
         ]
       }
