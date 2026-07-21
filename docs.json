@@ -21,84 +21,109 @@
             ]
           },
           {
+            "group": "Setup & Integration",
+            "pages": [
+              {
+                "group": "Integrating PitchPrint",
+                "expanded": false,
+                "pages": [
+                  "documentation/generate-your-auth-keys",
+                  "documentation/integration",
+                  "documentation/after-save",
+                  "documentation/custom-integration-my-account"
+                ]
+              },
+              {
+                "group": "Platform Integrations",
+                "expanded": false,
+                "pages": [
+                  "documentation/bigcommerce",
+                  "documentation/add-previews-project-file-links-to-shopify-email-notifications",
+                  "documentation/foil-accent",
+                  "documentation/localstorage-trigger"
+                ]
+              }
+            ]
+          },
+          {
             "group": "Using Modules",
             "pages": [
               {
-                "group": "AI Modules",
-                "pages": [
-                  "documentation/ai-image-generator",
-                  "documentation/ai-outpainting",
-                  "documentation/ai-sketch-to-image",
-                  "documentation/ai-smart-replace",
-                  "documentation/ai-structure",
-                  "documentation/ai-upscale"
-                ]
-              },
-              {
-                "group": "Canvas Adjuster",
-                "pages": [
-                  "documentation/canvas-adjuster-module",
-                  "documentation/integrating-canvas-adjuster-to-a-wordpress-store",
-                  "documentation/integrating-canvas-adjuster-to-an-opencart-store"
-                ]
-              },
-              {
                 "group": "Design & Data",
+                "expanded": false,
                 "pages": [
+                  "documentation/design-selector-module",
                   "documentation/data-form-module",
                   "documentation/variable-data-module",
-                  "documentation/design-selector-module",
                   "documentation/template-color-module",
                   "documentation/swatch-module"
                 ]
               },
               {
+                "group": "AI Tools",
+                "expanded": false,
+                "pages": [
+                  "documentation/ai-image-generator",
+                  "documentation/ai-smart-replace",
+                  "documentation/ai-sketch-to-image",
+                  "documentation/ai-outpainting",
+                  "documentation/ai-upscale",
+                  "documentation/ai-structure"
+                ]
+              },
+              {
                 "group": "Pages & Layout",
+                "expanded": false,
                 "pages": [
                   "documentation/how-to-use-page-count-module",
                   "documentation/page-loader-module",
                   "documentation/single-double-sided-module",
                   "documentation/shuffle-module"
                 ]
-              },
+              }
+            ]
+          },
+          {
+            "group": "Canvas Adjuster",
+            "pages": [
+              "documentation/canvas-adjuster-module",
+              "documentation/integrating-canvas-adjuster-to-a-wordpress-store",
+              "documentation/integrating-canvas-adjuster-to-an-opencart-store"
+            ]
+          },
+          {
+            "group": "Other Modules",
+            "pages": [
+              "documentation/remi-module",
+              "documentation/design-observables"
+            ]
+          },
+          {
+            "group": "Design Tools",
+            "pages": [
               {
-                "group": "Other Modules",
+                "group": "Editor & Tools",
+                "expanded": false,
                 "pages": [
-                  "documentation/design-observables",
-                  "documentation/remi-module"
+                  "documentation/picture-editor",
+                  "documentation/pdf-uploader",
+                  "documentation/tags",
+                  "documentation/how-to-add-a-placeholder-image-for-mask-shapes"
                 ]
               }
             ]
           },
           {
-            "group": "General",
+            "group": "3D Designs",
             "pages": [
-              {
-                "group": "3D Models",
-                "pages": [
-                  "documentation/3d",
-                  "documentation/3d-studio",
-                  "documentation/3d-view-introduction"
-                ]
-              },
-              {
-                "group": "Integrations",
-                "pages": [
-                  "documentation/add-previews-project-file-links-to-shopify-email-notifications",
-                  "documentation/bigcommerce",
-                  "documentation/localstorage-trigger"
-                ]
-              },
-              {
-                "group": "Editor & Tools",
-                "pages": [
-                  "documentation/picture-editor",
-                  "documentation/pdf-uploader",
-                  "documentation/foil-accent",
-                  "documentation/how-to-add-a-placeholder-image-for-mask-shapes",
-                  "documentation/tags"
-                ]
-              },
+              "documentation/3d-view-introduction",
+              "documentation/3d-studio",
+              "documentation/3d"
+            ]
+          },
+          {
+            "group": "Help & Migration",
+            "pages": [
               "documentation/upgrading-to-version-9",
               "documentation/faq"
             ]
@@ -326,15 +351,6 @@
             "pages": [
               "api-reference/introduction",
               "api-reference/auth-signature"
-            ]
-          },
-          {
-            "group": "Integrating PitchPrint",
-            "pages": [
-              "api-reference/generate-your-auth-keys",
-              "api-reference/integration",
-              "api-reference/after-save",
-              "api-reference/custom-integration-my-account"
             ]
           },
           {
