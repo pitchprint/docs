@@ -1,57 +1,99 @@
 ---
 title: "Types of PitchPrint design"
+description: "How the Template, Background, Canvas and Foreground layers combine to produce plain, template-based and foreground design types."
 ---
 
-PitchPrint can handle several design types and in most cases, there are one or two ways to implement your design ideas by thinking through how the PitchPrint canvas are arranged.
+Most design ideas can be built in PitchPrint once you understand how its canvas is stacked. Start with the four layers, then see how they combine into the three design types.
 
-So, let’s first understand the four different layers in this application and then thinker on how they can be combined to achieve common design ideas.
+## The four canvas layers
 
-**The 4 layers are Template, Background, Canvas and Foreground.**
+From bottom to top: **Template**, **Background**, **Canvas** and **Foreground**.
 
-> ![](https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5975961d042863033a1b5217/file-ECPGLFAJ4Z.png)
+<Frame>
+  <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5975961d042863033a1b5217/file-ECPGLFAJ4Z.png" alt="Diagram of the four canvas layers: Template, Background, Canvas and Foreground" />
+</Frame>
 
-1.  **Template:** This is the lowest layer among the four layers _(Purple in _the_ picture above)_ and can only contain one image. In most common designs, this layer is dormant. It is used mainly as a viewing stage for the actual product. To help the customer see how their work will appear on the finished product.
+<AccordionGroup>
+  <Accordion title="Template — the product mockup" icon="shirt">
+    The lowest layer (purple in the diagram above). It holds a single image and is dormant in most designs. Its job is to show the customer how their work will look on the finished product.
 
-    You can use this for displaying the design on products like a T-Shirt, a Mug, a Cap, Scarf etc. The T-Shirt or Scarf does not get printed in the final PDF file because you don’t need the T-Shirt picture to print on the actual T-Shirt, only the customer’s art work is needed. This is set once during design creation or editing by clicking the plus sign against the Template Image label on the Design app Toolbox as shown below:
+    Use it for print-on products like a t-shirt, mug, cap or scarf. The t-shirt itself is not printed into the final PDF — only the customer's artwork is, since you don't need a picture of a t-shirt printed onto an actual t-shirt.
 
-    ![](https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/642aaa294cd1ab01bbe8b485/file-1jbQSf1ZNY.png)
+    Set it during design creation or editing by clicking the plus sign next to the **Template Image** label in the toolbox:
 
-    Clicking the icon pops up your uploaded image lists and you can select from the list or upload a new image right there. Also take note, once you have a template image set, the designer shows up the canvas offset panel just at the bottom of the form as shown in this picture:
+    <Frame>
+      <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/642aaa294cd1ab01bbe8b485/file-1jbQSf1ZNY.png" alt="Plus sign against the Template Image label on the design app toolbox" />
+    </Frame>
 
-    ![](https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/642aaa0891efbc3c6264a13d/file-HitibKYOxr.png)
-    This simply allows you to offset the Canvas to an area where design is allowed as shown in the image below:
+    That opens your uploaded images, where you can select one or upload a new one. Once a template image is set, the canvas offset panel appears at the bottom of the form:
 
-![](https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5975e5942c7d3a73488b5347/file-lYVFP0M5m1.png)When a Template layer is used, the Product Width & Height defines the actual final product dimensions and not the Main Canvas’ dimensions.
-So in the case of our T-Shirt example, you still need to specify the dimension of the area where customers can design and position same using the Canvas Width, Height, Left and Top properties as shown above.
+    <Frame>
+      <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/642aaa0891efbc3c6264a13d/file-HitibKYOxr.png" alt="Canvas offset panel shown at the bottom of the form once a template image is set" />
+    </Frame>
 
-1.  **Background:** The background layer is just above the template and below the canvas layer. When customers edit background in the app, this is what they manipulate. This layer can be an image or a solid color.
+    Use it to offset the canvas onto the area where designing is allowed:
 
-2.  **Canvas:** This is where the action is at. This is the canvas your customer gets to interact with and place items upon like Shapes, Texts and Images. All designs make use of this canvas. When users click to select items, they click on this canvas, not the template beneath it or the foreground above it. Its dimensions are set based on either the Product Width & Height or the Canvas Width & Height if a template is utilized.
-    In situations where a Template it used, there is likelihood you want to offset the canvas to a certain part of the template area as well as define its dimensions lower than the actual product’s. This is where you use the offset form shown above. So for a T-Shirt design, you might want your customers to only design near the chest area; you simply make use of the offset for to offset the Canvas to that area as well as define a smaller width and height from the actual product width and height which in that case will be the template.
-    In a plain design like a Business Card, where those define the actual card dimensions, the canvas is the actual size of the product.
-3.  **Foreground:** This is the topmost layer and is used mainly for masking out the design canvas. It can only contain an image, just like the Template layer but can be printed or not depending on the option selected after setting the image.
+    <Frame>
+      <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5975e5942c7d3a73488b5347/file-lYVFP0M5m1.png" alt="Canvas offset into the area of the template where designing is allowed" />
+    </Frame>
 
-    ![](https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/642aa9a41274e915f2f929fc/file-wYN5re34k4.png)
+    <Warning>
+      When a Template layer is used, **Product Width & Height** defines the final product dimensions — not the main canvas dimensions. For the t-shirt example you still specify the designable area and its position using the Canvas Width, Height, Left and Top properties.
+    </Warning>
+  </Accordion>
 
-    So where do we get to use a Foreground image? Well, in creating designs like a MousePad where the user can design on an actual mouse pad image with the design area _(Canvas)_ masked out in a png transparency spot as shown below. ![](https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/590743092c7d3a057f88b2ac/file-X2Q8hoNu3A.jpg)The “Design Here” spot is actually the Main Canvas being revealed by a transparent section of the Foreground PNG image. Kindly note, it makes sense to only upload and apply partly transparent PNG files as foreground image because a Jpeg does not have transparent spots and as such, will cover up the whole of the Canvas and nothing will be shown.
+  <Accordion title="Background — image or solid color" icon="fill-drip">
+    Sits above the template and below the canvas. This is the layer customers manipulate when they edit the background in the app. It can be an image or a solid color.
+  </Accordion>
 
-So now, we have three main design types in PitchPrint to wit:
+  <Accordion title="Canvas — where customers work" icon="pen-ruler">
+    The layer your customer interacts with, placing shapes, text and images. Every design uses it. When customers select items they are clicking this canvas, not the template beneath or the foreground above.
 
-> **Plain Designs** – Common designs like Business Cards, Letter Heads, Banners, Greeting Cards, Signs, Labels etc
->
-> ![](https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5975ad2f2c7d3a73488b5214/file-JUkWPDhB4l.png)
+    Its dimensions come from **Product Width & Height**, or from **Canvas Width & Height** when a template is used.
 
-> **Template Designs** – Mostly product print-on designs like T-Shirts, Mugs, Caps, Rugs, Book Covers, Car Stickers, Sign Boards, Roll-Up banners etc, where you want them to see the design in an environment. The environment here is set using the template picture.
->
-> ![](https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5975b0462c7d3a73488b5229/file-qWsZg8ZOTQ.png)
+    With a template, you will often want to offset the canvas to part of the template area and make it smaller than the product itself — for a t-shirt, perhaps only the chest area. Use the offset form shown above.
 
-> **Foreground Designs** – Mouse-pad, Phone covers, Laptop cases, Picture Frames, Facebook banners etc where you want them to make designs underneath certain emblems
->
-> ![](https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5975ad55042863033a1b526c/file-oFYbn83oXe.png)
+    In a plain design like a business card, the canvas is the actual size of the product.
+  </Accordion>
 
-If you have any design idea and need assistance on how to implement it, you can mail us and will see how it can fit into any of the three categories listed above.
+  <Accordion title="Foreground — masking over the design" icon="layer-group">
+    The topmost layer, used mainly to mask the design canvas. Like the template it holds a single image, but you choose whether it prints.
 
-You can also check out our  [Solutions Section](/tutorial/calendar-design) to read tutorials on how to create common as well as complex designs.
+    <Frame>
+      <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/642aa9a41274e915f2f929fc/file-wYN5re34k4.png" alt="Foreground image options, including whether the image is printed" />
+    </Frame>
+
+    A mouse pad is the classic case: the customer designs on a mouse pad image with the design area masked out as a transparent spot.
+
+    <Frame>
+      <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/590743092c7d3a057f88b2ac/file-X2Q8hoNu3A.jpg" alt="Mouse pad design with a Design Here spot revealed through the transparent foreground" />
+    </Frame>
+
+    The "Design Here" spot is the main canvas showing through a transparent section of the foreground PNG.
+
+    <Warning>
+      Only use partly transparent **PNG** files as a foreground image. A JPEG has no transparency, so it covers the whole canvas and nothing shows through.
+    </Warning>
+  </Accordion>
+</AccordionGroup>
+
+## The three design types
+
+<CardGroup cols={3}>
+  <Card title="Plain Designs" img="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5975ad2f2c7d3a73488b5214/file-JUkWPDhB4l.png">
+    Business cards, letterheads, banners, greeting cards, signs, labels.
+  </Card>
+  <Card title="Template Designs" img="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5975b0462c7d3a73488b5229/file-qWsZg8ZOTQ.png">
+    Print-on products — t-shirts, mugs, caps, rugs, book covers, car stickers, sign boards, roll-up banners — where the customer sees the design in context. The context comes from the template picture.
+  </Card>
+  <Card title="Foreground Designs" img="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5975ad55042863033a1b526c/file-oFYbn83oXe.png">
+    Mouse pads, phone covers, laptop cases, picture frames, Facebook banners — anywhere customers design underneath an emblem.
+  </Card>
+</CardGroup>
+
+<Tip>
+  Got a design idea that doesn't obviously fit? Email us and we'll work out which of the three categories suits it. The [Solutions section](/tutorial/calendar-design) also walks through building common and complex designs.
+</Tip>
 
 ## Related articles
 

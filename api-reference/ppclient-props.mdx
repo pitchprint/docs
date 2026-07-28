@@ -1,8 +1,9 @@
 ---
 title: "PPCLIENT PROPS"
+description: "Reference for the window.PPCLIENT properties that override selectors, labels and cart behaviour in your store."
 ---
 
-# PPCLIENT Properties
+## PPCLIENT Properties
 
 You can define project-specific customization properties using the global `window.PPCLIENT` object. These can be set in the following ways:
 
@@ -12,19 +13,53 @@ window.PPCLIENT = {};
 window.PPCLIENT["propertyName"] = "value";
 ```
 
-| Property | Type | Description |
-| --- | --- | --- |
-| `customImageSelector` | `string` | Custom CSS selector for preview images in the project view. |
-| `customThumbSelector` | `string` | Custom CSS selector for preview thumbnails in the project view. |
-| `smartSizeSelector` | `string` | Custom CSS selector for Smart Sizes module (e.g., for selecting sizes). |
-| `quantitySelector` | `string` | Custom CSS selector for quantity input or page count selector. |
-| `userAccountPath` | `string` | Custom URL path to direct users to view saved designs. |
-| `customAccountDivSel` | `string` | Custom selector to embed the Saved Designs section on a page. |
-| `hideObserverablePreview` | `boolean` | Whether to hide preview images in observable design states. |
-| `createDesignLabel` | `string` | Unknown — potentially affects label for design creation (platform-specific). |
-| `customCartButtonSelector` | `string` | Custom CSS selector for the Add to Cart button. |
-| `langEdits` | `object` | Object to override language labels/text in the UI. |
-| `customizationRequired` | `boolean` | If `true` , users must customize the design before adding it to cart. |
+<ResponseField name="customImageSelector" type="string">
+  Custom CSS selector for preview images in the project view.
+</ResponseField>
+
+<ResponseField name="customThumbSelector" type="string">
+  Custom CSS selector for preview thumbnails in the project view.
+</ResponseField>
+
+<ResponseField name="smartSizeSelector" type="string">
+  Custom CSS selector for the Smart Sizes module (e.g. for selecting sizes).
+</ResponseField>
+
+<ResponseField name="quantitySelector" type="string">
+  Custom CSS selector for the quantity input or page count selector.
+</ResponseField>
+
+<ResponseField name="userAccountPath" type="string">
+  Custom URL path to direct users to view saved designs.
+</ResponseField>
+
+<ResponseField name="customAccountDivSel" type="string">
+  Custom selector to embed the Saved Designs section on a page.
+</ResponseField>
+
+<ResponseField name="hideObserverablePreview" type="boolean">
+  Whether to hide preview images in observable design states.
+</ResponseField>
+
+<ResponseField name="createDesignLabel" type="string">
+  Affects the label used for design creation.
+
+  <Note>
+    Behaviour is platform-specific and not fully documented.
+  </Note>
+</ResponseField>
+
+<ResponseField name="customCartButtonSelector" type="string">
+  Custom CSS selector for the Add to Cart button.
+</ResponseField>
+
+<ResponseField name="langEdits" type="object">
+  Object to override language labels and text in the UI.
+</ResponseField>
+
+<ResponseField name="customizationRequired" type="boolean">
+  If `true`, users must customize the design before adding it to cart.
+</ResponseField>
 
 ```javascript
 window.PPCLIENT = {

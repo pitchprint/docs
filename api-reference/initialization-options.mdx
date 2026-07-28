@@ -1,5 +1,6 @@
 ---
 title: "Initialization Options"
+description: "Reference for every key you can pass to the PitchPrintClient constructor, including apiKey, designId, mode, product, langCode and userId."
 ---
 
 To create an instance of the PitchPrint class, here are the possible options you can pass in:
@@ -10,78 +11,77 @@ var ppclient = new PitchPrintClient(options);
 
 The parameters value is a key-value object and are defined as follows:
 
-_(values preceded by red asteriks\* are required)_
+<ResponseField name="apiKey" type="string" required>
+  The API Key generated from the admin portal and assigned to your domain. This identifies each domain from the other, not the domain name which can be renamed at any time. [You can generate your apiKey from here](https://admin.pitchprint.io/domains).
+</ResponseField>
 
-> **\* apiKey :** _(string)_
->
-> This is the API Key generated from the admin portal and is assigned to your domain. This is what identifies each domain from the other, not the domain name which can be renamed at any time. [You can generate your apiKey from here](https://admin.pitchprint.io/domains).
+<ResponseField name="designId" type="string">
+  The ID of the design you intend to load for new projects. To get a listing of all designs under your account, you can call up this endpoint URL from the admin.
+</ResponseField>
 
-> **designId :** _(string)_
->
-> This is the ID of the design you intend to load for new projects. To get a listing of all designs under your account, you can call up this endpoint URL from the admin
+<ResponseField name="mode" type="string">
+  The mode in which the app should load. Default value should be `new`. When a user has finished creating a design but has not left the page, they may decide they want to edit again — set this to `edit` just before loading up the editor for editing.
+</ResponseField>
 
-> **mode :** _(string)_
->
-> The mode in which the app should load. Default value should be "new". But when a user has finished creating a design but has not left the page, they may decide to want to edit again. You should then set this to "edit" just before loading up the editor for editing.
+<ResponseField name="product" type="object">
+  The product details passed in as a value-pair object. Useful when reading through the project design file or when you need to identify each project design against your products. It can contain any values you desire, but we normally use Id and title, so it looks like: `{id: 'xyz', title: 'Purple Phamplets'}`
+</ResponseField>
 
-> **product :** _(object)_
->
-> The product details passed in as a value-pair object.
-> It is useful when reading through the project design file or you need to identify each project design against your products. It can contain any values you so desire, but we normally use Id and title, so it looks like: `{id: 'xyz', title: 'Purple Phamplets'}`
+<ResponseField name="langCode" type="string">
+  Language code the editor should use. If omitted, ‘en’ English will be used. Here is the list of all languages to which PitchPrint has been translated:
 
-> **langCode :** _(string)_
->
-> Language code the editor should use. If omitted, ‘en’ English will be used. Please note, this is different from the "lang" property defined above. Here is the list of all languages to which PitchPrint has been translated:
->
-> -   bg – Bulgarian
-> -   ca – Catalan
-> -   cs – Czech
-> -   da – Danish
-> -   nl – Dutch
-> -   fi – Finnish
-> -   fr – French
-> -   de – German
-> -   el – Greek
-> -   he – Hebrew
-> -   hu – Hungarian
-> -   id – Indonesian
-> -   it – Italian
-> -   lv – Latvian
-> -   lt – Lithuanian
-> -   no – Norwegian
-> -   pl – Polish
-> -   pt – Portuguese
-> -   pt-br – Portuguese (Brazilian)
-> -   ru – Russian
-> -   es – Spanish
-> -   sl – Slovak
-> -   sv – Swedish
-> -   tr – Turkish
-> -   vi – Vietnamese
+  -   bg – Bulgarian
+  -   ca – Catalan
+  -   cs – Czech
+  -   da – Danish
+  -   nl – Dutch
+  -   fi – Finnish
+  -   fr – French
+  -   de – German
+  -   el – Greek
+  -   he – Hebrew
+  -   hu – Hungarian
+  -   id – Indonesian
+  -   it – Italian
+  -   lv – Latvian
+  -   lt – Lithuanian
+  -   no – Norwegian
+  -   pl – Polish
+  -   pt – Portuguese
+  -   pt-br – Portuguese (Brazilian)
+  -   ru – Russian
+  -   es – Spanish
+  -   sl – Slovak
+  -   sv – Swedish
+  -   tr – Turkish
+  -   vi – Vietnamese
 
-> **userId :** _(string)_
->
-> For every user that instantiates the app, a folder is created on the server so their pictures and design projects can be saved and referenced anytime.
->
-> This is a unique code we use to reference each user. If this value is omitted, we will use ‘guest’ but when they reload the app on a different browser, their images etc are lost so it is advisable you provide a unique ID to identify each user and store their assets separately and safely.
+  <Note>
+    This is different from the `lang` property.
+  </Note>
+</ResponseField>
 
-> **userData :** _(string)_
->
-> This is a key-value pair of the user's additional information like email, address, phone etc that you will like attached to the particular project and that will appear in the projects page in our admin.
+<ResponseField name="userId" type="string">
+  A unique code we use to reference each user. For every user that instantiates the app, a folder is created on the server so their pictures and design projects can be saved and referenced anytime.
 
-> **designId :** _(string)_
->
-> This is the ID of the design you intend to load for new projects. To get a listing of all designs under your account, you can call up this endpoint URL from the admin
+  <Warning>
+    If this value is omitted, we will use ‘guest’ — when the user reloads the app on a different browser their images and assets are lost. Provide a unique ID to identify each user and store their assets separately and safely.
+  </Warning>
+</ResponseField>
 
-> **projectId :** _(string)_
->
-> This is a unique code that should be used to save the project on the server. We advise you leave it blank which gives the server the ease to generate a unique ID of its own. 
->
-> After a project has been saved, this ID is passed down to you via the onSave function as stated above. You subsequently can pass this in as an ID if you want to edit same project or retrieve the PDF file.
+<ResponseField name="userData" type="string">
+  A key-value pair of the user's additional information like email, address, phone etc that you want attached to the particular project and shown on the projects page in our admin.
+</ResponseField>
 
-> **custom :** _(string)_
->
-> Always set this to true. It allows the class to prevent some default actions which we have baked in for popular frameworks
+<ResponseField name="projectId" type="string">
+  A unique code used to save the project on the server. We advise you leave it blank, which gives the server the ease to generate a unique ID of its own.
+
+  After a project has been saved, this ID is passed down to you via the onSave function as stated above. You can subsequently pass it in as an ID if you want to edit the same project or retrieve the PDF file.
+</ResponseField>
+
+<ResponseField name="custom" type="string">
+  Always set this to true. It allows the class to prevent some default actions which we have baked in for popular frameworks.
+</ResponseField>
 
 ## Related articles
 

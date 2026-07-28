@@ -9,10 +9,20 @@ Welcome to PitchPrint! This guide takes you step-by-step from creating your acco
 
 Set up the account and domain that will hold your designs and issue the keys your store uses.
 
-1. Go to [admin.pitchprint.io/register](https://admin.pitchprint.io/register) and create your free account — or [log in](https://admin.pitchprint.io/login) if you already have one.
-2. Open the [Domains page](https://admin.pitchprint.io/domains) and click **Add Domain** in the top-right corner.
-3. Type any name for the domain (it's just a label — you can rename it later) and click **Submit**.
-4. PitchPrint provisions the domain with a sample design and generates your **API Key** and **Secret Key**.
+<Steps>
+  <Step title="Register or log in">
+    Go to [admin.pitchprint.io/register](https://admin.pitchprint.io/register) and create your free account — or [log in](https://admin.pitchprint.io/login) if you already have one.
+  </Step>
+  <Step title="Add a domain">
+    Open the [Domains page](https://admin.pitchprint.io/domains) and click **Add Domain** in the top-right corner.
+  </Step>
+  <Step title="Name the domain">
+    Type any name for the domain (it's just a label — you can rename it later) and click **Submit**.
+  </Step>
+  <Step title="Collect your keys">
+    PitchPrint provisions the domain with a sample design and generates your **API Key** and **Secret Key**.
+  </Step>
+</Steps>
 
 <Info>
   The **API Key** identifies your store on the public-facing side; the **Secret Key** signs back-end requests and must be kept private — never expose it in the browser.
@@ -23,20 +33,28 @@ Set up the account and domain that will hold your designs and issue the keys you
 Add the plugin for your platform so the editor appears on your product pages.
 
 <CardGroup cols={3}>
-  <Card title="Shopify" icon="shopify" href="/tutorial/pitchprint-for-shopify-getting-started" />
-  <Card title="WordPress" icon="wordpress" href="/tutorial/how-to-install-pitchprint-on-wordpress" />
-  <Card title="OpenCart" icon="cart-shopping" href="/tutorial/how-to-install-pitchprint-on-opencart" />
+  <Card title="Shopify" icon="shopify" href="/documentation/pitchprint-for-shopify-getting-started" />
+  <Card title="WordPress" icon="wordpress" href="/documentation/how-to-install-pitchprint-on-wordpress" />
+  <Card title="OpenCart" icon="cart-shopping" href="/documentation/how-to-install-pitchprint-on-opencart" />
 </CardGroup>
 
-Also available for PrestaShop, Magento, Wix, Ecwid, BigCommerce and 3DCart — see the [installation guides](/tutorial/overview). Building a custom-coded site? Follow the [API integration](/documentation/integration) instead.
+Also available for PrestaShop, Ecwid, BigCommerce and 3DCart — see the [installation guides](/documentation/which-framework-should-i-pick). Building a custom-coded site? Follow the [API integration](/api-reference/integration) instead.
 
 ## Step 3: Create or import a design
 
 A **design** is the template your customers personalize. Create one for each product you want customized.
 
-1. Open the [Designs page](https://admin.pitchprint.io/designs) in your PitchPrint admin.
-2. To test quickly, **import** a ready-made design from our store straight into your domain — or click **Create** to build one from scratch.
-3. Give the design a name and save it.
+<Steps>
+  <Step title="Open the Designs page">
+    Open the [Designs page](https://admin.pitchprint.io/designs) in your PitchPrint admin.
+  </Step>
+  <Step title="Import or create a design">
+    To test quickly, **import** a ready-made design from our store straight into your domain — or click **Create** to build one from scratch.
+  </Step>
+  <Step title="Name and save">
+    Give the design a name and save it.
+  </Step>
+</Steps>
 
 <Tip>
   Importing a sample design is the fastest way to see the full flow end-to-end before building your own.
@@ -46,9 +64,17 @@ A **design** is the template your customers personalize. Create one for each pro
 
 Link the design to a product, then try it as a customer would.
 
-1. In your store admin, open (or create) a product and assign your PitchPrint design to it.
-2. Visit that product on your storefront — you'll see a **Customize** button.
-3. Click it to open the editor with your template loaded, personalize the design, and submit it.
+<Steps>
+  <Step title="Assign the design to a product">
+    In your store admin, open (or create) a product and assign your PitchPrint design to it.
+  </Step>
+  <Step title="Open the product on your storefront">
+    Visit that product on your storefront — you'll see a **Customize** button.
+  </Step>
+  <Step title="Customize and submit">
+    Click it to open the editor with your template loaded, personalize the design, and submit it.
+  </Step>
+</Steps>
 
 ## Step 5: Download your print-ready files
 
@@ -70,7 +96,7 @@ When a customer submits, PitchPrint generates a **project** with a print-ready P
   <Card title="Create a design" icon="palette" href="/tutorial/how-to-create-a-design">
     Build your own customizable template from scratch.
   </Card>
-  <Card title="Explore modules" icon="puzzle-piece" href="/documentation/data-form-module">
+  <Card title="Explore modules" icon="puzzle-piece" href="/tutorial/data-form-module">
     Add data forms, swatches, AI tools and more to the editor.
   </Card>
   <Card title="Frequently asked questions" icon="circle-question" href="/documentation/faq">

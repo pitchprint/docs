@@ -31,3 +31,34 @@
 
 {/* Define what should and shouldn't be documented */}
 {/* Example: Don't document internal admin features */}
+
+## Release notes → blog
+
+Release notes live **only on the blog site**, not here. Each docs article is one
+topic; the blog groups the topics that shipped together into one release note.
+
+To include an article in a release, add two things:
+
+1. **Frontmatter** — the `release` value is the link between the article, the
+   blog release note, and the badge:
+
+   ```yaml
+   ---
+   title: "Canvas Adjuster Module"
+   release: "wk26-26"                 # groups this topic into Release WK26-26
+   release_summary: "One-line summary of what changed."   # optional; falls back to description
+   ---
+   ```
+
+2. **Badge** — links the article to its release note (add both lines):
+
+   ```mdx
+   import { ReleaseLink } from "/snippets/release-link.jsx";
+
+   <ReleaseLink release="wk26-26" />
+   ```
+
+On push, [`scripts/generate-blog-summaries.js`](scripts/generate-blog-summaries.js)
+groups every article sharing a `release` value into one `release-<id>.mdx` (one
+section per topic, each linking back here) and the workflow publishes it to the
+blog. See [`scripts/README.md`](scripts/README.md) for the pipeline details.

@@ -1,0 +1,86 @@
+---
+title: "Swatch Module"
+description: "Offer preset colour themes on one design, each with its own element colours, background and product preview picture."
+---
+
+<Frame>
+  <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5b2cc8992c7d3a0fa9a35395/file-02C7z1Gn2Q.png" alt="Swatch module" />
+</Frame>
+
+The Swatch module allows users to change a design's color theme and background within the application.
+
+It allows the admin to set colors, preview and background images per set of theme. So let's assume you want a light and dark version of your business card design. With the Swatch module on one design, you can add either of the other color mode without having to create two separate designs, You can set element's colors for text and shapes, set a background color or image and assign a preview picture so when that theme is selected in the product page, the preview image shows the appropriate view before going into the application.
+
+You can view a live sample here: [Swatch business cards demo](https://wp.demo.pitchprint.io/product/swch-business-cards/)
+
+Setting up the Swatch Module
+
+To enable this feature, navigate to your  [designs page](https://pitchprint.net/admin/designs), simply click the Configure button on the design you like to assign this to. Then navigate to the Modules Tab, there you will find the Swatch module.
+
+Toggle the Switch to the On position and the options will appear as shown:
+
+<Frame>
+  <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5b5822182c7d3a03f89cf61f/file-Hqu9Y2O8XI.png" alt="Swatch module options revealed after toggling the switch on" />
+</Frame>
+
+You can give it an optional title or leave that as blank. Click the **Add New button** to add a new theme to your design.
+
+<Frame>
+  <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/593916ae04286305c68ceb14/file-c3h6G70TAB.png" alt="Two themes added to the Swatch module" />
+</Frame>
+
+In the picture above, we have added two themes. Each with an option for 3 colors, a preview and background.
+
+<Frame>
+  <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/59391f2b2c7d3a0747cdbf70/file-oDqM3oB57s.png" alt="A theme item showing its three colors, preview picture and background" />
+</Frame>
+
+##### Swatch Colors:
+
+These are the 3 colored boxes on top of each theme item, they correspond to **swatch1, swatch2** and **swatch3** in that order.
+
+You link these colors to elements on your page by adding either swatch1, swatch2 or swatch3 to the chain value in your design.
+
+<Frame>
+  <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5939184d04286305c68ceb2a/file-yQP2Juw4Gg.png" alt="A design element with its chain value set to swatch1" />
+</Frame>
+
+So any element that has its chain set to swatch1 in that design, will have its color changed to the color value you have set of swatch1 for that theme when that theme is selected by the customer.
+
+<Note>
+  You can use comma to delimit other chain values you might have there. For instance, in the image below, the text element has a chain called name, we added swatch1 to it
+
+  <Frame>
+    <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/593919042c7d3a0747cdbf47/file-Kq9zshjwDs.png" alt="Text element whose chain value is name with swatch1 added" />
+  </Frame>
+
+</Note>
+
+##### Preview Picture:
+
+When a theme is selected on the product page, the product view should change to reveal that and this is where you set it for each page of your design.
+
+Click that image to select a picture or upload a new one for that preview. You can do this for all the pages in your design.
+
+##### Background Image / Color:
+
+Based on the design pages, you can set the color or background image that should be used for each theme when selected.
+
+If your design page has a color, a color selector is presented or if an image, then an image selector is what you see. It's not possible to cross options here; it follows what the design page has.
+
+## Related articles
+
+<CardGroup cols={2}>
+  <Card title="Color Palette" icon="palette" href="/tutorial/color-palette">
+    Create five-color complementary themes customers can sample to restyle a design.
+  </Card>
+  <Card title="Template Color Module" icon="image" href="/tutorial/template-color-module">
+    Let customers switch template images, such as T-shirt colors, at design time.
+  </Card>
+  <Card title="All About Colors" icon="droplet" href="/tutorial/all-about-colors">
+    Understand PitchPrint's color system, including Hex, CMYK and SPOT values.
+  </Card>
+  <Card title="Template Colour Designs" icon="image" href="/tutorial/template-colour-designs">
+    Learn what template-based designs are and how template images are swapped in the editor.
+  </Card>
+</CardGroup>

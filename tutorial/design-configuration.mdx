@@ -1,77 +1,200 @@
 ---
 title: "Design Configuration"
+description: "Reference for every per-design option across the General, Resources, Modules, History and 3D View tabs of the configuration panel."
 ---
+
+Every design has its own configuration panel, split into five tabs. This page documents each option in the order it appears.
 
 ## General
 
-1.  **Title**: Your design title.
-2.  **Welcome Message:** This is the message shown when the app loads. You have the option to add plain text or HTML code.
-3.  **Tags:** Use this section to add tags that extend the functionality of the editor.
-4.  **Show Customize Form:** When enabled, this displays a form containing all elements included in the design when it loads. Customers can fill out the form, and their input will update the design accordingly. Please note that if the Welcome Message is enabled, this form will override it.
-5.  **Hide Tabs:** Use this option to hide the Backgrounds, Pictures, or Text tabs. When enabled, the selected tabs will not be visible to the user.
-6.  **Lock Background:** When enabled, customers will **not** be able to change the background.
-7.  **Only Drag an Image to Masks:** When enabled, customers cannot click on images to add them to the canvas. Images can only be added by dragging and dropping them into the masks.
-8.  **Auto Place Image in Masks:** When enabled, uploaded images are automatically placed into the masks. Only the available masks on the canvas will be filled. For example, if there are 5 masks and the customer uploads 6 images, the first 5 images will be placed into the masks, and the 6th image will be added directly to the canvas.
-9.  **Snap to Page Only:** When enabled, items will snap only within the page boundaries and cannot extend beyond them.
-10.  **Uploaded Image Operations:** Allows you to convert images to **grayscale** or **black & white**, and apply **ICC profiles**.
-11.  **Client PDF Download:** When enabled, customers can download the PDF file directly from within the app.
-12.  **Split Masks:** When enabled, all clickable masks within a design will be split into separate PDF pages.
-13.  **Chain Colors:** Allows you to sync colors across elements that share the same chain ID within a design. Once enabled, updating the color of one item will automatically update the color of all items in the same chain.
-14.  **Disable Drag Select:** When enabled, users will not be able to drag to select multiple items at once.
-15.  **DPI Check:** Enables the DPI check for this specific design.
-16.  **Flash Item Dimensions:** Displays the physical dimensions of items while resizing. Please note, this feature is **not available for text items** and only applies to other item types.
-17.  **Show Image Picker on Load:** Automatically displays the image source picker when the editor loads.
-18.  **DPI Value:** Specify the minimum DPI that images must meet for this design.
-19.  **New Text Color:** Specify the color to be applied to new text added to the canvas. Please note that both the **RGB** value and the **CMYK** value must be provided for the PDF.
-20.  **Thumbnail Image:** The thumbnail image used in the Design Selector instead of the original design preview.
-21.  **Default Font:** Select the default font that will be applied to text within the design.
-22.  **Default Tab:** Select the tab that should appear first when the designer loads.
-23.  **Default Background Mode:** Specify the default mode that will be applied to new background images added to the design.
-24.  **Unit:** Select the unit of measurement that will be applied to the design.
-25.  **Limit Text Characters:** Use this field to control which characters users can type in the design. Enter a valid Regex pattern to define the allowed characters.
-26.  **Minimum Font Size:** Set the minimum font size that users are allowed to use for text in the design.
+<ResponseField name="Title" type="text">
+  Your design title.
+</ResponseField>
+
+<ResponseField name="Welcome Message" type="text or HTML">
+  The message shown when the app loads. Accepts plain text or HTML.
+</ResponseField>
+
+<ResponseField name="Tags" type="text">
+  Add [tags](/documentation/tags) that extend the functionality of the editor.
+</ResponseField>
+
+<ResponseField name="Show Customize Form" type="toggle">
+  Displays a form containing every element in the design when it loads. Customers fill in the form and the design updates from their input.
+
+  <Warning>
+    If a Welcome Message is also enabled, this form overrides it.
+  </Warning>
+</ResponseField>
+
+<ResponseField name="Hide Tabs" type="multi-select">
+  Hide the Backgrounds, Pictures or Text tabs. Selected tabs are not visible to the customer.
+</ResponseField>
+
+<ResponseField name="Lock Background" type="toggle">
+  Prevents customers from changing the background.
+</ResponseField>
+
+<ResponseField name="Only Drag an Image to Masks" type="toggle">
+  Disables click-to-add for images. Images can only be added by dragging and dropping them into masks.
+</ResponseField>
+
+<ResponseField name="Auto Place Image in Masks" type="toggle">
+  Uploaded images are placed into available masks automatically. Only masks on the canvas are filled — with 5 masks and 6 uploads, the first 5 images fill the masks and the 6th is added straight to the canvas.
+</ResponseField>
+
+<ResponseField name="Snap to Page Only" type="toggle">
+  Items snap only within the page boundaries and cannot extend beyond them.
+</ResponseField>
+
+<ResponseField name="Uploaded Image Operations" type="select">
+  Convert uploaded images to **grayscale** or **black & white**, and apply **ICC profiles**.
+</ResponseField>
+
+<ResponseField name="Client PDF Download" type="toggle">
+  Lets customers download the PDF directly from the app.
+</ResponseField>
+
+<ResponseField name="Split Masks" type="toggle">
+  Splits every clickable mask in the design into a separate PDF page.
+</ResponseField>
+
+<ResponseField name="Chain Colors" type="toggle">
+  Syncs colors across elements sharing a chain ID. Changing one item's color updates every item in the same chain. See [colour chains](/tutorial/how-to-create-colour-chains).
+</ResponseField>
+
+<ResponseField name="Disable Drag Select" type="toggle">
+  Stops customers dragging to select multiple items at once.
+</ResponseField>
+
+<ResponseField name="DPI Check" type="toggle">
+  Enables the [DPI check](/tutorial/photo-resolution-check) for this design.
+</ResponseField>
+
+<ResponseField name="Flash Item Dimensions" type="toggle">
+  Shows an item's physical dimensions while it is being resized.
+
+  <Note>
+    Not available for text items — it applies to all other item types.
+  </Note>
+</ResponseField>
+
+<ResponseField name="Show Image Picker on Load" type="toggle">
+  Opens the image source picker automatically when the editor loads.
+</ResponseField>
+
+<ResponseField name="DPI Value" type="number">
+  The minimum DPI images must meet for this design.
+</ResponseField>
+
+<ResponseField name="New Text Color" type="color">
+  The color applied to new text added to the canvas.
+
+  <Warning>
+    Provide both the **RGB** and the **CMYK** value, or the PDF output will be wrong.
+  </Warning>
+</ResponseField>
+
+<ResponseField name="Thumbnail Image" type="image">
+  Used in the [Design Selector](/tutorial/design-selector-module) in place of the original design preview.
+</ResponseField>
+
+<ResponseField name="Default Font" type="select">
+  The font applied to text in the design by default. See [adding your own fonts](/tutorial/how-to-add-your-own-fonts).
+</ResponseField>
+
+<ResponseField name="Default Tab" type="select">
+  The tab that opens first when the designer loads.
+</ResponseField>
+
+<ResponseField name="Default Background Mode" type="select">
+  The mode applied to new background images added to the design.
+</ResponseField>
+
+<ResponseField name="Unit" type="select">
+  The unit of measurement used throughout the design.
+</ResponseField>
+
+<ResponseField name="Limit Text Characters" type="regex">
+  Controls which characters customers can type. Enter a valid Regex pattern defining the allowed characters.
+</ResponseField>
+
+<ResponseField name="Minimum Font Size" type="number">
+  The smallest font size customers may use for text in the design.
+</ResponseField>
 
 ## Resources
 
-Use this panel to manage the resources available in your design. You can include or exclude specific resources, or apply the action to all resources at once. This functionality is available for **Pictures, Backgrounds, Fonts, Text Arts, and Colors**.
+Manage which resources are available inside the design — include or exclude them individually, or apply the change to all at once.
+
+Applies to **Pictures**, **Backgrounds**, **Fonts**, **Text Arts** and **Colors**.
 
 ## Modules
 
-Each module is already explained in depth on the following [documents](/documentation/data-form-module).
+Modules add optional behaviour to a design. Each has its own guide:
 
-**Page Count:** Links the quantity element on your site to the number of pages in the design. When the design is updated, the quantity will automatically reflect the updated number of pages. Please note that functionality may vary depending on the framework.
+<CardGroup cols={2}>
+  <Card title="Page Count" icon="hashtag" href="/tutorial/how-to-use-page-count-module">
+    Links your site's quantity element to the number of pages in the design, updating it automatically.
+  </Card>
+  <Card title="Page Loader" icon="copy" href="/tutorial/page-loader-module">
+    Lets customers add, remove, sort and swap pages within the design.
+  </Card>
+  <Card title="Canvas Adjuster" icon="up-right-and-down-left-from-center" href="/tutorial/canvas-adjuster-module">
+    Syncs dimensions between your product page and the editor, using preset or custom values.
+  </Card>
+  <Card title="Data Form" icon="table-list" href="/tutorial/data-form-module">
+    A quick-edit form for changing canvas items without touching the canvas.
+  </Card>
+  <Card title="Photo Prints" icon="images" href="/tutorial/photo-print-module">
+    Bulk Photo Print, Vintage Photo Prints, and Photo with Paper Type.
+  </Card>
+  <Card title="Template Color" icon="palette" href="/tutorial/template-color-module">
+    Lets customers change the color of the template image inside the design.
+  </Card>
+  <Card title="Swatch" icon="swatchbook" href="/tutorial/swatch-module">
+    Offer different color combinations per layer of a design.
+  </Card>
+  <Card title="Remix" icon="shuffle" href="/tutorial/remi-module">
+    Lets customers remix and swap the images in a design.
+  </Card>
+  <Card title="Variable Data" icon="file-csv" href="/tutorial/variable-data-module">
+    Prepopulate a design from an uploaded Excel or CSV file.
+  </Card>
+  <Card title="Single/Double Sided" icon="file-lines" href="/tutorial/single-double-sided-module">
+    Lets customers start with a single page or a double-sided layout.
+  </Card>
+</CardGroup>
 
-**Page Loader:** Allows customers to add, remove, sort, and swap pages within the design, giving them full control over page organization.
+<Note>
+  **Canvas Adjuster** and **Page Count** behave differently across ecommerce frameworks. Canvas Adjuster currently has native support for **drop-downs only**.
+</Note>
 
-**Canvas Adjuster:** Enables customers to sync dimensions from your site into the editor. Dimensions can be either predefined or custom values. When a customer selects or enters a value, the editor updates automatically. Conversely, changes made in the editor will update the product upon submission. Please note that behavior may differ depending on the framework. Currently, native support is available for **drop-downs only**.
+### Photo Prints categories
 
-**Data Form:** A quick-edit form that allows customers to modify items on the canvas directly through the form.
+<ResponseField name="Photo with Paper Type" type="category">
+  Offers customers a choice of size and paper type.
+</ResponseField>
 
-**Photo Prints:** Photo prints are available in three categories: **Bulk Photo Print**, **Vintage Photo Prints**, and **Photo with Paper Type**.
+<ResponseField name="Bulk Photo Prints" type="category">
+  Lets customers order multiple quantities of each photo they upload.
+</ResponseField>
 
--   **Photo with Paper Type:** Lets you provide end users with options for size and paper type.
--   **Bulk Photo Prints:** Allows customers to order multiple quantities of each photo they upload.
--   **Vintage Photo Prints:** Enables customers to use their uploaded photo as the design itself. The uploaded image will fit directly onto the page of the design and can be edited as needed. The file will match the dimensions of the design where it is placed.
+<ResponseField name="Vintage Photo Prints" type="category">
+  Uses the customer's uploaded photo as the design itself. The image fits the page it is placed on, matches that design's dimensions, and stays editable.
+</ResponseField>
 
-**Note:** Currently, values and options selected in the editor cannot be synced back to the product page. However, this information **is included in the PDF bookmarks**.
-
-**Template Color:** Allows the admin to provide customers with the ability to change the color of the template image within the design.
-
-**Swatch:** Enables you to offer different color combinations as options for each layer of a design.
-
-**Remix:** Allows customers to automatically remix the images in the design and swap them as desired.
-
-**Variable Data:** Provides customers with the ability to upload an Excel or CSV file to prepopulate the design with data from the file. The file should include all field names as column headings. You can choose to compile all records into a single PDF or create a separate PDF for each record.
-
-**Single/Double Sided Module:** This module allows customers to choose how many pages they would like to open in the designer. They have the option to select either a single page or a double-sided layout when starting their design.
+<Note>
+  Values and options selected in the editor cannot currently be synced back to the product page — but they **are** included in the PDF bookmarks.
+</Note>
 
 ## History
 
-The editing history of a design allows you to revert to a previous version if any mistakes are made. A new version is automatically saved each time the design is saved, enabling you to review or restore earlier changes when needed.
+Each time a design is saved, a new version is recorded. Use the history to review earlier versions and revert if a change went wrong.
 
 ## 3D View
 
-This window displays all 3D models available on the domain. From here, you can select and assign a 3D model to the design.
+Lists every 3D model available on the domain, so you can assign one to the design. See [3D views](/documentation/3d-view-introduction).
 
 ## Related articles
 
