@@ -1,5 +1,6 @@
 ---
 title: "PDF Rendering"
+description: "Why print-ready PDFs are hard to generate, and what Distiller 3 changes for emoji, ligatures and font substitution."
 ---
 
 ### Over the years, one of our greatest challenge has been how to generate PDF files for print. Yes, PDFs are abundant all over the digital space from bank statements to reports, e-books, invoicing, tickets, and so on but there are unique pain points faced by the print community all over the world apart from just generating PDF files. Here is a quick overview on some of these key issues:
@@ -28,25 +29,29 @@ Here is an overview of our base PDF feature requirements:
 
 We have had to implement different PDF distillers based off of libraries that support a few subsets of our list which has led to us having two different PDF Distillers.
 
-The current Distiller 1 does not support the complete SVG standards and though we did a lot of tweaking and customization to bring it to parity, there are still some missing implementations which we cannot add due to the structure of the library called TCPDF. To solve this issue, we opted to build Distiller 2 based on [CairoSVG](https://cairosvg.org/documentation/) library, which properly implements SVG 1.1 but lacked a lot of the other key features such as color profiles, overprints just to name a few.
+The current Distiller 1 does not support the complete SVG standards and though we did a lot of tweaking and customization to bring it to parity, there are still some missing implementations which we cannot add due to the structure of the library called TCPDF. To solve this issue, we opted to build Distiller 2 based on [CairoSVG](https://cairosvg.org/documentation/) library, which properly implements SVG 1.1 but lacked a lot of the other key features such as color profiles, overprints just to name a few.
 
 So, our biggest challenge has been finding a single PDF library that supports all these features and at a price point that will not affect our customers' pockets.
 
-A very few came to the fore, notably [iText](https://itextpdf.com/), [PDFLib](https://www.pdflib.com/), [Adobe PDF SDK](https://www.datalogics.com/adobe-pdf-library/) and [PDF-tools](https://www.pdf-tools.com/en/). But they are all licensed software, and very expensive to justify and pass unto our customers. For instance, an iText commercial license costs over $5,000 with a cap of 40,000 PDFs annually. That's less than half of what we generate for our customers on a monthly basis. Another key consideration was the ability to deploy the library on a Serverless environment, which most of these 3rd party vendors do not support. A Serverless environment simply ensures that each request (render) is handled by a single, separate server environment as against a single huge server which can get overwhelmed with resource contention during peak requests and could subsequently crash.
+A very few came to the fore, notably [iText](https://itextpdf.com/), [PDFLib](https://www.pdflib.com/), [Adobe PDF SDK](https://www.datalogics.com/adobe-pdf-library/) and [PDF-tools](https://www.pdf-tools.com/en/). But they are all licensed software, and very expensive to justify and pass unto our customers. For instance, an iText commercial license costs over $5,000 with a cap of 40,000 PDFs annually. That's less than half of what we generate for our customers on a monthly basis. Another key consideration was the ability to deploy the library on a Serverless environment, which most of these 3rd party vendors do not support. A Serverless environment simply ensures that each request (render) is handled by a single, separate server environment as against a single huge server which can get overwhelmed with resource contention during peak requests and could subsequently crash.
 
-In the beginning of the year, we explored [Apache PDFBox](https://pdfbox.apache.org/), which is built on Java and is quite matured. Though some features are lacking, it has pipelines that allowed us to implement these features with fewer pain points. So...we deployed a fully revamped version from our current offering, called **Distiller** **version 3** which we have officially released today. It's a work in progress and will be the basis for our up coming major product update. While we rigorously tested this new PDF distiller internally and with our Beta users, there can still be a few undiscovered bugs. If you do come across anything, please email us at **_support@pitchprint.com_** and we will gladly iron out any errors.
+In the beginning of the year, we explored [Apache PDFBox](https://pdfbox.apache.org/), which is built on Java and is quite matured. Though some features are lacking, it has pipelines that allowed us to implement these features with fewer pain points. So...we deployed a fully revamped version from our current offering, called **Distiller** **version 3** which we have officially released today. It's a work in progress and will be the basis for our up coming major product update. While we rigorously tested this new PDF distiller internally and with our Beta users, there can still be a few undiscovered bugs. If you do come across anything, please email us at **_support@pitchprint.com_** and we will gladly iron out any errors.
 
 Because it's built on the java framework, we leveraged Java's inbuilt text framework to handle text rendering and the font substitution. As such, Ligatures work brilliantly well in the new distiller compared to the other two.
 
 Here are a few sample comparison:
 
-![](https://blog.pitchprint.com/content/images/2022/09/Artboard---2.png)
+<Frame>
+  <img src="https://blog.pitchprint.com/content/images/2022/09/Artboard---2.png" alt="Sample text compared across the distillers, with Distiller 3 rendering emoji in full colour" />
+</Frame>
 
 New Distiller 3 handles all modern Emoji characters using vector rendering
 
 On encountering an emoji character, the rendering mode switches from text to vector and renders the correct emoji in colors using Microsoft's Segoe UI Emoji font including all skin color tones.
 
-![](https://blog.pitchprint.com/content/images/2022/09/Artboard---3.png)
+<Frame>
+  <img src="https://blog.pitchprint.com/content/images/2022/09/Artboard---3.png" alt="Comparison showing missing-glyph placeholders in older distillers next to Distiller 3's font substitution" />
+</Frame>
 
 New Distiller 3 does on the go font substitution for missing glyphs. So you can be rest assured every character will be rendered in the final PDF
 
@@ -55,6 +60,16 @@ A font is a collection of glyphs designed for each character in a language set. 
 In distiller 3, we check every character in your text against the font file and if a character is missing, we do substitute the font for one that has those characters and switch back to using your font. This ensures that our PDFs displays the right information, always.
 
 We would highly recommend watching this video as it sheds more light on the challenges in rendering PDFs.
+
+<Frame>
+  <iframe
+    className="w-full aspect-video rounded-xl"
+    src="https://www.youtube.com/embed/TiqDqd-1pwU"
+    title="Why generating print-ready PDF files is hard: colour spaces, fonts and rendering fidelity"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  />
+</Frame>
 
 ## Related articles
 

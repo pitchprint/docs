@@ -1,39 +1,63 @@
 ---
 title: "PDF Uploader"
+description: "Import an existing PDF as a design so text, groups, images and backgrounds stay editable in the PitchPrint editor."
 ---
 
-We designed our platform to empower customers to seamlessly upload PDF files, which are then converted to SVGs or flattened as PNGs for editing. This functionality enables users to edit their designs directly on the canvas, enhancing their creative experience.
+Upload a PDF and PitchPrint turns it into a design you can keep editing on the canvas, rather than a flat image. This saves rebuilding artwork you already have.
 
-**Current Conversion Limitations**
+## Why the uploader exists
 
--   **SVG Conversion**: When a PDF is converted to SVG, users can only modify color options. Unfortunately, other editing capabilities are limited.
--   **PNG Conversion**: Flattening a PDF to PNG results in a complete loss of editing options, as all elements are merged into a single image.
+PitchPrint can convert an uploaded PDF two ways, and both lose something:
 
-**Enhanced Editing with PDF Uploader**
+| Conversion | What you can still edit |
+| --- | --- |
+| **PDF → SVG** | Colors only. Other editing is unavailable. |
+| **PDF → PNG** | Nothing. Every element is flattened into a single image. |
 
-To address these limitations, we developed the PDF uploader feature. This tool allows administrators to:
+The PDF Uploader avoids both, keeping the artwork live.
 
--   **Upload PDF Files**: Simplifying the design process by enabling direct uploads.
--   **Edit Text**: Modify any text elements within the PDF for greater customization.
--   **Group and Ungroup Items**: Easily manage design elements for more flexibility.
--   **Move and Scale Images**: Adjust the positioning and size of images to fit the desired layout.
--   **Change Backgrounds**: Customize the background within the editor for a more tailored look.
+## What you can edit after uploading
 
-This advanced functionality significantly reduces the time and effort required to create designs from scratch. Instead, admins can upload existing files, make necessary adjustments, and save them as new designs, streamlining the workflow and enhancing productivity.
+<CardGroup cols={2}>
+  <Card title="Text" icon="font">
+    Modify any text element carried over from the PDF.
+  </Card>
+  <Card title="Groups" icon="object-group">
+    Group and ungroup items to manage elements flexibly.
+  </Card>
+  <Card title="Images" icon="image">
+    Move and scale images to fit the layout you want.
+  </Card>
+  <Card title="Backgrounds" icon="fill-drip">
+    Change the background from inside the editor.
+  </Card>
+</CardGroup>
 
-We believe this enhancement will greatly benefit our users by providing more robust editing options and improving the overall design experience on PitchPrint.
+## Upload a PDF
 
-To make use of the PDF uploader please go to [Designs](https://admin.pitchprint.com/designs) >> Click on **Import Designs.**
+<Steps>
+  <Step title="Open Import Designs">
+    Go to [Designs](https://admin.pitchprint.com/designs) and click **Import Designs**.
 
-![](https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/66ec338dceae9468399d482c/file-UfpHq2RxDG.png)
+    <Frame>
+      <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/66ec338dceae9468399d482c/file-UfpHq2RxDG.png" alt="Designs page in the admin with the Import Designs button highlighted" />
+    </Frame>
+  </Step>
 
-Then click on **Upload Design PDF** as shown below:
+  <Step title="Choose Upload Design PDF">
+    <Frame>
+      <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/66ec33c3811a2434cb6d3d9c/file-io2ieB05sZ.png" alt="Import Designs options with the Upload Design PDF choice highlighted" />
+    </Frame>
+  </Step>
 
-![](https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/66ec33c3811a2434cb6d3d9c/file-io2ieB05sZ.png)
+  <Step title="Select your file">
+    Pick the PDF from your local storage. It is added as a design in the selected category, ready to edit and save.
+  </Step>
+</Steps>
 
-Select the file you would like to upload from your local storage and the file will be added as a design in the selected category.
-
-Please note that this feature is still in **BETA mode** and we will continue to add functionality. Please reach out to us via [support@pitchprint.com](mailto:support@pitchprint.com) with any suggestions or questions.
+<Note>
+  This feature is in **BETA** and we are still adding functionality. Send suggestions or questions to [support@pitchprint.com](mailto:support@pitchprint.com).
+</Note>
 
 ## Related articles
 

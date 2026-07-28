@@ -13,5 +13,8 @@ node_modules/
 # Data
 data/
 
+# Build output (generated blog summaries)
+dist/
+
 # Claude
 .claude/

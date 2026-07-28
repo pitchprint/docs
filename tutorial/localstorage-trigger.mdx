@@ -1,0 +1,81 @@
+---
+title: "Localstorage Trigger"
+description: "Fix a missing Customize button caused by browser security settings blocking localStorage."
+---
+
+The PitchPrint editor needs access to `localStorage` to run. Tightened browser security settings can block it, and when that happens the **Customize** button doesn't appear on your product pages.
+
+Internet Explorer is not compatible with our platform at all. For other browsers, the fix is a security setting.
+
+<Steps>
+  <Step title="Check what the editor reports">
+    We detect Internet Explorer and show this message. Click **fix this problem** to see the next steps.
+
+    <Frame>
+      <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/605b2a10c44f5d025f4476bf/file-A2fNpRPy1x.png" alt="Browser incompatibility message in the editor" />
+    </Frame>
+
+    A popup then prompts you to update or change your browser.
+
+    <Frame>
+      <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/605b2d483f70ab34d9ba2829/file-egHidad1nM.png" alt="Popup prompting a browser update" />
+    </Frame>
+
+  </Step>
+
+  <Step title="Update your browser's security settings">
+    Pick your browser below and apply the change.
+
+    <Tabs>
+      <Tab title="Chrome">
+        Go to **Settings → Privacy and security → Security** (`chrome://settings/security`) and switch to **Standard protection**.
+
+        <Frame>
+          <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/6059de350ad05379b10cfa97/file-Is98XyADd0.png" alt="Chrome standard protection setting" />
+        </Frame>
+
+      </Tab>
+
+      <Tab title="Edge">
+        Go to **Settings → Privacy, search and services** (`edge://settings/privacy`) and switch tracking prevention to **Balanced**.
+
+        <Frame>
+          <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/6059e09e0ad05379b10cfaa6/file-Nb3RGvJNkE.png" alt="Edge balanced tracking prevention setting" />
+        </Frame>
+
+      </Tab>
+
+      <Tab title="Firefox">
+        Go to **Settings → Privacy & Security** (`about:preferences#privacy`) and switch to **Standard**.
+
+        <Frame>
+          <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/6059e065c44f5d025f446eca/file-hMcEhuTAev.png" alt="Firefox standard privacy setting" />
+        </Frame>
+
+      </Tab>
+
+      <Tab title="Safari">
+        In **Security** settings, make sure **Enable JavaScript** is ticked.
+
+        <Frame>
+          <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/605c561bc44f5d025f447d09/file-UKilpa04ng.png" alt="Safari Enable JavaScript setting" />
+        </Frame>
+
+        Then in **Privacy** settings, make sure **Block all cookies** is *not* ticked.
+
+        <Frame>
+          <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/6061a2cfd97e2f20e67ce838/file-X0j05vpqEX.png" alt="Safari cookie blocking setting" />
+        </Frame>
+
+      </Tab>
+    </Tabs>
+  </Step>
+
+  <Step title="Reload and check the product page">
+    With the setting updated your browser will stop blocking `localStorage`, and designs will load correctly from then on.
+  </Step>
+</Steps>
+
+<Note>
+  Still stuck? Get in touch with our support team and we'll help you work through it.
+</Note>

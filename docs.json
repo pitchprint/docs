@@ -21,84 +21,59 @@
             ]
           },
           {
-            "group": "Using Modules",
+            "group": "Installation Guide",
             "pages": [
               {
-                "group": "AI Modules",
+                "group": "Before You Install",
+                "expanded": false,
                 "pages": [
-                  "documentation/ai-image-generator",
-                  "documentation/ai-outpainting",
-                  "documentation/ai-sketch-to-image",
-                  "documentation/ai-smart-replace",
-                  "documentation/ai-structure",
-                  "documentation/ai-upscale"
+                  "documentation/which-framework-should-i-pick",
+                  "documentation/browser-compatibility",
+                  "documentation/3d-views"
                 ]
               },
               {
-                "group": "Canvas Adjuster",
+                "group": "Platform Installation",
+                "expanded": false,
                 "pages": [
-                  "documentation/canvas-adjuster-module",
-                  "documentation/integrating-canvas-adjuster-to-a-wordpress-store",
-                  "documentation/integrating-canvas-adjuster-to-an-opencart-store"
-                ]
-              },
-              {
-                "group": "Design & Data",
-                "pages": [
-                  "documentation/data-form-module",
-                  "documentation/variable-data-module",
-                  "documentation/design-selector-module",
-                  "documentation/template-color-module",
-                  "documentation/swatch-module"
-                ]
-              },
-              {
-                "group": "Pages & Layout",
-                "pages": [
-                  "documentation/how-to-use-page-count-module",
-                  "documentation/page-loader-module",
-                  "documentation/single-double-sided-module",
-                  "documentation/shuffle-module"
-                ]
-              },
-              {
-                "group": "Other Modules",
-                "pages": [
-                  "documentation/design-observables",
-                  "documentation/remi-module"
+                  "documentation/how-to-install-pitchprint-on-wordpress",
+                  "documentation/pitchprint-for-shopify-getting-started",
+                  "documentation/how-to-install-pitchprint-on-opencart",
+                  "documentation/how-to-install-pitchprint-on-prestashop",
+                  "documentation/how-to-install-pitchprint-on-bigcommerce",
+                  "documentation/bigcommerce",
+                  "documentation/how-to-install-pitchprint-on-ecwid",
+                  "documentation/pitchprint-on-3dcart"
                 ]
               }
             ]
           },
           {
-            "group": "General",
+            "group": "Design Tools",
             "pages": [
               {
-                "group": "3D Models",
-                "pages": [
-                  "documentation/3d",
-                  "documentation/3d-studio",
-                  "documentation/3d-view-introduction"
-                ]
-              },
-              {
-                "group": "Integrations",
-                "pages": [
-                  "documentation/add-previews-project-file-links-to-shopify-email-notifications",
-                  "documentation/bigcommerce",
-                  "documentation/localstorage-trigger"
-                ]
-              },
-              {
                 "group": "Editor & Tools",
+                "expanded": false,
                 "pages": [
                   "documentation/picture-editor",
                   "documentation/pdf-uploader",
-                  "documentation/foil-accent",
-                  "documentation/how-to-add-a-placeholder-image-for-mask-shapes",
-                  "documentation/tags"
+                  "documentation/tags",
+                  "documentation/how-to-add-a-placeholder-image-for-mask-shapes"
                 ]
-              },
+              }
+            ]
+          },
+          {
+            "group": "3D Designs",
+            "pages": [
+              "documentation/3d-view-introduction",
+              "documentation/3d-studio",
+              "documentation/3d"
+            ]
+          },
+          {
+            "group": "Help & Migration",
+            "pages": [
               "documentation/upgrading-to-version-9",
               "documentation/faq"
             ]
@@ -112,36 +87,6 @@
             "group": "Overview",
             "pages": [
               "tutorial/overview"
-            ]
-          },
-          {
-            "group": "Installation guide",
-            "pages": [
-              {
-                "group": "Getting Started",
-                "pages": [
-                  "tutorial/which-framework-should-i-pick",
-                  "tutorial/browser-compatibility",
-                  "tutorial/3d-views"
-                ]
-              },
-              {
-                "group": "Platform Installation",
-                "pages": [
-                  "tutorial/how-to-install-pitchprint-on-bigcommerce",
-                  "tutorial/how-to-install-pitchprint-on-ecwid",
-                  "tutorial/how-to-install-pitchprint-on-ekm",
-                  "tutorial/magento-installation",
-                  "tutorial/how-to-install-pitchprint-on-odoo",
-                  "tutorial/how-to-install-pitchprint-on-opencart",
-                  "tutorial/how-to-install-pitchprint-on-prestashop",
-                  "tutorial/how-to-install-pitchprint-on-wix",
-                  "tutorial/how-to-install-pitchprint-on-wordpress",
-                  "tutorial/pitchprint-for-shopify-getting-started",
-                  "tutorial/pitchprint-on-3dcart",
-                  "tutorial/backup-of-how-to-install-pitchprint-on-opencart-draft"
-                ]
-              }
             ]
           },
           {
@@ -212,6 +157,61 @@
             ]
           },
           {
+            "group": "Using Modules",
+            "pages": [
+              {
+                "group": "Design & Data",
+                "expanded": false,
+                "pages": [
+                  "tutorial/design-selector-module",
+                  "tutorial/data-form-module",
+                  "tutorial/variable-data-module",
+                  "tutorial/template-color-module",
+                  "tutorial/swatch-module"
+                ]
+              },
+              {
+                "group": "AI Tools",
+                "expanded": false,
+                "pages": [
+                  "tutorial/ai-image-generator",
+                  "tutorial/ai-smart-replace",
+                  "tutorial/ai-sketch-to-image",
+                  "tutorial/ai-outpainting",
+                  "tutorial/ai-upscale",
+                  "tutorial/ai-structure"
+                ]
+              },
+              {
+                "group": "Pages & Layout",
+                "expanded": false,
+                "pages": [
+                  "tutorial/how-to-use-page-count-module",
+                  "tutorial/page-loader-module",
+                  "tutorial/single-double-sided-module",
+                  "tutorial/shuffle-module"
+                ]
+              },
+              {
+                "group": "Canvas Adjuster",
+                "expanded": false,
+                "pages": [
+                  "tutorial/canvas-adjuster-module",
+                  "tutorial/integrating-canvas-adjuster-to-a-wordpress-store",
+                  "tutorial/integrating-canvas-adjuster-to-an-opencart-store"
+                ]
+              },
+              {
+                "group": "Other Modules",
+                "expanded": false,
+                "pages": [
+                  "tutorial/remi-module",
+                  "tutorial/design-observables"
+                ]
+              }
+            ]
+          },
+          {
             "group": "Tips 'n Tricks",
             "pages": [
               {
@@ -267,7 +267,8 @@
                   "tutorial/helptip-bubbles",
                   "tutorial/how-to-change-the-app-labels-and-texts",
                   "tutorial/adding-grommets",
-                  "tutorial/smart-size-design"
+                  "tutorial/smart-size-design",
+                  "tutorial/foil-accent"
                 ]
               },
               {
@@ -281,7 +282,8 @@
                 "group": "Troubleshooting",
                 "pages": [
                   "tutorial/web2print-options-missing-in-opencart-admin",
-                  "tutorial/personalize-button-no-showing"
+                  "tutorial/personalize-button-no-showing",
+                  "tutorial/localstorage-trigger"
                 ]
               }
             ]
@@ -304,7 +306,8 @@
                 "pages": [
                   "tutorial/how-to-attach-customer-designs-to-email-wp",
                   "tutorial/how-to-email-artwork-to-customers",
-                  "tutorial/how-to-show-customer-design-previews-on-email-wordpress"
+                  "tutorial/how-to-show-customer-design-previews-on-email-wordpress",
+                  "tutorial/add-previews-project-file-links-to-shopify-email-notifications"
                 ]
               },
               {
@@ -325,13 +328,13 @@
             "group": "Overview",
             "pages": [
               "api-reference/introduction",
+              "api-reference/generate-your-auth-keys",
               "api-reference/auth-signature"
             ]
           },
           {
-            "group": "Integrating PitchPrint",
+            "group": "Custom Integration",
             "pages": [
-              "api-reference/generate-your-auth-keys",
               "api-reference/integration",
               "api-reference/after-save",
               "api-reference/custom-integration-my-account"
@@ -383,6 +386,176 @@
       ]
     }
   },
+  "redirects": [
+    {
+      "source": "/documentation/add-previews-project-file-links-to-shopify-email-notifications",
+      "destination": "/tutorial/add-previews-project-file-links-to-shopify-email-notifications"
+    },
+    {
+      "source": "/documentation/localstorage-trigger",
+      "destination": "/tutorial/localstorage-trigger"
+    },
+    {
+      "source": "/documentation/foil-accent",
+      "destination": "/tutorial/foil-accent"
+    },
+    {
+      "source": "/documentation/generate-your-auth-keys",
+      "destination": "/api-reference/generate-your-auth-keys"
+    },
+    {
+      "source": "/documentation/integration",
+      "destination": "/api-reference/integration"
+    },
+    {
+      "source": "/documentation/after-save",
+      "destination": "/api-reference/after-save"
+    },
+    {
+      "source": "/documentation/custom-integration-my-account",
+      "destination": "/api-reference/custom-integration-my-account"
+    },
+    {
+      "source": "/tutorial/how-to-install-pitchprint-on-wix",
+      "destination": "/documentation/which-framework-should-i-pick"
+    },
+    {
+      "source": "/tutorial/magento-installation",
+      "destination": "/documentation/which-framework-should-i-pick"
+    },
+    {
+      "source": "/tutorial/how-to-install-pitchprint-on-ekm",
+      "destination": "/documentation/which-framework-should-i-pick"
+    },
+    {
+      "source": "/tutorial/how-to-install-pitchprint-on-odoo",
+      "destination": "/documentation/which-framework-should-i-pick"
+    },
+    {
+      "source": "/tutorial/which-framework-should-i-pick",
+      "destination": "/documentation/which-framework-should-i-pick"
+    },
+    {
+      "source": "/tutorial/browser-compatibility",
+      "destination": "/documentation/browser-compatibility"
+    },
+    {
+      "source": "/tutorial/3d-views",
+      "destination": "/documentation/3d-views"
+    },
+    {
+      "source": "/tutorial/how-to-install-pitchprint-on-wordpress",
+      "destination": "/documentation/how-to-install-pitchprint-on-wordpress"
+    },
+    {
+      "source": "/tutorial/pitchprint-for-shopify-getting-started",
+      "destination": "/documentation/pitchprint-for-shopify-getting-started"
+    },
+    {
+      "source": "/tutorial/how-to-install-pitchprint-on-opencart",
+      "destination": "/documentation/how-to-install-pitchprint-on-opencart"
+    },
+    {
+      "source": "/tutorial/how-to-install-pitchprint-on-prestashop",
+      "destination": "/documentation/how-to-install-pitchprint-on-prestashop"
+    },
+    {
+      "source": "/tutorial/how-to-install-pitchprint-on-bigcommerce",
+      "destination": "/documentation/how-to-install-pitchprint-on-bigcommerce"
+    },
+    {
+      "source": "/tutorial/how-to-install-pitchprint-on-ecwid",
+      "destination": "/documentation/how-to-install-pitchprint-on-ecwid"
+    },
+    {
+      "source": "/tutorial/pitchprint-on-3dcart",
+      "destination": "/documentation/pitchprint-on-3dcart"
+    },
+    {
+      "source": "/tutorial/backup-of-how-to-install-pitchprint-on-opencart-draft",
+      "destination": "/documentation/how-to-install-pitchprint-on-opencart"
+    },
+    {
+      "source": "/documentation/design-selector-module",
+      "destination": "/tutorial/design-selector-module"
+    },
+    {
+      "source": "/documentation/data-form-module",
+      "destination": "/tutorial/data-form-module"
+    },
+    {
+      "source": "/documentation/variable-data-module",
+      "destination": "/tutorial/variable-data-module"
+    },
+    {
+      "source": "/documentation/template-color-module",
+      "destination": "/tutorial/template-color-module"
+    },
+    {
+      "source": "/documentation/swatch-module",
+      "destination": "/tutorial/swatch-module"
+    },
+    {
+      "source": "/documentation/ai-image-generator",
+      "destination": "/tutorial/ai-image-generator"
+    },
+    {
+      "source": "/documentation/ai-smart-replace",
+      "destination": "/tutorial/ai-smart-replace"
+    },
+    {
+      "source": "/documentation/ai-sketch-to-image",
+      "destination": "/tutorial/ai-sketch-to-image"
+    },
+    {
+      "source": "/documentation/ai-outpainting",
+      "destination": "/tutorial/ai-outpainting"
+    },
+    {
+      "source": "/documentation/ai-upscale",
+      "destination": "/tutorial/ai-upscale"
+    },
+    {
+      "source": "/documentation/ai-structure",
+      "destination": "/tutorial/ai-structure"
+    },
+    {
+      "source": "/documentation/how-to-use-page-count-module",
+      "destination": "/tutorial/how-to-use-page-count-module"
+    },
+    {
+      "source": "/documentation/page-loader-module",
+      "destination": "/tutorial/page-loader-module"
+    },
+    {
+      "source": "/documentation/single-double-sided-module",
+      "destination": "/tutorial/single-double-sided-module"
+    },
+    {
+      "source": "/documentation/shuffle-module",
+      "destination": "/tutorial/shuffle-module"
+    },
+    {
+      "source": "/documentation/canvas-adjuster-module",
+      "destination": "/tutorial/canvas-adjuster-module"
+    },
+    {
+      "source": "/documentation/integrating-canvas-adjuster-to-a-wordpress-store",
+      "destination": "/tutorial/integrating-canvas-adjuster-to-a-wordpress-store"
+    },
+    {
+      "source": "/documentation/integrating-canvas-adjuster-to-an-opencart-store",
+      "destination": "/tutorial/integrating-canvas-adjuster-to-an-opencart-store"
+    },
+    {
+      "source": "/documentation/remi-module",
+      "destination": "/tutorial/remi-module"
+    },
+    {
+      "source": "/documentation/design-observables",
+      "destination": "/tutorial/design-observables"
+    }
+  ],
   "logo": {
     "light": "/logo/light.svg",
     "dark": "/logo/dark.svg"
@@ -401,7 +574,7 @@
     "primary": {
       "type": "button",
       "label": "Dashboard",
-      "href": "https://app.pitchprint.com"
+      "href": "https://admin.pitchprint.com/login"
     }
   },
   "contextual": {

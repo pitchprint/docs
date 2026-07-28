@@ -1,0 +1,101 @@
+---
+title: "Canvas Adjuster Module"
+description: "Let customers resize the canvas using your preset sizes or their own values, with optional aspect-ratio lock and product-page size syncing."
+release: "wk26-26"
+release_summary: "You can now set predefined and custom canvas values at the same time."
+---
+
+import { ReleaseLink } from "/snippets/release-link.jsx";
+
+<ReleaseLink release="wk26-26" />
+
+<Frame>
+  <img alt="Canvas Adjuster letting a customer set canvas dimensions in the designer" src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5b2cca122c7d3a0fa9a3539f/file-NKyAAwKYBN.png" />
+</Frame>
+
+This module allows your customers to adjust the canvas dimension before or during designing, custom dimensions can be given or have them pick from a list of preset values you created for the particular product.
+
+### How to Enable and Configure Canvas Adjuster on a Design
+
+To enable this feature, navigate to your  [designs page](https://admin.pitchprint.io/designs), simply click the Configure button on the design you like to assign this to. Then navigate to the Modules Tab. There you will find the Canvas Adjuster module. Click to enable it and the configuration panel shows up as shown below:
+
+<Frame>
+  <img alt="Canvas Adjuster configuration panel on the design's Modules tab" src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/64c8d6566d36cc04e8262605/file-47kKw5YgRy.png" />
+</Frame>
+
+The configuration options are as follows:
+
+<ResponseField name="Title" type="text">
+  A title that users get to see on the panel. For example “_Set banner dimensions_“
+</ResponseField>
+
+<ResponseField name="Variation element selector" type="text">
+  An automated way of syncing the size selector in your product page with the canvas adjuster module. Following the example link above, the selected size in the product page is automatically used by the design app without any additional integration. If the size is changed in the app, the product page selector is auto-updated. It is a two way sync and if you have a linked pricing, the price is also updated.
+
+  <Frame>
+    <img alt="Size selector on a product page synced with the canvas adjuster" src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/64c8f5043aabb03ecd7e657a/file-VdTBIBuL6A.png" />
+  </Frame>
+
+  The value to be placed here is the jQuery element unique id or class for the size selector in your product page. This changes from theme to theme and differs even on framework. Should you need help in accessing the element, do send us a ticket with a direct link to your product page.
+
+  <Frame>
+    <img alt="Variation element selector field holding the jQuery id or class of the size selector" src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5b559b4c2c7d3a03f89cde5c/file-MqTtnUzNXk.png" />
+  </Frame>
+</ResponseField>
+
+<ResponseField name="Lock Aspect Ratio" type="toggle">
+  When enabled, the values entered by the customer are locked in proportion based on the default page dimension of the initial design.
+</ResponseField>
+
+<ResponseField name="Apply to all pages" type="toggle">
+  When enabled, the dimensions applied to one page reflect across all the pages when the customer changes the dimension.
+</ResponseField>
+
+<ResponseField name="Clients can enter custom values" type="toggle">
+  Gives your users the ability to enter their own custom values instead of choosing from your preset list.
+</ResponseField>
+
+<ResponseField name="Add a Preset Value" type="button">
+  Adds a preset value to the list. In the front designer, your customers get to pick from this list. To delete any, click on the red button with the cross against the row. This value is set in the design’s default value. You can enter as many values or none.
+
+  <Note>
+    If no preset value is provided, the preset list is not shown.
+  </Note>
+</ResponseField>
+
+<ResponseField name="Mask mode" type="toggle">
+  An extension of the Photo mode feature. In the default Photo mode, the canvas is adjusted to fit the aspect ratio of the main photo. With mask mode enabled, the photo is masked to fit the canvas area and the user is given tools to zoom and position the photo as desired.
+
+  Think of it as a Photo Print feature where customers can order photo prints in standard sizes by placing their photos on the canvas and have it fit that dimension. When they choose a different dimension, the photo will adjust to fit the new size.
+</ResponseField>
+
+<ResponseField name="Dock panel" type="toggle">
+  Docks the custom size panel on the top of the window for easy modification of canvas sizes as shown:
+
+  <Frame>
+    <img alt="Custom size panel docked at the top of the designer window" src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/64c8ebff8ec1e24edafd2093/file-nM0wgzEDMv.png" />
+  </Frame>
+</ResponseField>
+
+<ResponseField name="Photo Canvas mode" type="toggle">
+  Allows users to create a canvas photo by adjusting the canvas size to the ratio of their uploaded photos. It is suited for plain canvases without any item, where users can simply drag their photos onto the canvas and the canvas will shrink or expand to the dimension of the photo placed on it.
+</ResponseField>
+
+<ResponseField name="Capture Presets from Selector" type="toggle">
+  When enabled, the designer will open with the dimensions selected by the customer on the product page.
+</ResponseField>
+
+A sample can be found on the following link [banner Canvas Adjuster demo](https://wp.demo.pitchprint.io/product/banner-canvas-adjuster/)
+
+When the Photo Canvas option is selected, the custom size option is obviously disabled for that design since canvas ratio is strictly based on the uploaded photo.
+
+## Related articles
+
+<CardGroup cols={2}>
+  <Card title="Integrating Canvas Adjuster To A WordPress Store" icon="store" href="/tutorial/integrating-canvas-adjuster-to-a-wordpress-store">
+    Set up canvas-based pricing variations for the Canvas Adjuster in a WooCommerce store.
+  </Card>
+  <Card title="Integrating Canvas Adjuster To An OpenCart Store" icon="store" href="/tutorial/integrating-canvas-adjuster-to-an-opencart-store">
+    Configure canvas-based pricing options for the Canvas Adjuster in an OpenCart store.
+  </Card>
+</CardGroup>

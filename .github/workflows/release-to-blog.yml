@@ -1,0 +1,84 @@
+# Publish blog release notes from docs articles.
+#
+# Each docs article is one topic. Articles that ship in a release carry a
+# `release: "wkXX-YY"` frontmatter value. This workflow groups every article
+# sharing a release into ONE blog release note (one section per topic) and
+# commits it into the Mintlify blog repo, which then auto-deploys. Mintlify has
+# no content-write API, so publishing = committing MDX into the blog's git repo.
+#
+# ── BEFORE THIS WORKS, FILL IN THE PLACEHOLDERS BELOW ────────────────────────
+#   1. BLOG_REPO   -> "owner/blog-repo" of the Mintlify release site (once created)
+#   2. BLOG_PATH   -> folder inside the blog repo where release notes live
+#   3. Secret BLOG_REPO_TOKEN -> a PAT (or fine-grained token) with write access
+#      to the blog repo. Add it in: docs repo → Settings → Secrets → Actions.
+#   4. (optional) Secret MINTLIFY_API_KEY -> admin key (mint_...) to force+track a
+#      deploy via the Mintlify update API. Git push already auto-deploys, so this
+#      is only needed if you want deterministic deploy status.
+# ─────────────────────────────────────────────────────────────────────────────
+
+name: Publish release notes to blog
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "documentation/**.mdx"
+      - "tutorial/**.mdx"
+      - "api-reference/**.mdx"
+
+# Placeholders — replace these two values.
+env:
+  BLOG_REPO: "pitchprint/CHANGE-ME-blog-repo"
+  BLOG_PATH: "release-notes"
+  DOCS_BASE_URL: "https://docs.pitchprint.com"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out docs repo
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # Scan all articles and (re)generate every release note. Only the ones
+      # whose articles changed will differ from what's already in the blog repo,
+      # so the commit step below is a no-op unless something actually changed.
+      - name: Generate release notes
+        run: node scripts/generate-blog-summaries.js
+
+      - name: Check out blog repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.BLOG_REPO }}
+          token: ${{ secrets.BLOG_REPO_TOKEN }}
+          path: blog-repo
+
+      - name: Sync release notes into the blog repo and push
+        run: |
+          if ! compgen -G "dist/blog-posts/*.mdx" > /dev/null; then
+            echo "No release notes generated (no articles carry a release: value)."
+            exit 0
+          fi
+          mkdir -p "blog-repo/${BLOG_PATH}"
+          cp dist/blog-posts/*.mdx "blog-repo/${BLOG_PATH}/"
+          cd blog-repo
+          git config user.name "pitchprint-bot"
+          git config user.email "bot@pitchprint.com"
+          git add "${BLOG_PATH}"/*.mdx
+          if git diff --cached --quiet; then
+            echo "Blog release notes already up to date."
+            exit 0
+          fi
+          git commit -m "chore: sync release notes from docs (${{ github.sha }})"
+          git push
+
+      # Optional: force + track a Mintlify deploy of the blog. Git push already
+      # triggers a deploy, so enable only if you want the API status back.
+      # - name: Trigger Mintlify deploy
+      #   run: |
+      #     curl -X POST https://api.mintlify.com/v1/update \
+      #       -H "Authorization: Bearer ${{ secrets.MINTLIFY_API_KEY }}" \
+      #       -H "Content-Type: application/json"

@@ -1,5 +1,6 @@
 ---
 title: "All About Colors"
+description: "How PitchPrint stores Hex, CMYK and SPOT values per color, and which of them is used for on-screen display versus the final PDF"
 ---
 
 Colors is one of the resource groups in PitchPrint which can be assigned to or excluded from designs. By default when a new domain is created, a set of 13 color categories are created for the domain. You can always delete these and create your own categories or rename them.
@@ -8,15 +9,21 @@ Creating a new category is fairly simple, just click the button on the top right
 
 ### PitchPrint Color System
 
-![](https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/59707098042863033a1b4112/file-a2OLkReeO9.png)It is important to understand how the color system works on this platform to better make the most of it and avoid issues.
+<Frame>
+  <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/59707098042863033a1b4112/file-a2OLkReeO9.png" alt="Color item popup with inputs for Hex, CMYK and SPOT values" />
+</Frame>
+
+It is important to understand how the color system works on this platform to better make the most of it and avoid issues.
 
 When you click any of the color items, the popup shown above appears with option to provide 3 color inputs to wit: Hex, CMYK and SPOT values.
 
 Monitors by default, are based on screen technology and therefore cannot display colors in CMYK. They have to be converted into RGB to be displayed by any monitor screen. The RGB HEX value in PitchPrint is used for display on the monitor screen.
 
-![](https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5976e5c7042863033a1b5ae6/file-EG0CdPGKud.png)
+<Frame>
+  <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5976e5c7042863033a1b5ae6/file-EG0CdPGKud.png" alt="A color's RGB hex value, which is what the monitor uses to display it" />
+</Frame>
 
-So if you have a value of say #990000 assigned to a text element, this value is used to display the text on the screen. If in addition, you also provided a CMYK + SPOT value to that color unit, those values will be used while creating the PDF File, **_provided the option to render PDF in RGB is turned off, which is by default in_ _[settings page](https://pitchprint.net/admin/settings):_** ![](https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/596f2a9a2c7d3a73488b38df/file-uibkfcvrQk.png)
+So if you have a value of say #990000 assigned to a text element, this value is used to display the text on the screen. If in addition, you also provided a CMYK + SPOT value to that color unit, those values will be used while creating the PDF File, **_provided the option to render PDF in RGB is turned off, which is by default in_ _[settings page](https://pitchprint.net/admin/settings):_** ![The render PDF in RGB option on the settings page](https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/596f2a9a2c7d3a73488b38df/file-uibkfcvrQk.png)
 
 If however, you **did not** provide a CMYK value, the system will do a conversion of the current RGB to CMYK and use the converted value in creating the PDF.
 
@@ -32,10 +39,10 @@ Remember, If a CMYK + SPOT value is provided, the system automatically uses that
   <Card title="Color Palette" icon="palette" href="/tutorial/color-palette">
     Create five-color complementary themes customers can sample to restyle a design.
   </Card>
-  <Card title="Swatch Module" icon="swatchbook" href="/documentation/swatch-module">
+  <Card title="Swatch Module" icon="swatchbook" href="/tutorial/swatch-module">
     Let customers switch a design's color theme, background and preview within the editor.
   </Card>
-  <Card title="Template Color Module" icon="image" href="/documentation/template-color-module">
+  <Card title="Template Color Module" icon="image" href="/tutorial/template-color-module">
     Let customers switch template images, such as T-shirt colors, at design time.
   </Card>
   <Card title="Template Colour Designs" icon="image" href="/tutorial/template-colour-designs">

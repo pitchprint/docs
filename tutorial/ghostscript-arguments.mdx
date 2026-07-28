@@ -1,5 +1,6 @@
 ---
 title: "Ghostscript Arguments"
+description: "Add your own Ghostscript command arguments in settings to change the PDF version, colour model and other output specs before download or webhook delivery."
 ---
 
 Ghostscript is a powerful PostScript and PDF processing engine. With Ghostscript, it is possible to further edit and convert your PDF specifications to your desires.
@@ -10,25 +11,31 @@ We have integrated a Ghostscript command pipeline, that can convert your PDF fil
 
 For example, let's say you would like the PDF to be converted from it's default PDF version 1.7 to PDF/X-3 version 1.3, you would provide the following argument: **\-dPDFX**
 
-**![](https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5b9f79f50428631d7a8b36c4/file-ruKIWfPffa.png)**
+<Frame>
+  <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5b9f79f50428631d7a8b36c4/file-ruKIWfPffa.png" alt="Settings page with -dPDFX entered as the Ghostscript argument" />
+</Frame>
 
 * * *
 
-Another example, if you would like to convert the PDF version to 1.4 and convert all colors including images in the PDF to CYMK, you would provide the following arguments: 
+Another example, if you would like to convert the PDF version to 1.4 and convert all colors including images in the PDF to CYMK, you would provide the following arguments:
 
-1.  **\-****dCompatibilityLevel=1.4** 
-2.  **\-sProcessColorModel=DeviceCMYK** 
-3.  **\-sColorConversionStrategy=CMYK** 
+1.  **\-****dCompatibilityLevel=1.4**
+2.  **\-sProcessColorModel=DeviceCMYK**
+3.  **\-sColorConversionStrategy=CMYK**
 4.  **\-sColorConversionStrategyForImages=CMYK**
 
-![](https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5b9f7ffd0428631d7a8b370f/file-7KPpv3KbT8.png)
+<Frame>
+  <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5b9f7ffd0428631d7a8b370f/file-7KPpv3KbT8.png" alt="Settings page with the four CMYK conversion arguments entered together in the Ghostscript field" />
+</Frame>
 
-> Please note that each argument is separated by a single space
+<Warning>
+  Each argument must be separated by a single space.
+</Warning>
 
-For more available arguments you can study  [Ghostscript Use](https://www.ghostscript.com/doc/9.23/VectorDevices.htm) .
+For more available arguments you can study  [Ghostscript Use](https://www.ghostscript.com/doc/9.23/VectorDevices.htm) .
 
-Also note that we provide other default arguments such as (so you should not): 
-**\-sDEVICE=pdfwrite -sOutputFile=out-x3.pdf PDFX\_def.ps input.ps**
+Also note that we provide other default arguments such as (so you should not):
+**\-sDEVICE=pdfwrite -sOutputFile=out-x3.pdf PDFX_def.ps input.ps**
 
 ## Related articles
 

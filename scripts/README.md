@@ -130,11 +130,39 @@ The list endpoints omit the `text` body, so `getAllArticlesWithContent()` fetche
 each article individually — using a bounded worker pool for speed while staying
 within Help Scout's rate limits. If you hit HTTP `429`, lower the concurrency.
 
+## Release notes → blog
+
+A separate, always-on pipeline publishes **blog release notes** from docs
+articles. It is independent of the Help Scout migration above.
+
+- **Source:** docs articles carrying a `release: "wkXX-YY"` frontmatter value
+  (see the "Release notes → blog" section in [`AGENTS.md`](../AGENTS.md) for the
+  authoring contract). Each article is one topic.
+- **Generator:** `scripts/generate-blog-summaries.js` (`npm run blog-summaries`)
+  scans `documentation/`, `tutorial/`, and `api-reference/`, **groups articles by
+  their `release` value**, and writes one `release-<id>.mdx` per release to
+  `dist/blog-posts/` (gitignored). Each release note has one `###` section per
+  topic — title, `release_summary` (or `description`/first paragraph), and a
+  `Learn more →` link back to the docs article.
+- **Publish:** `.github/workflows/release-to-blog.yml` runs the generator on push
+  and commits the release notes into the **blog repo**, which auto-deploys.
+  Mintlify has no content-write API, so publishing = committing MDX into git.
+  Fill in `BLOG_REPO` / `BLOG_PATH` and the `BLOG_REPO_TOKEN` secret once the blog
+  site exists.
+- **Back-link:** `snippets/release-link.jsx` renders the
+  `<ReleaseLink release="wkXX-YY" />` badge on the article. Update its
+  `BLOG_RELEASE_BASE` constant when the blog's URL is finalized.
+
+Config lives in env vars at the top of the generator: `SCAN_DIRS`, `OUTPUT_DIR`,
+`DOCS_BASE_URL`.
+
 ## Security notes
 
 - `.env` and `data/` handling: `.env` is gitignored. Never expose the API key in
   browser/front-end code — Basic Auth belongs on the server side only.
 - If the API key or password was ever committed or shared, **rotate it** in Help Scout.
+- `BLOG_REPO_TOKEN` (blog-publish workflow) and any `MINTLIFY_API_KEY` are GitHub
+  Actions **secrets** — never hard-code them in the workflow or scripts.
 
 ## Known limitations
 

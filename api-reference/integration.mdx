@@ -1,10 +1,13 @@
 ---
 title: "Integration"
+description: "Build a working PitchPrint page from scratch: load the client script, initialize it with your API key and design ID, and handle its events."
 ---
 
 To start with, you need at least an html page loaded from your site where you will load the app unto. If you already have a website in place, this will naturally be your products page template.
 
-> The code you are about to create can be downloaded here: [https://github.com/pitchprint/pitchprint/blob/master/sdk/index.html](https://github.com/pitchprint/pitchprint/blob/master/sdk/index.html)
+<Tip>
+  The code you are about to create can be downloaded here: [sample SDK index.html on GitHub](https://github.com/pitchprint/pitchprint/blob/master/sdk/index.html)
+</Tip>
 
 The PitchPrint app relies on a few libraries and we have made efforts to bundle them all into a single file.
 
@@ -35,7 +38,7 @@ Next, we just created the html elements that we need to interact with... A loade
 
 After that, we write out javaScript code to do the magic..
 
-#### Let's get a reference to our UI elements
+### Let's get a reference to our UI elements
 
 First, we need to get our elements into variables so we can use them later on, as follows:
 
@@ -45,7 +48,7 @@ var _launchButton = document.getElementById('launch_btn'),
 	_loaderDiv = document.getElementById('pp_loader_div');
 ```
 
-#### Initialize PitchPrint client
+### Initialize PitchPrint client
 
 Next, we need to initialize the PitchPrint client class, which will return us a reference () to interact with the app..
 
@@ -58,7 +61,7 @@ var ppclient = new PitchPrintClient({
 });
 ```
 
-#### Define our event handler functions
+### Define our event handler functions
 
 These are the two functions we are going to define to handle the app validated and project saved events..
 
@@ -79,7 +82,7 @@ var projectSaved = (_val) => {
 };
 ```
 
-#### Attach events to the app
+### Attach events to the app
 
 So here, we are going to attach events to the PitchPrint client class, such that if any of the events happen, it calls out functions
 
@@ -88,11 +91,13 @@ ppclient.on('app-validated', appValidated);
 ppclient.on('project-saved', projectSaved);
 ```
 
-#### Test our app
+### Test our app
 
 Ok, so far so good, you can test the page in a browser and see that it loads properly and that there are no errors thrown.
 
-To test, click the Launch Designer button. And your designer should show like this. If not, please open a ticket and let us know. ![](https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/61a5f2ccefc78d0553e5eaca/file-0sKRATHNyv.png)Using your own credentials
+To test, click the Launch Designer button. And your designer should show like this. If not, please open a ticket and let us know. ![The designer opened from the Launch Designer button](https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/61a5f2ccefc78d0553e5eaca/file-0sKRATHNyv.png)
+
+Using your own credentials
 
 For simplicity, we have used our own demo-credentials, that is API key and designId. Now you should change these to yours, the one you created in the previous topic.
 
@@ -100,7 +105,9 @@ So in the variables definition, change the apiKey value to your own apiKey.
 
 To get your designId, navigate to the [designs page](https://admin.pitchprint.io/designs). Open the configuration tab of the design which you would like to use. Go to the history tab and you'll see the designId please have a look below for reference:
 
-![](https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/629db8e8a2c316231c203063/file-d9nBJgLEd1.png)
+<Frame>
+  <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/629db8e8a2c316231c203063/file-d9nBJgLEd1.png" alt="History tab of a design's configuration, showing where the designId appears" />
+</Frame>
 
 Use the designId inside the code snippet as shown above.
 
