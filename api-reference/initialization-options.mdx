@@ -20,7 +20,7 @@ The parameters value is a key-value object and are defined as follows:
 </ResponseField>
 
 <ResponseField name="mode" type="string">
-  The mode in which the app should load. Default value should be `new`. When a user has finished creating a design but has not left the page, they may decide they want to edit again — set this to `edit` just before loading up the editor for editing.
+  The mode in which the app should load. Default value should be `new`. When a user has finished creating a design but has not left the page, they may decide they want to edit again. Set this to `edit` just before loading up the editor for editing.
 </ResponseField>
 
 <ResponseField name="product" type="object">
@@ -65,7 +65,7 @@ The parameters value is a key-value object and are defined as follows:
   A unique code we use to reference each user. For every user that instantiates the app, a folder is created on the server so their pictures and design projects can be saved and referenced anytime.
 
   <Warning>
-    If this value is omitted, we will use ‘guest’ — when the user reloads the app on a different browser their images and assets are lost. Provide a unique ID to identify each user and store their assets separately and safely.
+    If this value is omitted, we will use ‘guest’. When the user reloads the app on a different browser their images and assets are lost. Provide a unique ID to identify each user and store their assets separately and safely.
   </Warning>
 </ResponseField>
 

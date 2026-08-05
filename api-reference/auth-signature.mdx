@@ -8,7 +8,7 @@ Every call to the Runtime API is authenticated with a signature generated from y
 | Key | Where it runs |
 | --- | --- |
 | **API Key** | Public-facing. Identifies your domain on each request. |
-| **Secret Key** | Server-side only. Used to build the signature — never sent in a request. |
+| **Secret Key** | Server-side only. Used to build the signature. Never sent in a request. |
 
 <Warning>
   Never expose your Secret Key in client-side code, a public repository, or a mobile app bundle. Use it only from your server.
@@ -16,10 +16,10 @@ Every call to the Runtime API is authenticated with a signature generated from y
 
 ## Generate a signature
 
-Append your **API Key + Secret Key + timestamp** and take the MD5 hash of the resulting string — that hash is your signature. The timestamp is a UNIX timestamp (seconds since the epoch) and is valid for a one-hour window, so generate a new signature for each request.
+Append your **API Key + Secret Key + timestamp** and take the MD5 hash of the resulting string. That hash is your signature. The timestamp is a UNIX timestamp (seconds since the epoch) and is valid for a one-hour window, so generate a new signature for each request.
 
 <Warning>
-  Protect the script that generates your signature so that only code with the right privileges can call it — it has access to your Secret Key.
+  Protect the script that generates your signature so that only code with the right privileges can call it, since it has access to your Secret Key.
 </Warning>
 
 ```php
@@ -49,10 +49,10 @@ function generateSignature () {
 
 ## Sending the request
 
-Send `apiKey`, `timestamp` and `signature` — plus any endpoint-specific fields — as a JSON body. The endpoint for all runtime calls is **https://api.pitchprint.io/runtime/**.
+Send `apiKey`, `timestamp` and `signature`, plus any endpoint-specific fields, as a JSON body. The endpoint for all runtime calls is **https://api.pitchprint.io/runtime/**.
 
 <Note>
-  Pass the parameters as a JSON string, not query-string pairs — e.g. `curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($opts));`
+  Pass the parameters as a JSON string, not query-string pairs. For example: `curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($opts));`
 </Note>
 
 ## Related articles
