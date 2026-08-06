@@ -15,19 +15,30 @@ PrestaShop is an open source cart framework built on PHP. Follow these steps to 
   </Step>
 
   <Step title="Upload the module">
-    Unzip it and upload to your PrestaShop `modules` directory.
+    Unzip it and upload to your PrestaShop `modules` directory. Upload the `pitchprint` folder itself, not just its contents, so the result looks like this:
+
+    <Tree>
+      <Tree.Folder name="modules" defaultOpen>
+        <Tree.Folder name="pitchprint" defaultOpen highlight>
+          <Tree.Folder name="uploads">
+            <Tree.Folder name="files" />
+          </Tree.Folder>
+          <Tree.File name="pitchprint.php" />
+        </Tree.Folder>
+      </Tree.Folder>
+    </Tree>
 
     <Warning>
-      Upload the `pitchprint` folder itself, not just its contents. The path must be `modules/pitchprint`.
+      If you upload the contents instead of the folder, the module will not be detected. The path must be `modules/pitchprint`.
     </Warning>
   </Step>
 
   <Step title="Set upload folder permissions">
     Set `site/modules/pitchprint/uploads/files` to permission `777`.
 
-    <Warning>
-      Once installed, work through our [security measures](/tutorial/security-measures) before going live.
-    </Warning>
+    <Danger>
+      `777` grants write access to everyone on the server. Work through our [security measures](/tutorial/security-measures) before going live.
+    </Danger>
   </Step>
 
   <Step title="Install and configure the module">

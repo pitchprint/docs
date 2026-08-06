@@ -46,11 +46,23 @@ PitchPrint for WordPress runs alongside [WooCommerce](http://www.woothemes.com/w
   </Step>
 
   <Step title="Set upload folder permissions">
-    For uploads to work, set `wp-contents/plugins/pitchprint/upload/files` to permission `777`.
+    For uploads to work, set the `files` folder below to permission `777`.
 
-    <Warning>
-      Once installed, work through our [security measures](/tutorial/security-measures) before going live.
-    </Warning>
+    <Tree>
+      <Tree.Folder name="wp-contents" defaultOpen>
+        <Tree.Folder name="plugins" defaultOpen>
+          <Tree.Folder name="pitchprint" defaultOpen>
+            <Tree.Folder name="upload" defaultOpen>
+              <Tree.Folder name="files" highlight />
+            </Tree.Folder>
+          </Tree.Folder>
+        </Tree.Folder>
+      </Tree.Folder>
+    </Tree>
+
+    <Danger>
+      `777` grants write access to everyone on the server. Work through our [security measures](/tutorial/security-measures) before going live.
+    </Danger>
   </Step>
 
   <Step title="Assign a design to a product">

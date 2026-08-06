@@ -10,9 +10,9 @@ Every call to the Runtime API is authenticated with a signature generated from y
 | **API Key** | Public-facing. Identifies your domain on each request. |
 | **Secret Key** | Server-side only. Used to build the signature. Never sent in a request. |
 
-<Warning>
-  Never expose your Secret Key in client-side code, a public repository, or a mobile app bundle. Use it only from your server.
-</Warning>
+<Danger>
+  Never expose your Secret Key in client-side code, a public repository, or a mobile app bundle. Anyone holding it can edit your PitchPrint account. Use it only from your server.
+</Danger>
 
 ## Generate a signature
 
@@ -22,7 +22,9 @@ Append your **API Key + Secret Key + timestamp** and take the MD5 hash of the re
   Protect the script that generates your signature so that only code with the right privileges can call it, since it has access to your Secret Key.
 </Warning>
 
-```php
+<CodeGroup>
+
+```php PHP
 <?php
     define('PITCH_APIKEY', 'your-api-key');
     define('PITCH_SECRETKEY', 'your-secret-key');
@@ -35,7 +37,7 @@ Append your **API Key + Secret Key + timestamp** and take the MD5 hash of the re
 ?>
 ```
 
-```javascript
+```javascript Node.js
 const md5 = require('md5'); // you need the md5 module
 
 function generateSignature () {
@@ -46,6 +48,8 @@ function generateSignature () {
   return { timestamp, apiKey, signature };
 }
 ```
+
+</CodeGroup>
 
 ## Sending the request
 

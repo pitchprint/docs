@@ -9,6 +9,15 @@ To build a design idea in PitchPrint you need to know how its canvas is stacked.
 
 From bottom to top: **Template**, **Background**, **Canvas** and **Foreground**.
 
+```mermaid
+graph TB
+    F["Foreground — masks over the design, prints optionally"]
+    C["Canvas — where the customer works, always prints"]
+    B["Background — image or solid colour"]
+    T["Template — product mockup, never prints"]
+    F --> C --> B --> T
+```
+
 <Frame>
   <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5975961d042863033a1b5217/file-ECPGLFAJ4Z.png" alt="Diagram of the four canvas layers: Template, Background, Canvas and Foreground" />
 </Frame>
