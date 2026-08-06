@@ -554,6 +554,506 @@
     {
       "source": "/documentation/design-observables",
       "destination": "/tutorial/design-observables"
+    },
+    {
+      "source": "/article/24-how-to-add-your-own-fonts",
+      "destination": "/tutorial/how-to-add-your-own-fonts"
+    },
+    {
+      "source": "/article/25-faq",
+      "destination": "/documentation/faq"
+    },
+    {
+      "source": "/article/26-how-to-install-pitchprint-on-opencart",
+      "destination": "/documentation/how-to-install-pitchprint-on-opencart"
+    },
+    {
+      "source": "/article/28-how-to-change-the-app-labels-and-texts",
+      "destination": "/tutorial/how-to-change-the-app-labels-and-texts"
+    },
+    {
+      "source": "/article/29-canvas-adjuster-module",
+      "destination": "/tutorial/canvas-adjuster-module"
+    },
+    {
+      "source": "/article/35-how-to-install-pitchprint-on-wordpress",
+      "destination": "/documentation/how-to-install-pitchprint-on-wordpress"
+    },
+    {
+      "source": "/article/36-how-to-install-pitchprint-on-prestashop",
+      "destination": "/documentation/how-to-install-pitchprint-on-prestashop"
+    },
+    {
+      "source": "/article/37-pitchprint-for-shopify-getting-started",
+      "destination": "/documentation/pitchprint-for-shopify-getting-started"
+    },
+    {
+      "source": "/article/38-page-loader-module",
+      "destination": "/tutorial/page-loader-module"
+    },
+    {
+      "source": "/article/39-shuffle-module",
+      "destination": "/tutorial/shuffle-module"
+    },
+    {
+      "source": "/article/40-data-form-module",
+      "destination": "/tutorial/data-form-module"
+    },
+    {
+      "source": "/article/41-design-selector-module",
+      "destination": "/tutorial/design-selector-module"
+    },
+    {
+      "source": "/article/42-variable-data-module",
+      "destination": "/tutorial/variable-data-module"
+    },
+    {
+      "source": "/article/43-template-color-module",
+      "destination": "/tutorial/template-color-module"
+    },
+    {
+      "source": "/article/44-which-framework-should-i-pick",
+      "destination": "/documentation/which-framework-should-i-pick"
+    },
+    {
+      "source": "/article/45-how-to-enable-the-customization-form",
+      "destination": "/tutorial/how-to-enable-the-customization-form"
+    },
+    {
+      "source": "/article/46-how-to-create-a-design",
+      "destination": "/tutorial/how-to-create-a-design"
+    },
+    {
+      "source": "/article/47-text-styles",
+      "destination": "/tutorial/text-styles"
+    },
+    {
+      "source": "/article/49-security-measures",
+      "destination": "/tutorial/security-measures"
+    },
+    {
+      "source": "/article/50-how-to-create-a-baby-s-arrival-design-template",
+      "destination": "/tutorial/how-to-create-a-baby-s-arrival-design-template"
+    },
+    {
+      "source": "/article/51-how-to-create-a-collage-iphone-case-design-template",
+      "destination": "/tutorial/how-to-create-a-collage-iphone-case-design-template"
+    },
+    {
+      "source": "/article/52-helptip-bubbles",
+      "destination": "/tutorial/helptip-bubbles"
+    },
+    {
+      "source": "/article/53-item-hooks",
+      "destination": "/tutorial/item-hooks"
+    },
+    {
+      "source": "/article/54-remi-module",
+      "destination": "/tutorial/remi-module"
+    },
+    {
+      "source": "/article/55-integrating-canvas-adjuster-to-a-wordpress-store",
+      "destination": "/tutorial/integrating-canvas-adjuster-to-a-wordpress-store"
+    },
+    {
+      "source": "/article/56-integrating-canvas-adjuster-to-an-opencart-store",
+      "destination": "/tutorial/integrating-canvas-adjuster-to-an-opencart-store"
+    },
+    {
+      "source": "/article/57-mobile-phone-layouts",
+      "destination": "/tutorial/mobile-phone-layouts"
+    },
+    {
+      "source": "/article/58-types-of-pitchprint-designs",
+      "destination": "/tutorial/types-of-pitchprint-designs"
+    },
+    {
+      "source": "/article/59-photo-resolution-check",
+      "destination": "/tutorial/photo-resolution-check"
+    },
+    {
+      "source": "/article/61-swatch-module",
+      "destination": "/tutorial/swatch-module"
+    },
+    {
+      "source": "/article/62-managing-your-domains",
+      "destination": "/tutorial/managing-your-domains"
+    },
+    {
+      "source": "/article/64-all-about-colors",
+      "destination": "/tutorial/all-about-colors"
+    },
+    {
+      "source": "/article/65-managing-your-designs",
+      "destination": "/tutorial/managing-your-designs"
+    },
+    {
+      "source": "/article/66-design-editor",
+      "destination": "/tutorial/design-editor"
+    },
+    {
+      "source": "/article/67-admin-settings",
+      "destination": "/tutorial/admin-settings"
+    },
+    {
+      "source": "/article/68-web2print-options-missing-in-opencart-admin",
+      "destination": "/tutorial/web2print-options-missing-in-opencart-admin"
+    },
+    {
+      "source": "/article/69-how-to-save-your-svgs-for-use-in-pitchprint",
+      "destination": "/tutorial/how-to-save-your-svgs-for-use-in-pitchprint"
+    },
+    {
+      "source": "/article/70-how-to-create-an-svg-for-use-as-mask",
+      "destination": "/tutorial/how-to-create-an-svg-for-use-as-mask"
+    },
+    {
+      "source": "/article/72-how-to-update-design-with-customer-data",
+      "destination": "/tutorial/how-to-update-design-with-customer-data"
+    },
+    {
+      "source": "/article/74-how-to-import-designs",
+      "destination": "/tutorial/how-to-import-designs"
+    },
+    {
+      "source": "/article/75-how-to-create-templates-using-svg-shapes",
+      "destination": "/tutorial/how-to-create-templates-using-svg-shapes"
+    },
+    {
+      "source": "/article/76-how-to-enable-pixabay-image-search",
+      "destination": "/tutorial/how-to-enable-pixabay-image-search"
+    },
+    {
+      "source": "/article/77-how-to-attach-customer-designs-to-email-wp",
+      "destination": "/tutorial/how-to-attach-customer-designs-to-email-wp"
+    },
+    {
+      "source": "/article/84-introduction",
+      "destination": "/api-reference/introduction"
+    },
+    {
+      "source": "/article/85-initialization-options",
+      "destination": "/api-reference/initialization-options"
+    },
+    {
+      "source": "/article/86-auth-signature",
+      "destination": "/api-reference/auth-signature"
+    },
+    {
+      "source": "/article/87-generate-your-auth-keys",
+      "destination": "/api-reference/generate-your-auth-keys"
+    },
+    {
+      "source": "/article/88-integration",
+      "destination": "/api-reference/integration"
+    },
+    {
+      "source": "/article/89-after-save",
+      "destination": "/api-reference/after-save"
+    },
+    {
+      "source": "/article/90-events",
+      "destination": "/api-reference/events"
+    },
+    {
+      "source": "/article/91-designer-ready-method",
+      "destination": "/api-reference/designer-ready-method"
+    },
+    {
+      "source": "/article/92-fetch-design-categories",
+      "destination": "/api-reference/fetch-design-categories"
+    },
+    {
+      "source": "/article/94-fetch-designs",
+      "destination": "/api-reference/fetch-designs"
+    },
+    {
+      "source": "/article/95-fetch-project",
+      "destination": "/api-reference/fetch-project"
+    },
+    {
+      "source": "/article/96-render-pdf-raster",
+      "destination": "/api-reference/render-pdf-raster"
+    },
+    {
+      "source": "/article/97-photo-print-module",
+      "destination": "/tutorial/photo-print-module"
+    },
+    {
+      "source": "/article/99-webhooks",
+      "destination": "/tutorial/webhooks"
+    },
+    {
+      "source": "/article/100-automation-sending-your-pdf-file-to-printer",
+      "destination": "/tutorial/automation-sending-your-pdf-file-to-printer"
+    },
+    {
+      "source": "/article/106-how-to-create-colour-chains",
+      "destination": "/tutorial/how-to-create-colour-chains"
+    },
+    {
+      "source": "/article/107-display-modes",
+      "destination": "/tutorial/display-modes"
+    },
+    {
+      "source": "/article/108-ghostscript-arguments",
+      "destination": "/tutorial/ghostscript-arguments"
+    },
+    {
+      "source": "/article/109-color-palette",
+      "destination": "/tutorial/color-palette"
+    },
+    {
+      "source": "/article/110-browser-compatibility",
+      "destination": "/documentation/browser-compatibility"
+    },
+    {
+      "source": "/article/112-3d-views",
+      "destination": "/documentation/3d-views"
+    },
+    {
+      "source": "/article/114-how-to-use-page-count-module",
+      "destination": "/tutorial/how-to-use-page-count-module"
+    },
+    {
+      "source": "/article/119-backgrounds",
+      "destination": "/tutorial/backgrounds"
+    },
+    {
+      "source": "/article/124-3d-uv-mapping",
+      "destination": "/tutorial/3d-uv-mapping"
+    },
+    {
+      "source": "/article/126-clone-project",
+      "destination": "/api-reference/clone-project"
+    },
+    {
+      "source": "/article/127-getting-started-with-pitchprint",
+      "destination": "/tutorial/getting-started-with-pitchprint"
+    },
+    {
+      "source": "/article/129-layouts-v10",
+      "destination": "/tutorial/layouts-v10"
+    },
+    {
+      "source": "/article/130-pitchprint-on-3dcart",
+      "destination": "/documentation/pitchprint-on-3dcart"
+    },
+    {
+      "source": "/article/132-how-to-install-pitchprint-on-bigcommerce",
+      "destination": "/documentation/how-to-install-pitchprint-on-bigcommerce"
+    },
+    {
+      "source": "/article/133-tags",
+      "destination": "/documentation/tags"
+    },
+    {
+      "source": "/article/136-design-observables",
+      "destination": "/tutorial/design-observables"
+    },
+    {
+      "source": "/article/138-spark",
+      "destination": "/tutorial/spark"
+    },
+    {
+      "source": "/article/141-smart-sizes",
+      "destination": "/tutorial/smart-sizes"
+    },
+    {
+      "source": "/article/144-how-to-show-customer-design-previews-on-email-wordpress",
+      "destination": "/tutorial/how-to-show-customer-design-previews-on-email-wordpress"
+    },
+    {
+      "source": "/article/145-reels-data-form",
+      "destination": "/tutorial/reels-data-form"
+    },
+    {
+      "source": "/article/146-template-colour-designs",
+      "destination": "/tutorial/template-colour-designs"
+    },
+    {
+      "source": "/article/147-smart-size-design",
+      "destination": "/tutorial/smart-size-design"
+    },
+    {
+      "source": "/article/148-creating-text-art",
+      "destination": "/tutorial/creating-text-art"
+    },
+    {
+      "source": "/article/149-single-double-sided-module",
+      "destination": "/tutorial/single-double-sided-module"
+    },
+    {
+      "source": "/article/151-design-item-and-page-tags",
+      "destination": "/tutorial/design-item-and-page-tags"
+    },
+    {
+      "source": "/article/152-how-to-create-a-clickable-mask",
+      "destination": "/tutorial/how-to-create-a-clickable-mask"
+    },
+    {
+      "source": "/article/153-text-to-svg",
+      "destination": "/tutorial/text-to-svg"
+    },
+    {
+      "source": "/article/154-ai-image-generator",
+      "destination": "/tutorial/ai-image-generator"
+    },
+    {
+      "source": "/article/155-remove-background",
+      "destination": "/tutorial/remove-background"
+    },
+    {
+      "source": "/article/158-ai-upscale",
+      "destination": "/tutorial/ai-upscale"
+    },
+    {
+      "source": "/article/159-ai-outpainting",
+      "destination": "/tutorial/ai-outpainting"
+    },
+    {
+      "source": "/article/160-ai-smart-replace",
+      "destination": "/tutorial/ai-smart-replace"
+    },
+    {
+      "source": "/article/161-ai-sketch-to-image",
+      "destination": "/tutorial/ai-sketch-to-image"
+    },
+    {
+      "source": "/article/162-ai-structure",
+      "destination": "/tutorial/ai-structure"
+    },
+    {
+      "source": "/article/163-custom-integration-my-account",
+      "destination": "/api-reference/custom-integration-my-account"
+    },
+    {
+      "source": "/article/164-data-form-video",
+      "destination": "/tutorial/data-form-video"
+    },
+    {
+      "source": "/article/165-using-ai-imaginate",
+      "destination": "/tutorial/using-ai-imaginate"
+    },
+    {
+      "source": "/article/166-element-colour-chain",
+      "destination": "/tutorial/element-colour-chain"
+    },
+    {
+      "source": "/article/167-image-chain",
+      "destination": "/tutorial/image-chain"
+    },
+    {
+      "source": "/article/168-item-chain",
+      "destination": "/tutorial/item-chain"
+    },
+    {
+      "source": "/article/169-add-fonts-inside-editor",
+      "destination": "/tutorial/add-fonts-inside-editor"
+    },
+    {
+      "source": "/article/170-text-box-formatting",
+      "destination": "/tutorial/text-box-formatting"
+    },
+    {
+      "source": "/article/171-adding-qr-codes",
+      "destination": "/tutorial/adding-qr-codes"
+    },
+    {
+      "source": "/article/172-make-reference",
+      "destination": "/tutorial/make-reference"
+    },
+    {
+      "source": "/article/173-adding-grommets",
+      "destination": "/tutorial/adding-grommets"
+    },
+    {
+      "source": "/article/175-sticky-items",
+      "destination": "/tutorial/sticky-items"
+    },
+    {
+      "source": "/article/176-custom-mask",
+      "destination": "/tutorial/custom-mask"
+    },
+    {
+      "source": "/article/177-grommets",
+      "destination": "/tutorial/grommets"
+    },
+    {
+      "source": "/article/178-design-configuration",
+      "destination": "/tutorial/design-configuration"
+    },
+    {
+      "source": "/article/179-pdf-rendering",
+      "destination": "/tutorial/pdf-rendering"
+    },
+    {
+      "source": "/article/180-fetch-user-projects",
+      "destination": "/api-reference/fetch-user-projects"
+    },
+    {
+      "source": "/article/182-creating-designs-using-svgs",
+      "destination": "/tutorial/creating-designs-using-svgs"
+    },
+    {
+      "source": "/article/31-magento-installation",
+      "destination": "/documentation/which-framework-should-i-pick"
+    },
+    {
+      "source": "/article/139-how-to-install-pitchprint-on-wix",
+      "destination": "/documentation/which-framework-should-i-pick"
+    },
+    {
+      "source": "/article/140-how-to-install-pitchprint-on-ekm",
+      "destination": "/documentation/which-framework-should-i-pick"
+    },
+    {
+      "source": "/article/143-how-to-install-pitchprint-on-odoo",
+      "destination": "/documentation/which-framework-should-i-pick"
+    },
+    {
+      "source": "/collection/15-documentation",
+      "destination": "/"
+    },
+    {
+      "source": "/category/19-what-is-pitchprint",
+      "destination": "/documentation/quickstart"
+    },
+    {
+      "source": "/category/20-installation-guide",
+      "destination": "/documentation/which-framework-should-i-pick"
+    },
+    {
+      "source": "/category/21-sample-solutions",
+      "destination": "/tutorial/overview"
+    },
+    {
+      "source": "/category/18-admin-guide",
+      "destination": "/tutorial/getting-started-with-pitchprint"
+    },
+    {
+      "source": "/category/23-tips-n-tricks",
+      "destination": "/tutorial/overview"
+    },
+    {
+      "source": "/category/22-using-modules",
+      "destination": "/tutorial/design-selector-module"
+    },
+    {
+      "source": "/collection/78-developer-hub",
+      "destination": "/api-reference/introduction"
+    },
+    {
+      "source": "/category/81-integrating-pitchprint",
+      "destination": "/api-reference/integration"
+    },
+    {
+      "source": "/category/82-designer-api",
+      "destination": "/api-reference/designer-ready-method"
+    },
+    {
+      "source": "/category/83-runtime-api",
+      "destination": "/api-reference/introduction"
     }
   ],
   "logo": {
@@ -594,6 +1094,13 @@
       "x": "https://x.com/pitchprint",
       "github": "https://github.com/pitchprint",
       "linkedin": "https://linkedin.com/company/pitchprint"
+    }
+  },
+  "errors": {
+    "404": {
+      "redirect": false,
+      "title": "Page not found",
+      "description": "This page may have moved when we rebuilt the docs. Try [search](/), the [installation guides](/documentation/which-framework-should-i-pick), or the [API reference](/api-reference/introduction). Still stuck? Email [support@pitchprint.com](mailto:support@pitchprint.com)."
     }
   }
 }
