@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-labelledby="tl ds">
+  <title id="tl">PDF rendering and colour fidelity</title>
+  <desc id="ds">A design on screen in RGB converted to a print-ready PDF in CMYK with spot colours, keeping text and shapes as vectors.</desc>
+
+  <rect width="1200" height="630" fill="#F7F6FC"/>
+  <circle cx="1130" cy="70" r="180" fill="#EEEBFD"/>
+  <circle cx="96" cy="580" r="120" fill="#EEEBFD"/>
+
+  <g font-family="Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif">
+    <rect x="72" y="118" width="126" height="34" rx="17" fill="#14121F"/>
+    <text x="135" y="141" text-anchor="middle" font-size="14" font-weight="500" fill="#FFFFFF" letter-spacing="0.4">RENDERING</text>
+
+    <text x="72" y="242" font-size="66" font-weight="700" fill="#14121F">Screen to press</text>
+    <text x="72" y="296" font-size="24" fill="#57536E">Vector text and shapes, CMYK with</text>
+    <text x="72" y="330" font-size="24" fill="#57536E">spot colours, overprint preserved.</text>
+
+    <rect x="72" y="392" width="300" height="2" fill="#E4E1F2"/>
+    <text x="72" y="436" font-size="16" fill="#6B6880">What the customer sees is what prints</text>
+
+    <g>
+      <rect x="656" y="196" width="216" height="240" rx="14" fill="#FFFFFF" stroke="#E4E1F2" stroke-width="1.5"/>
+      <text x="680" y="230" font-size="13" font-weight="500" fill="#8B87A3" letter-spacing="0.6">ON SCREEN · RGB</text>
+      <rect x="680" y="248" width="168" height="120" rx="8" fill="#FBF7EF"/>
+      <circle cx="730" cy="300" r="26" fill="#6022E7"/>
+      <circle cx="768" cy="318" r="26" fill="#07D4CB" opacity="0.85"/>
+      <rect x="680" y="386" width="110" height="9" rx="4.5" fill="#D9D3F3"/>
+      <rect x="680" y="404" width="80" height="9" rx="4.5" fill="#EEEBFD"/>
+    </g>
+
+    <path d="M888 316 h44" stroke="#C9C3EC" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M924 308 l10 8 -10 8" fill="none" stroke="#C9C3EC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <g>
+      <rect x="950" y="196" width="216" height="240" rx="14" fill="#FFFFFF" stroke="#6022E7" stroke-width="2"/>
+      <text x="974" y="230" font-size="13" font-weight="500" fill="#6022E7" letter-spacing="0.6">PRINT · CMYK</text>
+      <rect x="974" y="248" width="168" height="120" rx="8" fill="#FBF7EF"/>
+      <circle cx="1024" cy="300" r="26" fill="#6022E7"/>
+      <circle cx="1062" cy="318" r="26" fill="#07D4CB" opacity="0.85"/>
+      <g stroke="#C9C3EC" stroke-width="1.5">
+        <path d="M974 242 v-14 M974 374 v14 M1142 242 v-14 M1142 374 v14"/>
+        <path d="M968 248 h-14 M968 368 h-14 M1148 248 h14 M1148 368 h14"/>
+      </g>
+      <g>
+        <rect x="974" y="386" width="30" height="24" rx="5" fill="#00AEEF"/>
+        <rect x="1010" y="386" width="30" height="24" rx="5" fill="#EC008C"/>
+        <rect x="1046" y="386" width="30" height="24" rx="5" fill="#FFF200"/>
+        <rect x="1082" y="386" width="30" height="24" rx="5" fill="#14121F"/>
+        <rect x="1118" y="386" width="24" height="24" rx="5" fill="#FFFFFF" stroke="#6022E7" stroke-width="1.5"/>
+      </g>
+    </g>
+    <text x="1058" y="470" text-anchor="middle" font-size="14" fill="#57536E">C · M · Y · K · spot</text>
+  </g>
+</svg>

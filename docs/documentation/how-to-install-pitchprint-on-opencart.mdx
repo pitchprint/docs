@@ -1,0 +1,135 @@
+---
+title: "How To Install PitchPrint On OpenCart"
+description: "Install the PitchPrint module on OpenCart 3.x or 2.x, then configure it and assign a design."
+---
+
+OpenCart is a lightweight open source cart framework. Pick the tab for your OpenCart version below, then finish with the setup steps. If your store is already running, skip straight to the module download.
+
+<Tabs>
+  <Tab title="OpenCart 3.x">
+    <Steps>
+      <Step title="Install OpenCart">
+        Download the latest release from the [OpenCart download page](http://opencart.com/index.php?route=download/download) and install it following the instructions in the package.
+      </Step>
+
+      <Step title="Download the PitchPrint ocmod module">
+        Grab the V10 ocmod build from [github.com/pitchprint/opencart/releases](https://github.com/pitchprint/opencart/releases).
+      </Step>
+
+      <Step title="Upload the module">
+        In your OpenCart admin go to **Extensions → Installer** and upload `pitchprint.ocmod.zip`.
+
+        <Frame>
+          <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5f0f08d804286306f806d4f2/file-d2k6DZlsLR.png" alt="Uploading the PitchPrint ocmod file in OpenCart" />
+        </Frame>
+
+      </Step>
+
+      <Step title="Refresh modifications">
+        Go to **Extensions → Modifications** and click the refresh button.
+
+        <Frame>
+          <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5f0f08582c7d3a10cbaab359/file-7Q0JvvcABQ.png" alt="Refreshing modifications in OpenCart" />
+        </Frame>
+
+      </Step>
+
+      <Step title="Find the module">
+        PitchPrint now appears under **Extensions → Modules**. Continue with the setup steps below.
+      </Step>
+    </Steps>
+  </Tab>
+
+  <Tab title="OpenCart 2.x (legacy)">
+    <Steps>
+      <Step title="Install vQmod">
+        OpenCart 2.x needs vQmod. Download [vqmod-2.5.1-opencart.zip](https://github.com/vqmod/vqmod/releases/download/v2.5.1-opencart.zip/vqmod-2.5.1-opencart.zip) and follow the [vQmod install guide](https://github.com/vqmod/vqmod/wiki/Installing-vQmod-on-OpenCart).
+
+        <Warning>
+          You must use the OpenCart edition of vQmod, not the standalone one.
+        </Warning>
+      </Step>
+
+      <Step title="Download the PitchPrint module">
+        Get it from [github.com/pitchprint/opencart/releases](https://github.com/pitchprint/opencart/releases).
+
+        <Warning>
+          There are three builds: 2.3, 2.2.x and 1.5.x. They are not interchangeable, so download the one matching your OpenCart version.
+        </Warning>
+      </Step>
+
+      <Step title="Upload the files">
+        Unzip the package and upload the contents of the **upload** folder into your OpenCart root, overwriting existing files.
+      </Step>
+
+      <Step title="Set upload folder permissions">
+        Over FTP, set `uploads/files` to permission `777`.
+
+        <Danger>
+          `777` grants write access to everyone on the server. Work through our [security measures](/docs/tutorial/security-measures) before going live.
+        </Danger>
+      </Step>
+
+      <Step title="Open the modules page">
+        In your OpenCart admin, go to **Extensions → Modules**, then continue with the setup steps below.
+      </Step>
+    </Steps>
+  </Tab>
+</Tabs>
+
+## Setting up PitchPrint on OpenCart
+
+<Steps>
+  <Step title="Install and edit the module">
+    Click to install the PitchPrint module, then click to edit it.
+  </Step>
+
+  <Step title="Generate your PitchPrint keys">
+    [Create an account](https://admin.pitchprint.com/register) or [log in](https://admin.pitchprint.com/login), then add your domain on the [domains page](https://admin.pitchprint.com/domains).
+
+    Enter your intended live domain, not a localhost address. You can still use the keys for local testing. PitchPrint returns an **API Key** and **Secret Key**.
+  </Step>
+
+  <Step title="Enter the keys in OpenCart">
+    Paste both keys into the module configuration and save.
+
+    <Frame>
+      <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/58fd9c1c0428634b4a3289c6/file-LwXUvK8rDk.png" alt="Entering PitchPrint API keys in OpenCart" />
+    </Frame>
+
+  </Step>
+
+  <Step title="Assign a design to a product">
+    Go to **Catalog → Products**, edit or create a product, and open the **Options** tab. Type "Web2Print" in the left box, click the Web2Print option to insert it, set **Required** to Yes and assign a design template.
+
+    <Frame>
+      <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/58fd9c3a0428634b4a3289c7/file-YJjDYtRaJp.jpg" alt="Assigning a Web2Print design option to an OpenCart product" />
+    </Frame>
+
+    <Tip>
+      If the Web2Print option does not appear, see [Web2Print options missing in OpenCart admin](/docs/tutorial/web2print-options-missing-in-opencart-admin).
+    </Tip>
+  </Step>
+
+  <Step title="Test it on your storefront">
+    Open the product on your store and look for the **Customize Now** button.
+
+    <Tip>
+      If the button does not appear, reload the admin product page and confirm a design is assigned. If it's assigned and the button still doesn't show, the cause is usually your theme. See [troubleshooting](/docs/tutorial/personalize-button-no-showing) or open a ticket.
+    </Tip>
+  </Step>
+</Steps>
+
+## Related articles
+
+<CardGroup cols={2}>
+  <Card title="Which shopping cart framework should I pick?" icon="compass" href="/docs/documentation/which-framework-should-i-pick">
+    Suggestions to help you choose the right shopping cart platform for your store.
+  </Card>
+  <Card title="Browser Compatibility" icon="browser" href="/docs/documentation/browser-compatibility">
+    See which browsers PitchPrint supports and the requirements for the app to run.
+  </Card>
+  <Card title="Getting started with PitchPrint" icon="rocket" href="/docs/tutorial/getting-started-with-pitchprint">
+    An overview of PitchPrint's features, workflows and best practices for new users.
+  </Card>
+</CardGroup>

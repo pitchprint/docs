@@ -1,0 +1,10 @@
+---
+title: "Adding Pages Programmatically"
+description: "Fire the clone-page event with a page index or page ID to duplicate a page in the editor from your own code"
+---
+
+To add a page programmatically we make use of the _clone-page_ event.
+
+	app.events.fire('clone-page', pageNum);
+
+PageNum is actually the index of the page that should be cloned, a page ID can also be used instead of page index.

@@ -1,0 +1,59 @@
+---
+title: "How to show customer design previews on email (WordPress)"
+description: "Copy a WooCommerce email template into your theme and add a PHP snippet that renders each order item's PitchPrint preview image."
+---
+
+The following is an article on having your customer's designs shown as previews on emails.
+
+<Note>
+  This code has been written only for the WooCommerce Cart plugin with WordPress.
+</Note>
+
+Kindly follow these instructions:
+
+1.  Move your email template to your theme folder so you may edit it.
+    1.  Backend -> Woocommerce -> Settings -> Emails -> Select Template -> Copy file to theme.
+    2.  Remember theme template location to use in the following step.
+2.  Place the below code before the **woocommerce_email_order_details** action call of your desired email template file (location of file remembered in above step).
+
+```php
+/* PitchPrint Preview Start*/
+
+function pp_show_previews($item_id, $item) {
+
+    $meta = wc_get_order_item_meta($item_id, '_w2p_set_option');
+
+    if ($meta) {
+
+        $ppData =  (strpos($meta,'%7') !== FALSE) ? json_decode(urldecode($meta)) : json_decode($meta);
+
+        echo '<br/>
+              <img src="https://pitchprint.io/previews/' . $ppData->projectId . '_1.jpg" width="150px" />
+              <br/>';
+
+    }
+
+}
+
+add_action( 'woocommerce_order_item_meta_start', 'pp_show_previews', 10, 2 );
+
+/* PitchPrint Preview End*/
+```
+
+Run a test by emailing yourself on an order, with a PitchPrint design item and the selected status you chose for your template/s.
+
+That's it! Contact support if you need any further assistance with the above.
+
+## Related articles
+
+<CardGroup cols={2}>
+  <Card title="How to attach customer designs to email (Word Press)" icon="paperclip" href="/docs/tutorial/how-to-attach-customer-designs-to-email-wp">
+    Attach customer design PDFs to WooCommerce order emails.
+  </Card>
+  <Card title="Add previews & project file links to Shopify email notifications" icon="envelope" href="/docs/tutorial/add-previews-project-file-links-to-shopify-email-notifications">
+    Add PitchPrint previews and PDF links to Shopify order emails.
+  </Card>
+  <Card title="How to email artwork to customers" icon="envelope" href="/docs/tutorial/how-to-email-artwork-to-customers">
+    Options for emailing finished customer artwork.
+  </Card>
+</CardGroup>

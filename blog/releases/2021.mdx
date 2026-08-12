@@ -1,0 +1,672 @@
+---
+title: "2021 releases"
+description: "PitchPrint release notes from 2021 — new features, improvements, and bug fixes."
+---
+
+Release notes published during 2021.
+
+<Update label="WK21-48" description="16 December 2021"
+  rss={{ title: "WK21-48 — Back to Collection", description: "Back to Collection." }}>
+  **Back to Collection.**
+
+  It’s always a pleasure to keep you up to date on what our team has been working on to make your experience with PitchPrint better with every passing day.
+
+  ### Back to Collection
+
+  We added the back to collection button from the Photo Print Module to the language file. Please have a look on the screenshot below for reference:
+
+  <Frame>
+    <img src="/blog/images/2021/12/image-4.png" alt="The language file entry for the Photo Print Module's back to collection button" />
+  </Frame>
+
+  <AccordionGroup>
+    <Accordion title="Bug fixes" icon="bug">
+      ### Quicksand Font Issue
+
+      The Quicksand font was not rendering properly when downloading a PDF, the text would have big spaces in between. We have gone ahead and fixed this issue and the font is now rendering correctly.
+
+      ### Cyrillic Font Issue
+
+      We also had an issue where Cyrillic text would not render fonts correctly as well. Upon adding the text to the canvas, it wouldn’t use the selected font at first try but would instead use the default one "Arial". This issue is now fixed and the correct font loads immediately when added to the canvas.
+
+      ### Clear Design button on Prestashop
+
+      The clear design button had a minor glitch on Prestashop. We have gone ahead and fixed this issue as well.
+
+      _That’s it for our weekly bug fixes..._
+
+      **Happy Holidays** 🎄🎅 🎉
+
+      It’s been a wonderful year for us and much thanks to you all for your unwavering support, patience and trust not only in our product but team as well. We are currently on our annual team recess holiday break as of 15th of December but worry not, we do have a skeletal support in place for critical issues so you can still reach us via our regular support channels and we will gladly assist as always 😊
+
+      The PitchPrint Team wishes you all a merry Christmas & a wonderful 2022 ahead!
+
+      <Frame>
+        <img src="/blog/images/2021/12/Annual-shutdown-2021--1-.png" alt="A holiday greeting notice about the PitchPrint team's 2021 annual shutdown" />
+      </Frame>
+    </Accordion>
+  </AccordionGroup>
+</Update>
+
+<Update label="WK21-47" description="8 December 2021"
+  rss={{ title: "WK21-47 — Added Fold Lines to PDF", description: "Added Fold Lines to PDF." }}>
+  **Added Fold Lines to PDF.**
+
+  It’s always such an absolute pleasure for us to inform you about what our team has been working on to make your experience with PitchPrint even better.
+
+  ### Added Fold Lines to PDF
+
+  We added the Vertical and Horizontal fold lines to the PDF file. This will aid in making sure that the printer knows exactly where to cut the files.
+
+  **3D Previews on WIX -** The 3D feature is now finally available on WIX. When a customer submits their design, the 3D model will now appear in the place of the product page image.
+
+  <AccordionGroup>
+    <Accordion title="Bug fixes" icon="bug">
+      ### Customisation form
+
+      Some of our customers had an issue with the customisation form not auto populating the canvas with the recently uploaded images. We have now fixed this issue, when a customer uploads images into the customisation form it will override the previous images on the canvas with the new ones. Have a look at the image below for reference:
+
+      <Frame>
+        <img src="/blog/images/2021/12/image.png" alt="The customisation form replacing canvas images with newly uploaded ones" />
+      </Frame>
+
+      Do have a look at our recently added designs for Black Friday, Cyber Monday, Hanukkah, Furniture, Utensils, Beverage Containers, Packaging, Christmas Festive Season themed templates and so much more. You can check these new templates by going to [designs](https://admin.pitchprint.com/designs) >> Then click on the **_Import Designs_** button. You should see all the new categories available as shown in the image below:
+
+      <Frame>
+        <img src="/blog/images/2021/12/image-3.png" alt="Newly added template categories listed in the Import Designs panel" />
+      </Frame>
+
+      That’s it for this week folks, tune in next week for some awesome new features and bug fixes. Have a fantastic week :).
+    </Accordion>
+  </AccordionGroup>
+</Update>
+
+<Update label="WK21-46" description="2 December 2021"
+  rss={{ title: "WK21-46 — Support for Webp image files, Custom Images", description: "Support for Webp image files, Custom Images." }}>
+  **Support for Webp image files, Custom Images.**
+
+  As always we’re excited to keep you up to date with what our team has been working on to make your experience on PitchPrint even better.
+
+  ### Support for Webp image files
+
+  Previously, our customers could only upload _.jpg_ and _.png_ image files and we have now added _.webp_ image format on the list as well. We will keep adding more file format upload options on the list as we go along.
+
+  ### Custom Images
+
+  We added a feature whereby developers can now parse images from an external library into the editor by using the code below:
+
+  customImages: \[ \{ title: "Title of Category", items: \[ \{ title: "Title of Image 1", url: "myimage1.png", isImage: true \}, \{ title: "Title of Image 2", url: "myimage2.png", isImage: true \} \] \} \]
+
+  Once the editor loads these images, they will be added to the existing images inside the picture tab. With this amazing new feature, you can easily parse as many images as possible, no restrictions at all. The above code is being used purely for illustration purposes only.
+
+  <AccordionGroup>
+    <Accordion title="Bug fixes" icon="bug">
+      ### Offsets in Combination with Page Loader
+
+      We had an issue with the offsets of a template image occasionally moving off the template when switching between pages whilst using the Page Loader module. We’ve gone ahead and fixed this issue and the offsets will now remain fixed on the template irrespective of switching between pages or not.
+
+      ### Load Text Art before Rendering
+
+      We also had an issue with text arts where it would not display the correct font immediately after it has been added to the canvas but would instead show the default font "arial" and then load the correct font after sometime. We’ve fixed this issue and the correct font will render instantly when text arts is added to the canvas.
+
+      That’s it for this week folks, tune in next week for some more exciting new features and bug fixes. Enjoy the rest of your week :)
+    </Accordion>
+  </AccordionGroup>
+</Update>
+
+<Update label="WK21-45" description="24 November 2021"
+  rss={{ title: "WK21-45 — Runtime API Clone Project", description: "Runtime API Clone Project." }}>
+  **Runtime API Clone Project.**
+
+  As always, it’s an absolute pleasure for our team to keep you up to date about what we’ve been working on to make your experience at PitchPrint an even better one.
+
+  ### Runtime API Clone Project
+
+  We have finally added the Runtime API Clone Project, developers and admin users can now use this API to duplicate/clone projects. Do read up [here](https://docs.pitchprint.com/api-reference/clone-project) for more information about this amazing API.
+
+  <AccordionGroup>
+    <Accordion title="Bug fixes" icon="bug">
+      ### Grey border in PNG and JPEG files
+
+      Our canvas has a grey border on the edges which aids in indicating to the user where the canvas ends. The grey border is more pronounced when the canvas is blank. Previously, the border would appear on JPEG or PNG files of downloaded designs or projects. We have now removed the border on the downloaded design and project files but it will still reflect on the canvas so as to serve as a guide for users.
+
+      ### Foreground Image issue
+
+      Some of our customers experienced an issue whereby a foreground image would exceed the canvas size. This is now a thing of the past and the foreground image fits perfectly on the canvas.
+
+      ### Canvas Lines in Smart Sizes
+
+      We also had a minor issue where the canvas lines did not change when updating each page of the Smart Sizes module. The canvas lines would remain the same across all dimensions and pages irrespective of the modifications applied. We have gone ahead and fixed this issue and admin users can now update the canvas lines uniquely per page.
+
+      <Frame>
+        <img src="/blog/images/2021/11/image-1.png" alt="Canvas line settings for an individual page in the Smart Sizes module" />
+      </Frame>
+
+      Please feel free to reach out to us at **support@pitchprint.com** if you have have questions or need assistance with anything.
+
+      That’s a wrap but before you dash, want to get a $25 voucher to spend as you wish?! Then hit the link below to get this amazing offer and be part of the first 100 people to review our amazing plugin. Your valuable feedback always helps in making our product great!
+
+      [https://review.capterra.com/Feedback-PitchPrint-180523-3107660498](https://review.capterra.com/Feedback-PitchPrint-180523-3107660498)
+
+      That’s it for this week folks, be on the lookout for our upcoming weekly release next week where we will be announcing some more bug fixes and exciting new features!. Enjoy the rest of your week :)
+    </Accordion>
+  </AccordionGroup>
+</Update>
+
+<Update label="WK21-44" description="19 November 2021"
+  rss={{ title: "WK21-44 — Inline Display on Wix", description: "Inline Display on Wix." }}>
+  **Inline Display on Wix.**
+
+  It’s always a pleasure to keep you up to date on what our team has been working on to make your experience with PitchPrint the best there is.
+
+  What’s new🚀,
+
+  ### Inline Display on Wix
+
+  We added inline display mode for Wix customers in addition to the full window display mode. We are working diligently on adding the option of a mini display, this option will be available soon!
+
+  **Order Completed Webhook** **on Wix** - We added the order completed webhook on Wix. Previously, only two status options were showing, it was either _**unpaid**_ or _**paid**_ unlike other frameworks that also have **order completed, processing, on hold, cancelled failed, refunded** etc. As per our workflow, we normally use the _order completed_ status of an order to fulfil a webhook but since this information isn’t available on the platform, we have opted for the **order paid** status as a trigger to fulfil the order completed webhook.
+
+  <AccordionGroup>
+    <Accordion title="Bug fixes" icon="bug">
+      ### Observables Module
+
+      We fixed an issue with the observables module, in the past our users would still have to select from the variants even when sometimes there was only one variant available. We fixed this issue where the module will now detect if there’s one variant available and it will use this to choose a design and open the editor with that design.
+
+      > A few of our customers have experienced some issues with incorrect colors appearing in the PDF. PitchPrint uses CMYK values for the PDF File and RGB values for onscreen display and each color has an RGB and CMYK value section please refer  to the image below, an incorrect CMYK value was provided or the field was left empty leading the PDF to be rendered using default color white. When creating a color please ensure that the color contains the correct RGB and CMYK value to avoid this issue.
+
+      <Frame>
+        <img src="/blog/images/2021/11/image.png" alt="The RGB and CMYK value fields shown when creating a color in PitchPrint" />
+      </Frame>
+
+      You can read more about colors [here](https://docs.pitchprint.com/tutorial/all-about-colors). Please feel free to reach out to us at support@pitchprint.com if you have have questions or need assistance with anything.
+
+      That’s it for this week but before you dash, want to get a $25 voucher to spend as you wish?! Then hit the link below to get this amazing offer and be part of the first 100 people to review our amazing plugin. Your valuable feedback always helps in making our product great!
+
+      [https://review.capterra.com/Feedback-PitchPrint-180523-3107660498](https://review.capterra.com/Feedback-PitchPrint-180523-3107660498)
+    </Accordion>
+  </AccordionGroup>
+
+  See you next week for some more exciting feature updates and bug fixes. Have an awesome week!
+</Update>
+
+<Update label="WK21-43" description="12 November 2021"
+  rss={{ title: "WK21-43 — Unique Upload File Names", description: "Unique Upload File Names." }}>
+  **Unique Upload File Names.**
+
+  As always it makes us happy to inform you what our team has been working on to make your experience at PitchPrint an even better one.
+
+  What’s new🚀,
+
+  ### Unique Upload File Names
+
+  Some of our customers on Wordpress had issues with uploading files via the **upload button** on the product page. When a customer uploaded files and a similar file name already existed on the server, the new files that share the same name would then replace the older ones on the server as with most softwares. We have now created the flexibility to be able to upload all files irrespective of the name and each file will now receive a unique name as a distinguisher.
+
+  <AccordionGroup>
+    <Accordion title="Bug fixes" icon="bug">
+      **Customisation** **Required on Wix** \- We worked on the customisation issue on Wix and made some adjustments which preempts and encourages your customers to use the editor and be able to customise their products to their heart’s desires, complete a design and click submit before they can add the product to the cart. This issue is now a thing of the past.
+
+      ### Wix Products in Admin
+
+      We had a number of our Wix customers experiencing issues with loading their [products](https://admin.pitchprint.com/products) on the admin. This issue is triggered when a customer uninstalls and reinstalls PitchPrint again whilst Wix token generation workflow frequently refreshes token rendering the previous token no longer valid hence the product links didn’t work properly and not able to fetch the Website products. This issue has now been resolved.
+
+      ### Customise button not showing on Wix
+
+      We had a few of our Wix customers experiencing an issue with the customise button not showing on the product even though a design has been assigned to the product. This was due to Wix not allowing trial users to load 3rd party scripts and subsequently stopped PitchPrint from running. Another contributing factor to the aforementioned issue was due to our customers having a Wix license but the purchased domain no being connected to the site hence PitchPrint was not showing.
+
+      > Please note all Wix customers ensure that you’ve subscribed to a paid Wix plan and that you’ve connected your paid domain to your website.
+
+      Please do not hesitate to contact us at _support@pitchprint.com_ if you are experiencing any issue with our editor or just need some guidance on manoeuvring around our platform.
+
+      As always, your reviews of our product matter and we are even offering a $25 voucher to spend as you wish as a token of our appreciation for the time taken to write your valuable feedback.  If you have a moment to spare, use the link below: [https://www.capterra.co.za/software/180523/pitchprint#reviews](https://www.capterra.co.za/software/180523/pitchprint#reviews)
+
+      That’s it for this week, we’ll be back next week with some exciting new features and bug fixes. Enjoy the rest of your week!
+    </Accordion>
+  </AccordionGroup>
+</Update>
+
+<Update label="WK21-42" description="4 November 2021"
+  rss={{ title: "WK21-42 — API for Product Images", description: "API for Product Images." }}>
+  **API for Product Images.**
+
+  It’s good to be back! We’ve been busy with so much and we can’t wait to share it with you.
+
+  What’s new🚀,
+
+  ### API for Product Images
+
+  In the past our WooCommerce customers had to manually upload a product page image for each product. We looked into this problem and made an update to our client.js file to be able to detect if a product page image is present or not, and if no image is available, then the PitchPrint design will be added as the default product image.
+
+  <AccordionGroup>
+    <Accordion title="Bug fixes" icon="bug">
+      ### Image Search Panel
+
+      Some of our clients experienced an issue with the search panel inside images. When a customer utilised the search bar and then cleared the search text, the image category would remain the same and wouldn’t give the customer the ability to switch to a different category thereafter. We have fixed this issue and customers can now clear the search bar and manoeuvre between categories without experiencing any glitches.
+
+      ### Rotated Text Issue
+
+      Our customers experienced an issue of a text moving off canvas when editing a rotated text. We have fixed this issue and the text will now remain fixed in one place irrespective whether there are any edits made to the text or not.
+
+      ### Layout Caching issue
+
+      When an admin made changes to the layout, the changes wouldn’t rollout to the front end and still displayed the previous layout due to cache. We’ve fixed this issue by adding a random number to the URL of each layout and should now load the update instantly.
+
+      That’s it for this week folks but before you go, we are still keen on receiving your valuable feedback and just to sweeten the deal we are also offering $25 coupon to spend as you wish. Please review our product using the link below:
+
+      [https://review.capterra.com/Feedback-PitchPrint-180523-3107660498](https://review.capterra.com/Feedback-PitchPrint-180523-3107660498)
+
+      Your feedback always helps in refining our product 🙂
+
+      We’ll be back next week with some awesome features and bug fixes. Have a fantastic week!
+    </Accordion>
+  </AccordionGroup>
+</Update>
+
+<Update label="WK21-41" description="27 October 2021"
+  rss={{ title: "WK21-41 — Image Search Issue, Clone Project Runtime API", description: "Image Search Issue, Clone Project Runtime API, Safari Scroll Issue." }}>
+  **Image Search Issue, Clone Project Runtime API, Safari Scroll Issue.**
+
+  As always we’re excited to keep you up to date with what our team has been working on to make your experience on PitchPrint even better.
+
+  Well this week we zoomed in on those existing pain points to try and troubleshoot those bugs as much as possible.
+
+  <AccordionGroup>
+    <Accordion title="Bug fixes" icon="bug">
+      ### Image Search Issue
+
+      When an image was searched for by name and there was a typing error on the search box, the search results would not yield the image you were looking for even if you corrected the typo thereafter on the search box. The entire word had to be removed and retyped for the image search function to work properly. We have now fixed this cumbersome issue and if any errors are made you can now simply remove those typos and adjust the text correctly rather than having to remove it altogether and retyping it all over again.
+
+      ### Clone Project Runtime API
+
+      Whenever our customers tried to clone projects via an API they would run into an error message. We have addressed this issue and you can now clone projects using the API without any hassles.
+
+      ### Safari Scroll Issue
+
+      We also had an issue where admin users couldn’t scroll all the way to the bottom of their designs/projects when using Safari. This particular browser issue is now a thing of the past and you should be able to scroll through all your designs and projects. Please note although you can use any browser for PitchPrint admin _we Highly recommend Google Chrome._ Please have a quick look at our compatibility document for reference: [https://docs.pitchprint.com/documentation/browser-compatibility](https://docs.pitchprint.com/documentation/browser-compatibility)
+    </Accordion>
+  </AccordionGroup>
+
+  That’s it for this week but before you run along, want to get a $25 voucher to spend as you wish?! Then hit the link below to get this amazing offer and be part of the first 100 people to review our amazing plugin.
+
+  [https://review.capterra.com/Feedback-PitchPrint-180523-3107660498](https://review.capterra.com/Feedback-PitchPrint-180523-3107660498)
+
+  Your feedback is always highly appreciated and valued.🙂
+
+  Continue being glued to our blog for some more exciting news about new features and bug fixes. Have a lovely week!
+</Update>
+
+<Update label="WK21-40" description="20 October 2021"
+  rss={{ title: "WK21-40 — Sticky Items", description: "Sticky Items." }}>
+  **Sticky Items.**
+
+  It’s always a pleasure to keep you up to date on what our team has been working on to make your experience with PitchPrint the best there is.
+
+  ### Sticky Items
+
+  In many cases, our admin users struggled to specify on which layer an element should fall on. Previously, when an element had to be at the on top the only thing that could be used was a foreground image. When an item had to be at the bottom, then the element needed to be set as a background. The aforementioned options of deciding whether to add a foreground or a background were not necessarily the best use of our customer’s time yet we pride ourselves of having a faster and efficient online editor.
+
+  We have now resolved this pain point by adding this amazing feature to make it easier for our admin users to specify if an element had to either be "always be at the bottom" or "always on top". This feature would assist tremendously if an dmin wanted an item to always be at the top no matter what the customer added to the canvas. Interchangeably, the admin can specify if an item should always be at the bottom no matter what the customer adds to the canvas.
+
+  To enable this amazing feature, simply follow these easy steps ----> [Designs](https://admin.pitchprint.com/designs) -> Open the design and go to where the change needs to be implemented -> add an element to the canvas and you are good to go!
+
+  There’s also an option to always have an element be at the top by default, simply  click ---> ITEM -> add _always-top_ as a Tag as shown on the screenshot below:
+
+  <Frame caption="always-top">
+    <img src="/blog/images/2021/10/Screen-Shot-2021-10-20-at-10.33.12.png" alt="The always-top tag added to an item's Tags field so the element stays on top" />
+  </Frame>
+
+  Now to set an element to always sit at the bottom by default, simply click-—> ITEM -> add _always-bottom_ as a Tag as shown on the screenshot below:
+
+  <Frame caption="always-bottom">
+    <img src="/blog/images/2021/10/Screen-Shot-2021-10-20-at-10.35.30.png" alt="The always-bottom tag added to an item's Tags field so the element stays at the bottom" />
+  </Frame>
+
+  <AccordionGroup>
+    <Accordion title="Bug fixes" icon="bug">
+      ### Remix Module Image Zoom
+
+      We had an issue where images would zoom in really far when swapped using Remix module. This issue is now a thing of the past.
+
+      ### Move Design button
+
+      We’ve also fixed the move design button in PitchPrint admin so you can now move a design to a different category with ease.
+
+      **Text Zooms out far when _KEEP TEXT WIDTH_ is enabled** - We had an issue when _**Keep Text Width**_ was enabled. Please refer to the image below for a better understanding:
+
+      <Frame>
+        <img src="/blog/images/2021/10/image-1.png" alt="Text enlarged and pushed off the canvas when Keep Text Width is enabled" />
+      </Frame>
+
+      Previously, when text was completely removed from a text field and a new text was then added thereafter, the new text would be bigger in size and subsequently move off the canvas. The text would then only start shrinking back to its normal size if the new text contained 10 letters or more. We have now fixed this issue and the text size will now remain the same irrespective whether a new text has been added or removed.
+
+      On a lighter note, are you interested in $25 voucher to spend as you wish?! Then hit the link below to get this amazing offer and be part of the first 100 people to review our amazing plugin. Your valuable feedback is always noted and appreciated :-)
+
+      [https://review.capterra.com/Feedback-PitchPrint-180523-3107660498](https://review.capterra.com/Feedback-PitchPrint-180523-3107660498)
+    </Accordion>
+  </AccordionGroup>
+
+  That’s it for now, we’ll see you next week with some more exciting feature updates and bug fixes. Have an awesome week!
+</Update>
+
+<Update label="WK21-39" description="7 October 2021"
+  rss={{ title: "WK21-39 — Custom Mask over the entire Canvas, PDF Layers", description: "Custom Mask over the entire Canvas, PDF Layers." }}>
+  **Custom Mask over the entire Canvas, PDF Layers.**
+
+  We’re always happy to inform you what we’ve been working on to make your experience with PitchPrint even better.
+
+  What’s new🚀,
+
+  ### Custom Mask over the entire Canvas
+
+  We added a feature that allows you to _add any shape_ to the canvas and set it as a clip to cut area around the shape in the final PDF. In the past, our customers struggled with having the canvas in different shapes to accommodate their specific needs, our canvas could only be a rectangle or a square but this amazing feature is bringing all sorts of flexibility around our canvas by allowing the admin to add any desired shape to the canvas and anything inside that particular cutout/ shape will be printed according to the desired specifications and everything else outside of it will be automatically cut off.
+
+  You can enable this great feature with these easy steps —> please go to [designs](https://admin.pitchprint.com/designs), open your design and then add the desired shape to the canvas. Now once you have added the desired shape then —> Go to _Item_, Add _page-clip_ inside Tags, also enable _Make Reference_ as shown on the screenshot below:
+
+  <Frame>
+    <img src="/blog/images/2021/10/Screen-Shot-2021-10-07-at-09.18.51.png" alt="The page-clip tag and Make Reference option set on a shape used to clip the canvas" />
+  </Frame>
+
+  You should see the design cut everything around the shape and only show what’s inside in the preview. Please save the design after making these changes.
+
+  ### PDF Layers
+
+  This feature allows you to specify on which PDF layer an element would sit in the final PDF based on what you specify in the design configuration. You can enable this in [designs](https://admin.pitchprint.com/designs), open your design, click on the element, go to Item, then add the tags shown below to specify which pdf layer the element should be placed on:
+
+  <Frame>
+    <img src="/blog/images/2021/10/Screen-Shot-2021-10-07-at-07.59.41.png" alt="PDF layer tags added to an element's Item tags in the design configuration" />
+  </Frame>
+
+  You can add the following Tags to your design:
+
+  > _pdf:layer, pdf:CUT, pdf:no-print, pdf:no-view, pdf: lock, pdf:overprint._
+
+  You also have the option to specify many instructions at once as indicated below:
+
+  > _pdf:layer|CUT|no-print_
+
+  Anything that starts with _pdf_ is an instruction that needs to be carried out on the final PDF file.
+
+  <AccordionGroup>
+    <Accordion title="Bug fixes" icon="bug">
+      ### Border Line Issue
+
+      Some of our clients reported that that they had an issue with the border lines in designs after they switched to v10, the border lines moved closer to the edge when downloading the PDF. We have now resolved this issue and all designs that contain borders should now be fixed.
+
+      That’s a wrap for this week but before you dash, want to get a $25 voucher to spend as you wish?! Then hit the link below to get this amazing offer and be part of the first 100 people to review our amazing plugin. Your valuable feedback always helps in making our product great :)
+
+      [https://review.capterra.com/Feedback-PitchPrint-180523-3107660498](https://review.capterra.com/Feedback-PitchPrint-180523-3107660498).
+
+      Be on the lookout for our upcoming weekly release next week where we will be announcing some more bug fixes and exciting new features!
+    </Accordion>
+  </AccordionGroup>
+</Update>
+
+<Update label="WK21-38" description="28 September 2021"
+  rss={{ title: "WK21-38 — Bulk Upload", description: "Bulk Upload." }}>
+  **Bulk Upload.**
+
+  It’s good to be back! We’ve been busy with so much and we can’t wait to share the exciting news with you.
+
+  ### Bulk Upload
+
+  We’ve added a bulk upload feature so you can now upload files like images, backgrounds etc. in bulk with just a click of a button.
+
+  <AccordionGroup>
+    <Accordion title="Bug fixes" icon="bug">
+      ### Data Form Module Disappears
+
+      When a design was duplicated and re-edited, the data form module would disappear inside the duplicated and modified version of the design. This is no longer the case.
+
+      ### Upload Button Disappears
+
+      On certain devices such as mobile phones and tablets etc. The upload button would disappear or shrink due to smaller display screen. We have now fixed this issue as well.
+
+      **We have also made some minor updates on the following**
+
+      ### Updated the Client JS Files for Prestashop
+
+      This aforementioned issue caused the add to cart button to show when customers updated the quantity and even when they selected certain variations of the product. It also preempted customers to add to cart prematurely without customising their orders first. We’ve fixed this minor glitch and the add to cart button will now only show after your valued customer has submitted their customised design inside the editor.
+
+      ### Pitchprint Warning on Wordpress
+
+      We’ve also resolved the warning that displayed due to Woocommerce latest version 5 update.
+
+      That’s it for this week but before you dash, want to get a $25 voucher to spend as you wish?! Then hit the link below to get this amazing offer and be part of the first 100 people to review our amazing plugin. Your valuable feedback is always appreciated :-)
+
+      [https://review.capterra.com/Feedback-PitchPrint-180523-3107660498](https://review.capterra.com/Feedback-PitchPrint-180523-3107660498).
+
+      Stayed tuned and we’ll be back next week with some more bug fixes and features.
+    </Accordion>
+  </AccordionGroup>
+</Update>
+
+<Update label="WK21-33" description="26 August 2021"
+  rss={{ title: "WK21-33 — Double Click on Clickable mask", description: "Double Click on Clickable mask." }}>
+  **Double Click on Clickable mask.**
+
+  We hope that you are well and safe in these trying times, it’s good to be back.
+
+  What’s new🚀,
+
+  ### Double Click on Clickable mask
+
+  We’ve added a feature that allows your to double click on a mask with a photo inside, by double clicking on the mask the customer will be able to move the mask.
+
+  <AccordionGroup>
+    <Accordion title="Bug fixes" icon="bug">
+      ### Issue with adding new colours
+
+      There was an issue when customers added new colours only a maximum of 3 colours would add, we’ve fixed this issue customers can now add as many colours as they like.
+
+      ### Dimension issues with JPEG file download
+
+      There was an issue with designs that were created with the unit Pixels, the JPEG file had different dimensions to the original design dimensions. We fixed this issue all files now have the correct dimensions as displayed in the design.
+
+      _**Please note you can now submit your feature requests on our feature request platform [https://track.pitchprint.com/](https://track.pitchprint.com/). Post and vote on posts that are already there, you can check out what the team is currently working on and it gives you the ability to vote on features, features with the more votes receive priority and will be added quicker than ones with less votes. So start adding your features and upvote features you would like us to add.**_
+
+      That’s it for this week, we’ll be in touch next week with some more bug fixes and exciting features. Please keep an eye out on our social media pages([Facebook](https://www.facebook.com/pitchprint), [Instagram](https://www.instagram.com/pitchprint/) and [Twitter](https://twitter.com/pitchprint/)) for more exciting content.
+    </Accordion>
+  </AccordionGroup>
+</Update>
+
+<Update label="WK21-27" description="13 July 2021"
+  rss={{ title: "WK21-27 — Minimum Font Size", description: "Minimum Font Size." }}>
+  **Minimum Font Size.**
+
+  Hope you guys are keeping safe during these trying times.
+
+  <AccordionGroup>
+    <Accordion title="Bug fixes" icon="bug">
+      ### Prestashop 1.77
+
+      We updated our plugin for Prestashop version 1.77 so any issues related to the plugin being outdated should now be solved.
+
+      ### Prestashop customisation\_ID
+
+      Our plugin was not returning the JSON code for the customisation\_ID correctly, we fixed the issue and it now retrieves the customization\_id properly.
+    </Accordion>
+  </AccordionGroup>
+
+  ### Minimum Font Size
+
+  This feature allows you to set a minimum font size per design. To achieve this, please use the following tags: **_min-font-size:20,disable-text-anchors_**_._** Insert these tags into the tags section of your design configuration.
+
+  <Frame>
+    <img src="/blog/images/2021/07/image-4.png" alt="The min-font-size and disable-text-anchors tags in a design's tags field" />
+  </Frame>
+
+  The first tag **_min-font-size:20_** configures the app to not go lower than **20points** font size and you can change this to any value you prefer.
+
+  However, this does not limit scaling which also affects the font size. So, we added another tag: disable-text-anchor to force users to only use the font size control to adjust font size, which stops at the specified minimum.
+  So, you will need a combination of these two tags to achieve this.
+
+  We also have two new cart frameworks coming your way.
+
+  We frequently post GIFs and images about tips and tricks on how to maneuver around our platform on our social media channels. Be sure to check them out and follow us on:
+
+  **[Twitter](https://twitter.com/pitchprint), [Instagram](https://instagram.com/pitchprint) and [Facebook](https://facebook.com/pitchprint)**
+
+  That’s it for this week! Please stay safe and healthy and we’ll see you next week with more exciting news and bug fixes.
+</Update>
+
+<Update label="WK21-24" description="23 June 2021"
+  rss={{ title: "WK21-24 — Anchor Stroke and Fill Color, Page Loader Title", description: "Anchor Stroke and Fill Color, Page Loader Title." }}>
+  **Anchor Stroke and Fill Color, Page Loader Title.**
+
+  We trust you are keeping well and safe in these trying times. We have quite a few surprises that we’ll share with you in the first week of July please keep your eyes peeled on our Social media pages for more exciting news.
+
+  We’ve started posting tips and tricks on [Facebook](https://www.facebook.com/pitchprint), [Twitter](https://twitter.com/pitchprint) and [Instagram](https://www.instagram.com/pitchprint/) these tips and tricks will help new and existing users navigate their way around our platform.
+
+  We’ve added a button to remove an image from the data form module, kindly reload your [layout](https://admin.pitchprint.com/layouts) and re-save your [styling](https://admin.pitchprint.com/styling) for this option to display.
+
+  <AccordionGroup>
+    <Accordion title="Bug fixes" icon="bug">
+      ### Anchor Stroke and Fill Color
+
+      Anchor stroke and fill color did not update on the product page and we fixed the issue.
+
+      ### Page Loader Title
+
+      Page loader title did not update on the product page and we fixed this issue.
+    </Accordion>
+  </AccordionGroup>
+
+  Since our team will be focusing on the July release, we’ll be back with more bug fixes and features after the first week of July.
+
+  Keep well and stay safe.
+</Update>
+
+<Update label="WK21-22" description="9 June 2021"
+  rss={{ title: "WK21-22 — Context menu buttons on mobile, Display thumbnail in form", description: "Context menu buttons on mobile, Display thumbnail in form, Search by Date, New Design Selections." }}>
+  **Context menu buttons on mobile, Display thumbnail in form, Search by Date, New Design Selections.**
+
+  We trust that you are well and had a relaxing weekend and keeping safe during these trying times🙂.
+
+  Last week we worked on the following:
+
+  ### Context menu buttons on mobile
+
+  When cropping an image on mobile, the context menu buttons weren’t present. We fixed this issue. Please re-save your [styling](https://admin.pitchprint.com/styling) for this to work.
+
+  ### Display thumbnail in form
+
+  The upload image indicator was not present inside the data form module or inside the form until after a customer uploaded an image. We added a default image upload indicator.
+
+  ### Search by Date
+
+  We added the ability to search by date using a calendar in the universal search console on our new [Admin Panel](https://admin.pitchprint.com/dashboard).
+
+  ### New Design Selections
+
+  Additionally we’ve updated our import design library, we now have 28 categories to choose from and plenty of new designs added to existing and new categories please be sure to check that out.
+
+  <Frame>
+    <img src="/blog/images/2021/06/image-1.png" alt="The import design library listing its 28 template categories" />
+  </Frame>
+
+  <Frame>
+    <img src="/blog/images/2021/06/image-2.png" alt="Newly added designs available in the import design library" />
+  </Frame>
+
+  We’re still in the process of adding many new exciting designs to our store. Please be sure to follow us on twitter, [Instagram](https://instagram.com/pitchprint), [Facebook](https://facebook.com/pitchprint) and our blog so you don’t miss out.
+
+  That’s it for this week, please tune in with us next week for more bug fixes and additional features. Have a fabulous week!
+</Update>
+
+<Update label="WK21-21" description="2 June 2021"
+  rss={{ title: "WK21-21 — Applied filter to images in the PDF, Pixabay CORS requests", description: "Applied filter to images in the PDF, Pixabay CORS requests, Thumbnail image selection in Admin." }}>
+  **Applied filter to images in the PDF, Pixabay CORS requests, Thumbnail image selection in Admin.**
+
+  We added a feature that allows customers to choose their image source directly when clicking on a mask. When you click on a mask instead of taking you to your image gallery it will now open a panel so you can select your image source.
+
+  This will require you to reload your [Layout](https://admin.pitchprint.com/layouts) to the latest as well as re-save your [Styling](https://admin.pitchprint.com/styling)
+
+  <Frame caption="This feature can be found in https://admin.pitchprint.com/settings.">
+    <img src="/blog/images/2021/05/Screen-Shot-2021-05-31-at-09.47.53.png" alt="The image source setting for masks in the PitchPrint admin settings page" />
+  </Frame>
+
+  <Frame>
+    <img src="/blog/images/2021/05/Screen-Shot-2021-05-31-at-09.51.00.png" alt="The image source panel that opens for a customer after clicking a mask" />
+  </Frame>
+
+  Last week we fixed the following issues:
+
+  ### Applied filter to images in the PDF
+
+  When a PDF was downloaded inside the application in the front end, the filters were not being applied to affected images inside the design. We fixed it so that, the filters are now applied to images inside the design.
+
+  ### Pixabay CORS requests
+
+  A few days back, Pixabay updated their API removing certain headers which affected CORS requests, thus many customers experienced issues with adding Pixabay images because the images could not be fetched from the source. We did fix this.
+
+  ### Thumbnail image selection in Admin
+
+  Thumbnail images selected in design configuration in admin did not replace the design thumbnails on the product page. We fixed the issue so admins can now upload their own thumbnail image they want to display when design selector is enabled.
+
+  That’s it for now, we’ll be back next week with more exciting features and bug fixes.
+</Update>
+
+<Update label="WK21-20" description="25 May 2021"
+  rss={{ title: "WK21-20 — Design Observables Module, Track your Activities", description: "Design Observables Module, Track your Activities, Set your own Password, Create a drop down from a Text field." }}>
+  **Design Observables Module, Track your Activities, Set your own Password, Create a drop down from a Text field.**
+
+  It’s been a while since our last blog post, but boy do we have some exciting news in store for you. Starting this week, we will resume our regular updates on bug fixes and new features on a weekly basis.
+
+  <AccordionGroup>
+    <Accordion title="Bug fixes" icon="bug">
+      ### Show a progress bar while loading Page-Sort panel
+
+      The Page-Sort panel would normally hang while sorting pages and customers would assume that the feature was not working properly, we added a progress bar to show customers that it is busy loading.
+
+      ### Crop previews while foreground is present
+
+      The preview was not cutting the design at the bleed line when a foreground was present and this created a false preview by including the bounds outside of the bleed lines.
+    </Accordion>
+  </AccordionGroup>
+
+  ### Design Observables Module
+
+  We have developed this module to help with the automation of design selection on a product page. Basically, this module observes the options on a product page.
+
+  For example if you have a variable product that has options **"material"** and **"size"**, then you can have designs in  a category named.. _**Glossy\_A4**_, _**Matte\_A4**_, _**Glossy\_A3**_, _**Matte\_A3**_ etc. And this module will observe the material and size selectors to load the appropriate design based on the customer-selected material and size.
+
+  <Frame>
+    <img src="/blog/images/2021/05/image-1.png" alt="The Design Observables module set to watch product page material and size options" />
+  </Frame>
+
+  Read more about this in our documentation page: [https://docs.pitchprint.com/tutorial/design-observables](https://docs.pitchprint.com/tutorial/design-observables)
+
+  ### Track your Activities
+
+  This is a new feature in our admin accessible from the top right icon lists that flings open a panel where you will see all your recent actions within the PitchPrint admin. Actions in red can be undone.
+
+  So, should you mistakenly delete a design or project, you can always come here and undo that action at any later date.
+
+  <Frame caption="Activities Panel">
+    <img src="/blog/images/2021/05/image.png" alt="The Activities panel listing recent admin actions, with undoable ones in red" />
+  </Frame>
+
+  ### Set your own Password
+
+  Admins can now create unique passwords for PitchPrint account users right in the [Admins Page](https://admin.pitchprint.com/accounts).
+
+  ### Create a drop down from a Text field
+
+  When using the Data Form module, you can now limit allowed values by pre-defining a comma-delimited list of values in the Textfield’s options.
+
+  <Frame caption="Text Configuration in Admin Designer">
+    <img src="/blog/images/2021/05/image-2.png" alt="A Textfield's options set to a comma-delimited list of allowed values in admin" />
+  </Frame>
+
+  <Frame caption="How the option appears to your customers">
+    <img src="/blog/images/2021/05/image-3.png" alt="The same Textfield shown to customers as a drop-down of preset values" />
+  </Frame>
+
+  **Export Design List** can now be found in bulk configuration.
+
+  <Frame caption="Export Design List option in Bulk Configuration panel">
+    <img src="/blog/images/2021/05/image-4.png" alt="The Export Design List option inside the Bulk Configuration panel" />
+  </Frame>
+
+  That’s it for this week, we’ll see you next week with some more excited updates and bug fixes.
+</Update>

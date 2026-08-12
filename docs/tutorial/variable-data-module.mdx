@@ -1,0 +1,67 @@
+---
+title: "Variable Data Module"
+description: "Let customers mass-customise a design by uploading a CSV or Excel file, mapping its columns to design elements and generating one PDF page per record."
+---
+
+<Frame>
+  <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5b2cc7922c7d3a0fa9a35386/file-81IzlerFNe.png" alt="Variable Data module banner" />
+</Frame>
+
+Variable data enables your customer to mass-customise a design by uploading a data sources such as Excel or CSV files.
+
+When the design is customized, the number of items equals the number of records that have been manually created or uploaded by the customer.
+
+When an upload is made, data columns can then be linked up with corresponding elements on the design
+
+**_Please note, this is a Premium Module and it is only available to Premium subscribers._**
+
+### How to Enable Variable Data on a Design
+
+To enable this feature, navigate to your  [designs page](https://admin.pitchprint.io/designs), simply click the Configure button on the design you like to assign this to. Then navigate to the Modules Tab. There you will find the Variable Data module. Click to Enable it and submit the form.
+
+<Frame>
+  <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/65098bd096b8220e08ace1ec/file-BEWpfOH6Ot.png" alt="Modules tab of a design's configuration dialog with the Variable Data module enabled" />
+</Frame>
+
+Once enabled, the feature is available on the design app. It creates a tab with the button shown below please click the button to upload your CSV or Excel File as shown below.
+
+<Frame>
+  <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/65098abe302287021e6349f8/file-DWfv0VJYE6.png" alt="Variable data tab in the design app with the button used to upload a CSV or Excel file" />
+</Frame>
+
+After clicking the button you will see the pop up below to upload your file, click the select file button to upload your file.
+
+<Frame>
+  <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/65098ba596b8220e08ace1ea/file-fO0SYR0TrJ.png" alt="Upload pop up with a select file button for choosing the data file" />
+</Frame>
+
+Now when a design is submitted with variable data, the PDF file will contain pages that correspond to the number of records contained in the uploaded file. The previews only generates the current page you're on to prevent having hundreds of preview images on the browser. If you would like to update the **QUANTITY** based on the number of records in your file you can do so by using our [Page Count Module](/docs/tutorial/how-to-use-page-count-module) alongside the variable data module.
+
+Lastly, in the object data passed down to the saved function, a “records” value is passed which states the number of data records the design contains. This can be used for other purposes like updating other custom modules.
+
+See demo: [Save the Date variable data demo](https://wp.demo.pitchprint.io/product/save-the-date-variable-data-module/)
+
+<Warning>
+  **IMPORTANT NOTE:** For Variable Data form to display, it is required that at least one item in the design should have its **Include In Form** option enabled
+
+  <Frame>
+    <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/6172603c12c07c18afddfee8/file-fwuntnsLHd.png" alt="Item settings with the Include In Form option enabled" />
+  </Frame>
+</Warning>
+
+## Related articles
+
+<CardGroup cols={2}>
+  <Card title="Data Form Module" icon="table-list" href="/docs/tutorial/data-form-module">
+    Add a quick-edit form that lets customers customize design elements without clicking around the canvas.
+  </Card>
+  <Card title="Data Form Video" icon="video" href="/docs/tutorial/data-form-video">
+    Watch a video walkthrough of the Data Form module.
+  </Card>
+  <Card title="How to update design with customer data" href="/docs/tutorial/how-to-update-design-with-customer-data">
+    Automatically reflect a signed-in customer's details in their design from your cart framework.
+  </Card>
+  <Card title="How to enable the Customization Form" href="/docs/tutorial/how-to-enable-the-customization-form">
+    Set up a quick-fill form that appears as soon as the app loads for faster edits.
+  </Card>
+</CardGroup>

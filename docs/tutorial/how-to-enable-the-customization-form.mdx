@@ -1,0 +1,77 @@
+---
+title: "How to enable the Customization Form"
+description: "Turn on Show Customize Form for a design and label its canvas items so customers get a quick-fill form the moment the app loads."
+---
+
+The customization form is a quick-fill form that is shown immediately the user loads the app. It basically reduces the time your customers have to click and edit items on the canvas by providing them with an overview of the demo texts that needs to be changed to their custom texts as well as images such as logos or fancy shapes. A sample is shown below:
+
+<Frame>
+  <img alt="Customization form listing the design's text and image fields for the customer to fill in" src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5b4c4f7e2c7d3a03f89c9724/file-LalkvlfMKD.png" />
+</Frame>
+
+To enable this feature, we need to configure the design to “ **Show Customization Form**” as well as label the items on the canvas we will like shown.
+
+**Enabling a Customization Form from admin panel**
+
+To enable this feature, navigate to the  [Designs section](https://admin.pitchprint.io/designs). Click the gear configuration button against your particular design.
+
+And in the popup window, enable   _**“Show Customize Form”**_ to true:
+
+<Frame>
+  <img alt="Show Customize Form setting switched on in the design configuration popup" src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/6790b8e668b1f56c37c14681/file-3XYCiT8Ujb.png" />
+</Frame>
+
+And Save! However, this alone does not show the form. You need to label and index your items in order for the form to show.
+
+**How to Label Items**
+
+The application uses the item labels you have assigned during design to label the fields as well as identify items that needs to be included in the form. In essence, if your items are not labeled, they are not included in the form and if no item is labeled in the entire design, then the customization form is never displayed for that design.
+
+To label your items, simply click on the edit button against the design to launch the designer in edit mode.
+
+Once the app loads, click your item (Text, Shape or Picture). This is what you will see on the left panel:
+
+<Frame>
+  <img alt="Left panel for a selected item showing the label, chain id and Include in Form fields" src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/6790c422051ddf6fa5194557/file-toIXMaVHPQ.png" />
+</Frame>
+
+Give your item a label. If needed, you can also give it a chain id. A chain simply means an id (without spacing) which can be assigned to two or more items to chain them together, such that when one is edited, all the rest follow suit. For instance, you may have a business card with company name on the front as well as on the back. Assigning the same chain “name” or any name without spacing to both will mean that if the company name was changed in the front one, all other ones too will change in value.
+
+<Note>
+  **Index -** A new feature also allows you to specify and index (priority) for each item. The default index is 0 for all items. To give an item a higher priority, you should give it a higher number so it's displayed first. To display an item at the bottom, you can assign it a negative value, say -2 and like that..
+</Note>
+
+Finally, set the Include in Form switch to a  **Yes**
+
+Likewise if two items have the same label, then only one is displayed while the other references the first. Same goes for Pictures and Shapes; if you have a logo on the front and back and you labelled them both as “Logo” for instance, only one is shown but on the design, every instances of item labeled “Logo” is replaced with the newly uploaded Picture or Shape.
+
+Submit your design and check to see it is displayed correctly.
+
+<Frame>
+  <img alt="Labelled design items in the editor before the form is generated" src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5b559cc32c7d3a03f89cde77/file-X7rMNAogd5.png" />
+</Frame>
+
+<Frame>
+  <img alt="Customization form displayed to the customer with the labelled fields" src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5b559ce10428631d7a893222/file-iD5OydMNJ5.png" />
+</Frame>
+
+<Tip>
+  You may also want to check out the  [**Data Form module**](/docs/tutorial/data-form-module) which does similar function but in a more inclusive manner
+</Tip>
+
+## Related articles
+
+<CardGroup cols={2}>
+  <Card title="Data Form Module" icon="table-list" href="/docs/tutorial/data-form-module">
+    Add a quick-edit form that lets customers customize design elements without clicking around the canvas.
+  </Card>
+  <Card title="Variable Data Module" icon="database" href="/docs/tutorial/variable-data-module">
+    Let customers mass-customize a design by uploading data from Excel or CSV files.
+  </Card>
+  <Card title="Data Form Video" icon="video" href="/docs/tutorial/data-form-video">
+    Watch a video walkthrough of the Data Form module.
+  </Card>
+  <Card title="How to update design with customer data" href="/docs/tutorial/how-to-update-design-with-customer-data">
+    Automatically reflect a signed-in customer's details in their design from your cart framework.
+  </Card>
+</CardGroup>

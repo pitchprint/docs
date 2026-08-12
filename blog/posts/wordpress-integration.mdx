@@ -1,0 +1,52 @@
+---
+title: "PitchPrint Wordpress Integration"
+description: "This release marks an exciting and significant milestone for us on the WordPress platform."
+tag: "Featured"
+author: "Isaac Coker"
+date: "2025-05-15"
+keywords: ["wordpress", "wordpress plugin", "transients api", "customizations", "webhooks"]
+"og:image": "/images/2025/05/image.png"
+"twitter:image": "/images/2025/05/image.png"
+cover: "/images/2025/05/wordpress-integration-hero.svg"
+summary: "A rebuilt WooCommerce plugin, from install to print file."
+---
+
+import PostMeta from "/snippets/post-meta.mdx";
+
+<PostMeta author="Isaac Coker" date="15 May 2025" readTime="3 min read" />
+
+<Frame>
+  <img src="/blog/images/2025/05/wordpress-integration-hero.svg" alt="The PitchPrint plugin inside a WooCommerce product page, adding a Customize button" />
+</Frame>
+
+This release marks an exciting and significant milestone for us on the WordPress platform. We’ve completely rebuilt the PitchPrint WordPress integration from the ground up to deliver a faster, more reliable, and user-friendly experience.
+
+Our primary goal was to improve overall performance, streamline customization handling, and ensure seamless compatibility with the latest WordPress standards. In doing so, we’ve also addressed a number of long-standing issues that WordPress users may have encountered, resulting in a more stable and optimized plugin.
+
+This overhaul sets the foundation for future enhancements and reinforces our commitment to providing a high-quality solution for our WordPress community.
+
+Please see below for a detailed summary of the updates included in this release.
+
+-   **Major upgrade implemented** - This release introduces significant improvements and new features to enhance performance, reliability, and compatibility.
+-   **Implemented WordPress Transients API for saving and retrieving customizations, with browser localStorage as fallback** - Customizations are now stored more efficiently using the Transients API, improving speed and scalability. If transients aren’t available or are cleared, localStorage ensures users don’t lose data.
+-   **Tested up to WordPress 6.7** - The plugin is fully compatible and stable with the latest version of WordPress (6.7), ensuring future-proof operation.
+-   **Fixed issue with legacy orders** - A bug affecting older orders has been resolved, restoring expected functionality and data consistency for long-term users.
+-   **Removed customizations from email and added it as an option** - Customizations are no longer included by default in order emails. This feature can now be toggled on or off based on user preference.
+-   **Limited previews in admin order details to 4** - Admins will now see up to 4 previews in order details, optimizing load times and reducing clutter for large customization sets.
+-   **Moved the Uploads folder outside the plugin into WordPress root for easy access** Uploads are now stored in a central location outside the plugin folder, making them more accessible and persistent across updates.
+-   **Fixed an issue with file uploads not registering** - A bug that prevented uploaded files from being registered correctly has been resolved to ensure file data is captured reliably.
+-   **Plugin reports and updates orderId against a PitchPrint project** - Each order is now properly linked and updated against its corresponding PitchPrint project, improving tracking and integration.
+-   **Updates the userId if the user was a guest when the order was placed** - If a guest later becomes a registered user, their order is now correctly associated with their user account for better continuity.
+-   **Fixed issue with webhooks** - Webhook functionality has been stabilized, ensuring real-time communication and automation with external systems.
+-   **Added session as a backup for saving and retrieving customizations on sites where other plugins reset transient data** - For sites where other plugins interfere with transients, session storage ensures customization data is retained without interruption.
+-   **SVN now includes functions/general/email.php file** - The email-related functions file is now included in the SVN repository, ensuring full availability during deployment or installation.
+-   **Tested with the latest version of WordPress** - Final compatibility and QA testing confirmed seamless operation with the most recent WordPress release.
+-   **Fixed email download link issue** - The issue where the download link in emails was broken or missing has been resolved, restoring full download functionality.
+
+This concludes the list of updates and fixes applied to the plugin. To test the latest version, please navigate to the **Plugins** page within your WordPress admin dashboard and click **Update** next to the PitchPrint plugin. For visual reference, please see the image below.
+
+<Frame>
+  <img src="/blog/images/2025/05/image.png" alt="The WordPress Plugins page with the Update link for the PitchPrint plugin" />
+</Frame>
+
+We’re excited for you to explore the latest version and benefit from the improvements we’ve made. If you have any questions or encounter any issues, please don’t hesitate to contact us at **support@pitchprint.com**.
