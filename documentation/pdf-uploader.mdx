@@ -1,0 +1,75 @@
+---
+title: "PDF Uploader"
+description: "Import an existing PDF as a design so text, groups, images and backgrounds stay editable in the PitchPrint editor."
+tag: "BETA"
+---
+
+Upload a PDF and PitchPrint turns it into a design you can keep editing on the canvas. <Badge icon="badge-alert" color="orange" size="sm">Beta</Badge> You do not have to rebuild artwork you already have.
+
+## Why the uploader exists
+
+PitchPrint can convert an uploaded PDF in two ways, and both of them lose editability:
+
+| Conversion | What you can still edit |
+| --- | --- |
+| **PDF → SVG** | Colors only. Other editing is unavailable. |
+| **PDF → PNG** | Nothing. Every element is flattened into a single image. |
+
+The PDF Uploader avoids both limitations and keeps the artwork editable.
+
+## What you can edit after uploading
+
+<CardGroup cols={2}>
+  <Card title="Text" icon="font">
+    Modify any text element carried over from the PDF.
+  </Card>
+  <Card title="Groups" icon="object-group">
+    Group and ungroup items to manage elements.
+  </Card>
+  <Card title="Images" icon="image">
+    Move and scale images to fit the layout you want.
+  </Card>
+  <Card title="Backgrounds" icon="fill-drip">
+    Change the background from inside the editor.
+  </Card>
+</CardGroup>
+
+## Upload a PDF
+
+<Steps>
+  <Step title="Open Import Designs">
+    Go to [Designs](https://admin.pitchprint.com/designs) and click **Import Designs**.
+
+    <Frame>
+      <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/66ec338dceae9468399d482c/file-UfpHq2RxDG.png" alt="Designs page in the admin with the Import Designs button highlighted" />
+    </Frame>
+  </Step>
+
+  <Step title="Choose Upload Design PDF">
+    <Frame>
+      <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/66ec33c3811a2434cb6d3d9c/file-io2ieB05sZ.png" alt="Import Designs options with the Upload Design PDF choice highlighted" />
+    </Frame>
+  </Step>
+
+  <Step title="Select your file">
+    Pick the PDF from your local storage. It is added as a design in the selected category, ready to edit and save.
+  </Step>
+</Steps>
+
+<Note>
+  We are still adding functionality to the uploader. Send suggestions or questions to [support@pitchprint.com](mailto:support@pitchprint.com).
+</Note>
+
+## Related articles
+
+<CardGroup cols={2}>
+  <Card title="PDF Rendering" icon="file-pdf" href="/tutorial/pdf-rendering">
+    How PitchPrint generates print-ready PDFs and its distiller engines.
+  </Card>
+  <Card title="Ghostscript Arguments" icon="terminal" href="/tutorial/ghostscript-arguments">
+    Customize PDF output with Ghostscript conversion arguments.
+  </Card>
+  <Card title="Automation: Sending your PDF file to Printer" icon="print" href="/tutorial/automation-sending-your-pdf-file-to-printer">
+    Automate emailing PDF output to your printer using webhooks and Zapier.
+  </Card>
+</CardGroup>

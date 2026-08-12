@@ -1,0 +1,169 @@
+---
+title: "Managing your Designs"
+description: "Work with design categories, bulk configuration and the per-design settings panel in the PitchPrint admin."
+---
+
+The  [Designs section in PitchPrint admin](https://pitchprint.net/admin/designs) is where you get to create, edit, configure or delete designs assigned to a domain. Designs here are sorted based on categories, like a single-level folder system. So every design belongs to a parent category.
+
+### Design Categories
+
+<Frame>
+  <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5971a7fd042863033a1b482b/file-dUjNcB1A08.png" alt="Design category titled Blue Business Cards holding four designs" />
+</Frame>
+
+Shown above is a design category titled Blue Business Cards with 4 designs. To create a Category, simply click the Create New Category button on the top right corner of the page and provide a category title for it.
+
+Clicking the More Option opens up a list of actions you can perform all on that single category as shown below:
+
+<Frame>
+  <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5971a8b9042863033a1b4837/file-q5gcD7Ou9D.png" alt="More Options menu listing the actions available for a whole category" />
+</Frame>
+
+The menu list is self explanatory.
+
+**The Bulk Configuration Panel** is a means of applying a configuration settings across board to all the designs in that category. Some settings are excluded like the title since those are unique to each design. Clicking it shows the configuration panel which is a limited version of that shown per design. Please refer to the section titled _**Configuring each Design**_ below for an explanation of each setting on that panel.
+
+<Warning>
+  Kindly remember, whatever action you take using the **Bulk Configuration panel** will be applied across to all designs included in that directory as against each design.
+</Warning>
+
+### How to Create a new Design
+
+This topic is pretty expansive and has been covered in another documentation.  [Click here to learn **How to create a new Design**](/tutorial/how-to-create-a-design)
+
+### Configuring each Design
+
+Each design in a category can be managed by moving your mouse over each to reveal a set of menus against it, as shown in the image below:
+
+<Frame>
+  <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5971ab47042863033a1b483b/file-DLaLIxfnJm.png" alt="Menu icons revealed when hovering the mouse over a single design" />
+</Frame>
+
+The first icon allows you preview the design pages, the second allows you to configure that individual design's settings. Clicking the configure icon launches the configuration panel as shown below:
+
+<Frame>
+  <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5971ac7e042863033a1b4840/file-UIEuQ6LVRv.png" alt="Configuration panel that opens after clicking the configure icon on a design" />
+</Frame>
+
+### General
+
+The General tab holds the core settings for a single design.
+
+<ResponseField name="Design Title" type="text">
+  The design's label.
+</ResponseField>
+
+<ResponseField name="Welcome Message" type="text">
+  Write a custom message or instructions which will be shown once the application is launched and the design is shown.
+</ResponseField>
+
+<ResponseField name="Tags" type="text">
+  Add tags which allow you to assign a layout to a design. Have a look at the following [document](/tutorial/layouts-v10) to learn more about layouts and tags.
+</ResponseField>
+
+<ResponseField name="Show Customize Form" type="toggle">
+  Displays or hides the customization form that should appear once the design loads. This form is a quick means of allowing customers provide their details especially for text based designs in an easy to edit form. Whatever data they provide is used to update the design. To understand how this works, read more on the topic: Item Names & Chains
+</ResponseField>
+
+<ResponseField name="Hide Tabs" type="multi-select">
+  Toggles visibility of each of the 3 tabs: Background, Pictures and Text tabs. By default, they are all off, which means they will all be shown. If for example you don't want customers to change this design's background, then you can turn ON the first switch and when the application loads, the background tab will be hidden.
+</ResponseField>
+
+<ResponseField name="Lock Background" type="toggle">
+  The customer cannot change the background.
+</ResponseField>
+
+<ResponseField name="Disable Image Click" type="toggle">
+  Customers cannot click images on the left Pictures panel to add them to the canvas. They will only be able to drag and drop their pictures. You may need this feature if you have a canvas design with mask spots where you only want users to drag pictures into specific mask containers, as against clicking which will just place it on the canvas.
+</ResponseField>
+
+<ResponseField name="Snap to Page Only" type="toggle">
+  Item snapping is limited to page boundaries only.
+</ResponseField>
+
+<ResponseField name="GrayScaleImage Uploads" type="toggle">
+  A premium feature that converts any user uploaded images into greyscale while in this design. You may need this feature if your product can only be printed in black / white and non-color.
+
+  <Note>
+    This is not a site wide feature.
+  </Note>
+</ResponseField>
+
+<ResponseField name="Enable Client PDF Download" type="toggle">
+  Allows your customers to download the PDF after creating their designs.
+</ResponseField>
+
+<ResponseField name="Split Masks" type="toggle">
+  Each mask will be split into a PDF.
+</ResponseField>
+
+<ResponseField name="Chain Colors" type="toggle">
+  Colors with the same chain values will be synced.
+</ResponseField>
+
+<ResponseField name="Image DPI Check" type="number">
+  Sets the DPI limit for any picture your users can add to the canvas. For this design, this value overrides the one you might have set on the settings page. Read more [here to learn more about DPI Check](/tutorial/photo-resolution-check)
+</ResponseField>
+
+<ResponseField name="New Text Color" type="color">
+  Sets the default color of any text created by the user while editing this design. You can supply the RGB and CMYK values. To read more about colors, [please click here](/tutorial/all-about-colors)
+</ResponseField>
+
+<ResponseField name="Thumbnail Preview" type="image">
+  By default, the app uses the design page snapshots as previews where the design is required to be displayed, like in the design selector module. If however you set a thumbnail here, this will be used instead of the design snapshots. This can be used to show how the design looks on a product.
+</ResponseField>
+
+<ResponseField name="Default Font" type="select">
+  The default font for this design. When a new text is added to the canvas, it uses the font you have set here.
+</ResponseField>
+
+<ResponseField name="Default Tab" type="select">
+  The default tab that should be shown when the design loads. For instance, if it's a photo album design, you may want them to see Photos -> Upload so customers get straight to work uploading their photos.
+</ResponseField>
+
+<ResponseField name="Layouts" type="select">
+  Sets the layout that should be loaded for this design. You can set different layouts for both mobile phones and desktop. Selecting the first **\--** option for mobile means it will use the default PitchPrint mobile layout, which we strongly advise. You can read more about layouts here.
+
+  <Note>
+    Only available on version 9.
+  </Note>
+</ResponseField>
+
+<ResponseField name="Unit" type="select">
+  Select the unit of measurement for your design. We have five different units to choose from: Centimeters, Millimeters, Inches, Feet and Pixels.
+</ResponseField>
+
+<ResponseField name="Limit Text Characters" type="regex">
+  Limit the characters a user can type into the designer by using Regex.
+</ResponseField>
+
+<ResponseField name="Minimum Font Size" type="number">
+  Set the minimum font size that will be used when text is added to this design.
+</ResponseField>
+
+### Resources
+
+The resources tab allows you to sieve or filter what resource gets loaded per design. This is for Pictures, Backgrounds, Colors, Fonts and Text Art styles.
+
+There are two modes to choose from Exclude or Include. If you select Exclude and nothing was selected in the input box, this means every category in that resource will be loaded when that design loads. If still you have Exclude but selected certain categories of resource, then everything will be loaded EXCEPT those you have selected. The reverse is for include.
+
+### Modules
+
+Here, you will manage and assign modules to each design. Please read more about individual [modules here](/tutorial/data-form-module)
+
+## Related articles
+
+<CardGroup cols={2}>
+  <Card title="How To Create A Design" icon="plus" href="/tutorial/how-to-create-a-design">
+    Build your own design template step by step in the standalone editor.
+  </Card>
+  <Card title="Design Configuration" icon="gear" href="/tutorial/design-configuration">
+    Reference for every design setting across General, Resources and Modules.
+  </Card>
+  <Card title="Types of PitchPrint design" icon="layer-group" href="/tutorial/types-of-pitchprint-designs">
+    Understand the four canvas layers and the three main design types.
+  </Card>
+  <Card title="How to import designs" icon="file-import" href="/tutorial/how-to-import-designs">
+    Import ready-made designs from the PitchPrint store into your categories.
+  </Card>
+</CardGroup>

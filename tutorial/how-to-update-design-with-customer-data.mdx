@@ -1,0 +1,57 @@
+---
+title: "How to update design with customer data"
+description: "Label text items with values such as email or firstname so a signed-in customer's cart details fill the design automatically."
+---
+
+When used in some cart frameworks: OpenCart, WordPress and PrestaShop, it plays nice to have the customer's data reflected in the design once they are signed in.
+
+So something like a customer's name can be reflected on a business card design when it loads without them having to do anything yet. The app will fetch the data from the underlying cart framework and update the design to reflect these values. The following are values being watched:
+
+-   Email
+-   Telephone
+-   Firstname
+-   Lastname
+-   Name
+-   Address
+
+This is done automatically but the admin needs to link these values to text elements placed on the design canvas. To do this:
+
+<Steps>
+  <Step title="Open your design">
+    Load your design in edit mode or create a new design
+  </Step>
+  <Step title="Select a text item">
+    Select a text item you will like to link on the canvas
+  </Step>
+  <Step title="Label the item">
+    Open the Admin Tab and **_Label_** that item any of the above listed values: email or telephone... as shown in the image below:
+
+    <Frame>
+      <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/59a7bbd1042863033a1c7064/file-7zYnKDImMd.png" alt="Admin tab with the Label field of a text item set to email" />
+    </Frame>
+  </Step>
+  <Step title="Save and test on your store">
+    Save your design and check the result on your store front by logging in as a customer and try edit the design. The email text should reflect your (customer's) actual email address.
+  </Step>
+</Steps>
+
+<Note>
+  The **"Name"** is a combination of both **firstname + lastname** to form a full name
+</Note>
+
+## Related articles
+
+<CardGroup cols={2}>
+  <Card title="Data Form Module" icon="table-list" href="/tutorial/data-form-module">
+    Add a quick-edit form that lets customers customize design elements without clicking around the canvas.
+  </Card>
+  <Card title="Variable Data Module" icon="database" href="/tutorial/variable-data-module">
+    Let customers mass-customize a design by uploading data from Excel or CSV files.
+  </Card>
+  <Card title="How to enable the Customization Form" href="/tutorial/how-to-enable-the-customization-form">
+    Set up a quick-fill form that appears as soon as the app loads for faster edits.
+  </Card>
+  <Card title="Mini Display Mode" href="/tutorial/reels-data-form">
+    Show the canvas alone with a compact customization form near the add-to-cart button.
+  </Card>
+</CardGroup>

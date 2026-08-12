@@ -1,0 +1,45 @@
+---
+title: "After Save"
+description: "Handle the project-saved event to read the returned project ID, preview images and page details after a customer saves a design."
+---
+
+So what happens next after our customer clicks the Save Button in the designer?
+
+The designer automatically generates all the design pages, saves the project on our servers, generates a PDF File, then comes back to you with all these details.
+
+An event is dispatched **"project-saved"**, which we want to handle with our event **"projectSaved"**.
+
+```javascript
+//Function to run once the user has saved their project
+var projectSaved = (_val) => {
+	let _data = _val.data;
+	if (_data && _data.previews && _data.previews.length) {
+		_previewDiv.innerHTML = _data.previews.reduce((_str, _prev) => `${_str}<img src="${_prev}">`, '');
+	}
+};
+```
+
+And what we did here is simply get the data property of the event, which has a property named **previews**, a collection of the project's preview pages
+
+We then created image elements, setting the URL to the preview path and inserted them in our preview div.
+
+From here on, you can integrate as you like to your web application. You have the projectId, the preview images, source, number of pages and most information you need to identify this special customization so it goes along with the product to the cart.
+
+Good luck with the integration and if you get stuck, we are simply an email away!
+
+## Related articles
+
+<CardGroup cols={2}>
+  <Card title="Integration" icon="plug" href="/api-reference/integration">
+    Load the PitchPrint app into your page and wire up events.
+  </Card>
+  <Card title="Introduction" icon="circle-info" href="/api-reference/introduction">
+    Overview of what PitchPrint is and how it works.
+  </Card>
+  <Card title="Generate your auth keys" icon="key" href="/api-reference/generate-your-auth-keys">
+    Create the API and Secret keys needed to integrate the app.
+  </Card>
+  <Card title="My Account - Saved Projects" icon="user" href="/api-reference/custom-integration-my-account">
+    Add a My Account page so customers can view their saved projects.
+  </Card>
+</CardGroup>

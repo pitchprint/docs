@@ -1,0 +1,64 @@
+---
+title: "API overview"
+description: "Base URL, authentication, and conventions for the PitchPrint Runtime API."
+---
+
+The PitchPrint Runtime API lets your server fetch designs and projects, clone projects, and render print-ready files for your domain. Use it server-side, authenticated with your domain's **API Key** and **Secret Key**.
+
+## Base URL
+
+All Runtime API calls are made to:
+
+```
+https://api.pitchprint.io/runtime/
+```
+
+Rendered files are served from dedicated hosts: `pdf.pitchprint.com` for PDFs and `png.pitchprint.com` (or `jpeg`) for raster images.
+
+## Authentication
+
+Every `/runtime/` request is authenticated with a **signature**, which is the MD5 hash of your API Key, Secret Key and a UNIX timestamp:
+
+```
+signature = MD5(apiKey + secretKey + timestamp)
+```
+
+You send `apiKey`, `timestamp` and `signature` with each request, never the Secret Key itself. See [Authentication](/api-reference/auth-signature) for the full walkthrough and code samples.
+
+<Warning>
+  Your Secret Key must stay server-side. Never expose it in browser code or a public repository.
+</Warning>
+
+## Request format
+
+- Send parameters as a **JSON body** (not query-string pairs) with `Content-Type: application/json`.
+- Requests are **POST**, except file rendering which is **GET**.
+- The `timestamp` is valid for a **one-hour window**. Generate a fresh signature for each call.
+
+## Responses
+
+Successful calls return a JSON object with a `data` field:
+
+```json
+{ "data": {} }
+```
+
+Action endpoints such as [Clone Project](/api-reference/clone-project) return a status instead:
+
+```json
+{ "error": false, "status": 1, "newId": "e7d1ab10b9eb9b142cd4c702f0e1c69f" }
+```
+
+## Where to next
+
+<CardGroup cols={3}>
+  <Card title="Integrating PitchPrint" icon="plug" href="/api-reference/integration">
+    Generate your keys, load the app into your page and handle saved projects.
+  </Card>
+  <Card title="Designer API" icon="sliders" href="/api-reference/designer-ready-method">
+    Hook into the editor with methods, properties and events.
+  </Card>
+  <Card title="Runtime API" icon="server" href="/api-reference/fetch-designs">
+    Load designs, projects and render PDFs server-side.
+  </Card>
+</CardGroup>

@@ -1,0 +1,366 @@
+---
+title: "Admin Settings"
+description: "Reference for every option on the per-domain settings page, from designer behaviour and PDF output to file uploads and store integration."
+---
+
+The  [Settings Page](https://pitchprint.net/admin/settings) controls the PitchPrint app per domain and has the following settings
+
+## Designer
+
+Options that control how the designer behaves while your customers are editing.
+
+<ResponseField name="Auto Save" type="toggle">
+  Auto saves the customers designs in the background at 5 minute intervals.
+</ResponseField>
+
+<ResponseField name="Skip Preview" type="toggle">
+  Allows the submit button to skip the preview process.
+</ResponseField>
+
+<ResponseField name="Lock Aspect Ratio" type="toggle">
+  Maintains the aspect ratio when resizing images.
+</ResponseField>
+
+<ResponseField name="Show Thumbnail Navigation" type="toggle">
+  Shows page thumbnails instead of the arrow navigation bar.
+</ResponseField>
+
+<ResponseField name="Show Navigation on Bottom" type="toggle">
+  Shows the thumbnail navigation below the canvas in the centre of the page.
+</ResponseField>
+
+<ResponseField name="Enable Save for Later" type="toggle">
+  Allows customers to save their designs to their account and resume them at a later stage.
+</ResponseField>
+
+<ResponseField name="Highlight on Item Hover" type="toggle">
+  Hovering over an item on the canvas displays its bounds. The anchor fill color is used for this with an opacity of roughly 0.3.
+</ResponseField>
+
+<ResponseField name="Snap Items" type="toggle">
+  Snaps items while dragging on the canvas.
+</ResponseField>
+
+<ResponseField name="Hide Custom Color" type="toggle">
+  Prevents the customer from adding their own colors.
+</ResponseField>
+
+<ResponseField name="Custom Color Input" type="toggle">
+  Shows the input values so customers can type in their colors.
+</ResponseField>
+
+<ResponseField name="Disable Drag-Select Mobile" type="toggle">
+  Users cannot drag to select multiple items on mobile phones.
+</ResponseField>
+
+<ResponseField name="Disable Zoom on Mobile" type="toggle">
+  Users cannot pinch to zoom the canvas on mobile phones.
+</ResponseField>
+
+<ResponseField name="Clear Design On Reload" type="toggle">
+  The design clears upon reload and the customer needs to start afresh.
+</ResponseField>
+
+<ResponseField name="Add Product to Cart" type="toggle">
+  The customer's design is added directly to the Cart upon submission, rather than being added to the product page.
+</ResponseField>
+
+<ResponseField name="Verify all Pages" type="toggle">
+  The customer must review and confirm all pages of the design before they can submit it.
+</ResponseField>
+
+<ResponseField name="Image Encode Quality" type="number">
+  Value used in encoding the design image previews. A higher value is better but requires larger bandwidth to save.
+</ResponseField>
+
+<ResponseField name="Snap Range" type="number">
+  Value used for object snapping on the canvas while moving items around.
+</ResponseField>
+
+<ResponseField name="Large Button Style" type="select">
+  Style used for the top main buttons. You can have them as just icons, or icons and text.
+</ResponseField>
+
+<ResponseField name="Watermark" type="image">
+  Select or upload a picture you want to use as watermark while the design is being edited by users. A sample is attached, you can right click to download and use:
+
+  <Frame>
+    ![](https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/597ca2632c7d3a73488b79fe/file-9i5oVkm221.png)
+  </Frame>
+</ResponseField>
+
+<ResponseField name="Mask Shape Upload Indicator" type="image">
+  Upload a picture that instructs your users to click to upload on a mask shape. Only used where you have clickable mask shapes. A sample image is attached and you can right click to download and use.
+</ResponseField>
+
+## Downloads
+
+<ResponseField name="Download Files in App" type="toggle">
+  Allows the customer to download the design as a PDF, a PNG or JPEG file depending on what the admin allows.
+</ResponseField>
+
+<ResponseField name="Download PDF in Order Details" type="toggle">
+  Gives users the option to download their designs in their account page when an order has been placed.
+</ResponseField>
+
+<ResponseField name="Watermark PDF downloads in APP" type="toggle">
+  The watermark uploaded in the designer section is added to the PDF document when the customer downloads from inside the APP.
+
+  <Note>
+    We disabled this feature due to complaints from customers.
+  </Note>
+</ResponseField>
+
+<ResponseField name="Download Formats" type="select">
+  Choose between either PDF only or a combination of PDF, JPEG and PNG download formats.
+</ResponseField>
+
+## Anchors
+
+<ResponseField name="Size" type="number">
+  Default size of the item control anchor on the canvas. It is larger on Mobile devices.
+</ResponseField>
+
+<ResponseField name="Style" type="select">
+  Option for a rectangular or circular anchor.
+</ResponseField>
+
+<ResponseField name="Stroke Color" type="color">
+  Color for the anchor's outer stroke.
+</ResponseField>
+
+<ResponseField name="Fill Color" type="color">
+  Anchor fill color.
+</ResponseField>
+
+## Text
+
+<ResponseField name="Floating Point Size" type="toggle">
+  Users can set font sizes in a more granular level.
+</ResponseField>
+
+<ResponseField name="Place new Text" type="toggle">
+  Places new text directly on the canvas without the user clicking the canvas.
+</ResponseField>
+
+<ResponseField name="Auto Size New Text" type="toggle">
+  New text is resized to fit screen.
+</ResponseField>
+
+<ResponseField name="New Text Size" type="number">
+  Set a fixed size for text.
+</ResponseField>
+
+<ResponseField name="Default Text Type" type="select">
+  Choose the default text type. There are three options: Text area, Wrapping text box and curved text.
+</ResponseField>
+
+<ResponseField name="New Text Message" type="text">
+  Add the default message for a new text.
+</ResponseField>
+
+## PDF
+
+<ResponseField name="Flatten Texts to vector shapes" type="toggle">
+  Converts all texts into vector shapes within the PDF file.
+</ResponseField>
+
+<ResponseField name="Print Cut Marks" type="toggle">
+  Cut marks are printed on the final PDF file using the bleed margins you have set while creating the design.
+</ResponseField>
+
+<ResponseField name="Render PDF in RGB" type="toggle">
+  Forces the PDF distiller to render the final PDF using only RGB Values. Kindly [read more on colors](/tutorial/all-about-colors) to understand how this works.
+</ResponseField>
+
+<ResponseField name="PDF Distiller" type="select">
+  Version 1 is based on TCPDF; Version 2 on CairoGraphics; Version 3 combines both functionalities of version 1 and 2. Kindly read more about our PDF distillers on the following link [Distilling PDF on the PitchPrint blog](https://blog.pitchprint.com/distilling-pdf/)
+</ResponseField>
+
+<ResponseField name="PDF Version" type="select">
+  Set your output PDF version.
+</ResponseField>
+
+<ResponseField name="PDF Image Output Profile for V2" type="select">
+  Version 2 distiller output Image profile. Default leaves image unchanged.
+</ResponseField>
+
+<ResponseField name="PDF Render Intent for V2" type="select">
+  Version 2 distiller PDF ICC render intents.
+</ResponseField>
+
+<ResponseField name="ICC Profile" type="select">
+  Select ICC profile to render PDF or JPEG in.
+</ResponseField>
+
+## Canvas Lines
+
+<ResponseField name="Solid Region Activation" type="toggle">
+  Clicking on transparent regions of an image will NOT select it.
+</ResponseField>
+
+<ResponseField name="Fill Bleed Area" type="toggle">
+  The bleed area is filled with a fainted color.
+</ResponseField>
+
+<ResponseField name="Show bleeds as dashed lines" type="toggle">
+  Displays the bleeds lines as dashed.
+</ResponseField>
+
+<ResponseField name="Bleed Line Color" type="color">
+  Color used for the bleed lines on the canvas.
+</ResponseField>
+
+<ResponseField name="Margin Line Color" type="color">
+  Color used for the margin lines on the canvas.
+</ResponseField>
+
+<ResponseField name="Snap Line Color" type="color">
+  While editing, snap lines enable users to snap items to their surrounding element's bounds. This shows a dashed line on the canvas and you set that color here.
+</ResponseField>
+
+<ResponseField name="Fold Line Color" type="color">
+  Fold lines allow you to define fold boundaries on the design, which are not printed. Sets the color used to display those lines.
+</ResponseField>
+
+## Plugins
+
+<ResponseField name="Enable Gallery Search" type="toggle">
+  Shows a search box in the pictures gallery.
+</ResponseField>
+
+<ResponseField name="Facebook" type="toggle">
+  Shows the Facebook panel under Pictures.
+</ResponseField>
+
+<ResponseField name="Instagram" type="toggle">
+  Shows the Instagram panel under Pictures.
+</ResponseField>
+
+<ResponseField name="Pixabay" type="text">
+  We have integrated Pixabay for photo search and this allows customers to import photos from Pixabay. First, you need to register with Pixabay and generate an API Key. This is where you enter that API Key.
+
+  <Note>
+    You also need to send Pixabay an email requesting them to enable your API Key for use via PitchPrint. By default, the API Key will not work unless they enable it for you on their end. Kindly read more here: [How to enable Pixabay image search](/tutorial/how-to-enable-pixabay-image-search).
+  </Note>
+</ResponseField>
+
+## File Uploads
+
+<ResponseField name="Clear User Uploads" type="toggle">
+  Clears the uploaded image cache before each user session.
+</ResponseField>
+
+<ResponseField name="Flatten SVGs" type="toggle">
+  Flattens all uploaded SVG images. This gives a better result in terms of what you see is what you get but limits the ability of customers to change the uploaded shape's colors.
+</ResponseField>
+
+<ResponseField name="Flatten all other Vectors" type="toggle">
+  Applies the same effect as Flatten SVGs to other file formats like PDF, Illustrator, CorelDraw files etc. This is a highly recommended option as there are various vector files customers can upload and we can't guarantee their fidelity across board. Flattening these files upon upload ensures they get exactly what was in the file.
+</ResponseField>
+
+<ResponseField name="Conversion Size (x10)" type="number">
+  Max pixel value to which your file will be scaled. E.g. 300 = 3000px.
+</ResponseField>
+
+<ResponseField name="Display Image Source for Masks" type="toggle">
+  Shows a Panel where the user picks their image source when they click a mask.
+</ResponseField>
+
+<ResponseField name="Retain Picture Dimensions" type="toggle">
+  When a picture is added to canvas, place it at the original size.
+
+  <Note>
+    May make it difficult for users to find handles.
+  </Note>
+</ResponseField>
+
+<ResponseField name="Reject Uploaded vectors with missing font" type="toggle">
+  When a vector is uploaded and the font is not in your list, reject the file.
+</ResponseField>
+
+## Image DPI Check
+
+<ResponseField name="Enable DPI Check" type="toggle">
+  Limits users from stretching their uploaded images beyond certain limits to maintain quality.
+</ResponseField>
+
+<ResponseField name="DPI Minimum" type="number">
+  Sets the value for the DPI check.
+</ResponseField>
+
+## Store Settings
+
+<ResponseField name="Show App on Startup" type="toggle">
+  The designer automatically shows when your product page launches.
+</ResponseField>
+
+<ResponseField name="Retain Page Images" type="toggle">
+  After a design has been customized, the app changes the product page's preview pictures to the new design's. Enabling this forces the app not to change the product page's images.
+</ResponseField>
+
+<ResponseField name="Customization Required" type="toggle">
+  Forces customers to first edit a design before they can add to cart. In some cart frameworks, this is achieved by hiding the Add to Cart button until a design is customized.
+</ResponseField>
+
+<ResponseField name="Disable Add to Cart button" type="toggle">
+  If the **Customization Required** feature is enabled along with this option, the Customize button will be disabled instead of hidden.
+</ResponseField>
+
+<ResponseField name="Prevent Inline Scroll" type="toggle">
+  Prevents the user from initially scrolling on the page when inline mode is enabled.
+</ResponseField>
+
+<ResponseField name="Display mode" type="select">
+  How the APP shows on your product page. There are three options to choose from: Mini Mode, Inline Mode and Full Window (Default).
+</ResponseField>
+
+<ResponseField name="Modify Project ID" type="text">
+  Prepend or Append data to the project ID.
+</ResponseField>
+
+<ResponseField name="File Upload Types" type="text">
+  Specify acceptable file upload types for the upload section on the product page.
+</ResponseField>
+
+<ResponseField name="Mini Selector Element" type="text">
+  Specify an html element selector present on your product page where the PitchPrint designer can attach itself and load mini mode as a part of your page instead of being displayed full screen. Usually customers can send us their product page URL and we will search for a suitable element and send back its value. This is because there are different themes out there each with its own layout and naming schemes.
+</ResponseField>
+
+<ResponseField name="Move Buttons Before" type="text">
+  Specify a CSS selector on your site before which the PitchPrint buttons should be inserted.
+</ResponseField>
+
+<ResponseField name="Inline Selector Element" type="text">
+  Specify an html element selector present on your product page where the PitchPrint designer can attach itself and load inline as a part of your page instead of being displayed full screen. Usually customers can send us their product page URL and we will search for a suitable element and send back its value. This is because there are different themes out there each with its own layout and naming schemes.
+</ResponseField>
+
+<ResponseField name="Price Selector Element" type="text">
+  Similar to the inline version described above, this allows PitchPrint to capture the price and display it within the app.
+</ResponseField>
+
+<ResponseField name="Custom JavaScript" type="text">
+  Type in the custom JavaScript you wish to run when the app is loaded. You can use this for [language customization.](/tutorial/how-to-change-the-app-labels-and-texts)
+</ResponseField>
+
+<ResponseField name="Custom CSS Style" type="text">
+  Specify additional styles you wish to apply to the designer when loaded.
+</ResponseField>
+
+<ResponseField name="Help Content" type="text">
+  Add your own help content with HTML.
+</ResponseField>
+
+## General
+
+<ResponseField name="Version 10" type="toggle">
+  Our new version. We add more features each day & you can switch back anytime.
+</ResponseField>
+
+<ResponseField name="Global Tags" type="text">
+  Comma delimited tags. You can enable additional functionalities that are otherwise not in the settings page.
+</ResponseField>
+
+<ResponseField name="Delete user projects/files" type="select">
+  Specify how long you would like to retain user files or projects (minimum 30 days, maximum 6 months).
+</ResponseField>

@@ -1,0 +1,138 @@
+---
+title: "How To Create A Collage IPhone Case Design Template"
+description: "Work through a phone case template end to end: size the reference image, cut four SVG mask shapes in Inkscape, then assemble the page in admin."
+---
+
+Introduction
+
+In this tutorial, we will create an iPhone Collage template. In this design, customers can drag their pictures unto squares arranged at the back of an iPhone template, apply filters and submit. This is a sample of Template based design with mask shapes.
+
+## Creating the iPhone Template
+
+To start with, we need a picture of an iPhone at the back of the page to act as a template. This template will never be printed in the final PDF file but will only act as a reference that will be beneath our canvas so people can have an idea of upon what and where they are placing their pictures.
+
+Go grab an iPhone template image with its back shown in an orthographic view like this:
+
+<Frame>
+  <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5900c02f0428634b4a32a3d9/file-tO8Pb7ezkb.png" alt="Back of an iPhone shown in an orthographic view, used as the template image" />
+</Frame>
+
+Then use your image editor (we prefer Fireworks for this) to create a plain canvas with a width to height ratio of
+
+**1:2.108**
+
+This is how we came about it… the physical iPhone device has a width of 2.31 inches by 4.87 and dividing the width by the height, you have that exact value. So we settled for a canvas area of 200 by 422 pixels. It’s pretty simple: 200 multiplied by 2.108 equals approximately 422 and we get our our height.
+
+Now let’s go a little further. We need to pad the iPhone template so there will be breathing area, where users can grab picture handles and we can place instructions as references as well as arrows pointing to the squares. To do this, we will “pad” the template as well as the design. Bearing in mind, our final physical design is 2.31 inches by 4.87 inches, let’s add a padding of 0.5 inches all around, we will add them as bleeds.
+
+Of course we need to consider that in our template so we need to translate 0.5 inches to pixels here on our template. To do that, let’s consider this: based on our prior dimensions, we choose 200 pixels to give us 2.31 inches. Now ask the question, “WHAT PIXELS” will give us 0.5? Math is simple:
+
+200pixels = 2.31 inches
+
+WHAT PIXELS? = 0.5 inches
+
+Now cross multiply
+
+WHAT PIXELS? = (200 x 0.5) / 2.31
+
+And finally
+
+WHAT PIXELS? = 43 pixels.
+
+Remember, you can start with any value; we started with 200 but all we needed is the perfect aspect ratio because the app will always scale the canvas area to the user’s screen using this exact ratio: 1:2.108!
+
+So, adjust your canvas area in Fireworks or Photoshop to: 200 + 43 + 43 (left and right padding) by 422 + 43 + 43 (top and bottom padding). That is: 286 x 508.
+
+Simple right? Now let’s place our iPhone template picture on the canvas, set its size to 200 wide and 422 high. Then center it on the canvas, set your background to transparent and place all your guides and directional designs around it. We made it simple by placing just the arrows and center lines as shown in the picture below. Later on in the design, we will place a reference text that can be edited at any time.
+
+Now export your template and save it as a PNG image so that it carries its transparency along. You can download our template though for reference:
+
+<Frame>
+  <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5900c07e2c7d3a057f88962a/file-EmT7d1OQUp.png" alt="Exported PNG template with the iPhone centred on a transparent padded canvas with arrows and centre lines" />
+</Frame>
+
+Creating the Mask Shapes
+
+Next, we will create the mask shapes. A mask shape is a simple shape which can accept a picture dragged unto it and clip the image to fit its shape. A mask is simply a plain svg. All svg images in the Plain Shapes section can act as masks. Other SVG images cannot. The simple property that makes a mask is that it has to have a single path node and not a grouped path node. It must have a single path node with d attributes and must not have a transform property. We are going to create them using Inkscape . [Inkscape is an open source svg editor with great features](http://www.inkscape.org/).
+
+So we are going to create 4 of those mask shapes to cover the top-left, top-right, bottom-left and bottom-right corners of the iPhone so everything looks masked out. The other areas at the middle can be easily handled using the stock rectangle shape in Plain Shapes section of the Pictures tab.
+
+To start with, open your Inkscape app and drag a copy of the iPhone template unto it. Do not worry about dimensions here; remember all that matters is aspect ratio! So drag a copy of the template unto the canvas and if prompted to link or embed image, choose link. It really doesn’t matter since you will not be saving that canvas. We simply need that picture to get the exact shape of an iPhone; nothing more.
+
+Next, scale your iPhone photo to almost fill the canvas, remember to drag only by the corners and please hold down Control or Command key to scale proportionately. Unlike Fireworks or Photoshop, Inkscape scales items non-proportionately so you need to hold down the Control or Command key to scale proportionately.
+
+Now et’s drag four guide lines from the top and left rulers to the edges of the iPhone as shown in the picture below. If your ruler is not showing, press Ctrl+R to toggle it on/off.
+
+<Frame>
+  <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5900c0aa2c7d3a057f88962b/file-aLvWuQefMU.png" alt="Inkscape canvas with four guide lines dragged to the edges of the iPhone image" />
+</Frame>
+
+Next, select the rectangle tool (F4) and draw a rectangle around the iPhone using the guides. With the tool still selected and your new rectangle shown, look up after the title bar, you will find the rectangle’s properties with a label titled “Change:” in the Rx: property, adjust increase the value till you get a rounded rectangle that fits the shape of the iPhone. You may need to zoom in a little bit and select both the tool and rectangle back. The value that works well for me here is 60. Again, your value may differ based on the level of your scaling but that’s fine. We just need that shape. You may give your rectangle a color and an opacity to see well beneath.
+
+<Frame>
+  <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5900c0d62c7d3a057f88962d/file-TrC6wVrpRN.png" alt="Rounded rectangle drawn over the iPhone shape using the guides" />
+</Frame>
+
+Ok. Now deselect the rectangle, and using the same tool, create another rectangle that will be used to mask out the Camera and Flash spot on the top left region of the iPhone as shown. You will need to adjust the Rx value again, the value that works well for me here is 15 pixels.
+
+<Frame>
+  <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5900c0f02c7d3a057f88962e/file-DTyhEhDcfb.png" alt="Second smaller rounded rectangle covering the camera and flash area" />
+</Frame>
+
+Now we will use the second rectangle to exclude out that region on the first rectangle. Deselect everything by clicking on the plain canvas. Then select only the two rectangles, make sure you don’t select the template beneath, just the two rectangles by clicking on each while holding down the Shift key. The go to Menus > Path and click Exclusion. Now your rectangle has a hole for the Camera and Flash ![🙂](https://s.w.org/images/core/emoji/2.2.1/svg/1f642.svg)
+
+<Frame>
+  <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5900c11b0428634b4a32a3df/file-T96Md2Mszl.png" alt="Rectangle after the Exclusion operation, now with a hole for the camera and flash" />
+</Frame>
+
+We will now slice out our for corners out of the rectangle and the middle we don’t need, we will discard. To do this, use the Bezier tool to draw lines along our template guides. First draw a vertical line along the center. Click down, then hold down the Control/Command key to direct your end point vertical or horizontal and right click to end your path. Draw the upper region and lower region horizontal paths as well.
+
+<Frame>
+  <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5900c13c2c7d3a057f88962f/file-EQeBWHcacZ.png" alt="Bezier lines drawn along the centre and the upper and lower guides of the rectangle" />
+</Frame>
+
+To cut the shape, we need to select all our lines (remember to select multiple items, simply hold down the shift key while you click on each), then convert them to paths: Menu > Path > Stroke to Path. To be sure, when you select any of them, it should show at the status line that you have selected a path (4 nodes), not a stroke any longer. First, let’s divide it vertically. Select the rectangle alongside the vertical path(remember our lines are now path), with the two selected, click Menu > Path > Division. This divides our rectangle into two equal parts vertically. Next, duplicate the horizontal paths each and use to divide each half of the rectangle into top, middle and bottom, we don’t need to further divide the middle since we will not be needing that. At this moment, you can delete the iPhone template, drag apart the shapes and delete the middle regions so your canvas looks like this:
+
+<Frame>
+  <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5900c1880428634b4a32a3e8/file-8aHy2YY8Hv.png" alt="The four corner shapes dragged apart on the canvas with the middle sections deleted" />
+</Frame>
+
+Those are basically all we need ![🙂](https://s.w.org/images/core/emoji/2.2.1/svg/1f642.svg) Next we need to save them separately as a file. Create a new Inkscape page: Menu > File > New > Default. Copy the top-eft shape; paste it into the new canvas, then Menu > File > Document Properties and under Custom Size in the dialog, click “Resize Page to Content”, then click the button “Resize Page to Drawing or Selection”. Now we have this:
+
+<Frame>
+  <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5900c1ad0428634b4a32a3ec/file-njQABDQyRh.png" alt="Top-left shape pasted into a new Inkscape page resized to fit the drawing" />
+</Frame>
+
+To ensure this is a plain path and it’s not in a group, click Menus > Edit > XML Editor. If there is a group there, it will be shown as svg:g node encapsulating our shape. We can see this:
+
+<Frame>
+  <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5900c1dc0428634b4a32a3ef/file-9dOhxo3DI0.png" alt="Inkscape XML editor showing the path nested inside an svg:g group node" />
+</Frame>
+
+If we delete this node, our shape will also be deleted. To fix this mess, we need to drag our path node as shown and move it up above the group node:
+
+<Frame>
+  <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5900c1fa0428634b4a32a3f1/file-idRY5G5CGJ.png" alt="Path node dragged above the group node in the XML editor" />
+</Frame>
+
+Then delete the group node! Drag the XML editor off the canvas so we can see the canvas properly. Now our shape has gone off stage, no worries don’t use your mouse to re-position. Use the x and y values up in the panel just below the menu. Enter in a value of zero for both and we have a perfect path shape, no group whatsoever. Check the XML Editor again, to ensure there’s NO group element “`<svg:g`”. Next, save it as plain shape. Menus > File > Save as… In the save dialog, select “Plain svg” for “Save as Type” so it gives you a light file without the gibberish.
+
+Repeat this and save the remaining three other parts to wit: top-right, bottom-left and bottom-right.
+
+That is how to create a mask. Other shapes should be simpler. What you need to ensure basically is that you have just one single node of path in the file, not grouped elements. You can draw a complex path, ensure you use the tools under shape to convert them to path and merge them all into a single path, resize your canvas to the path dimension and check for groupings and remove any. Then save!
+
+## Creating the Page
+
+Now let’s get to PitchPrint admin and create the template design. Refer to this tutorial if you necessary: “[**How to create a Baby’s Arrival design template**](/tutorial/how-to-create-a-baby-s-arrival-design-template)“.
+
+Give it a title, select Inches as unit of measurement and set both Render PDF and Render Bleeds to “Yes”.
+Once the page loads click the orange button to get into the app. And create your page. For the title, you can call it iPhone Back Casing or something of that sort. For width, give enter a value of 3.31 and 5.87 for height. Remember we added 0.5 inches on both sides as offsets? So that gives us 1 inches on both height and width.
+
+Next, give it a bleed of 0.5,0.5,0.5,0.5,0.5
+
+Browse to upload your template file. Click the “Add Page to Design Button” and you will find your new page created with a white background. Click the background transparency button on the bottom left and set it to the minimum. Now you should see your iPhone template properly.
+
+Click the Pictures tab, then the plus sign to upload your shapes. Browse for the four files and upload them at once. Now once uploaded, drag each shape to the four corners of the iPhone template on the canvas and scale appropriately and go to the Plain Shapes section to add the four middle rectangles. Adjust appropriately and preview your design to see how it looks. You can color each rectangle differently to give each a distinct look. Also set each rectangle’s “Transform lock” on. So users cannot move them around.
+
+You can add a text or some sort of message and set its transform lock, reference and edit locks to yes, so it is not printed, moved nor edited by the user.
+Preview your work and submit.

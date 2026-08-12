@@ -1,0 +1,102 @@
+---
+title: "How To Install PitchPrint On WordPress"
+description: "Install WordPress, WooCommerce and the PitchPrint plugin, then assign your first design."
+---
+
+PitchPrint for WordPress runs alongside [WooCommerce](http://www.woothemes.com/woocommerce/), which supplies the cart. WordPress has no cart of its own, so WooCommerce must be installed and active first.
+
+<Note>
+  PitchPrint cannot run without WooCommerce. Install WooCommerce before the PitchPrint plugin.
+</Note>
+
+<Steps>
+  <Step title="Install WordPress">
+    Download and install WordPress from [wordpress.org](http://wordpress.org/).
+  </Step>
+
+  <Step title="Install WooCommerce">
+    Log in to your WordPress admin and go to **Plugins → Add New**, then search for "WooCommerce" and install it.
+
+    To install manually, download the [WooCommerce zip](http://downloads.wordpress.org/plugin/woocommerce.zip) and upload it instead.
+  </Step>
+
+  <Step title="Install the PitchPrint plugin">
+    Use the same route: go to **Plugins → Add New**, search for "PitchPrint" and install it.
+
+    You can also install [the zip](https://downloads.wordpress.org/plugin/pitchprint.11.0.11.zip) manually.
+  </Step>
+
+  <Step title="Activate both plugins">
+    Go to **Admin → Plugins → Installed Plugins** and activate WooCommerce and PitchPrint.
+  </Step>
+
+  <Step title="Generate your PitchPrint keys">
+    [Create an account](https://admin.pitchprint.com/register) or [log in](https://admin.pitchprint.com/login), then open the [domains page](https://admin.pitchprint.com/domains) and add a new domain.
+
+    Enter your intended live domain, not a localhost address. You can still use the keys for local testing. PitchPrint returns an **API Key** and **Secret Key**.
+  </Step>
+
+  <Step title="Enter the keys in WordPress">
+    Back in your WordPress admin, click **PitchPrint** in the left menu, paste in both keys and save. Leave the Custom JS and CSS fields empty for now.
+
+    <Frame>
+      <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/6903222af4fdff43cee9aa8e/file-W9AGE0E48d.png" alt="PitchPrint settings in the WordPress admin" />
+    </Frame>
+
+  </Step>
+
+  <Step title="Set upload folder permissions">
+    For uploads to work, set the `files` folder below to permission `777`.
+
+    <Tree>
+      <Tree.Folder name="wp-contents" defaultOpen>
+        <Tree.Folder name="plugins" defaultOpen>
+          <Tree.Folder name="pitchprint" defaultOpen>
+            <Tree.Folder name="upload" defaultOpen>
+              <Tree.Folder name="files" highlight />
+            </Tree.Folder>
+          </Tree.Folder>
+        </Tree.Folder>
+      </Tree.Folder>
+    </Tree>
+
+    <Danger>
+      `777` grants write access to everyone on the server. Work through our [security measures](/tutorial/security-measures) before going live.
+    </Danger>
+  </Step>
+
+  <Step title="Assign a design to a product">
+    Go to **Products → Add Product**, give it an SKU and a price, then pick the design to assign. Designs are pulled from your PitchPrint account using the keys above.
+
+    <Frame>
+      <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/690321d5f4fdff43cee9aa8a/file-9ip4TkSlKQ.png" alt="Assigning a PitchPrint design to a WooCommerce product" />
+    </Frame>
+
+  </Step>
+
+  <Step title="Test it on your storefront">
+    Open the product on your store and check for the **Customize** button.
+
+    <Tip>
+      If the button does not appear, make sure the product has a price. Without one the button won't render. If it's still missing, see [troubleshooting](/tutorial/personalize-button-no-showing) or open a ticket.
+    </Tip>
+  </Step>
+
+  <Step title="Collect your print files">
+    When an order comes in, the design download links appear against each product in that order.
+  </Step>
+</Steps>
+
+## Related articles
+
+<CardGroup cols={2}>
+  <Card title="Which shopping cart framework should I pick?" icon="compass" href="/documentation/which-framework-should-i-pick">
+    Suggestions to help you choose the right shopping cart platform for your store.
+  </Card>
+  <Card title="Browser Compatibility" icon="browser" href="/documentation/browser-compatibility">
+    See which browsers PitchPrint supports and the requirements for the app to run.
+  </Card>
+  <Card title="Getting started with PitchPrint" icon="rocket" href="/tutorial/getting-started-with-pitchprint">
+    An overview of PitchPrint's features, workflows and best practices for new users.
+  </Card>
+</CardGroup>
