@@ -1,0 +1,41 @@
+---
+title: "How to change the app labels and texts"
+description: "Override the default language file values, such as the Customize button text, using PPCLIENT.langEdits in your Custom Javascript settings"
+---
+
+Over time, one of the most frequent questions has been  **_“How do I change the text on Customize Button?"_** This article addresses that and explains how to overwrite the default text values by editing the content of the language file to suit your particular taste.
+
+Language files are loaded immediately the app loads. The language file is loaded based on the default language you have defined on your website. Our language files are hosted on GitHub and you can contribute by editing or adding a new language you like to have on the platform.
+
+Here is the Git repository:  [pitchprint language files on GitHub](https://github.com/pitchprint/pitchprint/tree/master/language)
+
+English “en” is the default language. If your site has installed for instance dutch, it will automatically load the dutch language pack
+
+This article explains how you can change the language on your specific site without having to edit the files from our repository. To do that, kindly follow these steps:
+
+<Steps>
+  <Step title="Locate the text in the language file">
+    Load the language file your site loads from and locate the text you wish to change from the repo:  [language files repository](https://github.com/pitchprint/pitchprint/tree/master/language) (just click the language and it will open the text)
+  </Step>
+  <Step title="Open your settings page">
+    Next, navigate to your settings page here:  [Settings page](https://admin.pitchprint.com/settings)
+  </Step>
+  <Step title="Paste the code into Custom Javascript">
+    Scroll down to the Custom Javascript section and paste the following code:
+
+```javascript
+    PPCLIENT.langEdits = {
+    	"parameter": "Value text"
+    };
+    ```
+  </Step>
+  <Step title="Replace the parameter and value">
+    Next, copy the value corresponding with the language text you want to change above in step 1 and replace **_parameter_** with that name. Then type in your new value in place of **_Value Text_**.
+  </Step>
+  <Step title="Save the changes">
+    Save the changes in your settings. If you want to add more values, just add as many lines of **_"parameter" : "Value Text"_** as you like but make sure to add a comma at the end of each line. The last item should not have a comma.
+  </Step>
+  <Step title="Add module texts in the modules section">
+    **Please note**: All **modules** should be added inside the modules section as shown in the language file.
+  </Step>
+</Steps>

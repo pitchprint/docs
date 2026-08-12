@@ -1,0 +1,418 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "PitchPrint Runtime API",
+    "description": "Server-side endpoints for fetching designs, projects and rendered files from your PitchPrint domain. Every /runtime/ call is authenticated with a signature computed as MD5(apiKey + secretKey + timestamp), sent as JSON in the request body. The timestamp is valid for a one-hour window.",
+    "version": "9.0.0"
+  },
+  "servers": [
+    { "url": "https://api.pitchprint.io" }
+  ],
+  "security": [],
+  "paths": {
+    "/runtime/fetch-design-categories": {
+      "post": {
+        "operationId": "fetchDesignCategories",
+        "summary": "Fetch Design Categories",
+        "description": "Fetch all the design categories associated with your domain. The only parameters required are the signature parameters (`apiKey`, `timestamp`, `signature`) used to authenticate the call. Each category in the response includes its `id`, `title` and creation time — use a category's `id` with [Fetch Designs](/api-reference/fetch-designs) to list the designs inside it.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/SignatureParams" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The list of design categories in your domain.",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" },
+                "example": {
+                  "data": [
+                    { "id": "5afb3c7960aa7ff839dhs3767553a3fa2", "title": "Business Cards", "created": 1522140375, "modules": "" }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/runtime/fetch-designs": {
+      "post": {
+        "operationId": "fetchDesigns",
+        "summary": "Fetch Designs",
+        "description": "Fetch all the designs under a given category. Pass the `categoryId` of the category whose designs you want, along with the signature parameters. The response returns the category ID and an `items` array where each design includes its `designId`, `title`, `version`, `unit`, last-modified time and preview image URLs. Use a `designId` with [Fetch Design](/api-reference/fetch-design) to retrieve a single design's full source data.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  { "$ref": "#/components/schemas/SignatureParams" },
+                  {
+                    "type": "object",
+                    "required": ["categoryId"],
+                    "properties": {
+                      "categoryId": { "type": "string", "description": "ID of a design category.", "example": "cat-id" }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The designs under the requested category.",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" },
+                "example": {
+                  "data": {
+                    "categoryId": "cat-id",
+                    "items": [
+                      {
+                        "designId": "******K83RU7R",
+                        "version": 9,
+                        "unit": "cm",
+                        "lastModified": 1485934721,
+                        "title": "design title",
+                        "previews": [
+                          "https://pitchprint.io/previews/design_id_1.jpg",
+                          "https://pitchprint.io/previews/design_id_2.jpg"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/runtime/fetch-design": {
+      "post": {
+        "operationId": "fetchDesign",
+        "summary": "Fetch Design",
+        "description": "Fetch the source data for a single design associated with your domain. Requires a valid `designId` and the signature parameters. Use [Fetch Designs](/api-reference/fetch-designs) to get the available design IDs.\n\n**Important:** pass a `designId`, not a `categoryId` — every design lives inside a category, and using a category ID here will not return a design.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  { "$ref": "#/components/schemas/SignatureParams" },
+                  {
+                    "type": "object",
+                    "required": ["designId"],
+                    "properties": {
+                      "designId": { "type": "string", "description": "ID of a single design.", "example": "5afb3c7960aa7ff504632367553a3fa2" }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The source data for the requested design.",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" },
+                "example": {
+                  "data": {
+                    "_id": "5afb3c7960aa7ff504632367553a3fa2",
+                    "lastModified": "2015-01-12T06:01:20.000Z",
+                    "_owner": "***",
+                    "map": {
+                      "backgroundimages": { "items": "", "mode": "exclude" },
+                      "colors": { "items": "", "mode": "exclude" },
+                      "images": { "items": "", "mode": "exclude" },
+                      "modules": "{}",
+                      "fonts": { "items": "", "mode": "exclude" }
+                    },
+                    "design": {}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/runtime/fetch-design-previews": {
+      "post": {
+        "operationId": "fetchDesignPreviews",
+        "summary": "Fetch Design Previews",
+        "description": "Retrieve the preview images for the designs in your domain. Requires only the signature parameters (`apiKey`, `timestamp`, `signature`). Use this when you need to display design thumbnails without pulling each design's full source data.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/SignatureParams" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Preview image data for your designs.",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" },
+                "example": {
+                  "data": [
+                    {
+                      "designId": "******K83RU7R",
+                      "previews": [
+                        "https://pitchprint.io/previews/design_id_1.jpg",
+                        "https://pitchprint.io/previews/design_id_2.jpg"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/runtime/fetch-project": {
+      "post": {
+        "operationId": "fetchProject",
+        "summary": "Fetch Project",
+        "description": "Fetch the source data for a project — a design that has been personalized by one of your customers — associated with your domain. Requires a valid `projectId` and the signature parameters. The response returns the full project under `data`, including its `designId`, `productId`, `title`, `unit`, product details and the personalized `pages`.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  { "$ref": "#/components/schemas/SignatureParams" },
+                  {
+                    "type": "object",
+                    "required": ["projectId"],
+                    "properties": {
+                      "projectId": { "type": "string", "description": "ID of a single project.", "example": "835a460c916dec74f02adef0e4a9dce9" }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The source data for the requested project.",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" },
+                "example": {
+                  "data": {
+                    "_id": "835a460c916dec74f02adef0e4a9dce9",
+                    "version": "8.0.0",
+                    "_author": "guest",
+                    "showPresetForm": false,
+                    "hideBackgroundPanel": false,
+                    "hideTextPanel": false,
+                    "hideImagePanel": false,
+                    "product": { "id": "28", "name": "HTC Touch HD" },
+                    "disableImageClick": false,
+                    "designId": "74b9c1f4cfbbec8f59245304d7f7332c",
+                    "projectId": "835a460c916dec74f02adef0e4a9dce9",
+                    "productId": "28",
+                    "layout": "default",
+                    "title": "Red T-Shirt",
+                    "scaling": 0.28826764436296975,
+                    "unit": "cm",
+                    "welcomeMsg": "Welcome to your creative side.",
+                    "pages": [
+                      {
+                        "pageData": {
+                          "title": "Front",
+                          "render": true,
+                          "fWidth": 67.249,
+                          "fHeight": 77,
+                          "templateSource": "//s3.amazonaws.com/pitchprint.cdn/.../front.png",
+                          "canvasDimension": { "top": 10, "left": 16, "right": 16.249, "bottom": 12, "width": 35, "height": 55 },
+                          "index": 0
+                        },
+                        "groups": [],
+                        "items": [
+                          {
+                            "type": "i-text",
+                            "left": 143.29,
+                            "top": 101.31,
+                            "fill": "#ffffff",
+                            "text": "Click Here\nTo Edit\nYour Awesome\nText",
+                            "fontSize": 40,
+                            "fontWeight": "bold",
+                            "fontFamily": "Candara",
+                            "textAlign": "center",
+                            "includeInForm": false
+                          }
+                        ]
+                      }
+                    ],
+                    "_owner": "9a3a11ea5f5fc12e7a41f3098a082cd9",
+                    "lastModified": "2015-08-24T16:37:19.876Z",
+                    "enabled": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/runtime/clone-project": {
+      "post": {
+        "operationId": "cloneProject",
+        "summary": "Clone Project",
+        "description": "Clone an existing project associated with your domain. Requires a valid `projectId` and the signature parameters. On success the response returns `error: false`, a `status` of `1`, and `newId` — the ID of the newly created project, which you can then load or [fetch](/api-reference/fetch-project).",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  { "$ref": "#/components/schemas/SignatureParams" },
+                  {
+                    "type": "object",
+                    "required": ["projectId"],
+                    "properties": {
+                      "projectId": { "type": "string", "description": "ID of the project to clone.", "example": "835a460c916dec74f02adef0e4a9dce9" }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The clone result, including the new project ID.",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" },
+                "example": { "error": false, "status": 1, "newId": "e7d1ab10b9eb9b142cd4c702f0e1c69f" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/runtime/fetch-user-projects": {
+      "post": {
+        "operationId": "fetchUserProjects",
+        "summary": "Fetch User Projects",
+        "description": "List all projects linked to a specific user. Unlike the other runtime calls, this endpoint runs on `https://api.pitchprint.com` and is authenticated with your domain's Secret Key sent in the `Authorization` header — not the signature parameters. Pass the user's `userId` in the body. The response returns an array of the user's projects, each with its `designId`, `title`, `product` details and timestamps.",
+        "servers": [
+          { "url": "https://api.pitchprint.com" }
+        ],
+        "security": [ { "secretKeyAuth": [] } ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["userId"],
+                "properties": {
+                  "userId": { "type": "string", "description": "The unique userId of the user.", "example": "5629946986554" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The projects linked to the user.",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" },
+                "example": {
+                  "data": [
+                    {
+                      "product": {
+                        "name": "mens vest",
+                        "id": 6734621474874,
+                        "title": "Mens Vest",
+                        "url": "pitchprint.myshopify.com/collections/frontpage/products/mens-vest"
+                      },
+                      "apiKey": "pitchprint.myshopify.com",
+                      "lastEdit": 1732172100,
+                      "pageLength": 1,
+                      "mode": "new",
+                      "created": 1732172100,
+                      "userData": { "name": "undefined undefined" },
+                      "userId": "5629946986554",
+                      "_id": "d8b63bf34ec40b4a555c5fcb0a577324e6",
+                      "saveForLater": false,
+                      "designId": "6e4439d8ce445bde13e2c546dd0a45c7",
+                      "title": "Men's Vest (3D)"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{projectId}": {
+      "get": {
+        "operationId": "renderProject",
+        "summary": "Render PDF & Raster",
+        "description": "Render and download a project's file at runtime — all PDF and raster files are generated on demand. Use the `pdf` subdomain for a print-ready PDF (shown here). For a raster image, use the `png` or `jpeg` subdomains instead, e.g. `https://png.pitchprint.com/{projectId}`. Pass the `projectId` as the path segment.",
+        "servers": [
+          { "url": "https://pdf.pitchprint.com" }
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "description": "ID of the project to render.",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The rendered PDF file.",
+            "content": {
+              "application/pdf": {
+                "schema": { "type": "string", "format": "binary" }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SignatureParams": {
+        "type": "object",
+        "required": ["apiKey", "timestamp", "signature"],
+        "properties": {
+          "apiKey": { "type": "string", "description": "Your domain's API key.", "example": "your-api-key" },
+          "timestamp": { "type": "integer", "description": "UNIX timestamp (seconds since epoch) generated at request time. Valid for one hour.", "example": 1485934721 },
+          "signature": { "type": "string", "description": "MD5(apiKey + secretKey + timestamp).", "example": "e2fc714c4727ee9395f324cd2e7f331f" }
+        }
+      }
+    },
+    "securitySchemes": {
+      "secretKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization",
+        "description": "Your domain's secret key, sent as the Authorization header."
+      }
+    }
+  }
+}

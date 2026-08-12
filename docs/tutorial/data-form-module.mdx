@@ -1,0 +1,86 @@
+---
+title: "Data Form Module"
+description: "Set up a quick-edit form so customers personalize labelled design elements through fields instead of clicking around the canvas."
+---
+
+<Frame>
+  <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/5b2cc8152c7d3a0fa9a3538e/file-joD8oe0Bt3.png" alt="Data Form module banner" />
+</Frame>
+
+This is a PitchPrint module that shows a quick-edit form filled with data elements from the selected canvas. It allows customers to quickly customize their designs without reverting to moving and clicking items on the canvas.
+
+A sample demo can be seen here:  [Business Card with Data Form](https://wp.demo.pitchprint.io/product/business-card-data-form/)
+
+Please note, this module is only available to Premium subscribers.
+
+### How to Enable and Configure Data-Form module on a Design
+
+To enable this feature, navigate to your [Designs page](https://admin.pitchprint.io/designs), simply click the Configure button on the design you like to assign this to. Then navigate to the Modules Tab. There you will find the Data Form module. Click to enable it and the configuration panel shows up as shown below:
+
+<Frame>
+  <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/61725f32efc78d0553e5243c/file-eqdsPmObEi.png" alt="Data Form configuration panel in the Modules tab of a design" />
+</Frame>
+
+The configuration options are as follows:
+
+<ResponseField name="Title" type="text">
+  The title you want to appear on top of the form. This can be left blank.
+</ResponseField>
+
+<ResponseField name="Set as Default Tab" type="toggle">
+  Shows the Data Form as the default tab, the first tab that appears in the design app.
+</ResponseField>
+
+<ResponseField name="Hide other Tabs" type="toggle">
+  Hides the Background, Picture and Text tabs, letting you limit what customers can add or customize in the design.
+</ResponseField>
+
+<ResponseField name="Make Background Editable" type="toggle">
+  Gives customers the ability to change the background color or image of the pages.
+</ResponseField>
+
+<ResponseField name="Edit Pictures after Upload" type="toggle">
+  When a user uploads their pictures, they are taken to the image editor right away.
+</ResponseField>
+
+<ResponseField name="Force Background Cropping" type="toggle">
+  Shows the image editor with the crop tool when a customer uploads a background image, so they can crop it to exactly fit the canvas dimensions.
+</ResponseField>
+
+When you enable this module, the application looks through your design page by page for elements with the following properties:
+
+1.  **A Label.**
+2.  **Include in Form set to True.**
+
+If you do not see your elements, kindly edit your design and make sure your have set a label to each element you want to include in the form as well as set the include in form switch to **ON** as shown:
+
+<Frame>
+  <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/61725f832b380503dfdfd048/file-dZKwAeVVLj.png" alt="Element properties with a label entered and the Include in Form switch set to ON" />
+</Frame>
+
+<Warning>
+  **Shapes** - For Shape items you intend to use as clips / masks, please do ensure to enable the **_Clickable Mask option_**
+</Warning>
+
+<Note>
+  **Index -** A new feature also allows you to specify and index (priority) for each item. The default index is 0 for all items. To give an item a higher priority, you should give it a higher number so it's displayed first. To display an item at the bottom, you can assign it a negative value, say -2 and like that..
+</Note>
+
+This module appears as shown in the app: You may want to check out **[How to enable the customization form](/docs/tutorial/how-to-enable-the-customization-form)**
+
+## Related articles
+
+<CardGroup cols={2}>
+  <Card title="Variable Data Module" icon="database" href="/docs/tutorial/variable-data-module">
+    Let customers mass-customize a design by uploading data from Excel or CSV files.
+  </Card>
+  <Card title="Data Form Video" icon="video" href="/docs/tutorial/data-form-video">
+    Watch a video walkthrough of the Data Form module.
+  </Card>
+  <Card title="How to update design with customer data" href="/docs/tutorial/how-to-update-design-with-customer-data">
+    Automatically reflect a signed-in customer's details in their design from your cart framework.
+  </Card>
+  <Card title="How to enable the Customization Form" href="/docs/tutorial/how-to-enable-the-customization-form">
+    Set up a quick-fill form that appears as soon as the app loads for faster edits.
+  </Card>
+</CardGroup>

@@ -1,0 +1,59 @@
+---
+title: "Custom Mask"
+description: "Use any shape on the canvas as a clipping area so the final PDF trims everything outside it, instead of a plain rectangle."
+---
+
+This feature allows you to add any shape to the canvas and use it as a clipping area for the final PDF. Previously, the canvas was limited to rectangles or squares, which made it challenging to accommodate specific design needs. With this functionality, admins can add custom shapes, ensuring that anything within the shape is printed according to the desired specifications, while everything outside the shape is automatically trimmed.
+
+### How to Enable the Shape Clipping Feature
+
+<Steps>
+  <Step title="Open your design">
+    Go to **Designs** and open the design you want to edit.
+  </Step>
+  <Step title="Add the shape">
+    Add the desired shape to the canvas.
+  </Step>
+  <Step title="Open the Item panel">
+    Once the shape is added, go to **Item**.
+  </Step>
+  <Step title="Add the Page-Clip tag">
+    Click **Add Page-Clip** inside **Tags**.
+  </Step>
+  <Step title="Enable Make Reference">
+    Enable **Make Reference** as shown in the screenshot below.
+
+    <Frame>
+      <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/699ecc91f6d38e2d28f2695d/file-MwwvAAXuBM.png" alt="Item panel with the Page-Clip tag added and Make Reference switched on" />
+    </Frame>
+  </Step>
+</Steps>
+
+In the preview, only the content within the shape will be displayed, while everything outside will be automatically trimmed. Remember to save the design after applying these changes. See the images below for reference:
+
+<Frame>
+  <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/699ecd92e2eecb153c0e7d24/file-8ewtc6gdO3.png" alt="Design canvas with the custom shape placed over the artwork" />
+</Frame>
+
+<Frame>
+  <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/699ecdbcf6d38e2d28f26979/file-RoMiE8hDK8.png" alt="Preview showing only the content inside the shape, with the rest trimmed away" />
+</Frame>
+
+For any issues or assistance, please contact us at **support@pitchprint.com**
+
+## Related articles
+
+<CardGroup cols={2}>
+  <Card title="How to create a clickable mask" icon="mask" href="/docs/tutorial/how-to-create-a-clickable-mask">
+    Turn a shape into an image placeholder customers can click to insert images.
+  </Card>
+  <Card title="How to Add a Placeholder image for Mask Shapes" icon="image" href="/docs/documentation/how-to-add-a-placeholder-image-for-mask-shapes">
+    Set a guide image that prompts clients to click a mask shape.
+  </Card>
+  <Card title="How to create an SVG for use as a Mask" icon="vector-square" href="/docs/tutorial/how-to-create-an-svg-for-use-as-mask">
+    Prepare a single-path SVG that can be used as a photo mask.
+  </Card>
+  <Card title="How to create templates using SVG shapes" icon="shapes" href="/docs/tutorial/how-to-create-templates-using-svg-shapes">
+    Build a design template from an SVG shape, such as a phone case.
+  </Card>
+</CardGroup>

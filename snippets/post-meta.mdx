@@ -1,0 +1,20 @@
+{/*
+  Byline shown under a post title: author, publish date, and read time.
+  Usage:
+    import PostMeta from "/snippets/post-meta.mdx";
+    <PostMeta author="Rukaya Davids" date="3 July 2025" readTime="4 min read" />
+*/}
+
+<div style={{
+  display: "flex",
+  alignItems: "center",
+  gap: "0.5rem",
+  fontSize: "0.875rem",
+  opacity: 0.7,
+  marginBottom: "1.5rem"
+}}>
+  <span><strong>{props.author}</strong></span>
+  <span>·</span>
+  <span>{props.date}</span>
+  {props.readTime && <><span>·</span><span>{props.readTime}</span></>}
+</div>
