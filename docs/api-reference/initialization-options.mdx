@@ -1,0 +1,96 @@
+---
+title: "Initialization Options"
+description: "Reference for every key you can pass to the PitchPrintClient constructor, including apiKey, designId, mode, product, langCode and userId."
+---
+
+To create an instance of the PitchPrint class, here are the possible options you can pass in:
+
+```javascript
+var ppclient = new PitchPrintClient(options);
+```
+
+The parameters value is a key-value object and are defined as follows:
+
+<ResponseField name="apiKey" type="string" required>
+  The API Key generated from the admin portal and assigned to your domain. This identifies each domain from the other, not the domain name which can be renamed at any time. [You can generate your apiKey from here](https://admin.pitchprint.io/domains).
+</ResponseField>
+
+<ResponseField name="designId" type="string">
+  The ID of the design you intend to load for new projects. To get a listing of all designs under your account, you can call up this endpoint URL from the admin.
+</ResponseField>
+
+<ResponseField name="mode" type="string">
+  The mode in which the app should load. Default value should be `new`. When a user has finished creating a design but has not left the page, they may decide they want to edit again. Set this to `edit` just before loading up the editor for editing.
+</ResponseField>
+
+<ResponseField name="product" type="object">
+  The product details passed in as a value-pair object. Useful when reading through the project design file or when you need to identify each project design against your products. It can contain any values you desire, but we normally use Id and title, so it looks like: `{id: 'xyz', title: 'Purple Phamplets'}`
+</ResponseField>
+
+<ResponseField name="langCode" type="string">
+  Language code the editor should use. If omitted, ‘en’ English will be used. Here is the list of all languages to which PitchPrint has been translated:
+
+  -   bg – Bulgarian
+  -   ca – Catalan
+  -   cs – Czech
+  -   da – Danish
+  -   nl – Dutch
+  -   fi – Finnish
+  -   fr – French
+  -   de – German
+  -   el – Greek
+  -   he – Hebrew
+  -   hu – Hungarian
+  -   id – Indonesian
+  -   it – Italian
+  -   lv – Latvian
+  -   lt – Lithuanian
+  -   no – Norwegian
+  -   pl – Polish
+  -   pt – Portuguese
+  -   pt-br – Portuguese (Brazilian)
+  -   ru – Russian
+  -   es – Spanish
+  -   sl – Slovak
+  -   sv – Swedish
+  -   tr – Turkish
+  -   vi – Vietnamese
+
+  <Note>
+    This is different from the `lang` property.
+  </Note>
+</ResponseField>
+
+<ResponseField name="userId" type="string">
+  A unique code we use to reference each user. For every user that instantiates the app, a folder is created on the server so their pictures and design projects can be saved and referenced anytime.
+
+  <Warning>
+    If this value is omitted, we will use ‘guest’. When the user reloads the app on a different browser their images and assets are lost. Provide a unique ID to identify each user and store their assets separately and safely.
+  </Warning>
+</ResponseField>
+
+<ResponseField name="userData" type="string">
+  A key-value pair of the user's additional information like email, address, phone etc that you want attached to the particular project and shown on the projects page in our admin.
+</ResponseField>
+
+<ResponseField name="projectId" type="string">
+  A unique code used to save the project on the server. We advise you leave it blank, which gives the server the ease to generate a unique ID of its own.
+
+  After a project has been saved, this ID is passed down to you via the onSave function as stated above. You can subsequently pass it in as an ID if you want to edit the same project or retrieve the PDF file.
+</ResponseField>
+
+<ResponseField name="custom" type="string">
+  Always set this to true. It allows the class to prevent some default actions which we have baked in for popular frameworks.
+</ResponseField>
+
+## Related articles
+
+<CardGroup cols={2}>
+  <Card title="Events" icon="bell" href="/docs/api-reference/events">
+    Listen for and fire events on the PitchPrint client.
+  </Card>
+  <Card title="Designer ready method" icon="code" href="/docs/api-reference/designer-ready-method">
+    Hook your custom code into the editor once the designer is ready.
+  </Card>
+</CardGroup>
+

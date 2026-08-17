@@ -1,0 +1,42 @@
+---
+title: "Error Fix: web2print options missing in OpenCart Admin"
+description: "Fix the vqmod bug that stops template files being cached, which leaves the OpenCart product option showing only \"required\"."
+---
+
+If you happen to type in web2print in the OpenCart option and it only shows required, this is most probably a vqmod issue stated here:  [vqmod issue #71](https://github.com/vqmod/vqmod/issues/71)
+
+This issue prevents vqmod from creating template files so if you check the directory /vqmod/vqcache/, you most probably will only find files with .php and no .tpl
+
+## Fix
+
+<Steps>
+  <Step title="Open the vqmod config file">
+    FTP into your installation and open the file vqmod/xml/vqmod_opencart.xml
+  </Step>
+
+  <Step title="Replace the file node">
+    Replace the whole **_file_** node with the following code:
+
+```xml
+<file name="system/startup.php,system/engine/*.php,system/library/*.php,admin/controller/extension/*.php,system/library/template/*.php">
+    <operation error="skip" info="For non OCMod includes/requires">
+        <search position="replace" regex="true"><![CDATA[~(require|include)(_once)?\((?!modification\()([^)]+)~]]> </search>
+        <add><![CDATA[$1$2(\\VQMod::modCheck($3)]]> </add>
+    </operation>
+    <operation error="skip" info="For OCMod includes/requires - OPERATION MUST BE AFTER NON OCMOD INCLUDES/REQUIRES OPERATION">
+        <search position="replace" regex="true"><![CDATA[~(require|include)(_once)?\(modification\(([^)]+)~]]> </search>
+        <add><![CDATA[$1$2(\\VQMod::modCheck(modification($3), $3]]> </add>
+    </operation>
+</file>
+```
+
+  </Step>
+
+  <Step title="Clear the vqmod cache">
+    Navigate to /vqmod/vqcache and delete all the files in that folder. Don't worry they are simply cached files
+  </Step>
+
+  <Step title="Recheck the admin product page">
+    Refresh your admin product page and try again. The web2print option should now appear and if it doesn't, please send us a mail.
+  </Step>
+</Steps>

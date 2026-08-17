@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-labelledby="tl ds">
+  <title id="tl">PitchPrint AI Studio</title>
+  <desc id="ds">A text prompt with size and style options generates an image resource in the PitchPrint admin, with tools to remove the background, upscale, reuse as a template, save to resources, download, and view details.</desc>
+
+  <rect width="1200" height="630" fill="#F7F6FC"/>
+  <circle cx="1130" cy="70" r="180" fill="#EEEBFD"/>
+  <circle cx="96" cy="580" r="120" fill="#EEEBFD"/>
+
+  <g font-family="Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif">
+
+    <rect x="72" y="118" width="188" height="34" rx="17" fill="#6022E7"/>
+    <text x="166" y="141" text-anchor="middle" font-size="14" font-weight="500" fill="#FFFFFF" letter-spacing="0.4">NEW IN THE ADMIN</text>
+
+    <text x="72" y="242" font-size="74" font-weight="700" fill="#14121F">AI Studio</text>
+    <text x="72" y="294" font-size="24" fill="#57536E">Generate image resources from a</text>
+    <text x="72" y="328" font-size="24" fill="#57536E">text prompt, right in the admin panel.</text>
+
+    <g font-size="15" fill="#6B6880">
+      <circle cx="79" cy="392" r="4" fill="#07D4CB"/>
+      <text x="94" y="397">Describe it</text>
+      <circle cx="219" cy="392" r="4" fill="#07D4CB"/>
+      <text x="234" y="397">Pick a size</text>
+      <circle cx="359" cy="392" r="4" fill="#07D4CB"/>
+      <text x="374" y="397">Pick a style</text>
+    </g>
+
+    <rect x="72" y="446" width="300" height="2" fill="#E4E1F2"/>
+    <text x="72" y="490" font-size="16" fill="#6B6880">No third-party tools. No design experience.</text>
+
+    <g>
+      <rect x="660" y="96" width="468" height="150" rx="16" fill="#FFFFFF" stroke="#E4E1F2" stroke-width="1.5"/>
+      <text x="688" y="130" font-size="13" font-weight="500" fill="#8B87A3" letter-spacing="0.6">PROMPT</text>
+      <text x="688" y="164" font-size="18" fill="#14121F">a watercolour hummingbird,</text>
+      <text x="688" y="192" font-size="18" fill="#14121F">cream paper background</text>
+      <rect x="945" y="176" width="2" height="20" fill="#6022E7"/>
+
+      <rect x="688" y="208" width="112" height="26" rx="13" fill="#F2F0FB"/>
+      <text x="744" y="226" text-anchor="middle" font-size="13" fill="#57536E">1024 × 1024</text>
+      <rect x="810" y="208" width="106" height="26" rx="13" fill="#F2F0FB"/>
+      <text x="863" y="226" text-anchor="middle" font-size="13" fill="#57536E">Watercolour</text>
+      <rect x="1000" y="204" width="100" height="34" rx="17" fill="#6022E7"/>
+      <text x="1050" y="226" text-anchor="middle" font-size="14" font-weight="500" fill="#FFFFFF">Generate</text>
+    </g>
+
+    <path d="M894 258 L894 290" stroke="#C9C3EC" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M886 282 L894 292 L902 282" fill="none" stroke="#C9C3EC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M842 268 l4.5 10.5 10.5 4.5 -10.5 4.5 -4.5 10.5 -4.5 -10.5 -10.5 -4.5 10.5 -4.5 z" fill="#07D4CB"/>
+    <path d="M952 276 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3 z" fill="#A17BF4"/>
+
+    <g>
+      <rect x="744" y="308" width="300" height="248" rx="16" fill="#FFFFFF" stroke="#E4E1F2" stroke-width="1.5"/>
+      <rect x="760" y="324" width="268" height="176" rx="10" fill="#FBF7EF"/>
+      <circle cx="838" cy="404" r="46" fill="#EEEBFD"/>
+      <path d="M838 366 c26 14 40 34 40 52 c0 20 -18 34 -40 34 c-22 0 -40 -14 -40 -34 c0 -18 14 -38 40 -52 z" fill="#6022E7"/>
+      <path d="M878 418 c22 -10 44 -8 60 6 c-18 4 -34 10 -46 20 c-8 6 -14 6 -18 0 c-4 -8 -2 -18 4 -26 z" fill="#07D4CB"/>
+      <circle cx="826" cy="392" r="5" fill="#FFFFFF"/>
+      <path d="M948 350 a34 34 0 0 1 34 34" fill="none" stroke="#A17BF4" stroke-width="3" stroke-linecap="round"/>
+      <path d="M962 470 q28 -22 56 -6" fill="none" stroke="#D9D3F3" stroke-width="3" stroke-linecap="round"/>
+
+      <g>
+        <rect x="760" y="514" width="268" height="30" rx="8" fill="#F7F6FC"/>
+        <g stroke="#57536E" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="774" y="522" width="14" height="14" rx="2" stroke-dasharray="3 2.5"/>
+          <path d="M818 536 l14 -14 M826 522 h6 v6 M818 530 v6 h6"/>
+          <path d="M862 524 h14 v10 h-14 z M866 534 v4 h14 v-10 h-4"/>
+          <path d="M912 522 v14 M905 529 h14"/>
+          <path d="M954 522 v11 M949 528 l5 5 5 -5 M948 538 h12"/>
+          <circle cx="1000" cy="529" r="7"/>
+          <path d="M1000 526 v0.5 M1000 530 v3"/>
+        </g>
+      </g>
+    </g>
+
+    <text x="744" y="586" font-size="14" fill="#8B87A3">Remove background · Upscale · Reuse · Save to resources · Download · Details</text>
+  </g>
+</svg>
