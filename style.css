@@ -1,0 +1,23 @@
+/* ---------------------------------------------------------------------------
+   Hide the Mintlify product switcher (the "Documentation / Blog" dropdown
+   next to the logo).
+
+   Why CSS: the switcher is rendered because navigation uses `products`, and
+   `products` is what scopes each section's tab row — so /blog shows
+   "Blog | Releases" instead of the documentation tabs. Removing `products`
+   would bring the docs tabs back onto the blog, so the structure has to stay
+   and only the control is hidden.
+
+   Why this selector: the button's `id` is generated per render
+   (base-ui-_R_6sleaum6ebp9fiutb_) and its classes are Tailwind utilities, so
+   neither is stable. `aria-haspopup="menu"` is part of the component's
+   accessibility contract and is the most durable hook available.
+
+   If a future Mintlify release changes the markup, the switcher reappears —
+   it fails visibly rather than breaking the page.
+   --------------------------------------------------------------------------- */
+
+header button[aria-haspopup="menu"],
+nav button[aria-haspopup="menu"] {
+  display: none !important;
+}
