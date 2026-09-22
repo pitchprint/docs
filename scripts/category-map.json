@@ -1,0 +1,79 @@
+{
+  "_comment": "Help Scout category name -> where a NEW article is filed in the sidebar, as a path of group names inside a tab. ingest-new.js uses this; it never moves an article that is already placed. Add an entry when support creates a new category. Unmapped categories fall back to `_fallback` for their section.",
+  "_slugOverrides_comment": "Per-article placement, checked before `categories`. For articles Help Scout files under a category that does not match where they belong on the site.",
+  "slugOverrides": {
+    "how-to-install-pitchprint-on-vb-media": [
+      "Documentation",
+      "Installation Guide",
+      "Platform Installation"
+    ]
+  },
+  "_fallback": {
+    "documentation": [
+      "Documentation",
+      "Installation Guide",
+      "Platform Installation"
+    ],
+    "tutorial": [
+      "Tutorial",
+      "Tips 'n Tricks",
+      "Advanced"
+    ],
+    "api-reference": [
+      "API Reference",
+      "Developer Knowledge Base"
+    ]
+  },
+  "categories": {
+    "What is PitchPrint?": [
+      "Documentation",
+      "Get Started"
+    ],
+    "Installation guide": [
+      "Documentation",
+      "Installation Guide",
+      "Platform Installation"
+    ],
+    "General": [
+      "Documentation",
+      "Design Tools",
+      "Editor & Tools"
+    ],
+    "Admin Guide": [
+      "Tutorial",
+      "Admin Guide",
+      "Getting Started"
+    ],
+    "Using Modules": [
+      "Tutorial",
+      "Using Modules",
+      "Other Modules"
+    ],
+    "Tips 'n Tricks": [
+      "Tutorial",
+      "Tips 'n Tricks",
+      "Advanced"
+    ],
+    "Sample Solutions": [
+      "Tutorial",
+      "Sample Solutions",
+      "Design Templates"
+    ],
+    "Integrating PitchPrint": [
+      "API Reference",
+      "Custom Integration"
+    ],
+    "Designer API": [
+      "API Reference",
+      "Designer API"
+    ],
+    "Front End": [
+      "API Reference",
+      "Designer API"
+    ],
+    "Developer Knowledge Base": [
+      "API Reference",
+      "Developer Knowledge Base"
+    ]
+  }
+}

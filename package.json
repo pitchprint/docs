@@ -7,8 +7,12 @@
   "scripts": {
     "example": "node --env-file=.env scripts/example.js",
     "convert": "node scripts/convert-to-markdown.js",
+    "drift": "node scripts/report-drift.js",
+    "baseline": "node scripts/report-drift.js --write",
+    "ingest": "node --env-file-if-exists=.env scripts/ingest-new.js",
     "publish": "node scripts/publish-to-docs.js",
-    "blog-summaries": "node scripts/generate-blog-summaries.js"
+    "blog-summaries": "node scripts/generate-blog-summaries.js",
+    "test": "node scripts/test-tidy.mjs && node scripts/test-validate.mjs && node scripts/test-style-pass.mjs"
   },
   "engines": {
     "node": ">=20.6.0"

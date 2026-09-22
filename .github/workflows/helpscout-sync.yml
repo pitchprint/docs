@@ -1,0 +1,229 @@
+# Weekly Help Scout sync: propose brand-new articles as a pull request,
+# report edits to existing ones as an issue.
+#
+# The published docs are hand-authored and have diverged from Help Scout on every
+# page, so nothing already in docs/ may be overwritten. But a brand-new article
+# has no hand-written version to protect, so it is prepared automatically.
+#
+#   new article    -> tidied, rewritten into house style, filed, PROPOSED IN A PR
+#   edited article -> reported in an issue; the published page is left alone
+#
+# Nothing reaches main without a human merging the pull request. That review step
+# is the point: the AI pass is checked against the source for lost or invented
+# content, but "did not lose anything" is not the same as "reads well", and only
+# a person can judge the second.
+#
+# One-time setup:
+#   1. Settings -> Secrets and variables -> Actions -> New repository secret
+#        Name: HELPSCOUT_API_KEY
+#   2. Optional but recommended, same place:
+#        Name: ANTHROPIC_API_KEY
+#      Without it the sync still works; new pages just arrive in the plainer
+#      mechanical style with a comment saying they are worth a human pass.
+#   3. Seed the baseline once, locally, and commit it:
+#        npm run example && npm run convert && npm run baseline
+#        git add scripts/helpscout-baseline.json && git commit
+#   4. Settings -> Actions -> General -> Workflow permissions:
+#        tick "Allow GitHub Actions to create and approve pull requests"
+#      Without this the PR step fails with "GitHub Actions is not permitted to
+#      create pull requests".
+
+name: Help Scout sync
+
+on:
+  schedule:
+    # 01:00 UTC = 03:00 SAST, Mondays.
+    - cron: "0 1 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: helpscout-sync
+  cancel-in-progress: false
+
+env:
+  SYNC_BRANCH: helpscout-sync
+  BOT_EMAIL: "41898282+github-actions[bot]@users.noreply.github.com"
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Needed so the job can see origin/$SYNC_BRANCH and compare authors.
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - run: npm ci
+
+      # The safety checks that decide whether an AI rewrite is allowed to ship.
+      # If they are broken, nothing else in this job should run.
+      - name: Test the conformance guards
+        run: npm test
+
+      - name: Write .env from secrets
+        env:
+          HELPSCOUT_API_KEY: ${{ secrets.HELPSCOUT_API_KEY }}
+        run: |
+          {
+            echo "HELPSCOUT_BASE_URL=https://docsapi.helpscout.net/v1"
+            echo "HELPSCOUT_API_KEY=$HELPSCOUT_API_KEY"
+            echo "HELPSCOUT_API_PASSWORD=X"
+          } > .env
+
+      - name: Fetch articles from Help Scout
+        run: npm run example
+
+      - name: Convert HTML to MDX
+        run: npm run convert
+
+      # Report edits BEFORE ingesting, so the report reflects the baseline as it
+      # stood at the start of the run.
+      - name: Report edits to existing articles
+        env:
+          DRIFT_REPORT_PATH: ${{ runner.temp }}/drift-report.md
+        run: npm run drift
+
+      # Refuse to touch the sync branch if a reviewer has committed to it. The
+      # branch is rebuilt from scratch each run and force-pushed, which would
+      # silently destroy a step title someone fixed by hand in the open PR.
+      - name: Guard — do not clobber a reviewer's commit
+        run: |
+          if git ls-remote --exit-code --heads origin "$SYNC_BRANCH" >/dev/null 2>&1; then
+            git fetch --quiet origin "$SYNC_BRANCH"
+            author=$(git log -1 --format=%ae "origin/$SYNC_BRANCH")
+            if [ "$author" != "$BOT_EMAIL" ]; then
+              echo "::error::$SYNC_BRANCH was last committed to by $author, not the sync bot."
+              echo "This run rebuilds and force-pushes that branch, which would discard that commit."
+              echo "Merge or close the open pull request, then re-run this workflow."
+              exit 1
+            fi
+          fi
+
+      # Adds only articles absent from the baseline with no existing page, each
+      # rewritten into house style if ANTHROPIC_API_KEY is set. Verifies
+      # afterwards that no existing page was touched, and exits non-zero if one
+      # was. The report becomes the body of the pull request.
+      - name: Add new articles
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          set -o pipefail
+          npm run ingest -- --write | tee "$RUNNER_TEMP/ingest-report.txt"
+
+      - name: Guard — additions only
+        run: |
+          # Allowed: new files, docs.json, the baseline. Anything else is a bug.
+          offenders=$(git status --porcelain \
+            | grep -v '^??' \
+            | grep -v ' docs\.json$' \
+            | grep -v ' scripts/helpscout-baseline\.json$' || true)
+          if [ -n "$offenders" ]; then
+            echo "::error::This job modified files it must never touch:"
+            echo "$offenders"
+            exit 1
+          fi
+          deleted=$(git status --porcelain | grep '^ D\|^D ' || true)
+          if [ -n "$deleted" ]; then
+            echo "::error::Files were deleted:"
+            echo "$deleted"
+            exit 1
+          fi
+          echo "Additions only — no existing page was modified or deleted."
+
+      - name: Check for broken links
+        run: npx --yes mint@latest broken-links
+
+      - name: Open or update the pull request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "Nothing new from Help Scout — no pull request needed."
+            exit 0
+          fi
+
+          git config user.name "helpscout-sync[bot]"
+          git config user.email "$BOT_EMAIL"
+          git checkout -b "$SYNC_BRANCH"
+          git add -A
+          git commit -m "Add new Help Scout articles
+
+          Prepared automatically by the weekly sync and rewritten into house
+          style, checked against the source for lost or invented content. Any
+          page the check rejected shipped as its plainer mechanical version and
+          carries a comment saying it is worth a human pass — search for
+          'Imported from Help Scout' to find them.
+
+          Workflow: ${{ github.workflow }} run ${{ github.run_number }}"
+
+          # Force-push is safe here: the branch is regenerated from main on every
+          # run, and the guard above already refused if a human had committed to it.
+          git push --force origin "$SYNC_BRANCH"
+
+          {
+            echo "New Help Scout articles, prepared automatically. **Nothing is published until this is merged.**"
+            echo
+            echo "## What to check"
+            echo
+            echo "- Do the \`<Step>\` titles read like instructions a person would write?"
+            echo "- Does every screenshot have \`alt\` text that describes it?"
+            echo "- Is each article filed under the right sidebar group?"
+            echo "- Any page marked \`mechanical only\` below did **not** get the AI pass — it needs the most attention."
+            echo
+            echo "## Ingest report"
+            echo
+            echo '```'
+            cat "$RUNNER_TEMP/ingest-report.txt"
+            echo '```'
+            echo
+            echo "---"
+            echo "Re-running the workflow rebuilds this branch from scratch. Do not commit fixes here —"
+            echo "the next run would refuse to proceed. Merge first, then edit on \`main\`."
+          } > "$RUNNER_TEMP/pr-body.md"
+
+          existing=$(gh pr list --head "$SYNC_BRANCH" --state open --json number --jq '.[0].number // empty')
+          if [ -n "$existing" ]; then
+            gh pr edit "$existing" --body-file "$RUNNER_TEMP/pr-body.md"
+            echo "Updated pull request #$existing."
+          else
+            gh pr create \
+              --base "$(gh repo view --json defaultBranchRef --jq .defaultBranchRef.name)" \
+              --head "$SYNC_BRANCH" \
+              --title "Add new Help Scout articles" \
+              --body-file "$RUNNER_TEMP/pr-body.md"
+          fi
+
+      - name: Raise or update an issue for edited articles
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TITLE: "Help Scout edits not yet ported"
+        run: |
+          number=$(gh issue list --state open --search "$TITLE in:title" \
+                     --json number,title \
+                     --jq ".[] | select(.title==\"$TITLE\") | .number" | head -1)
+
+          if grep -q "^No Help Scout changes" "$RUNNER_TEMP/drift-report.md"; then
+            if [ -n "$number" ]; then
+              gh issue comment "$number" --body "Nothing left to port as of $(date -u +%Y-%m-%d). Closing."
+              gh issue close "$number"
+            fi
+            exit 0
+          fi
+
+          if [ -n "$number" ]; then
+            gh issue comment "$number" --body-file "$RUNNER_TEMP/drift-report.md"
+          else
+            gh issue create --title "$TITLE" --body-file "$RUNNER_TEMP/drift-report.md"
+          fi

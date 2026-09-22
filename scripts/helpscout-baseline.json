@@ -1,0 +1,676 @@
+{
+  "_comment": "Fingerprint of the Help Scout content as last reviewed. scripts/report-drift.js compares each sync against this to show only what support has changed. Regenerate with `npm run baseline` after porting changes into docs/.",
+  "updatedAt": "2026-09-02T10:18:52.552Z",
+  "articles": {
+    "documentation/3d-studio": {
+      "hash": "5b57c73a3b883a17",
+      "title": "3D Studio",
+      "bytes": 277
+    },
+    "documentation/3d-view-introduction": {
+      "hash": "2f8e86227a43675d",
+      "title": "3D View Introduction",
+      "bytes": 2252
+    },
+    "documentation/3d-views": {
+      "hash": "96242d1a1dfb21f4",
+      "title": "3D Views",
+      "bytes": 3379
+    },
+    "documentation/3d": {
+      "hash": "879e581c90a86de0",
+      "title": "3D Business card",
+      "bytes": 5563
+    },
+    "documentation/bigcommerce": {
+      "hash": "a9f849b4d3f7c84f",
+      "title": "BigCommerce user Guide",
+      "bytes": 1401
+    },
+    "documentation/browser-compatibility": {
+      "hash": "083f743deeb2d037",
+      "title": "Browser Compatibility",
+      "bytes": 1585
+    },
+    "documentation/faq": {
+      "hash": "d88386c389af923e",
+      "title": "Frequently asked questions",
+      "bytes": 4213
+    },
+    "documentation/how-to-add-a-placeholder-image-for-mask-shapes": {
+      "hash": "596502b2d079c9f7",
+      "title": "How to Add a Placeholder image for Mask Shapes",
+      "bytes": 2013
+    },
+    "documentation/how-to-install-pitchprint-on-bigcommerce": {
+      "hash": "89b650d7e05ffa5b",
+      "title": "How to install PitchPrint on BigCommerce",
+      "bytes": 3627
+    },
+    "documentation/how-to-install-pitchprint-on-ecwid": {
+      "hash": "34e9d8f0b049eeac",
+      "title": "How to Install PitchPrint on ECWID",
+      "bytes": 103
+    },
+    "documentation/how-to-install-pitchprint-on-ekm": {
+      "hash": "683af5873b32e4f6",
+      "title": "How to Install PitchPrint on EKM",
+      "bytes": 3780
+    },
+    "documentation/how-to-install-pitchprint-on-odoo": {
+      "hash": "ec96c0c8849f6f76",
+      "title": "How To Install PitchPrint On Odoo",
+      "bytes": 5834
+    },
+    "documentation/how-to-install-pitchprint-on-opencart": {
+      "hash": "9660d32464e9c56e",
+      "title": "How To Install PitchPrint On OpenCart",
+      "bytes": 5482
+    },
+    "documentation/how-to-install-pitchprint-on-prestashop": {
+      "hash": "6ae6fc55396691ab",
+      "title": "How To Install PitchPrint On PrestaShop",
+      "bytes": 3080
+    },
+    "documentation/how-to-install-pitchprint-on-vb-media": {
+      "hash": "cb4d272455d85339",
+      "title": "How to Install Pitchprint on VB Media",
+      "bytes": 2514
+    },
+    "documentation/how-to-install-pitchprint-on-wix": {
+      "hash": "33c443d276e494a6",
+      "title": "How to install PitchPrint on WIX",
+      "bytes": 3865
+    },
+    "documentation/how-to-install-pitchprint-on-wordpress": {
+      "hash": "bd4e1b338663413b",
+      "title": "How To Install PitchPrint On WordPress",
+      "bytes": 3930
+    },
+    "documentation/magento-installation": {
+      "hash": "1df2aba9cff6c56d",
+      "title": "How To Install PitchPrint On Magento",
+      "bytes": 2789
+    },
+    "documentation/pdf-uploader": {
+      "hash": "dec0b1f73eaa916f",
+      "title": "PDF Uploader",
+      "bytes": 2618
+    },
+    "documentation/picture-editor": {
+      "hash": "874c8041930c8b5b",
+      "title": "Picture Editor",
+      "bytes": 31
+    },
+    "documentation/pitchprint-for-shopify-getting-started": {
+      "hash": "09e73205d99f4cad",
+      "title": "PitchPrint For Shopify.. Getting Started",
+      "bytes": 4241
+    },
+    "documentation/pitchprint-on-3dcart": {
+      "hash": "ec439900f83cd4be",
+      "title": "PitchPrint on 3DCart",
+      "bytes": 2576
+    },
+    "documentation/tags": {
+      "hash": "d3eabcd11a841227",
+      "title": "Tags",
+      "bytes": 817
+    },
+    "documentation/upgrading-to-version-9": {
+      "hash": "28291783ce4cff0c",
+      "title": "Upgrading to Version 9",
+      "bytes": 2573
+    },
+    "documentation/which-framework-should-i-pick": {
+      "hash": "3c97a1265b2790c0",
+      "title": "Which shopping cart framework should I pick?",
+      "bytes": 2519
+    },
+    "tutorial/3d-uv-mapping": {
+      "hash": "3a0a6d5a86fc9184",
+      "title": "3D UV Mapping",
+      "bytes": 3890
+    },
+    "tutorial/add-fonts-inside-editor": {
+      "hash": "bf453622c9187d50",
+      "title": "Add Fonts - Inside Editor",
+      "bytes": 210
+    },
+    "tutorial/add-previews-project-file-links-to-shopify-email-notifications": {
+      "hash": "650ac27f5a6dc443",
+      "title": "Add previews & project file links to Shopify email notifications",
+      "bytes": 2223
+    },
+    "tutorial/adding-grommets": {
+      "hash": "6e78cd767d6d7709",
+      "title": "Adding Grommets",
+      "bytes": 328
+    },
+    "tutorial/adding-qr-codes": {
+      "hash": "4c40db0b50deec1d",
+      "title": "Adding QR Codes",
+      "bytes": 32
+    },
+    "tutorial/admin-settings": {
+      "hash": "970b0732695f3ae3",
+      "title": "Admin Settings",
+      "bytes": 12091
+    },
+    "tutorial/ai-image-generator": {
+      "hash": "cb672f331df04d90",
+      "title": "AI-Imaginate",
+      "bytes": 3868
+    },
+    "tutorial/ai-outpainting": {
+      "hash": "5fd9be9cd3ddf118",
+      "title": "AI Outpainting",
+      "bytes": 2184
+    },
+    "tutorial/ai-sketch-to-image": {
+      "hash": "929e61906ce0f30e",
+      "title": "AI Sketch to Image",
+      "bytes": 3096
+    },
+    "tutorial/ai-smart-replace": {
+      "hash": "a4e4392719c566e0",
+      "title": "AI Smart Replace",
+      "bytes": 3825
+    },
+    "tutorial/ai-structure": {
+      "hash": "27acbf7d9af325ac",
+      "title": "AI Structure",
+      "bytes": 3613
+    },
+    "tutorial/ai-upscale": {
+      "hash": "3794e8a3ba23d66f",
+      "title": "AI Upscale",
+      "bytes": 2943
+    },
+    "tutorial/all-about-colors": {
+      "hash": "087e457ece78973b",
+      "title": "All About Colors",
+      "bytes": 2762
+    },
+    "tutorial/automation-sending-your-pdf-file-to-printer": {
+      "hash": "bb56000e1d8b6f79",
+      "title": "Automation: Sending your PDF file to Printer",
+      "bytes": 7162
+    },
+    "tutorial/backgrounds": {
+      "hash": "a83b44c618f8098d",
+      "title": "PP v10 features",
+      "bytes": 2862
+    },
+    "tutorial/calendar-design": {
+      "hash": "61de8b3555a22607",
+      "title": "Calendar Design",
+      "bytes": 4485
+    },
+    "tutorial/canvas-adjuster-module": {
+      "hash": "09bf3feaca02565d",
+      "title": "Canvas Adjuster Module",
+      "bytes": 4709
+    },
+    "tutorial/color-palette": {
+      "hash": "fc5d9aa1c383eaa6",
+      "title": "Color Palette",
+      "bytes": 4430
+    },
+    "tutorial/creating-designs-using-svgs": {
+      "hash": "4ff3cf506e864283",
+      "title": "Creating Designs Using SVGs",
+      "bytes": 44
+    },
+    "tutorial/creating-text-art": {
+      "hash": "3e25046c2a5a51b4",
+      "title": "Creating Text Art",
+      "bytes": 192
+    },
+    "tutorial/custom-mask": {
+      "hash": "f755300173ee88e5",
+      "title": "Custom Mask",
+      "bytes": 1645
+    },
+    "tutorial/data-form-module": {
+      "hash": "67856c2f4fb77afd",
+      "title": "Data Form Module",
+      "bytes": 3268
+    },
+    "tutorial/data-form-video": {
+      "hash": "cba8d75b4613b35c",
+      "title": "Data Form Video",
+      "bytes": 32
+    },
+    "tutorial/design-configuration": {
+      "hash": "d03203fa176bf95d",
+      "title": "Design Configuration",
+      "bytes": 6986
+    },
+    "tutorial/design-editor": {
+      "hash": "996a023f3c918587",
+      "title": "Admin Design Editor",
+      "bytes": 7062
+    },
+    "tutorial/design-item-and-page-tags": {
+      "hash": "e5ae7202eaee76b5",
+      "title": "Design Item and Page Tags",
+      "bytes": 4068
+    },
+    "tutorial/design-observables": {
+      "hash": "234ff85efe24623b",
+      "title": "Design Observables",
+      "bytes": 2127
+    },
+    "tutorial/design-selector-module": {
+      "hash": "f141456906a83ee3",
+      "title": "Design Selector Module",
+      "bytes": 4219
+    },
+    "tutorial/display-modes": {
+      "hash": "201c5cb2099ff29d",
+      "title": "Display Modes",
+      "bytes": 3096
+    },
+    "tutorial/element-colour-chain": {
+      "hash": "77e4e4e50eff747d",
+      "title": "Colour Chain",
+      "bytes": 606
+    },
+    "tutorial/foil-accent": {
+      "hash": "e41808e8f0271886",
+      "title": "GleamPrint For WordPress",
+      "bytes": 2761
+    },
+    "tutorial/getting-started-with-pitchprint": {
+      "hash": "7128fc91d53fc83b",
+      "title": "Getting started with PitchPrint",
+      "bytes": 5239
+    },
+    "tutorial/ghostscript-arguments": {
+      "hash": "222fc6d3b898ab45",
+      "title": "Ghostscript Arguments",
+      "bytes": 1811
+    },
+    "tutorial/grommets": {
+      "hash": "e1ff70f6a01952c8",
+      "title": "Grommets",
+      "bytes": 1754
+    },
+    "tutorial/helptip-bubbles": {
+      "hash": "fb6ff0d5be426276",
+      "title": "HelpTip Bubbles",
+      "bytes": 1134
+    },
+    "tutorial/how-to-add-your-own-fonts": {
+      "hash": "51d556f69eeae67b",
+      "title": "How to add your own fonts",
+      "bytes": 1688
+    },
+    "tutorial/how-to-attach-customer-designs-to-email-wp": {
+      "hash": "73f918f46657d9b9",
+      "title": "How to attach customer designs to email (Word Press)",
+      "bytes": 3515
+    },
+    "tutorial/how-to-change-the-app-labels-and-texts": {
+      "hash": "19a0f70de8fb6d0e",
+      "title": "How to change the app labels and texts",
+      "bytes": 2344
+    },
+    "tutorial/how-to-create-a-baby-s-arrival-design-template": {
+      "hash": "19362b82dd09e836",
+      "title": "How To Create A Baby’s Arrival Design Template",
+      "bytes": 6903
+    },
+    "tutorial/how-to-create-a-clickable-mask": {
+      "hash": "49a6f8ab83b9c4fd",
+      "title": "How to create a clickable mask",
+      "bytes": 2033
+    },
+    "tutorial/how-to-create-a-collage-iphone-case-design-template": {
+      "hash": "9ceb933bea8e87ca",
+      "title": "How To Create A Collage IPhone Case Design Template",
+      "bytes": 12674
+    },
+    "tutorial/how-to-create-a-design": {
+      "hash": "05faccaa4b031163",
+      "title": "How To Create A Design",
+      "bytes": 9542
+    },
+    "tutorial/how-to-create-an-svg-for-use-as-mask": {
+      "hash": "a57f4140d79a8fe4",
+      "title": "How to create an SVG for use as a Mask",
+      "bytes": 1450
+    },
+    "tutorial/how-to-create-colour-chains": {
+      "hash": "0551d9cbce883b16",
+      "title": "How to create colour chains",
+      "bytes": 1996
+    },
+    "tutorial/how-to-create-templates-using-svg-shapes": {
+      "hash": "7a25f9a4ab838f5e",
+      "title": "How to create templates using SVG shapes",
+      "bytes": 2095
+    },
+    "tutorial/how-to-email-artwork-to-customers": {
+      "hash": "df0f19a5cb2f6d57",
+      "title": "How to email artwork to customers",
+      "bytes": 50
+    },
+    "tutorial/how-to-enable-pixabay-image-search": {
+      "hash": "68027713100e989e",
+      "title": "How to enable Pixabay image search",
+      "bytes": 1189
+    },
+    "tutorial/how-to-enable-the-customization-form": {
+      "hash": "5df884ffc6b57d48",
+      "title": "How to enable the Customization Form",
+      "bytes": 3898
+    },
+    "tutorial/how-to-import-designs": {
+      "hash": "d1d809fb0346a769",
+      "title": "How to import designs",
+      "bytes": 1499
+    },
+    "tutorial/how-to-save-your-svgs-for-use-in-pitchprint": {
+      "hash": "1c2c36085d148ebd",
+      "title": "How to save your SVGs for use in PitchPrint",
+      "bytes": 978
+    },
+    "tutorial/how-to-show-customer-design-previews-on-email-wordpress": {
+      "hash": "dcd17744392948ff",
+      "title": "How to show customer design previews on email (WordPress)",
+      "bytes": 1598
+    },
+    "tutorial/how-to-update-design-with-customer-data": {
+      "hash": "3e92ab6287875f93",
+      "title": "How to update design with customer data",
+      "bytes": 1533
+    },
+    "tutorial/how-to-use-page-count-module": {
+      "hash": "3627bfb916a9d84c",
+      "title": "Page Count",
+      "bytes": 1229
+    },
+    "tutorial/image-chain": {
+      "hash": "5a340b953bb1249f",
+      "title": "Image Chain",
+      "bytes": 500
+    },
+    "tutorial/integrating-canvas-adjuster-to-a-wordpress-store": {
+      "hash": "fcba021ee1fbd2ba",
+      "title": "Integrating Canvas Adjuster To A WordPress Store",
+      "bytes": 3144
+    },
+    "tutorial/integrating-canvas-adjuster-to-an-opencart-store": {
+      "hash": "a3d2ea20d08e1244",
+      "title": "Integrating Canvas Adjuster To An OpenCart Store",
+      "bytes": 4338
+    },
+    "tutorial/item-chain": {
+      "hash": "e85cba36c80ba198",
+      "title": "Item Chain",
+      "bytes": 431
+    },
+    "tutorial/item-hooks": {
+      "hash": "441be3b8a3c63268",
+      "title": "Item Hooks",
+      "bytes": 4429
+    },
+    "tutorial/layouts-v10": {
+      "hash": "275ec24c379822e9",
+      "title": "Layouts (version 10)",
+      "bytes": 3371
+    },
+    "tutorial/localstorage-trigger": {
+      "hash": "215801e0af454cc4",
+      "title": "Localstorage Trigger",
+      "bytes": 3208
+    },
+    "tutorial/make-reference": {
+      "hash": "b3ff9788cc82123a",
+      "title": "Make Reference",
+      "bytes": 251
+    },
+    "tutorial/managing-your-designs": {
+      "hash": "d934f289d8fada56",
+      "title": "Managing your Designs",
+      "bytes": 7681
+    },
+    "tutorial/managing-your-domains": {
+      "hash": "80b6b34fb9d5a6ad",
+      "title": "Managing your Domains",
+      "bytes": 2596
+    },
+    "tutorial/mobile-phone-layouts": {
+      "hash": "4ab60955241815a0",
+      "title": "Mobile Phone Layouts",
+      "bytes": 1387
+    },
+    "tutorial/page-loader-module": {
+      "hash": "bca298b7d8e8c833",
+      "title": "Page Loader Module",
+      "bytes": 1616
+    },
+    "tutorial/pdf-rendering": {
+      "hash": "bdea06f2045cd5c1",
+      "title": "PDF Rendering",
+      "bytes": 7035
+    },
+    "tutorial/personalize-button-no-showing": {
+      "hash": "5d1583200edfa453",
+      "title": "Personalize button not showing?",
+      "bytes": 74
+    },
+    "tutorial/photo-print-module": {
+      "hash": "5c12deaffe753d82",
+      "title": "Photo Print Module",
+      "bytes": 5593
+    },
+    "tutorial/photo-resolution-check": {
+      "hash": "2d14497426c07325",
+      "title": "Photo Resolution (DPI) Check",
+      "bytes": 1468
+    },
+    "tutorial/reels-data-form": {
+      "hash": "00321bd38e1eb7f7",
+      "title": "Mini Display Mode",
+      "bytes": 409
+    },
+    "tutorial/remi-module": {
+      "hash": "ab894178f523d259",
+      "title": "Remix Module",
+      "bytes": 1989
+    },
+    "tutorial/remove-background": {
+      "hash": "69361ae10bf00042",
+      "title": "Remove Background",
+      "bytes": 1832
+    },
+    "tutorial/security-measures": {
+      "hash": "319fb3939bb68018",
+      "title": "Security Measures",
+      "bytes": 2029
+    },
+    "tutorial/shuffle-module": {
+      "hash": "2d16ee648b9cd808",
+      "title": "Shuffle Module",
+      "bytes": 2184
+    },
+    "tutorial/single-double-sided-module": {
+      "hash": "48399100721c2b35",
+      "title": "Single/Double Sided Module",
+      "bytes": 2868
+    },
+    "tutorial/smart-size-design": {
+      "hash": "39e4d6341bc05379",
+      "title": "Smart Size Design",
+      "bytes": 405
+    },
+    "tutorial/smart-sizes": {
+      "hash": "bd3698d662a2d7e8",
+      "title": "Smart Sizes",
+      "bytes": 3343
+    },
+    "tutorial/spark": {
+      "hash": "7f887fefa2300597",
+      "title": "Spark",
+      "bytes": 4943
+    },
+    "tutorial/sticky-items": {
+      "hash": "8abf8d6ca6ff5069",
+      "title": "Sticky Items",
+      "bytes": 2707
+    },
+    "tutorial/swatch-module": {
+      "hash": "e4776f2698e993c2",
+      "title": "Swatch Module",
+      "bytes": 3656
+    },
+    "tutorial/template-color-module": {
+      "hash": "479f59e7daf9872a",
+      "title": "Template Color Module",
+      "bytes": 3952
+    },
+    "tutorial/template-colour-designs": {
+      "hash": "85be6df74aff7ff6",
+      "title": "Template Colour Designs",
+      "bytes": 505
+    },
+    "tutorial/text-box-formatting": {
+      "hash": "a0c2f4cec38a326c",
+      "title": "Text Box Formatting",
+      "bytes": 409
+    },
+    "tutorial/text-styles": {
+      "hash": "cfe0b22b5fd8542f",
+      "title": "Text Styles",
+      "bytes": 2416
+    },
+    "tutorial/text-to-svg": {
+      "hash": "be8fec9dd77139fe",
+      "title": "SVG to Text",
+      "bytes": 350
+    },
+    "tutorial/types-of-pitchprint-designs": {
+      "hash": "05bef20db141d096",
+      "title": "Types of PitchPrint design",
+      "bytes": 6429
+    },
+    "tutorial/using-ai-imaginate": {
+      "hash": "c71eb4535076257a",
+      "title": "AI-Imaginate: Text to Image AI Tool",
+      "bytes": 346
+    },
+    "tutorial/variable-data-module": {
+      "hash": "c63db98849a6d390",
+      "title": "Variable Data Module",
+      "bytes": 3020
+    },
+    "tutorial/web2print-options-missing-in-opencart-admin": {
+      "hash": "4a1790b709a81868",
+      "title": "Error Fix: web2print options missing in OpenCart Admin",
+      "bytes": 1917
+    },
+    "tutorial/webhooks": {
+      "hash": "bcf4dd5aed0e6afc",
+      "title": "Webhooks",
+      "bytes": 3814
+    },
+    "api-reference/adding-pages-programmatically": {
+      "hash": "a3380e555b368a6e",
+      "title": "Adding Pages Programmatically",
+      "bytes": 358
+    },
+    "api-reference/after-save": {
+      "hash": "bd9001d8bd25f35a",
+      "title": "After Save",
+      "bytes": 1400
+    },
+    "api-reference/auth-signature": {
+      "hash": "d805510fac87464f",
+      "title": "Auth Signature",
+      "bytes": 2395
+    },
+    "api-reference/clone-project": {
+      "hash": "50995ffeb3e1ffc8",
+      "title": "Clone Project",
+      "bytes": 1960
+    },
+    "api-reference/custom-integration-my-account": {
+      "hash": "5a2856f04f4c9a60",
+      "title": "My Account - Saved Projects",
+      "bytes": 9419
+    },
+    "api-reference/designer-ready-method": {
+      "hash": "3a885b2e898bd0b8",
+      "title": "Designer ready method",
+      "bytes": 1044
+    },
+    "api-reference/events": {
+      "hash": "460c63c59598851e",
+      "title": "Events",
+      "bytes": 8109
+    },
+    "api-reference/fetch-design-categories": {
+      "hash": "4cab18907b089afd",
+      "title": "Fetch Design Categories",
+      "bytes": 1995
+    },
+    "api-reference/fetch-design-previews": {
+      "hash": "dace31bfbb8ba621",
+      "title": "Fetch Design Previews",
+      "bytes": 38
+    },
+    "api-reference/fetch-design": {
+      "hash": "3bddd65ae4314a74",
+      "title": "Fetch Design",
+      "bytes": 2766
+    },
+    "api-reference/fetch-designs": {
+      "hash": "98da6c773dfde354",
+      "title": "Fetch Designs",
+      "bytes": 2179
+    },
+    "api-reference/fetch-project": {
+      "hash": "f9dc602eaa3be921",
+      "title": "Fetch Project",
+      "bytes": 13975
+    },
+    "api-reference/fetch-user-projects": {
+      "hash": "504f512591f77a4c",
+      "title": "Fetch User Projects",
+      "bytes": 1874
+    },
+    "api-reference/generate-your-auth-keys": {
+      "hash": "f56ae5f965708508",
+      "title": "Generate your auth keys",
+      "bytes": 1904
+    },
+    "api-reference/initialization-options": {
+      "hash": "63b0cd113e7b8344",
+      "title": "Initialization Options",
+      "bytes": 3805
+    },
+    "api-reference/integration": {
+      "hash": "f88b1fba4faada09",
+      "title": "Integration",
+      "bytes": 4881
+    },
+    "api-reference/introduction": {
+      "hash": "a7fd2834f3bc496c",
+      "title": "Introduction",
+      "bytes": 1184
+    },
+    "api-reference/ppclient-props": {
+      "hash": "4e50a82bfb9127f0",
+      "title": "PPCLIENT PROPS",
+      "bytes": 3715
+    },
+    "api-reference/render-pdf-raster": {
+      "hash": "6e37218457d42e3c",
+      "title": "Render PDF & Raster",
+      "bytes": 434
+    }
+  }
+}

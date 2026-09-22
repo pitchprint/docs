@@ -125,20 +125,75 @@ const turndown = new TurndownService({
 });
 turndown.use(gfm);
 
+// --- Video embeds -----------------------------------------------------------
+
+// slug -> YouTube ID, from scripts/videos.json. Injected directly under the
+// frontmatter of the matching page. Kept here rather than hand-edited into the
+// published .mdx because `publish` recreates those folders from scratch on every
+// run — an edit made downstream would be deleted by the next sync.
+const videoMap = JSON.parse(
+  await readFile(new URL("./videos.json", import.meta.url), "utf8")
+);
+
+// --- Curation config (committed, so a pull cannot undo editorial decisions) ---
+
+// slug -> section directory. Help Scout has no concept of these moves, so
+// without this file every sync would shuffle pages between sections.
+const { overrides: sectionOverrides } = JSON.parse(
+  await readFile(new URL("./sections.json", import.meta.url), "utf8")
+);
+
+// Articles that must never be published (legacy collections, drafts, backups).
+const excludeConfig = JSON.parse(
+  await readFile(new URL("./exclude.json", import.meta.url), "utf8")
+);
+const excludeGroups = new Set(excludeConfig.groups || []);
+const excludePatterns = (excludeConfig.slugPatterns || []).map((p) => new RegExp(p));
+
+/** The iframe block for a page, or "" when that slug has no video. */
+function videoEmbed(slug, title) {
+  const id = videoMap[slug];
+  // Unset, or still holding a REPLACE_WITH_* placeholder -> render nothing,
+  // rather than an iframe pointing at a non-existent video.
+  if (!id || slug.startsWith("_") || id.startsWith("REPLACE_WITH")) return "";
+  return [
+    "<iframe",
+    '  className="w-full aspect-video rounded-xl"',
+    `  src="https://www.youtube-nocookie.com/embed/${id}"`,
+    `  title=${JSON.stringify(title)}`,
+    '  frameBorder="0"',
+    '  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"',
+    "  allowFullScreen",
+    "></iframe>",
+    "",
+  ].join("\n");
+}
+
 // --- Helpers ----------------------------------------------------------------
 
-/** Safe, UNIQUE slug within a folder. On collision, append the article number. */
-function fileNameFor(article, used) {
+/** The slug an article would get, before de-duplication. Stable per article. */
+function baseSlugFor(article) {
   const base =
     article.slug ||
     (article.name || `article-${article.number || article.id}`)
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/^-+|-+$/g, "");
-  let name = base || `article-${article.number || article.id}`;
+  return base || `article-${article.number || article.id}`;
+}
+
+/** Safe, UNIQUE slug within a folder. On collision, append the article number. */
+function fileNameFor(article, used) {
+  let name = baseSlugFor(article);
   if (used.has(name)) name = `${name}-${article.number || article.id}`;
   used.add(name);
   return name;
+}
+
+/** True when an article must not be published at all. */
+function isExcluded(article, group, slug) {
+  if (excludeGroups.has(group)) return true;
+  return excludePatterns.some((re) => re.test(slug));
 }
 
 /** Clean up Turndown output. */
@@ -211,6 +266,9 @@ await rm(outDir, { recursive: true, force: true });
 
 let written = 0;
 let skipped = 0;
+let videosInjected = 0;
+let overridden = 0;
+const excluded = [];
 let empty = 0;
 const perSection = {};
 const usedNames = {}; // dir -> Set
@@ -224,7 +282,21 @@ for (const article of articles) {
     continue;
   }
 
-  const dir = SECTION_DIRS[section];
+  const baseSlug = baseSlugFor(article);
+  const mappedGroup = groupFor(article, section);
+
+  if (isExcluded(article, mappedGroup, baseSlug)) {
+    excluded.push(`${baseSlug} [${mappedGroup}]`);
+    continue;
+  }
+
+  // An override wins over the collection/category mapping. This is where the
+  // hand-made editorial placement lives.
+  const dir = sectionOverrides[baseSlug] || SECTION_DIRS[section];
+  if (sectionOverrides[baseSlug] && sectionOverrides[baseSlug] !== SECTION_DIRS[section]) {
+    overridden += 1;
+  }
+
   const body = sanitizeMdx(tidy(turndown.turndown(article.text || "")));
   if (!body) empty += 1;
 
@@ -241,9 +313,15 @@ for (const article of articles) {
   usedNames[dir] ??= new Set();
   const slug = fileNameFor(article, usedNames[dir]);
   await mkdir(join(outDir, dir), { recursive: true });
-  await writeFile(join(outDir, dir, `${slug}.mdx`), `${frontmatter}\n\n${body}\n`, "utf8");
+  const video = videoEmbed(slug, article.name || "Untitled");
+  if (video) videosInjected += 1;
+  await writeFile(
+    join(outDir, dir, `${slug}.mdx`),
+    `${frontmatter}\n\n${video}${video ? "\n" : ""}${body}\n`,
+    "utf8"
+  );
 
-  const group = groupFor(article, section);
+  const group = mappedGroup;
   groups[section] ??= {};
   groups[section][group] ??= [];
   groups[section][group].push({ path: `${dir}/${slug}`, title: article.name || "Untitled" });
@@ -268,3 +346,19 @@ for (const [dir, count] of Object.entries(perSection)) {
   console.log(`  ${dir}/ — ${count} pages`);
 }
 console.log(`Skipped ${skipped} legacy article(s); ${empty} had no body content.`);
+console.log(`Applied ${overridden} section override(s) from scripts/sections.json.`);
+console.log(`Excluded ${excluded.length} article(s) via scripts/exclude.json.`);
+for (const e of excluded) console.log(`    - ${e}`);
+
+const mappedSlugs = Object.keys(videoMap).filter(
+  (k) => !k.startsWith("_") && videoMap[k] && !videoMap[k].startsWith("REPLACE_WITH")
+);
+console.log(
+  `Injected ${videosInjected}/${mappedSlugs.length} video embed(s) from scripts/videos.json.`
+);
+if (videosInjected < mappedSlugs.length) {
+  console.log(
+    "  Warning: some slugs in videos.json matched no generated page. Compare the"
+  );
+  console.log("  keys against the .mdx filenames under data/markdown/.");
+}

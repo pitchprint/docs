@@ -1,0 +1,10 @@
+{
+  "_comment": "Articles matching these rules are never written. Checked in convert-to-markdown.js. groups match the Help Scout category name; slugPatterns are JS regexes.",
+  "groups": [
+    "Legacy (v8)"
+  ],
+  "slugPatterns": [
+    "^backup-of-",
+    "-draft$"
+  ]
+}
