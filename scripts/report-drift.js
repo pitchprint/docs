@@ -65,6 +65,14 @@ const baseline = existsSync(baselinePath)
   ? JSON.parse(await readFile(baselinePath, "utf8")).articles || {}
   : null;
 
+// Articles that deliberately have no published page. Their edits are still
+// worth surfacing — support is maintaining something — but separately, so
+// nobody goes looking for a published page to port a change into.
+const unpublishedPath = join(scriptDir, "unpublished.json");
+const unpublished = existsSync(unpublishedPath)
+  ? JSON.parse(await readFile(unpublishedPath, "utf8")).articles || {}
+  : {};
+
 /* ----------------------------------------------------- seed or compare */
 
 if (baseline === null && !WRITE) {
@@ -116,15 +124,37 @@ if (seeding) {
   );
   lines.push("");
 
-  if (changed.length) {
-    lines.push(`### Edited in Help Scout (${changed.length})`);
+  // Split the edits: ones with a page to port into, and ones we deliberately
+  // do not publish. Mixing them wastes a reviewer's time on a page that was
+  // never meant to exist.
+  const editedLive = changed.filter((a) => !unpublished[a.key]);
+  const editedUnpublished = changed.filter((a) => unpublished[a.key]);
+
+  if (editedLive.length) {
+    lines.push(`### Edited in Help Scout (${editedLive.length})`);
     lines.push("");
     lines.push("| Article | Published page | Size change |");
     lines.push("| --- | --- | --- |");
-    for (const a of changed.sort((x, y) => Math.abs(y.delta) - Math.abs(x.delta))) {
+    for (const a of editedLive.sort((x, y) => Math.abs(y.delta) - Math.abs(x.delta))) {
       const live = hasLivePage(a.key) ? `\`docs/${a.key}.mdx\`` : "— none —";
       const d = a.delta > 0 ? `+${a.delta}` : `${a.delta}`;
       lines.push(`| ${a.title} <br><code>${a.key}</code> | ${live} | ${d} bytes |`);
+    }
+    lines.push("");
+  }
+
+  if (editedUnpublished.length) {
+    lines.push(`### Edited, but deliberately unpublished (${editedUnpublished.length})`);
+    lines.push("");
+    lines.push(
+      "Support is still maintaining these in Help Scout. They have no published " +
+        "page by decision — see `scripts/unpublished.json`. **No action needed** " +
+        "unless the decision has changed."
+    );
+    lines.push("");
+    for (const a of editedUnpublished) {
+      const d = a.delta > 0 ? `+${a.delta}` : `${a.delta}`;
+      lines.push(`- **${a.title}** — \`${a.key}\` (${d} bytes)`);
     }
     lines.push("");
   }

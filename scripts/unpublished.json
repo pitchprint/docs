@@ -1,0 +1,37 @@
+{
+  "_comment": "Help Scout articles that deliberately have NO published page. This is the decision record, not a cache — it is hand-maintained and committed. scripts/ingest-new.js refuses to publish anything listed here, and scripts/report-drift.js reports edits to them separately so nobody goes hunting for a page that was never meant to exist. To publish one: delete its entry, run `npm run ingest -- --preview .preview --only <slug>` to review, then `npm run ingest -- --write`. Keys are <section>/<slug>, matching data/markdown/ and the baseline.",
+  "_decidedBy": "sbabalwe@pitchprint.com",
+  "_decidedAt": "2026-09-23",
+  "articles": {
+    "documentation/how-to-install-pitchprint-on-ekm": {
+      "title": "How to Install PitchPrint on EKM",
+      "status": "not-publishing",
+      "reason": "Deliberately unpublished. Present in Help Scout since before the baseline was seeded and never ported to the site."
+    },
+    "documentation/how-to-install-pitchprint-on-odoo": {
+      "title": "How To Install PitchPrint On Odoo",
+      "status": "not-publishing",
+      "reason": "Deliberately unpublished. Present in Help Scout since before the baseline was seeded and never ported to the site."
+    },
+    "documentation/how-to-install-pitchprint-on-vb-media": {
+      "title": "How to Install Pitchprint on VB Media",
+      "status": "not-publishing",
+      "reason": "Deliberately unpublished. Present in Help Scout since before the baseline was seeded and never ported to the site."
+    },
+    "documentation/how-to-install-pitchprint-on-wix": {
+      "title": "How to install PitchPrint on WIX",
+      "status": "not-publishing",
+      "reason": "Deliberately unpublished. Present in Help Scout since before the baseline was seeded and never ported to the site."
+    },
+    "documentation/magento-installation": {
+      "title": "How To Install PitchPrint On Magento",
+      "status": "not-publishing",
+      "reason": "Deliberately unpublished. Present in Help Scout since before the baseline was seeded and never ported to the site."
+    },
+    "documentation/how-to-install-pitchprint-on-ekm-1": {
+      "title": "How to Install PitchPrint on EKM (second copy)",
+      "status": "needs-decision",
+      "reason": "Appeared in Help Scout AFTER the baseline was seeded — support seems to have rewritten the EKM guide as a new article (5,409 bytes) rather than editing the original (3,803 bytes). Held back because its predecessor is unpublished. Decide whether to publish this one, fold it into the original, or retire both."
+    }
+  }
+}

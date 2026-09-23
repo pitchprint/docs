@@ -110,6 +110,16 @@ if (!existsSync(baselinePath)) {
 const baselineFile = JSON.parse(await readFile(baselinePath, "utf8"));
 const baseline = baselineFile.articles || {};
 const categoryMap = JSON.parse(await readFile(join(scriptDir, "category-map.json"), "utf8"));
+
+// Articles that deliberately have no published page. These were being skipped
+// only because they happen to sit in the baseline, which is a content
+// fingerprint for drift detection — not a record of intent. Re-seed the
+// baseline, or lose an entry, and they would quietly go live. This file states
+// the decision outright so it survives both.
+const unpublishedPath = join(scriptDir, "unpublished.json");
+const unpublished = existsSync(unpublishedPath)
+  ? JSON.parse(await readFile(unpublishedPath, "utf8")).articles || {}
+  : {};
 const manifest = JSON.parse(await readFile(join(srcDir, "nav-manifest.json"), "utf8"));
 
 // slug -> Help Scout category, from the manifest the convert step emits.
@@ -160,6 +170,22 @@ for (const section of SECTIONS) {
   for (const file of (await readdir(dir)).filter((f) => f.endsWith(".mdx"))) {
     const slug = file.slice(0, -4);
     const key = `${section}/${slug}`;
+
+    // A recorded decision not to publish. Checked before the baseline, because
+    // the baseline is a content fingerprint and this is a statement of intent.
+    //
+    // --only is exempt so you can still *look* at one: it requires --preview,
+    // which cannot write into docs/. Looking is how you decide.
+    if (unpublished[key] && !ONLY) {
+      skipped.push({
+        key,
+        why:
+          unpublished[key].status === "needs-decision"
+            ? "awaiting a decision — see scripts/unpublished.json"
+            : "deliberately not published — see scripts/unpublished.json",
+      });
+      continue;
+    }
 
     if (ONLY) {
       // Preview-only: process just this article, whatever its status.
@@ -349,6 +375,17 @@ if (!WRITE) {
 }
 
 /* -------------------------------------------------------------------- apply */
+
+// Belt and braces. The loop above already skips these, but this is the last
+// point before anything is written into docs/, and "we decided not to publish
+// this" is the kind of intent that must not be lost to a refactor.
+const forbidden = planned.filter((p) => unpublished[p.key]);
+if (forbidden.length) {
+  console.error("\nAbout to publish articles recorded as NOT to be published:");
+  for (const p of forbidden) console.error(`  ${p.key} — ${unpublished[p.key].reason || "no reason given"}`);
+  console.error("\nRemove the entry from scripts/unpublished.json if that is genuinely intended.");
+  process.exit(1);
+}
 
 for (const p of planned) {
   await mkdir(join(servedRoot, p.section), { recursive: true });

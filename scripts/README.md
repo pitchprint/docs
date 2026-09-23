@@ -38,6 +38,7 @@ Actions tab.
 | 2. Convert | `npm run convert` | `data/articles.json` | `data/markdown/{documentation,tutorial,api-reference}/*.mdx` |
 | 3a. Report | `npm run drift` | `data/markdown/` + baseline | list of articles support has *edited* |
 | 3b. Ingest | `npm run ingest` | `data/markdown/` + baseline | *new* articles written into `docs/` and filed in the sidebar |
+| — | `npm run registry` | `data/markdown/` + `docs/` | where every Help Scout article stands: published, held back, or untracked |
 | — | `npm run publish` | `data/markdown/` | **destructive rebuild of `docs/`. Refuses to run without `--overwrite-docs`. Not part of any pipeline.** |
 
 Converted output: **134 pages** after exclusions, split across Documentation,
@@ -62,6 +63,8 @@ Tutorial and API Reference.
 | `scripts/test-style-pass.mjs` | Tests for the AI pass plumbing, with the API stubbed. |
 | `scripts/category-map.json` | Help Scout category → sidebar group, for filing new articles. |
 | `scripts/helpscout-baseline.json` | Fingerprint of the Help Scout content as last reviewed. **Committed.** |
+| `scripts/unpublished.json` | Articles that deliberately have **no** published page. A decision record, hand-maintained. |
+| `scripts/registry.js` | `npm run registry` — the Help Scout ↔ repo correspondence, and what the next sync would propose. |
 | `scripts/publish-to-docs.js` | Destructive rebuild of `docs/` from Help Scout. Refuses to run without `--overwrite-docs`. |
 | `scripts/nav.json` | The sidebar as `publish` would emit it. Only `publish` reads this. |
 | `scripts/sections.json` | slug → section overrides. Editorial placement Help Scout knows nothing about. |
@@ -120,6 +123,7 @@ npm test                              # the safety checks — no network, no key
 npm run example                       # 1. fetch from Help Scout  -> data/articles.json
 npm run convert                       # 2. HTML -> MDX            -> data/markdown/<section>/
 npm run drift                         # 3a. what has support edited?      report only
+npm run registry                      # 3c. where does every article stand?
 npm run ingest                        # 3b. what is brand new?            dry run
 npm run ingest -- --preview .preview  #     write the candidates somewhere safe to read
 npm run ingest -- --write             #     apply for real
@@ -285,6 +289,81 @@ Four independent layers, in order:
 
 Then the pull request, which is the only thing that reaches `main`.
 
+## Articles we deliberately do not publish
+
+Not every Help Scout article belongs on the site. Five install guides — EKM,
+Odoo, VB Media, WIX and Magento — exist in Help Scout with no published page,
+and that is a decision, not an oversight.
+
+Until now they were skipped only because they happen to sit in the baseline.
+That is a fingerprint of Help Scout's *content*, not a record of *intent* —
+re-seed it, or drop an entry, and those articles would quietly go live.
+
+`scripts/unpublished.json` states the decision outright:
+
+```json
+{
+  "articles": {
+    "documentation/how-to-install-pitchprint-on-wix": {
+      "title": "How to install PitchPrint on WIX",
+      "status": "not-publishing",
+      "reason": "Deliberately unpublished. ..."
+    }
+  }
+}
+```
+
+Two `status` values:
+
+- `not-publishing` — settled. The sync never proposes it.
+- `needs-decision` — held back, but someone still has to choose. It shows up in
+  its own section of `npm run registry` so it does not get forgotten.
+
+It is enforced in three places:
+
+1. `ingest-new.js` skips these before it even consults the baseline.
+2. A second check runs immediately before anything is written to `docs/`, so
+   the intent survives a refactor of the first.
+3. `report-drift.js` reports edits to them under *"Edited, but deliberately
+   unpublished"* — support may still be maintaining the article, but there is no
+   page to port a change into, and a reviewer should not go looking for one.
+
+You can still read one without publishing it — `--only` is exempt, and it
+requires `--preview`, which cannot write into `docs/`:
+
+```bash
+npm run ingest -- --preview .preview --only how-to-install-pitchprint-on-wix
+```
+
+**To publish one:** delete its entry, review it with the command above, then
+`npm run ingest -- --write`.
+
+## The registry
+
+`npm run registry` answers the question every sync raises — *is this article
+already here, deliberately left out, or genuinely new?*
+
+```bash
+npm run registry              # print it
+npm run registry -- --write   # also write scripts/article-registry.md
+```
+
+Every converted article resolves to one of four states:
+
+| State | Meaning |
+| --- | --- |
+| `published` | a page exists at `docs/<section>/<slug>.mdx` |
+| `not-publishing` | a recorded decision in `unpublished.json` |
+| `needs-decision` | listed there, but not yet settled |
+| `UNTRACKED` | none of the above — the next `--write` would propose it |
+
+It also lists published pages with **no** Help Scout article behind them. That
+is normal for hand-authored pages (`quickstart`, `overview`, the API
+`introduction`), and otherwise usually means an article was renamed in Help
+Scout, leaving the old page stranded.
+
+Read-only unless you pass `--write`, and it always exits 0 — a report, not a gate.
+
 ## Automated edit reporting
 
 Support still authors in Help Scout, so their edits have to surface somewhere.
@@ -356,6 +435,7 @@ Work down the steps in order — the first failure is the real one.
 | `Same slug in two Help Scout categories` | Two articles converged on one slug | Rename one in Help Scout, or add a `slugOverrides` entry |
 | `Could not place: no group "X"` | A new Help Scout category with no mapping | Add it to `category-map.json` |
 | `... was last committed to by <someone>` | A reviewer committed to the `helpscout-sync` branch, which the run rebuilds and force-pushes | Merge or close the open PR, then re-run. Never commit fixes to that branch — merge first, then edit on `main` |
+| `About to publish articles recorded as NOT to be published` | The unpublished guard caught something the skip loop missed — a real bug | Do not remove the `unpublished.json` entry to "fix" it; work out why the loop let it through |
 | `This job modified files it must never touch` | A bug: the ingest changed an existing page | `git checkout -- docs docs.json scripts/helpscout-baseline.json` and open an issue. Do not merge |
 | `GitHub Actions is not permitted to create pull requests` | Repo setting | Settings → Actions → General → tick the PR checkbox |
 | `mint broken-links` fails | Often a *pre-existing* broken link, not the sync's doing | Run `npx mint broken-links` locally on `main` to tell the two apart |
@@ -512,9 +592,10 @@ articles. It is independent of the Help Scout migration above.
   rendering a badge beside the sidebar title — already used here for `Premium`
   and `BETA` — and there is no tag-based browsing. A topic taxonomy has to be
   built from `keywords:` frontmatter plus hand-written index pages.
-- Five Help Scout articles have no published page: `ekm`, `odoo`, `vb-media`,
-  `wix`, `magento-installation`. They are in the baseline, so the sync will
-  never propose them. Publish them by hand or leave them retired.
+- Five Help Scout articles deliberately have no published page: `ekm`, `odoo`,
+  `vb-media`, `wix`, `magento-installation`. Recorded in
+  `scripts/unpublished.json`; see [Articles we deliberately do not
+  publish](#articles-we-deliberately-do-not-publish).
 - A few articles stored code as prose in Help Scout, so the converter emits it as
   escaped inline text. The AI pass fences these correctly; the mechanical
   fallback flags them as a warning but leaves them escaped.

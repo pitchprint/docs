@@ -1,7 +1,8 @@
 {
   "_comment": "slug -> YouTube ID. convert-to-markdown.js injects the embed at the top of the matching page in data/markdown/. NOTE: that output only reaches the site via ingest-new.js, which skips any slug that already has a published page \u2014 so these entries affect NEW articles only. To add a video to a page already in docs/, edit that .mdx directly. Set an entry to null or delete it to remove the video.",
   "how-to-install-pitchprint-on-wordpress": "-4Ga24DUD_U",
-  "pitchprint-for-shopify-getting-started": "REPLACE_WITH_YOUTUBE_ID_SHOPIFY",
+  "pitchprint-for-shopify-getting-started": "Msilqzcduwk",
   "how-to-install-pitchprint-on-opencart": "sxTkpvnLxw0",
-  "how-to-install-pitchprint-on-prestashop": "REPLACE_WITH_YOUTUBE_ID_PRESTASHOP"
+  "how-to-install-pitchprint-on-prestashop": "NzcR8ohSNJk",
+  "how-to-install-pitchprint-on-bigcommerce": "i_vA7XgopI4"
 }
