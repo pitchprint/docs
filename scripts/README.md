@@ -2,61 +2,73 @@
 
 A small, near-zero-dependency Node.js pipeline that pulls PitchPrint's help
 articles out of the [Help Scout Docs API](https://developer.helpscout.com/docs-api/),
-converts them from HTML to Markdown, and reports what support has changed there.
+converts them from HTML to Markdown, and then does two different things with the
+result depending on whether the article is new.
 
-It does **not** publish into the site. It did once — that was the original
+It does **not** republish the site. It did once — that was the original
 migration — but the documentation has been hand-authored since, so the scripts
-now exist to watch Help Scout, not to overwrite `docs/`.
+now exist to *watch* Help Scout and to *propose* additions, never to overwrite
+`docs/`.
 
 ## The pipeline
 
-Three stages, run in order:
-
 ```
-Help Scout API  ──►  data/articles.json  ──►  data/markdown/<section>/  ──┬──►  new articles added
-   npm run example         npm run convert                                 │     npm run ingest
-                                                                           └──►  edits reported
-                                                                                 npm run drift
+Help Scout API ──► data/articles.json ──► data/markdown/<section>/ ──┬──► NEW article
+  npm run example      npm run convert                               │    tidy → AI style pass
+                                                                     │    → pull request
+                                                                     │    npm run ingest
+                                                                     │
+                                                                     └──► EDITED article
+                                                                          → GitHub issue
+                                                                          npm run drift
 ```
 
-**New** articles are added to the site automatically. **Existing** pages are never
-touched — they are hand-authored and have diverged from Help Scout on every page,
+**New** articles are prepared automatically and proposed as a **pull request** —
+nothing reaches `main` without a human merging it. **Existing** pages are never
+touched; they are hand-authored and have diverged from Help Scout on every page,
 see [Help Scout is no longer the source of truth](#help-scout-is-no-longer-the-source-of-truth).
 
-Runs weekly via `.github/workflows/helpscout-sync.yml`.
+Runs weekly via `.github/workflows/helpscout-sync.yml`, and on demand from the
+Actions tab.
 
 | Step | Command | Input | Output |
 | --- | --- | --- | --- |
+| 0. Test | `npm test` | — | 52 checks over the conformance guards. Runs first in CI. |
 | 1. Fetch | `npm run example` | Help Scout API | `data/articles.json` (147 raw articles, full HTML) |
 | 2. Convert | `npm run convert` | `data/articles.json` | `data/markdown/{documentation,tutorial,api-reference}/*.mdx` |
 | 3a. Report | `npm run drift` | `data/markdown/` + baseline | list of articles support has *edited* |
 | 3b. Ingest | `npm run ingest` | `data/markdown/` + baseline | *new* articles written into `docs/` and filed in the sidebar |
-| — | `npm run reseed` | `data/markdown/` | **destructive re-seed of `docs/`. Not part of any pipeline.** |
+| — | `npm run publish` | `data/markdown/` | **destructive rebuild of `docs/`. Refuses to run without `--overwrite-docs`. Not part of any pipeline.** |
 
 Converted output: **134 pages** after exclusions, split across Documentation,
-Tutorial and API Reference — used for comparison only, never published.
+Tutorial and API Reference.
 
 ## Files
 
 | File | Purpose |
 | --- | --- |
-| `.env` | Real Help Scout credentials (gitignored — never committed). |
+| `.env` | Real credentials (gitignored — never committed). |
 | `.env.example` | Template showing the required variables. |
 | `scripts/helpscout.js` | API client — Basic Auth, requests, pagination, bulk fetch. |
 | `scripts/example.js` | Step 1: fetch all articles with content → `data/articles.json`. |
 | `scripts/convert-to-markdown.js` | Step 2: HTML → MDX, chunked into section folders under `data/markdown/`, plus a `nav-manifest.json` describing the sidebar groups. |
 | `scripts/report-drift.js` | Step 3a: report what support has *edited*. Writes nothing into `docs/`. |
 | `scripts/ingest-new.js` | Step 3b: add *new* articles. Refuses to touch any existing page. |
+| `scripts/tidy.mjs` | Mechanical clean-up of converted Markdown. Deterministic; invents nothing. |
+| `scripts/style-pass.mjs` | The AI conformance pass, plus `validate()` — the checks that decide whether its output may ship. |
+| `scripts/house-style.md` | The style rules, fed verbatim to the AI pass. **Edit this to change how new articles are written.** |
+| `scripts/test-tidy.mjs` | Tests for the mechanical pass. |
+| `scripts/test-validate.mjs` | Tests for `validate()`, including a sweep of every real page in `docs/`. |
+| `scripts/test-style-pass.mjs` | Tests for the AI pass plumbing, with the API stubbed. |
 | `scripts/category-map.json` | Help Scout category → sidebar group, for filing new articles. |
-| `scripts/helpscout-baseline.json` | Fingerprint of the Help Scout content as last reviewed. Commit it. |
-| `scripts/publish-to-docs.js` | Destructive re-seed of `docs/` from Help Scout. Refuses to run without `--overwrite-docs`. |
-| `scripts/nav.json` | **The sidebar.** Emitted verbatim. Edit this to change navigation. |
+| `scripts/helpscout-baseline.json` | Fingerprint of the Help Scout content as last reviewed. **Committed.** |
+| `scripts/publish-to-docs.js` | Destructive rebuild of `docs/` from Help Scout. Refuses to run without `--overwrite-docs`. |
+| `scripts/nav.json` | The sidebar as `publish` would emit it. Only `publish` reads this. |
 | `scripts/sections.json` | slug → section overrides. Editorial placement Help Scout knows nothing about. |
 | `scripts/exclude.json` | Articles never published (legacy collections, drafts, backups). |
-| `scripts/videos.json` | slug → YouTube ID. `convert` injects an embed at the top of each matching page. |
+| `scripts/videos.json` | slug → YouTube ID, for **new** articles only. See [Videos](#videos). |
 | `data/pages/<section>/` | Hand-authored pages, **committed**. Not derived from Help Scout. |
 | `data/markdown/` | Converted pages + `nav-manifest.json` (regenerated by `convert`). |
-| `data/pages/<section>/` | Hand-authored pages (e.g. the API `introduction.mdx`), copied verbatim by `publish`. Edit these by hand — `convert` never touches them. |
 | `data/` | Generated + hand-authored source (mintignored so it isn't served as pages). |
 
 ## Setup
@@ -71,35 +83,77 @@ Tutorial and API Reference — used for comparison only, never published.
    HELPSCOUT_BASE_URL="https://docsapi.helpscout.net/v1"
    HELPSCOUT_API_KEY="your_api_key_here"
    HELPSCOUT_API_PASSWORD="X"
+   ANTHROPIC_API_KEY="sk-ant-..."   # optional — see the AI style pass below
    ```
 
-   > **Basic Auth convention:** the API key is the *username*; the *password* can
-   > be any value (Help Scout ignores it for reads — `X` is the usual
-   > placeholder). Quote the value if it contains a `#`, or dotenv treats the
-   > rest of the line as a comment.
+   > **Basic Auth convention:** the Help Scout API key is the *username*; the
+   > *password* can be any value (Help Scout ignores it for reads — `X` is the
+   > usual placeholder). Quote the value if it contains a `#`, or dotenv treats
+   > the rest of the line as a comment.
 
-2. Requires **Node.js >= 20.6** (uses the built-in `--env-file` flag and
-   `process.loadEnvFile()`).
+2. Requires **Node.js >= 20.6**.
 
-3. Install the one build-time dependency (Turndown, for HTML→Markdown):
+3. Install dependencies (Turndown, for HTML→Markdown):
 
    ```bash
    npm install
    ```
 
+### CI secrets
+
+| Secret | Required? | Without it |
+| --- | --- | --- |
+| `HELPSCOUT_API_KEY` | Yes | The sync cannot fetch anything. |
+| `ANTHROPIC_API_KEY` | No | New pages arrive in the plainer mechanical style, flagged for a human pass. |
+
+Both live in **Settings → Secrets and variables → Actions**.
+
+The PR step also needs **Settings → Actions → General → Workflow permissions**
+set to *Read and write*, with *Allow GitHub Actions to create and approve pull
+requests* ticked. Without it the run fails with `GitHub Actions is not permitted
+to create pull requests`.
+
 ## Running the pipeline
 
 ```bash
-npm run example   # 1. fetch articles from Help Scout   -> data/articles.json
-npm run convert   # 2. convert HTML to MDX              -> data/markdown/<section>/
-npm run drift     # 3. what has support changed?        -> report only
-mint dev          #    preview the published docs at http://localhost:3000
+npm test                              # the safety checks — no network, no key needed
+npm run example                       # 1. fetch from Help Scout  -> data/articles.json
+npm run convert                       # 2. HTML -> MDX            -> data/markdown/<section>/
+npm run drift                         # 3a. what has support edited?      report only
+npm run ingest                        # 3b. what is brand new?            dry run
+npm run ingest -- --preview .preview  #     write the candidates somewhere safe to read
+npm run ingest -- --write             #     apply for real
+npx mint dev                          #     preview the site at http://localhost:3000
 ```
 
-`npm run publish` is intentionally absent. It overwrites the hand-written
-documentation and is reachable only as `npm run reseed`.
-
 You only need step 1 again when the source content in Help Scout changes.
+
+### Reading the output before it lands
+
+`--preview <dir>` writes the candidate pages to a scratch directory and touches
+nothing else — not `docs/`, not `docs.json`, not the baseline. It is safe to run
+against the live repo at any time.
+
+```bash
+npm run ingest -- --preview .preview
+```
+
+When Help Scout has nothing new, `--only <slug>` forces one article through
+anyway so you can see what the pipeline would produce:
+
+```bash
+npm run ingest -- --preview .preview --only how-to-install-pitchprint-on-ekm
+```
+
+`--only` is refused without `--preview`, because outside preview mode it would
+mean writing over a hand-written page.
+
+Every page the AI pass rewrote gets a `.mechanical.mdx` sibling in the preview
+directory, so you can see exactly what it changed:
+
+```bash
+git diff --no-index .preview/documentation/x.mechanical.mdx .preview/documentation/x.mdx
+```
 
 ## Help Scout is no longer the source of truth
 
@@ -119,26 +173,26 @@ published version is the richer one every time.
 | `fetch-project` | 193 (OpenAPI pointer) | 13,975 (stale prose) |
 
 So republishing from Help Scout would replace the documentation with older,
-worse prose. `npm run publish` is therefore **not** part of any pipeline — it
-refuses to run without `--overwrite-docs`, and `npm run reseed` is the only way
-to invoke it.
+worse prose. `publish-to-docs.js` is therefore **not** part of any pipeline and
+refuses to run without `--overwrite-docs`.
 
-## New articles are added automatically
+## New articles are proposed as a pull request
 
 A brand-new Help Scout article has no hand-written counterpart to protect, so it
-is filed without anyone intervening:
+is prepared without anyone intervening:
 
-1. tidied toward house style — mechanical only (see below)
-2. written to `docs/<section>/<slug>.mdx`
-3. filed in the sidebar group its Help Scout category maps to, via
+1. **tidied** mechanically — Frames, Steps, callouts, escape artefacts
+2. **rewritten** into house style by the AI pass, if a key is configured
+3. **checked** — the rewrite is compared against the source and discarded if it
+   lost or invented anything
+4. written to `docs/<section>/<slug>.mdx`
+5. filed in the sidebar group its Help Scout category maps to, via
    `scripts/category-map.json`
-4. recorded in the baseline so it is never ingested twice
-5. committed and deployed
+6. recorded in the baseline so it is never ingested twice
+7. **opened as a pull request** — not pushed to `main`
 
-```bash
-npm run ingest             # dry run — shows what would be added and where
-npm run ingest -- --write  # apply
-```
+Step 7 is the review gate. The checks in step 3 can prove the rewrite did not
+lose anything; they cannot prove it reads well. Only a person can judge that.
 
 ### Where an article gets filed
 
@@ -152,31 +206,84 @@ Placement is resolved in this order:
 3. `_fallback` — per section, when the category is unknown. A new Help Scout
    category shows up in the dry run as `via fallback` — add it to the map.
 
-### What "tidied" covers, and what it does not
+### What the mechanical pass does
 
-Mechanical fixes only, because they cannot misread the content:
+Deterministic transformations only, because they cannot misread the content:
 
-- unescaping list ordinals (`1\.` → `1.`) and brackets (`\[POST\]` → `[POST]`)
-- splitting images Help Scout glues to the following list item
-- demoting `#####` headings to `###` so the page nav reads them
-- rebuilding the description to end on a sentence instead of mid-word with an ellipsis
+- unescapes list ordinals (`1\.` → `1.`) and brackets (`\[POST\]` → `[POST]`)
+- splits images Help Scout glues to the text after them — this runs **before**
+  the ordinal fix, or a glued step stays escaped and never becomes a `<Step>`
+- wraps every image in `<Frame>`
+- turns a run of numbered items into `<Steps>` / `<Step>`
+- converts `Note:` / `Important:` / `Warning:` / `Tip:` paragraphs into callouts
+- demotes `#####` headings to `###` so the page nav reads them
+- rebuilds the description to end on a sentence instead of mid-word
 
-It does **not** invent `<Steps>` titles, choose callouts, or restructure prose —
-that is editorial judgement. Each ingested page carries a marker:
+What it cannot do is write a good `<Step>` title. It takes the first clause of
+the step, which yields things like
+`<Step title="Clicking on this link will take you to the a page where you">`.
+Fixing that is the AI pass's job.
+
+### The AI style pass
+
+`style-pass.mjs` sends the tidied article to the Anthropic Messages API with
+three things:
+
+1. `scripts/house-style.md` — the rules, derived from the real pages
+2. an exemplar — the largest hand-written page from the same section
+3. Mintlify's own component reference, fetched once per run
+
+That third item is the useful form of "use Mintlify best practices": a URL
+written into the MDX would be inert, but handing the model Mintlify's component
+docs makes the output conform to components that actually exist.
+
+Set `ANTHROPIC_MODEL` to override the model. Use `--no-style-pass` to skip the
+step even when a key is present.
+
+**Nothing here trusts the model.** `validate()` rejects the rewrite outright if:
+
+| Check | Rejects when |
+| --- | --- |
+| Frontmatter | missing, title changed, or a key beyond `title`/`description` |
+| Images | any source image URL is missing or altered |
+| Links | any external link from the source is gone |
+| Components | one is used that is not on the allowlist, or a tag is unbalanced |
+| Structure | steps or headings drop more than a quarter below the source count |
+| Specifics | a version number, port, file name, parameter or bold UI label vanished |
+| Volume | the prose drops below 70% of the source length |
+
+On any failure the **mechanical version ships instead** and the reason appears
+in the ingest report and the PR body. A rejected rewrite costs you a plainer
+page, never a damaged one.
+
+The structure check is a tolerance, not equality, and deliberately so: the
+mechanical pass wraps *every* numbered item as a `<Step>`, including Help Scout
+closing lines like "You can always reach out to us via email". Demoting those to
+a callout is exactly the editorial judgement the AI pass exists for, so demanding
+one step out per step in would reject good rewrites. Content loss is caught
+directly by the specifics and volume checks instead.
+
+A page that did **not** get a successful AI pass carries a marker:
 
 ```mdx
-{/* Imported from Help Scout. Mechanically tidied — worth a pass for <Steps>, callouts and images. */}
+{/* Imported from Help Scout, mechanically tidied. Worth a pass for step titles, alt text and callouts. */}
 ```
 
-`grep -rn "Imported from Help Scout" docs/` lists everything awaiting a style pass.
+`grep -rn "Imported from Help Scout" docs/` lists everything awaiting a human.
 Images stay on Help Scout's S3 CDN; nothing is downloaded into the repo.
 
 ### Safety
 
-`ingest-new.js` snapshots every existing page before it writes and re-checks them
-afterwards, exiting non-zero if any changed. It also skips any article whose slug
-already has a published page. The workflow then re-checks independently: only new
-files, `docs.json` and the baseline may differ, and no file may be deleted.
+Four independent layers, in order:
+
+1. `npm test` runs first in CI. If the guards are broken, nothing else executes.
+2. `ingest-new.js` skips any article whose slug already has a published page.
+3. It snapshots every existing page before writing and re-checks them after,
+   exiting non-zero if any changed.
+4. The workflow re-checks independently: only new files, `docs.json` and the
+   baseline may differ, and no file may be deleted.
+
+Then the pull request, which is the only thing that reaches `main`.
 
 ## Automated edit reporting
 
@@ -191,17 +298,11 @@ automatically — the published version is further ahead. So they are reported:
 Edits are reported *before* new articles are ingested, so the report reflects the
 baseline as it stood at the start of the run.
 
-```bash
-npm run example    # fetch from Help Scout
-npm run convert    # -> data/markdown/
-npm run drift      # what has support edited since the baseline?
-npm run ingest     # what is brand new? (dry run)
-```
-
 Seed the baseline once, then commit it:
 
 ```bash
 npm run baseline
+git add scripts/helpscout-baseline.json
 ```
 
 After porting a Help Scout change into `docs/` by hand, run `npm run baseline`
@@ -214,46 +315,71 @@ The rule the whole pipeline is built around:
 
 > **Help Scout owns content. This repo owns structure.**
 
-A sync can add, change or remove pages. It can never reshape the sidebar, move a
-page between sections, or delete a hand-authored page. Every editorial decision
-lives in a committed file, because none of it can be derived from the Help Scout
-API:
+A sync may add a page. It can never reshape the sidebar, move a page between
+sections, or delete a hand-authored page. Every editorial decision lives in a
+committed file, because none of it can be derived from the Help Scout API:
 
-- **`nav.json`** — the sidebar, verbatim: tabs, nested groups, ordering,
-  `expanded` flags. Help Scout has flat categories, so nesting like
-  *Installation Guide → Platform Installation* exists only here.
+- **`category-map.json`** — where a new article is filed. The one file the
+  ingest reads to make a placement decision.
+- **`nav.json`** — the sidebar as `publish` would emit it: tabs, nested groups,
+  ordering. Only `publish` reads it, so it is a historical record unless you
+  deliberately re-seed.
 - **`sections.json`** — 37 slug → section overrides. The category mapping would
   put the platform install guides under `tutorial/`; the live site has them under
-  `documentation/`. Without this file every sync moves them back.
+  `documentation/`.
 - **`exclude.json`** — drops the `Legacy (v8)` collection and any
   `backup-of-*` / `*-draft` article.
 - **`data/pages/`** — `quickstart` and `overview` are hand-written and have no
-  Help Scout article. They used to live only in the served tree, which `publish`
-  wipes — so a sync deleted them with nothing to restore from. They are now
-  committed source.
-
-### What happens to a brand-new article
-
-It is published as a file, then appended to the `autoAppend` group named in
-`nav.json` for its section (`More Guides` / `More Reference`). It appears on the
-site without anyone intervening, in a clearly-labelled group, leaving the
-curated groups untouched. Move it into its proper group in `nav.json` at leisure.
-
-Set a section's `autoAppend` to `null` to publish the file but keep it out of the
-sidebar entirely.
-
-### What happens when an article is renamed or deleted
-
-`publish` **fails** and writes nothing. Every page named in `nav.json` must
-resolve to a real file; if one does not, you get the list and the run exits
-non-zero, so CI goes red and the site stays as it was. Fix the slug in
-`nav.json` (or add a `sections.json` entry) and re-run.
+  Help Scout article. They are committed source.
 
 ### Editing navigation
 
-Edit `scripts/nav.json`, never `docs.json` — `publish` overwrites the
-`Documentation` product's tabs from `nav.json` on every run. The `Blog` product
-and every top-level setting in `docs.json` are left alone.
+Edit `docs.json` directly. The ingest **appends** a new page into the group
+`category-map.json` names for it and changes nothing else, so hand edits to the
+sidebar survive every sync. Reordering, renaming a group, or moving a page
+between groups is a normal commit.
+
+(`nav.json` is only consulted by `publish-to-docs.js`, which is not part of any
+pipeline. Editing it has no effect on the live sidebar.)
+
+## When it breaks
+
+The workflow is designed to fail loudly and change nothing, so a red run is safe.
+Work down the steps in order — the first failure is the real one.
+
+| Symptom | Cause | Fix |
+| --- | --- | --- |
+| `npm ci` fails | `package-lock.json` out of sync with `package.json` | `npm install` locally, commit the lockfile |
+| `npm test` fails | A conformance guard is broken. **Stop here** — do not skip it; it is what stands between a model response and the live site | Read the failing assertion; it names what it expected |
+| `... only read N of M pages` | The sweep cannot parse `docs/` frontmatter — usually a line-ending or frontmatter problem | Check the named files open with `---` |
+| `No baseline` | `helpscout-baseline.json` is missing or uncommitted | `npm run baseline`, then commit it |
+| `Same slug in two Help Scout categories` | Two articles converged on one slug | Rename one in Help Scout, or add a `slugOverrides` entry |
+| `Could not place: no group "X"` | A new Help Scout category with no mapping | Add it to `category-map.json` |
+| `... was last committed to by <someone>` | A reviewer committed to the `helpscout-sync` branch, which the run rebuilds and force-pushes | Merge or close the open PR, then re-run. Never commit fixes to that branch — merge first, then edit on `main` |
+| `This job modified files it must never touch` | A bug: the ingest changed an existing page | `git checkout -- docs docs.json scripts/helpscout-baseline.json` and open an issue. Do not merge |
+| `GitHub Actions is not permitted to create pull requests` | Repo setting | Settings → Actions → General → tick the PR checkbox |
+| `mint broken-links` fails | Often a *pre-existing* broken link, not the sync's doing | Run `npx mint broken-links` locally on `main` to tell the two apart |
+| `API 401` in the ingest report | Bad or missing `ANTHROPIC_API_KEY` | Fix the secret. The run still succeeds — pages ship mechanical |
+| `API 429` in the ingest report | Anthropic rate limit | Harmless; pages ship mechanical. Re-run later to get the rewrite |
+| `specifics dropped` / `steps lost` / `content loss` | The AI pass produced something lossy and was **correctly rejected** | Nothing to fix. The mechanical version shipped. If it happens on every article, `house-style.md` may be fighting the checks |
+| Help Scout `429` | Fetch concurrency too high | Lower it in `getAllArticlesWithContent()` |
+
+Two failures are *not* errors and need no action:
+
+- `No new Help Scout articles to add.` — nothing new upstream.
+- `Nothing new from Help Scout — no pull request needed.` — same, one step later.
+
+### Reverting a bad merge
+
+The sync only ever adds files, so undoing a merged PR is a plain revert:
+
+```bash
+git revert -m 1 <merge-commit>
+```
+
+Then remove the affected entries from `scripts/helpscout-baseline.json` if you
+want those articles reconsidered on the next run — otherwise they are recorded
+as already ingested and will never reappear.
 
 ## Why pages live under `docs/`
 
@@ -270,20 +396,42 @@ written outside those prefixes will 404 into the marketing site.
 
 ## Videos
 
-Video embeds are declared in `scripts/videos.json`, not edited into the
-published `.mdx`:
+Videos are hosted on YouTube as **Unlisted** (Private videos will not play in an
+embed) and served through `youtube-nocookie.com`.
 
-```json
-{
-  "how-to-install-pitchprint-on-wordpress": "dQw4w9WgXcQ"
-}
+There are two places a video can come from, and the distinction matters:
+
+**A page already in `docs/`** — edit the `.mdx` directly. Put the embed after the
+intro paragraph, before the first step:
+
+```mdx
+<Frame>
+  <iframe
+    className="w-full aspect-video rounded-xl"
+    src="https://www.youtube-nocookie.com/embed/VIDEO_ID"
+    title="How to install PitchPrint on WordPress"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</Frame>
 ```
 
-`publish` deletes and recreates each section folder on every run, so an embed
-added directly to a generated page would disappear on the next sync. Declaring
-it here means it is reapplied every time. Videos are hosted on YouTube as
-**Unlisted** (Private videos will not play in an embed) and served through
-`youtube-nocookie.com`.
+Use `className="w-full aspect-video rounded-xl"`, not `width`/`height` — a fixed
+560×315 box overflows on a phone.
+
+**A brand-new article** — add it to `scripts/videos.json` and `convert` injects
+the embed at the top:
+
+```json
+{ "how-to-install-pitchprint-on-wordpress": "-4Ga24DUD_U" }
+```
+
+> **`videos.json` does not affect pages already in `docs/`.** It feeds
+> `convert-to-markdown.js`, whose output reaches the site only through
+> `ingest-new.js` — which skips any slug that already has a published page. The
+> file dates from when `publish` rebuilt `docs/` on every sync. An entry holding
+> a `REPLACE_WITH_*` placeholder renders nothing rather than a broken embed.
 
 ## How articles are chunked
 
@@ -301,28 +449,18 @@ The mapping lives in clearly-labeled config blocks (`COLLECTION`,
 `TUTORIAL_CATEGORY_IDS`) at the top of the script — change the split by moving a
 category id in or out.
 
-### Sidebar groups
-
-Within each tab, pages are grouped by their Help Scout **category** (see
-`CATEGORY_NAMES` / `GROUP_ORDER` in the convert script). The API Reference tab is
-ordered: **Get Started** (hand-authored Introduction) → Integrating PitchPrint →
-Designer API → Runtime API → Developer Knowledge Base → **Legacy (v8)**. Legacy
-articles get their own group so they don't blur into the current API docs.
-
 ### Hand-authored pages
 
-Pages in `data/pages/<section>/` are copied into the served tree verbatim and
-appear **first** in that tab (in a "Get Started" / "Overview" group). This is how
-the API `introduction.mdx` overview (base URL, authentication, signatures,
-errors) is added — it isn't derived from Help Scout, so edit it directly.
+Pages in `data/pages/<section>/` are committed source with no Help Scout article
+behind them — the API `introduction.mdx` overview (base URL, authentication,
+signatures, errors) is one. Edit them directly; `convert` never touches them.
 
 ## MDX safety
 
 Mintlify compiles `.mdx` through a strict MDX parser, so stray `{`, `}`, and `<`
 in prose (template code like `${...}` / `{{ liquid }}`, or HTML shown as
 examples) would break the build. `sanitizeMdx()` escapes those characters, but
-only **outside** code spans/blocks, where they're already literal. This is why
-`mint broken-links` compiles all 147 pages with no syntax errors.
+only **outside** code spans/blocks, where they're already literal.
 
 ## API functions (`scripts/helpscout.js`)
 
@@ -351,38 +489,39 @@ articles. It is independent of the Help Scout migration above.
 - **Generator:** `scripts/generate-blog-summaries.js` (`npm run blog-summaries`)
   scans `documentation/`, `tutorial/`, and `api-reference/`, **groups articles by
   their `release` value**, and writes one `release-<id>.mdx` per release to
-  `dist/blog-posts/` (gitignored). Each release note has one `###` section per
-  topic — title, `release_summary` (or `description`/first paragraph), and a
-  `Learn more →` link back to the docs article.
+  `dist/blog-posts/` (gitignored).
 - **Publish:** `.github/workflows/release-to-blog.yml` runs the generator on push
-  and commits the release notes into the **blog repo**, which auto-deploys.
-  Mintlify has no content-write API, so publishing = committing MDX into git.
-  Fill in `BLOG_REPO` / `BLOG_PATH` and the `BLOG_REPO_TOKEN` secret once the blog
-  site exists.
+  and commits the release notes into the blog repo, which auto-deploys.
 - **Back-link:** `snippets/release-link.jsx` renders the
-  `<ReleaseLink release="wkXX-YY" />` badge on the article. Update its
-  `BLOG_RELEASE_BASE` constant when the blog's URL is finalized.
-
-Config lives in env vars at the top of the generator: `SCAN_DIRS`, `OUTPUT_DIR`,
-`DOCS_BASE_URL`.
+  `<ReleaseLink release="wkXX-YY" />` badge on the article.
 
 ## Security notes
 
-- `.env` and `data/` handling: `.env` is gitignored. Never expose the API key in
-  browser/front-end code — Basic Auth belongs on the server side only.
-- If the API key or password was ever committed or shared, **rotate it** in Help Scout.
-- `BLOG_REPO_TOKEN` (blog-publish workflow) and any `MINTLIFY_API_KEY` are GitHub
-  Actions **secrets** — never hard-code them in the workflow or scripts.
+- `.env` is gitignored. Never expose the Help Scout API key in browser or
+  front-end code — Basic Auth belongs on the server side only.
+- If a key was ever committed or shared, **rotate it**.
+- `HELPSCOUT_API_KEY`, `ANTHROPIC_API_KEY`, `BLOG_REPO_TOKEN` and any
+  `MINTLIFY_API_KEY` are GitHub Actions **secrets** — never hard-coded in the
+  workflow or scripts.
+- The AI pass sends article text to the Anthropic API. That text is help
+  documentation intended for publication, but be aware it leaves the repo.
 
 ## Known limitations
 
-- A few articles stored code as prose (not `<pre>` blocks) in Help Scout, so the
-  converter emits it as escaped inline text rather than fenced code blocks. The
-  currently-published pages have been fixed by hand (wrapped in fenced blocks), but
-  re-running `convert`/`publish` would reintroduce the raw output — re-apply the
-  fix, or teach `sanitizeMdx()` to fence these.
-- Images still point at Help Scout's S3 URLs, and internal links use
-  `docs.pitchprint.com` URLs — neither is rewritten to local/relative paths yet.
+- **Mintlify cannot filter by tag.** Its `tag:` frontmatter is a single string
+  rendering a badge beside the sidebar title — already used here for `Premium`
+  and `BETA` — and there is no tag-based browsing. A topic taxonomy has to be
+  built from `keywords:` frontmatter plus hand-written index pages.
+- Five Help Scout articles have no published page: `ekm`, `odoo`, `vb-media`,
+  `wix`, `magento-installation`. They are in the baseline, so the sync will
+  never propose them. Publish them by hand or leave them retired.
+- A few articles stored code as prose in Help Scout, so the converter emits it as
+  escaped inline text. The AI pass fences these correctly; the mechanical
+  fallback flags them as a warning but leaves them escaped.
+- Images still point at Help Scout's S3 URLs; internal links in converted output
+  use `docs.pitchprint.com` URLs. Neither is rewritten to relative paths.
 - API Reference includes 13 articles from the legacy `v8 - old` collection Help
-  Scout had flagged "DO NOT USE" — they may be outdated. Re-exclude them by
-  removing `COLLECTION.LEGACY_DEV_HUB` from `sectionFor()` in the convert script.
+  Scout had flagged "DO NOT USE". Re-exclude them by removing
+  `COLLECTION.LEGACY_DEV_HUB` from `sectionFor()` in the convert script.
+- The repo is checked out with CRLF line endings on Windows. `validate()`
+  normalises them, but a tool that assumes `\n` will misread `docs/`.
