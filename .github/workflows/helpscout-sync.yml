@@ -1,4 +1,4 @@
-# Weekly Help Scout sync: propose brand-new articles as a pull request,
+# Help Scout sync: propose brand-new articles as a pull request,
 # report edits to existing ones as an issue.
 #
 # The published docs are hand-authored and have diverged from Help Scout on every
@@ -8,33 +8,51 @@
 #   new article    -> tidied, rewritten into house style, filed, PROPOSED IN A PR
 #   edited article -> reported in an issue; the published page is left alone
 #
-# Nothing reaches main without a human merging the pull request. That review step
-# is the point: the AI pass is checked against the source for lost or invented
-# content, but "did not lose anything" is not the same as "reads well", and only
-# a person can judge the second.
+# Nothing reaches main without a human merging the pull request.
+#
+# ---------------------------------------------------------------------------
+# TWO SCHEDULES
+#
+#   0 1 * * 1      Mondays 01:00 UTC (03:00 SAST) — the real run.
+#   */5 * * * *    Every 5 minutes — TEMPORARY, for testing. Always a DRY RUN:
+#                  it fetches, converts and reports, but writes nothing, opens
+#                  no pull request and raises no issue.
+#
+# >>> DELETE the */5 cron when testing is finished. <<<
+# It costs Actions minutes on every fire (~288 runs/day) and exists only so a
+# broken run can be diagnosed quickly.
+# ---------------------------------------------------------------------------
+#
+# EVERY RUN WRITES A LOG to the `sync-logs` branch, pass or fail, including the
+# captured output of each step. Read the latest one with:
+#
+#   git fetch origin sync-logs && git show origin/sync-logs:logs/latest.md
+#
+# That branch holds only logs — it never touches main and is never merged.
 #
 # One-time setup:
 #   1. Settings -> Secrets and variables -> Actions -> New repository secret
 #        Name: HELPSCOUT_API_KEY
-#   2. Optional but recommended, same place:
-#        Name: ANTHROPIC_API_KEY
-#      Without it the sync still works; new pages just arrive in the plainer
-#      mechanical style with a comment saying they are worth a human pass.
+#   2. Optional, same place: ANTHROPIC_API_KEY
+#      Without it new pages arrive in the plainer mechanical style.
 #   3. Seed the baseline once, locally, and commit it:
 #        npm run example && npm run convert && npm run baseline
-#        git add scripts/helpscout-baseline.json && git commit
 #   4. Settings -> Actions -> General -> Workflow permissions:
-#        tick "Allow GitHub Actions to create and approve pull requests"
-#      Without this the PR step fails with "GitHub Actions is not permitted to
-#      create pull requests".
+#        "Read and write", and tick "Allow GitHub Actions to create and approve
+#        pull requests".
 
 name: Help Scout sync
 
 on:
   schedule:
-    # 01:00 UTC = 03:00 SAST, Mondays.
     - cron: "0 1 * * 1"
+    - cron: "*/5 * * * *"
   workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run — fetch and report, but write nothing and open no PR"
+        type: boolean
+        default: true
 
 permissions:
   contents: write
@@ -47,6 +65,8 @@ concurrency:
 
 env:
   SYNC_BRANCH: helpscout-sync
+  LOG_BRANCH: sync-logs
+  TEST_CRON: "*/5 * * * *"
   BOT_EMAIL: "41898282+github-actions[bot]@users.noreply.github.com"
 
 jobs:
@@ -55,9 +75,23 @@ jobs:
     timeout-minutes: 20
 
     steps:
+      # ------------------------------------------------------------- mode
+      - name: Decide run mode
+        id: mode
+        run: |
+          dry=false
+          why="full run"
+          if [ "${{ github.event_name }}" = "schedule" ] && [ "${{ github.event.schedule }}" = "$TEST_CRON" ]; then
+            dry=true; why="5-minute test schedule"
+          elif [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.dry_run }}" = "true" ]; then
+            dry=true; why="dry_run input"
+          fi
+          echo "dry=$dry" >> "$GITHUB_OUTPUT"
+          echo "why=$why"  >> "$GITHUB_OUTPUT"
+          echo "Mode: $([ "$dry" = true ] && echo 'DRY RUN' || echo 'FULL RUN') ($why)"
+
       - uses: actions/checkout@v4
         with:
-          # Needed so the job can see origin/$SYNC_BRANCH and compare authors.
           fetch-depth: 0
 
       - uses: actions/setup-node@v4
@@ -65,13 +99,49 @@ jobs:
           node-version: "20"
           cache: npm
 
-      - run: npm ci
+      # Fail with a sentence rather than an exit code. Checked before any work,
+      # because a missing secret is the cheapest failure to diagnose and the
+      # most annoying to find at the bottom of a stack trace.
+      - name: Preflight — required secrets
+        id: preflight
+        env:
+          HELPSCOUT_API_KEY: ${{ secrets.HELPSCOUT_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          {
+            if [ -z "$HELPSCOUT_API_KEY" ]; then
+              echo "FAIL  HELPSCOUT_API_KEY is not set, or is empty."
+              echo "      Settings -> Secrets and variables -> Actions -> New repository secret"
+              echo "      The sync cannot fetch anything without it."
+              fail=1
+            else
+              echo "ok    HELPSCOUT_API_KEY is set (${#HELPSCOUT_API_KEY} characters)"
+            fi
+            if [ -z "$ANTHROPIC_API_KEY" ]; then
+              echo "warn  ANTHROPIC_API_KEY is not set — new pages will ship in the"
+              echo "      plainer mechanical style. Not fatal."
+            else
+              echo "ok    ANTHROPIC_API_KEY is set (${#ANTHROPIC_API_KEY} characters)"
+            fi
+            [ -f scripts/helpscout-baseline.json ] \
+              && echo "ok    baseline committed ($(node -e "console.log(Object.keys(require('./scripts/helpscout-baseline.json').articles||{}).length)") articles)" \
+              || { echo "FAIL  scripts/helpscout-baseline.json is missing — seed it with 'npm run baseline' and commit it."; fail=1; }
+            [ -n "$fail" ] && { echo; echo "Preflight failed. Nothing was fetched or written."; exit 1; }
+            echo
+            echo "Preflight passed."
+          } 2>&1 | tee "$RUNNER_TEMP/step-preflight.log"
 
-      # The safety checks that decide whether an AI rewrite is allowed to ship.
-      # If they are broken, nothing else in this job should run.
+      - name: Install dependencies
+        id: install
+        run: npm ci 2>&1 | tee "$RUNNER_TEMP/step-install.log"
+
       - name: Test the conformance guards
-        run: npm test
+        id: tests
+        run: |
+          set -o pipefail
+          npm test 2>&1 | tee "$RUNNER_TEMP/step-tests.log"
 
+      # Never teed to the log: this step touches the key.
       - name: Write .env from secrets
         env:
           HELPSCOUT_API_KEY: ${{ secrets.HELPSCOUT_API_KEY }}
@@ -83,22 +153,47 @@ jobs:
           } > .env
 
       - name: Fetch articles from Help Scout
-        run: npm run example
+        id: fetch
+        run: |
+          set -o pipefail
+          npm run example 2>&1 | tee "$RUNNER_TEMP/step-fetch.log"
 
       - name: Convert HTML to MDX
-        run: npm run convert
+        id: convert
+        run: |
+          set -o pipefail
+          npm run convert 2>&1 | tee "$RUNNER_TEMP/step-convert.log"
 
       # Report edits BEFORE ingesting, so the report reflects the baseline as it
       # stood at the start of the run.
       - name: Report edits to existing articles
+        id: drift
         env:
           DRIFT_REPORT_PATH: ${{ runner.temp }}/drift-report.md
-        run: npm run drift
+        run: |
+          set -o pipefail
+          npm run drift 2>&1 | tee "$RUNNER_TEMP/step-drift.log"
 
-      # Refuse to touch the sync branch if a reviewer has committed to it. The
-      # branch is rebuilt from scratch each run and force-pushed, which would
-      # silently destroy a step title someone fixed by hand in the open PR.
+      - name: Registry — where every article stands
+        id: registry
+        run: |
+          set -o pipefail
+          npm run registry 2>&1 | tee "$RUNNER_TEMP/step-registry.log"
+
+      # ------------------------------------------------- dry run stops here
+      - name: Preview what would be added
+        id: preview
+        if: steps.mode.outputs.dry == 'true'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          set -o pipefail
+          npm run ingest 2>&1 | tee "$RUNNER_TEMP/step-ingest.log"
+          echo "DRY RUN — nothing written, no pull request, no issue."
+
+      # --------------------------------------------------------- full run
       - name: Guard — do not clobber a reviewer's commit
+        if: steps.mode.outputs.dry != 'true'
         run: |
           if git ls-remote --exit-code --heads origin "$SYNC_BRANCH" >/dev/null 2>&1; then
             git fetch --quiet origin "$SYNC_BRANCH"
@@ -111,20 +206,18 @@ jobs:
             fi
           fi
 
-      # Adds only articles absent from the baseline with no existing page, each
-      # rewritten into house style if ANTHROPIC_API_KEY is set. Verifies
-      # afterwards that no existing page was touched, and exits non-zero if one
-      # was. The report becomes the body of the pull request.
       - name: Add new articles
+        id: ingest
+        if: steps.mode.outputs.dry != 'true'
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
           set -o pipefail
-          npm run ingest -- --write | tee "$RUNNER_TEMP/ingest-report.txt"
+          npm run ingest -- --write 2>&1 | tee "$RUNNER_TEMP/step-ingest.log"
 
       - name: Guard — additions only
+        if: steps.mode.outputs.dry != 'true'
         run: |
-          # Allowed: new files, docs.json, the baseline. Anything else is a bug.
           offenders=$(git status --porcelain \
             | grep -v '^??' \
             | grep -v ' docs\.json$' \
@@ -142,15 +235,31 @@ jobs:
           fi
           echo "Additions only — no existing page was modified or deleted."
 
+      # Deliberately NOT fatal. This checks the whole site, so a broken link
+      # that has been sitting in an unrelated page for months would otherwise
+      # kill a run in which the sync behaved perfectly — which is exactly what
+      # happened on run #3: every step passed, this one failed, and the pull
+      # request was never opened.
+      #
+      # The result still reaches you: it goes into the run log and, when it
+      # fails, into the pull request body for the reviewer to judge.
       - name: Check for broken links
-        run: npx --yes mint@latest broken-links
+        id: links
+        if: steps.mode.outputs.dry != 'true'
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          npx --yes mint@latest broken-links 2>&1 | tee "$RUNNER_TEMP/step-links.log"
 
       - name: Open or update the pull request
+        id: pr
+        if: steps.mode.outputs.dry != 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LINKS_OUTCOME: ${{ steps.links.outcome }}
         run: |
           if [ -z "$(git status --porcelain)" ]; then
-            echo "Nothing new from Help Scout — no pull request needed."
+            echo "Nothing new from Help Scout — no pull request needed." | tee "$RUNNER_TEMP/step-pr.log"
             exit 0
           fi
 
@@ -160,16 +269,14 @@ jobs:
           git add -A
           git commit -m "Add new Help Scout articles
 
-          Prepared automatically by the weekly sync and rewritten into house
-          style, checked against the source for lost or invented content. Any
-          page the check rejected shipped as its plainer mechanical version and
-          carries a comment saying it is worth a human pass — search for
-          'Imported from Help Scout' to find them.
+          Prepared automatically by the sync and rewritten into house style,
+          checked against the source for lost or invented content. Any page the
+          check rejected shipped as its plainer mechanical version and carries a
+          comment saying it is worth a human pass — search for 'Imported from
+          Help Scout' to find them.
 
           Workflow: ${{ github.workflow }} run ${{ github.run_number }}"
 
-          # Force-push is safe here: the branch is regenerated from main on every
-          # run, and the guard above already refused if a human had committed to it.
           git push --force origin "$SYNC_BRANCH"
 
           {
@@ -185,8 +292,20 @@ jobs:
             echo "## Ingest report"
             echo
             echo '```'
-            cat "$RUNNER_TEMP/ingest-report.txt"
+            cat "$RUNNER_TEMP/step-ingest.log"
             echo '```'
+            if [ "$LINKS_OUTCOME" = "failure" ]; then
+              echo
+              echo "## ⚠ Broken links"
+              echo
+              echo "\`mint broken-links\` reported problems. This does **not** block the run,"
+              echo "because it checks the whole site and the breakage may predate this change."
+              echo "Check whether any of it comes from the pages added here."
+              echo
+              echo '```'
+              tail -n 40 "$RUNNER_TEMP/step-links.log" 2>/dev/null || echo "(no output captured)"
+              echo '```'
+            fi
             echo
             echo "---"
             echo "Re-running the workflow rebuilds this branch from scratch. Do not commit fixes here —"
@@ -196,16 +315,17 @@ jobs:
           existing=$(gh pr list --head "$SYNC_BRANCH" --state open --json number --jq '.[0].number // empty')
           if [ -n "$existing" ]; then
             gh pr edit "$existing" --body-file "$RUNNER_TEMP/pr-body.md"
-            echo "Updated pull request #$existing."
+            echo "Updated pull request #$existing." | tee "$RUNNER_TEMP/step-pr.log"
           else
             gh pr create \
               --base "$(gh repo view --json defaultBranchRef --jq .defaultBranchRef.name)" \
               --head "$SYNC_BRANCH" \
               --title "Add new Help Scout articles" \
-              --body-file "$RUNNER_TEMP/pr-body.md"
+              --body-file "$RUNNER_TEMP/pr-body.md" | tee "$RUNNER_TEMP/step-pr.log"
           fi
 
       - name: Raise or update an issue for edited articles
+        if: steps.mode.outputs.dry != 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TITLE: "Help Scout edits not yet ported"
@@ -227,3 +347,126 @@ jobs:
           else
             gh issue create --title "$TITLE" --body-file "$RUNNER_TEMP/drift-report.md"
           fi
+
+      # ------------------------------------------------------------- the log
+      # Runs whatever happened above, including a failure. It must never be the
+      # reason a run goes red, so every step here tolerates its own errors.
+      - name: Publish the run log
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DRY: ${{ steps.mode.outputs.dry }}
+          WHY: ${{ steps.mode.outputs.why }}
+          O_PREFLIGHT: ${{ steps.preflight.outcome }}
+          O_INSTALL: ${{ steps.install.outcome }}
+          O_TESTS: ${{ steps.tests.outcome }}
+          O_FETCH: ${{ steps.fetch.outcome }}
+          O_CONVERT: ${{ steps.convert.outcome }}
+          O_DRIFT: ${{ steps.drift.outcome }}
+          O_REGISTRY: ${{ steps.registry.outcome }}
+          O_PREVIEW: ${{ steps.preview.outcome }}
+          O_INGEST: ${{ steps.ingest.outcome }}
+          O_LINKS: ${{ steps.links.outcome }}
+          O_PR: ${{ steps.pr.outcome }}
+        run: |
+          set +e
+          L="$RUNNER_TEMP/run-log.md"
+          stamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          slug=$(date -u +"%Y-%m-%d_%H%M%S")
+
+          mode=$([ "$DRY" = "true" ] && echo "DRY RUN" || echo "FULL RUN")
+
+          {
+            echo "# Help Scout sync — run ${{ github.run_number }}"
+            echo
+            echo "| | |"
+            echo "| --- | --- |"
+            echo "| When | \`$stamp\` |"
+            echo "| Mode | **$mode** ($WHY) |"
+            echo "| Trigger | \`${{ github.event_name }}\` |"
+            echo "| Commit | \`${{ github.sha }}\` |"
+            echo "| Result | **${{ job.status }}** |"
+            echo "| Run | ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} |"
+            echo
+            echo "## Steps"
+            echo
+            echo "| Step | Outcome |"
+            echo "| --- | --- |"
+            for pair in "Preflight:$O_PREFLIGHT" "Install:$O_INSTALL" "Tests:$O_TESTS" \
+                        "Fetch:$O_FETCH" "Convert:$O_CONVERT" "Drift:$O_DRIFT" \
+                        "Registry:$O_REGISTRY" "Preview:$O_PREVIEW" "Ingest:$O_INGEST" \
+                        "Broken links:$O_LINKS" "Pull request:$O_PR"; do
+              name="${pair%%:*}"; out="${pair##*:}"
+              [ -z "$out" ] && out="skipped"
+              case "$out" in
+                success)  icon="ok" ;;
+                failure)  icon="**FAILED**" ;;
+                skipped)  icon="–" ;;
+                *)        icon="$out" ;;
+              esac
+              echo "| $name | $icon |"
+            done
+            echo
+            echo "## Output"
+            for f in preflight install tests fetch convert drift registry ingest links pr; do
+              p="$RUNNER_TEMP/step-$f.log"
+              [ -s "$p" ] || continue
+              echo
+              echo "### $f"
+              echo
+              echo '```'
+              # Last 200 lines is plenty and keeps the log readable.
+              tail -n 200 "$p"
+              echo '```'
+            done
+          } > "$L"
+
+          # Defensive redaction. GitHub masks secrets in its own logs, but this
+          # file is committed to the repository, so never rely on that alone.
+          sed -i -E 's/(sk-[A-Za-z0-9_-]{8})[A-Za-z0-9_-]+/\1<redacted>/g; s/([A-Za-z0-9_]*(KEY|TOKEN|SECRET)[A-Za-z0-9_]*=)[^ ]+/\1<redacted>/gi' "$L"
+
+          # Logs live on their own orphan branch: main stays clean, and nothing
+          # here can trip the additions-only guard.
+          work="$RUNNER_TEMP/logrepo"
+          rm -rf "$work"
+          remote="https://x-access-token:$GH_TOKEN@github.com/${{ github.repository }}.git"
+
+          if git clone --quiet --depth 1 --branch "$LOG_BRANCH" "$remote" "$work" 2>/dev/null; then
+            echo "Appending to existing $LOG_BRANCH branch."
+          else
+            echo "Creating $LOG_BRANCH branch."
+            mkdir -p "$work" && cd "$work"
+            git init --quiet
+            git checkout --quiet --orphan "$LOG_BRANCH"
+            git remote add origin "$remote"
+            mkdir -p logs
+            printf '# Help Scout sync logs\n\nOne file per run, newest in `logs/latest.md`.\nThis branch holds only logs. It is never merged into main.\n' > README.md
+          fi
+
+          cd "$work" || exit 0
+          mkdir -p logs
+          cp "$L" "logs/${slug}-run${{ github.run_number }}.md"
+          cp "$L" "logs/latest.md"
+
+          # Keep the 200 most recent run logs.
+          ls -1 logs/*-run*.md 2>/dev/null | sort | head -n -200 | xargs -r rm -f
+
+          git config user.name "helpscout-sync[bot]"
+          git config user.email "$BOT_EMAIL"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Log unchanged; nothing to push."
+            exit 0
+          fi
+          git commit --quiet -m "Sync log: run ${{ github.run_number }} — ${{ job.status }} ($mode)"
+          git push --quiet origin "$LOG_BRANCH" 2>&1 | tail -3 || echo "Could not push the log (non-fatal)."
+          echo "Log written to $LOG_BRANCH:logs/latest.md"
+          exit 0
+
+      - name: Log location
+        if: always()
+        run: |
+          echo "### Run log" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          echo 'git fetch origin sync-logs && git show origin/sync-logs:logs/latest.md' >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
