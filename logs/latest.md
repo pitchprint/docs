@@ -1,13 +1,13 @@
-# Help Scout sync — run 5
+# Help Scout sync — run 6
 
 | | |
 | --- | --- |
-| When | `2026-10-13T03:29:41Z` |
+| When | `2026-10-13T10:57:09Z` |
 | Mode | **DRY RUN** (5-minute test schedule) |
 | Trigger | `schedule` |
-| Commit | `ef373e913f8c68b5ed1497d45fbfee9ae584e98c` |
+| Commit | `f0883a050c77dabc57574bf8a463be285eff2b79` |
 | Result | **success** |
-| Run | https://github.com/pitchprint/docs/actions/runs/38341941369 |
+| Run | https://github.com/pitchprint/docs/actions/runs/38386816678 |
 
 ## Steps
 
@@ -42,7 +42,7 @@ Preflight passed.
 
 ```
 
-added 3 packages, and audited 4 packages in 618ms
+added 3 packages, and audited 4 packages in 968ms
 
 found 0 vulnerabilities
 ```
@@ -95,7 +95,7 @@ ok    a code identifier removed outright  (specifics dropped (1): "pitchprint.zi
 ok    the port number dropped  (specifics dropped (1): "443")
 ok    bold reformatted but the label kept is accepted
 
-ok    132 real hand-written pages accepted (bar the known divergences)
+ok    131 real hand-written pages accepted (bar the known divergences)
 
 All validate() tests passed.
 ok    no API key keeps the mechanical version
@@ -201,8 +201,8 @@ Generated 2026-10-13 from `data/markdown/` and `docs/`.
 
 | State | Count |
 | --- | --- |
-| Published | 129 |
-| Deliberately not publishing | 5 |
+| Published | 128 |
+| Deliberately not publishing | 6 |
 | Needs a decision | 0 |
 | **Untracked — would be proposed on the next sync** | **0** |
 | Pages with no Help Scout article | 2 |
@@ -216,6 +216,7 @@ Recorded in `scripts/unpublished.json`. The sync will never propose these.
 - **How to Install Pitchprint on VB Media** — `documentation/how-to-install-pitchprint-on-vb-media`
 - **How to install PitchPrint on WIX** — `documentation/how-to-install-pitchprint-on-wix`
 - **How To Install PitchPrint On Magento** — `documentation/magento-installation`
+- **Upgrading to Version 9** — `documentation/upgrading-to-version-9`
 
 ## Published pages with no Help Scout article
 
@@ -270,7 +271,7 @@ Normal for hand-authored pages. Anything unexpected here usually means an articl
 | PitchPrint For Shopify.. Getting Started | `documentation/pitchprint-for-shopify-getting-started` | published |
 | PitchPrint on 3DCart | `documentation/pitchprint-on-3dcart` | published |
 | Tags | `documentation/tags` | published |
-| Upgrading to Version 9 | `documentation/upgrading-to-version-9` | published |
+| Upgrading to Version 9 | `documentation/upgrading-to-version-9` | not-publishing |
 | Which shopping cart framework should I pick? | `documentation/which-framework-should-i-pick` | published |
 | 3D UV Mapping | `tutorial/3d-uv-mapping` | published |
 | Add Fonts - Inside Editor | `tutorial/add-fonts-inside-editor` | published |
@@ -377,4 +378,5 @@ No new Help Scout articles to add.
   skipped documentation/how-to-install-pitchprint-on-vb-media — deliberately not published — see scripts/unpublished.json
   skipped documentation/how-to-install-pitchprint-on-wix — deliberately not published — see scripts/unpublished.json
   skipped documentation/magento-installation — deliberately not published — see scripts/unpublished.json
+  skipped documentation/upgrading-to-version-9 — deliberately not published — see scripts/unpublished.json
 ```
