@@ -1,5 +1,5 @@
 {
-  "_comment": "Help Scout articles that deliberately have NO published page. This is the decision record, not a cache — it is hand-maintained and committed. scripts/ingest-new.js refuses to publish anything listed here, and scripts/report-drift.js reports edits to them separately so nobody goes hunting for a page that was never meant to exist. To publish one: delete its entry, run `npm run ingest -- --preview .preview --only <slug>` to review, then `npm run ingest -- --write`. Keys are <section>/<slug>, matching data/markdown/ and the baseline.",
+  "_comment": "Help Scout articles that deliberately have NO published page. This is the decision record, not a cache \u2014 it is hand-maintained and committed. scripts/ingest-new.js refuses to publish anything listed here, and scripts/report-drift.js reports edits to them separately so nobody goes hunting for a page that was never meant to exist. To publish one: delete its entry, run `npm run ingest -- --preview .preview --only <slug>` to review, then `npm run ingest -- --write`. Keys are <section>/<slug>, matching data/markdown/ and the baseline.",
   "_decidedBy": "sbabalwe@pitchprint.com",
   "_decidedAt": "2026-09-23",
   "articles": {
@@ -30,8 +30,13 @@
     },
     "documentation/how-to-install-pitchprint-on-ekm-1": {
       "title": "How to Install PitchPrint on EKM (second copy)",
-      "status": "needs-decision",
-      "reason": "Appeared in Help Scout AFTER the baseline was seeded — support seems to have rewritten the EKM guide as a new article (5,409 bytes) rather than editing the original (3,803 bytes). Held back because its predecessor is unpublished. Decide whether to publish this one, fold it into the original, or retire both."
+      "status": "not-publishing",
+      "reason": "Appeared in Help Scout AFTER the baseline was seeded \u2014 support seems to have rewritten the EKM guide as a new article (5,409 bytes) rather than editing the original (3,803 bytes). Held back because its predecessor is unpublished. Decide whether to publish this one, fold it into the original, or retire both."
+    },
+    "documentation/upgrading-to-version-9": {
+      "title": "Upgrading to Version 9",
+      "status": "not-publishing",
+      "reason": "Unpublished on 2026-10-13 by request. Was live under Documentation / Help & Migration; removed from the site and from docs.json navigation, with /docs/documentation/upgrading-to-version-9 redirected to the FAQ so the old URL does not 404."
     }
   }
 }
