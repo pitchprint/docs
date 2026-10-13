@@ -1,8 +1,9 @@
 # Environment / secrets
 .env
 .env.local
-.env.example
 .env.*.local
+.env.example
+# .env.example is intentionally NOT ignored — it is the credential template.
 
 # OS / editor
 .DS_Store
@@ -10,8 +11,12 @@
 # Node
 node_modules/
 
-# Data
-data/
+# Data — generated artefacts are ignored, hand-authored sources are NOT.
+# data/pages/ holds pages that do not come from Help Scout (index, quickstart,
+# overview). publish-to-docs.js recreates docs/ from scratch on every sync, so
+# anything not committed here is destroyed by the next pull.
+data/*
+!data/pages/
 
 # Build output (generated blog summaries)
 dist/

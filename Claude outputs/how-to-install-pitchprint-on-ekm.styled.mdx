@@ -1,0 +1,121 @@
+---
+title: "How to Install PitchPrint on EKM"
+description: "Install PitchPrint from the EKM App Store, inject the storefront script, then assign a design to a product."
+---
+
+PitchPrint installs on EKM as an app from the EKM App Store, plus one script injected into your storefront theme. Once it is connected, you assign a design to any product and customers personalise it before ordering.
+
+<Steps>
+  <Step title="Open the EKM App Store">
+    Go to [https://www.ekm.com/login](https://www.ekm.com/login) to view PitchPrint on the EKM App Store.
+  </Step>
+
+  <Step title="Register or log in to EKM">
+    You can either register a new EKM account or log in to an existing one.
+
+    <Frame>
+      <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/6204f991025ca67522c79bda/file-eAAynLM4XM.png" alt="The EKM login and registration page" />
+    </Frame>
+  </Step>
+
+  <Step title="Install the PitchPrint app">
+    Once you are logged in, open [Install PitchPrint on EKM Platform](https://api.pitchprint.com/carts/ekm) and install PitchPrint.
+  </Step>
+
+  <Step title="Authorise the app">
+    The app needs to be authenticated. Click the allow button.
+
+    <Frame>
+      <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/6204f602d86136157d9a2bcf/file-u8chLFuBPX.jpg" alt="The EKM authorisation prompt with the allow button" />
+    </Frame>
+  </Step>
+
+  <Step title="Log in to the PitchPrint admin">
+    Open the PitchPrint Admin login page at [https://admin.pitchprint.com/login](https://admin.pitchprint.com/login).
+
+    <Frame>
+      <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/61ea81b868cd260cc2d33185/file-bkvZ0I0bJg.png" alt="The PitchPrint admin login page" />
+    </Frame>
+
+    <Note>
+      Your login details are sent to the email address you used to register for EKM.
+    </Note>
+  </Step>
+
+  <Step title="Open the custom code editor">
+    In your EKM store, click **Design** in the top panel, select **Edit**, then click **Inject custom code**.
+
+    <Frame>
+      <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/6206024dd86136157d9a31e7/file-2xyj5VWmlg.png" alt="The inject custom code option in the EKM design menu" />
+    </Frame>
+  </Step>
+
+  <Step title="Inject the PitchPrint script">
+    Paste this script and save.
+
+    ```html
+    <script type="text/javascript" src="https://pitchprint.io/rsc/js/ekm.js"></script>
+    ```
+
+    <Frame>
+      <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/620603e439e5d05141b689c7/file-aGm9qv0559.png" alt="The PitchPrint script pasted into the EKM custom code field" />
+    </Frame>
+
+    <Warning>
+      Place the script in the **Before `</body>` Code** field. In any other field the editor will not load.
+    </Warning>
+  </Step>
+
+  <Step title="Create a product in EKM">
+    PitchPrint is a product customizer, so you need a product for customers to customize — a business card, banner or t-shirt, for instance.
+
+    In your EKM store, click **Shop** in the top panel and click the add product button.
+
+    <Frame>
+      <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/6204f834025ca67522c79bd2/file-pW9eljSHNI.png" alt="The add product button in the EKM shop panel" />
+    </Frame>
+  </Step>
+
+  <Step title="Open the Products page in PitchPrint">
+    Launch the PitchPrint Admin Portal again and navigate to the Products page.
+  </Step>
+
+  <Step title="Assign a design to the product">
+    Hover over any product you wish to assign a design to, and you will find the option to assign one.
+
+    <Frame>
+      <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/6204f6f8025ca67522c79bca/file-E9OsVy5PcK.png" alt="Assigning a PitchPrint design to a product from the Products page" />
+    </Frame>
+  </Step>
+
+  <Step title="Test it on your storefront">
+    Open the product on your store. You should find the **Customize this Design** button shown below — click it to launch the editor.
+
+    <Frame>
+      <img src="https://s3.amazonaws.com/helpscout.net/docs/assets/58f1ec6d2c7d3a52b42f8254/images/6204f5c9025ca67522c79bc1/file-YxkAw3tYam.png" alt="The Customize this Design button on an EKM product page" />
+    </Frame>
+  </Step>
+
+  <Step title="Place a test order">
+    Once you have finished customizing, add it to the cart and complete the order.
+  </Step>
+
+  <Step title="Collect your print files">
+    To download the PDF associated with each EKM order, open the Orders link in your PitchPrint Admin. There you can download the print files for each order.
+  </Step>
+</Steps>
+
+<Tip>
+  You can always reach out to us via email or chat should you have any issues.
+</Tip>
+
+## Related articles
+
+<CardGroup cols={2}>
+  <Card title="Which shopping cart framework should I pick?" icon="compass" href="/docs/documentation/which-framework-should-i-pick">
+    Suggestions to help you choose the right shopping cart platform for your store.
+  </Card>
+  <Card title="Browser Compatibility" icon="browser" href="/docs/documentation/browser-compatibility">
+    See which browsers PitchPrint supports and the requirements for the app to run.
+  </Card>
+</CardGroup>

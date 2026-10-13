@@ -326,7 +326,10 @@ for (const c of candidates) {
 
   planned.push({ ...c, category, target, via, group: resolved.group, out, mechanical,
                  applied: tidied.applied, styled, styleNotes,
-                 navPath: `/docs/${c.section}/${c.slug}`, title, description });
+                 // No leading slash: Mintlify nav entries are bare paths relative to
+                 // the project root. A leading slash stops the page registering, which
+                 // makes every link to it report as broken in `mint broken-links`.
+                 navPath: `docs/${c.section}/${c.slug}`, title, description });
 }
 
 /* ------------------------------------------------------------------- report */

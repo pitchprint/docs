@@ -58,7 +58,7 @@ To include an article in a release, add two things:
    <ReleaseLink release="wk26-26" />
    ```
 
-On push, [`scripts/generate-blog-summaries.js`](scripts/generate-blog-summaries.js)
+On push, [`scripts/generate-blog-summaries.js`](https://github.com/pitchprint/docs/blob/main/scripts/generate-blog-summaries.js)
 groups every article sharing a `release` value into one `release-<id>.mdx` (one
 section per topic, each linking back here) and the workflow publishes it to the
-blog. See [`scripts/README.md`](scripts/README.md) for the pipeline details.
+blog. See [`scripts/README.md`](https://github.com/pitchprint/docs/blob/main/scripts/README.md) for the pipeline details.
