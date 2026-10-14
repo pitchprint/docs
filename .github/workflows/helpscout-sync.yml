@@ -11,16 +11,17 @@
 # Nothing reaches main without a human merging the pull request.
 #
 # ---------------------------------------------------------------------------
-# TWO SCHEDULES
+# SCHEDULE
 #
-#   0 1 * * 1      Mondays 01:00 UTC (03:00 SAST) — the real run.
-#   */5 * * * *    Every 5 minutes — TEMPORARY, for testing. Always a DRY RUN:
-#                  it fetches, converts and reports, but writes nothing, opens
-#                  no pull request and raises no issue.
+#   0 1 * * *      Every day at 01:00 UTC (03:00 SAST) — the real run.
 #
-# >>> DELETE the */5 cron when testing is finished. <<<
-# It costs Actions minutes on every fire (~288 runs/day) and exists only so a
-# broken run can be diagnosed quickly.
+# A commented-out */5 cron sits beside it for rapid testing; it is always a DRY
+# RUN. Uncomment it only while debugging, and comment it out again afterwards.
+#
+# NOTHING IS MERGED AUTOMATICALLY. A run that finds new articles opens or
+# updates a pull request and stops there. The documentation changes only when a
+# person merges it. Edits to articles that already have a published page are
+# never applied at all — they are reported in an issue.
 # ---------------------------------------------------------------------------
 #
 # EVERY RUN WRITES A LOG to the `sync-logs` branch, pass or fail, including the
@@ -45,8 +46,12 @@ name: Help Scout sync
 
 on:
   schedule:
-    - cron: "0 1 * * 1"
-    - cron: "*/5 * * * *"
+    # 01:00 UTC = 03:00 SAST, every day.
+    - cron: "0 1 * * *"
+    # To test rapidly, uncomment the line below: it fires every 5 minutes and is
+    # always a DRY RUN (it matches TEST_CRON). Comment it out again afterwards —
+    # it costs Actions minutes on every fire, roughly 288 runs a day.
+    # - cron: "*/5 * * * *"
   workflow_dispatch:
     inputs:
       dry_run:
