@@ -72,11 +72,6 @@
       "title": "How To Install PitchPrint On PrestaShop",
       "bytes": 3080
     },
-    "documentation/how-to-install-pitchprint-on-vb-media": {
-      "hash": "cb4d272455d85339",
-      "title": "How to Install Pitchprint on VB Media",
-      "bytes": 2514
-    },
     "documentation/how-to-install-pitchprint-on-wix": {
       "hash": "33c443d276e494a6",
       "title": "How to install PitchPrint on WIX",
@@ -671,6 +666,12 @@
       "hash": "6e37218457d42e3c",
       "title": "Render PDF & Raster",
       "bytes": 434
+    },
+    "documentation/how-to-install-pitchprint-on-vb-media": {
+      "hash": "cb4d272455d85339",
+      "title": "How to Install Pitchprint on VB Media",
+      "bytes": 3061,
+      "ingestedAt": "2026-10-14T09:28:04.520Z"
     }
   }
 }

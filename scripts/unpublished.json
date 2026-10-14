@@ -1,5 +1,5 @@
 {
-  "_comment": "Help Scout articles that deliberately have NO published page. This is the decision record, not a cache \u2014 it is hand-maintained and committed. scripts/ingest-new.js refuses to publish anything listed here, and scripts/report-drift.js reports edits to them separately so nobody goes hunting for a page that was never meant to exist. To publish one: delete its entry, run `npm run ingest -- --preview .preview --only <slug>` to review, then `npm run ingest -- --write`. Keys are <section>/<slug>, matching data/markdown/ and the baseline.",
+  "_comment": "Help Scout articles that deliberately have NO published page. This is the decision record, not a cache \u2014 it is hand-maintained and committed. scripts/ingest-new.js refuses to publish anything listed here, and scripts/report-drift.js reports edits to them separately so nobody goes hunting for a page that was never meant to exist. TO PUBLISH ONE: delete its entry here AND delete its entry from scripts/helpscout-baseline.json \u2014 the ingest skips anything already in the baseline, so removing it from this file alone leaves it silently skipped. Then review with `npm run ingest -- --preview .preview --only <slug>` and apply with `npm run ingest -- --write`. Keys are <section>/<slug>, matching data/markdown/ and the baseline.",
   "_decidedBy": "sbabalwe@pitchprint.com",
   "_decidedAt": "2026-09-23",
   "articles": {
@@ -10,11 +10,6 @@
     },
     "documentation/how-to-install-pitchprint-on-odoo": {
       "title": "How To Install PitchPrint On Odoo",
-      "status": "not-publishing",
-      "reason": "Deliberately unpublished. Present in Help Scout since before the baseline was seeded and never ported to the site."
-    },
-    "documentation/how-to-install-pitchprint-on-vb-media": {
-      "title": "How to Install Pitchprint on VB Media",
       "status": "not-publishing",
       "reason": "Deliberately unpublished. Present in Help Scout since before the baseline was seeded and never ported to the site."
     },

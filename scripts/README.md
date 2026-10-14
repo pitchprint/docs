@@ -335,8 +335,12 @@ requires `--preview`, which cannot write into `docs/`:
 npm run ingest -- --preview .preview --only how-to-install-pitchprint-on-wix
 ```
 
-**To publish one:** delete its entry, review it with the command above, then
-`npm run ingest -- --write`.
+**To publish one:** delete its entry here **and** its entry in
+`scripts/helpscout-baseline.json`. Both are needed — the ingest skips anything
+already in the baseline, so removing it from `unpublished.json` alone leaves the
+article silently skipped with no error. Then review it with the command above and
+apply with `npm run ingest -- --write`, which files it in the sidebar and records
+it back in the baseline.
 
 ## The registry
 
