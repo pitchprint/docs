@@ -1,13 +1,13 @@
-# Help Scout sync — run 10
+# Help Scout sync — run 11
 
 | | |
 | --- | --- |
-| When | `2026-10-14T06:08:07Z` |
+| When | `2026-10-14T11:45:07Z` |
 | Mode | **DRY RUN** (5-minute test schedule) |
 | Trigger | `schedule` |
-| Commit | `f0883a050c77dabc57574bf8a463be285eff2b79` |
+| Commit | `df4ac43097d8572d1b4dfda809fcff3d39d4d665` |
 | Result | **success** |
-| Run | https://github.com/pitchprint/docs/actions/runs/38520416457 |
+| Run | https://github.com/pitchprint/docs/actions/runs/38558740304 |
 
 ## Steps
 
@@ -42,7 +42,7 @@ Preflight passed.
 
 ```
 
-added 3 packages, and audited 4 packages in 386ms
+added 3 packages, and audited 4 packages in 611ms
 
 found 0 vulnerabilities
 ```
@@ -95,7 +95,7 @@ ok    a code identifier removed outright  (specifics dropped (1): "pitchprint.zi
 ok    the port number dropped  (specifics dropped (1): "443")
 ok    bold reformatted but the label kept is accepted
 
-ok    131 real hand-written pages accepted (bar the known divergences)
+ok    132 real hand-written pages accepted (bar the known divergences)
 
 All validate() tests passed.
 ok    no API key keeps the mechanical version
@@ -201,8 +201,8 @@ Generated 2026-10-14 from `data/markdown/` and `docs/`.
 
 | State | Count |
 | --- | --- |
-| Published | 128 |
-| Deliberately not publishing | 6 |
+| Published | 129 |
+| Deliberately not publishing | 5 |
 | Needs a decision | 0 |
 | **Untracked — would be proposed on the next sync** | **0** |
 | Pages with no Help Scout article | 2 |
@@ -213,7 +213,6 @@ Recorded in `scripts/unpublished.json`. The sync will never propose these.
 
 - **How to Install PitchPrint on EKM** — `documentation/how-to-install-pitchprint-on-ekm`
 - **How To Install PitchPrint On Odoo** — `documentation/how-to-install-pitchprint-on-odoo`
-- **How to Install Pitchprint on VB Media** — `documentation/how-to-install-pitchprint-on-vb-media`
 - **How to install PitchPrint on WIX** — `documentation/how-to-install-pitchprint-on-wix`
 - **How To Install PitchPrint On Magento** — `documentation/magento-installation`
 - **Upgrading to Version 9** — `documentation/upgrading-to-version-9`
@@ -262,7 +261,7 @@ Normal for hand-authored pages. Anything unexpected here usually means an articl
 | How To Install PitchPrint On Odoo | `documentation/how-to-install-pitchprint-on-odoo` | not-publishing |
 | How To Install PitchPrint On OpenCart | `documentation/how-to-install-pitchprint-on-opencart` | published |
 | How To Install PitchPrint On PrestaShop | `documentation/how-to-install-pitchprint-on-prestashop` | published |
-| How to Install Pitchprint on VB Media | `documentation/how-to-install-pitchprint-on-vb-media` | not-publishing |
+| How to Install Pitchprint on VB Media | `documentation/how-to-install-pitchprint-on-vb-media` | published |
 | How to install PitchPrint on WIX | `documentation/how-to-install-pitchprint-on-wix` | not-publishing |
 | How To Install PitchPrint On WordPress | `documentation/how-to-install-pitchprint-on-wordpress` | published |
 | How To Install PitchPrint On Magento | `documentation/magento-installation` | not-publishing |
@@ -375,7 +374,6 @@ Normal for hand-authored pages. Anything unexpected here usually means an articl
 No new Help Scout articles to add.
   skipped documentation/how-to-install-pitchprint-on-ekm — deliberately not published — see scripts/unpublished.json
   skipped documentation/how-to-install-pitchprint-on-odoo — deliberately not published — see scripts/unpublished.json
-  skipped documentation/how-to-install-pitchprint-on-vb-media — deliberately not published — see scripts/unpublished.json
   skipped documentation/how-to-install-pitchprint-on-wix — deliberately not published — see scripts/unpublished.json
   skipped documentation/magento-installation — deliberately not published — see scripts/unpublished.json
   skipped documentation/upgrading-to-version-9 — deliberately not published — see scripts/unpublished.json
