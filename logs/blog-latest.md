@@ -1,23 +1,23 @@
-# Release notes to blog — run 8
+# Release notes to blog — run 9
 
 | | |
 | --- | --- |
-| When | `2026-10-15T22:56:25Z` |
+| When | `2026-10-15T22:57:29Z` |
 | Mode | **DRY RUN** (requested by hand with dry_run) |
 | Trigger | `workflow_dispatch` |
-| Commit | `f611f06e372efab6fc732573461f40a5d67d2c69` |
-| Result | **failure** |
-| Run | https://github.com/pitchprint/docs/actions/runs/38819776313 |
+| Commit | `a827df0e08fdfd108c0c3a5ca0e7bda58603398b` |
+| Result | **success** |
+| Run | https://github.com/pitchprint/docs/actions/runs/38820515940 |
 
 ## Steps
 
 | Step | Outcome |
 | --- | --- |
 | Install | ok |
-| Tests | **FAILED** |
-| Fetch feed | – |
-| Benchmark | – |
-| Preview | – |
+| Tests | ok |
+| Fetch feed | ok |
+| Benchmark | ok |
+| Preview | ok |
 | Branch guard | – |
 | Import | – |
 | Additions-only guard | – |
@@ -30,7 +30,7 @@
 
 ```
 
-added 3 packages, and audited 4 packages in 597ms
+added 3 packages, and audited 4 packages in 502ms
 
 found 0 vulnerabilities
 ```
@@ -225,9 +225,8 @@ End to end, against a year file
   ok    no blog.pitchprint.com image URL left behind
   ok    docs.json untouched
   ok    re-running is a no-op
-  FAIL  a failed image download refuses rather than writing a broken note
-          exit 2
-  FAIL  and nothing was written
+  ok    a failed image download refuses rather than writing a broken note
+  ok    and nothing was written
   ok    an unreadable pubDate is refused, not guessed
   ok    and nothing was written
   ok    preview exits 0
@@ -235,5 +234,138 @@ End to end, against a year file
   ok    preview writes the candidate
   ok    --preview with --write is refused
 
-2 blog release-note check(s) failed.
+All blog release-note tests passed.
+```
+
+### fetch
+
+```
+
+> helpscout-docs-client@1.0.0 blog-fetch
+> node scripts/fetch-blog-releases.js
+
+Fetching https://blog.pitchprint.com/rss/
+
+13 release note(s) cached to data/blog-releases.json (2 other post(s) ignored).
+  newest: Release WK26-40 — Thu, 01 Oct 2026 14:02:58 GMT
+```
+
+### benchmark
+
+```
+
+> helpscout-docs-client@1.0.0 blog-benchmark
+> node scripts/ingest-blog-releases.mjs --benchmark
+
+Conversion compared against the hand-written blocks.
+
+  WK26-26  (25 June 2026)
+    words     668 hand-written vs 594 converted  (89%)
+    headings  7 vs 0
+    images    5 vs 5  (5 in the post)
+    accordion yes vs yes
+
+  WK19-26  (7 May 2026)
+    words     907 hand-written vs 949 converted  (105%)
+    headings  6 vs 0
+    images    8 vs 10  (10 in the post)
+    accordion yes vs yes
+
+  WK12-26  (19 March 2026)
+    words     583 hand-written vs 502 converted  (86%)
+    headings  6 vs 0
+    images    6 vs 6  (6 in the post)
+    accordion yes vs yes
+
+  WK09-26  (26 February 2026)
+    words     565 hand-written vs 463 converted  (82%)
+    headings  5 vs 0
+    images    6 vs 6  (6 in the post)
+    accordion yes vs yes
+
+  WK48-25  (27 November 2025)
+    words     711 hand-written vs 694 converted  (98%)
+    headings  3 vs 0
+    images    3 vs 3  (3 in the post)
+    accordion yes vs yes
+
+  WK45-25  (6 November 2025)
+    words     640 hand-written vs 553 converted  (86%)
+    headings  4 vs 0
+    images    9 vs 9  (9 in the post)
+    accordion yes vs yes
+
+  WK41-25  (9 October 2025)
+    words     491 hand-written vs 446 converted  (91%)
+    headings  4 vs 0
+    images    4 vs 4  (4 in the post)
+    accordion yes vs yes
+
+  WK35-25  (28 August 2025)
+    words     576 hand-written vs 496 converted  (86%)
+    headings  3 vs 0
+    images    7 vs 7  (7 in the post)
+    accordion yes vs yes
+
+  WK32-25  (7 August 2025)
+    words     630 hand-written vs 534 converted  (85%)
+    headings  2 vs 0
+    images    9 vs 9  (9 in the post)
+    accordion yes vs yes
+
+  WK30-25  (24 July 2025)
+    words     788 hand-written vs 705 converted  (89%)
+    headings  4 vs 0
+    images    8 vs 8  (8 in the post)
+    accordion no vs yes
+
+  WK23-25  (5 June 2025)
+    words     903 hand-written vs 802 converted  (89%)
+    headings  6 vs 0
+    images    6 vs 6  (6 in the post)
+    accordion yes vs yes
+
+  WK17-25  (24 April 2025)
+    words     675 hand-written vs 560 converted  (83%)
+    headings  5 vs 0
+    images    4 vs 4  (4 in the post)
+    accordion yes vs yes
+
+12 post(s) compared. Words near 100% with matching headings and images
+means the conversion carries the content. The accordion row is the known
+gap, and is flagged on every run.
+```
+
+### preview
+
+```
+
+> helpscout-docs-client@1.0.0 blog-sync
+> node scripts/ingest-blog-releases.mjs
+
+  skipped WK26-26 — already in blog/releases/2026.mdx
+  skipped WK19-26 — already in blog/releases/2026.mdx
+  skipped WK12-26 — already in blog/releases/2026.mdx
+  skipped WK09-26 — already in blog/releases/2026.mdx
+  skipped WK48-25 — already in blog/releases/2025.mdx
+  skipped WK45-25 — already in blog/releases/2025.mdx
+  skipped WK41-25 — already in blog/releases/2025.mdx
+  skipped WK35-25 — already in blog/releases/2025.mdx
+  skipped WK32-25 — already in blog/releases/2025.mdx
+  skipped WK30-25 — already in blog/releases/2025.mdx
+  skipped WK23-25 — already in blog/releases/2025.mdx
+  skipped WK17-25 — already in blog/releases/2025.mdx
+
+  NOTE  "Release WK26-40" was published 1 October 2026, which is WK40-26. Filed as WK40-26 — the digits in the post title look transposed.
+
+1 release note(s) on the blog but not in the docs:
+
+  WK40-26  1 October 2026
+    title     Release WK26-40
+    into      blog/releases/2026.mdx
+    source    https://blog.pitchprint.com/release-wk26-40/
+    images    4
+    NEEDS     alt text on 4 image(s) — the post had none
+
+Dry run — nothing written. Re-run with --write to apply.
 ```
