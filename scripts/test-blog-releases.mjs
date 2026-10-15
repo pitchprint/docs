@@ -223,7 +223,7 @@ async function linkModules(dir) {
   }
 }
 
-async function fixture(items, { withImages = true } = {}) {
+async function fixture(items) {
   const dir = await mkdtemp(join(tmpdir(), "blogrel-"));
   await mkdir(join(dir, "blog", "releases"), { recursive: true });
   await mkdir(join(dir, "data"), { recursive: true });
@@ -236,14 +236,13 @@ async function fixture(items, { withImages = true } = {}) {
     await cp(join(scriptDir, f), join(dir, "scripts", f));
   }
   await linkModules(dir);
-  // Pre-place the images so the download step is a no-op and the test needs
-  // no network. Downloading itself is exercised only in CI.
-  if (withImages) {
-    for (const p of ["2026/06/image.png", "2026/06/image-6.png"]) {
-      const dest = join(dir, "blog", "images", p);
-      await mkdir(dirname(dest), { recursive: true });
-      await writeFile(dest, "x", "utf8");
-    }
+  // Pre-place the images the posts reference, so a passing run needs no
+  // network at all. The one case that must hit the network is the download
+  // failure below, which references a path that exists nowhere.
+  for (const p of ["2026/06/image.png", "2026/06/image-6.png"]) {
+    const dest = join(dir, "blog", "images", p);
+    await mkdir(dirname(dest), { recursive: true });
+    await writeFile(dest, "x", "utf8");
   }
   return dir;
 }
@@ -320,13 +319,31 @@ const POST_EXISTING = {
 }
 
 {
-  const dir = await fixture([POST_NEW], { withImages: false });
+  // The "every image must land before anything is written" guard.
+  //
+  // The first version of this test created the failure by having no network,
+  // which meant it passed on a laptop behind an egress proxy and FAILED on a
+  // CI runner that could reach the blog — there the image downloaded, the note
+  // was written, and the assertion was simply wrong. A test that passes for
+  // environmental reasons is worse than no test.
+  //
+  // So it now points at a path that does not exist on the blog. The download
+  // fails the same way everywhere: 404 where the host is reachable, a
+  // connection error where it is not. Both land in the same refusal.
+  const MISSING = {
+    ...POST_NEW,
+    html: HTML.replace(
+      "content/images/2026/06/image.png",
+      "content/images/2026/06/__deliberately-absent-for-tests__.png"
+    ),
+  };
+  const dir = await fixture([MISSING]);
   const before = await readFile(join(dir, "blog/releases/2026.mdx"), "utf8");
   const r = run(dir, ["--write"]);
   check(
     "a failed image download refuses rather than writing a broken note",
     r.code === 1 && /Refusing to write a release note whose images are missing/.test(r.out),
-    `exit ${r.code}`
+    `exit ${r.code}: ${r.out.trim().split("\n").slice(-2).join(" ")}`
   );
   check("and nothing was written", (await readFile(join(dir, "blog/releases/2026.mdx"), "utf8")) === before);
   await cleanup(dir);
