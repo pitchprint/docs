@@ -10,7 +10,7 @@
 #
 # WHAT IT DOES
 #
-# Once a week it looks for docs articles carrying a `release:` value whose
+# Once a day it looks for docs articles carrying a `release:` value whose
 # release has no <Update> block in the matching year file, and opens a pull
 # request adding a DRAFT block for each one.
 #
@@ -38,18 +38,23 @@ name: Release notes to blog
 
 on:
   schedule:
-    # 02:00 UTC Friday = 04:00 SAST, the morning after Thursday's release.
-    - cron: "0 2 * * 5"
-    # For testing: uncomment to run every 5 minutes. A run on this schedule is
-    # always a DRY RUN (it matches TEST_CRON below). Comment it out again
-    # afterwards — it is noisy and it holds the concurrency group.
-    # - cron: "*/5 * * * *"
+    # 02:00 UTC = 04:00 SAST, every day — the same cadence as the Help Scout
+    # sync, an hour later so the two never queue behind each other.
+    - cron: "0 2 * * *"
+    # TESTING — CURRENTLY ACTIVE. Fires every 5 minutes and is always a DRY
+    # RUN: it matches TEST_CRON below, so it can never write a file or open a
+    # pull request, however it is triggered. Comment this line out when you
+    # have seen enough — it is noisy, it holds the concurrency group, and
+    # GitHub throttles repositories that schedule this aggressively.
+    - cron: "*/5 * * * *"
   workflow_dispatch:
     inputs:
       dry_run:
-        description: "Preview only — do not open a pull request"
+        description: "Dry run — report what would be added, but write nothing and open no PR"
         type: boolean
-        default: false
+        # Defaults to true, as the Help Scout sync does: opening a pull request
+        # is the thing you opt into, not the thing you forget to opt out of.
+        default: true
 
 permissions:
   contents: write
@@ -79,7 +84,7 @@ jobs:
       - name: Decide run mode
         id: mode
         run: |
-          dry=false; why="scheduled weekly run"
+          dry=false; why="scheduled daily run"
           if [ "${{ github.event_name }}" = "schedule" ] && [ "${{ github.event.schedule }}" = "$TEST_CRON" ]; then
             dry=true; why="test schedule — always a dry run"
           elif [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
