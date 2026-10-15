@@ -1,6 +1,6 @@
 {
   "_comment": "Fingerprint of the Help Scout content as last reviewed. scripts/report-drift.js compares each sync against this to show only what support has changed. Regenerate with `npm run baseline` after porting changes into docs/.",
-  "updatedAt": "2026-09-02T10:18:52.552Z",
+  "updatedAt": "2026-10-15T23:14:19.422Z",
   "articles": {
     "documentation/3d-studio": {
       "hash": "5b57c73a3b883a17",
@@ -43,9 +43,9 @@
       "bytes": 2013
     },
     "documentation/how-to-install-pitchprint-on-bigcommerce": {
-      "hash": "89b650d7e05ffa5b",
+      "hash": "5a6eb6f9a21fa741",
       "title": "How to install PitchPrint on BigCommerce",
-      "bytes": 3627
+      "bytes": 3937
     },
     "documentation/how-to-install-pitchprint-on-ecwid": {
       "hash": "34e9d8f0b049eeac",
@@ -63,14 +63,19 @@
       "bytes": 5834
     },
     "documentation/how-to-install-pitchprint-on-opencart": {
-      "hash": "9660d32464e9c56e",
+      "hash": "835ceabd33f5dea5",
       "title": "How To Install PitchPrint On OpenCart",
-      "bytes": 5482
+      "bytes": 5789
     },
     "documentation/how-to-install-pitchprint-on-prestashop": {
-      "hash": "6ae6fc55396691ab",
+      "hash": "a48c3daf2a1458f3",
       "title": "How To Install PitchPrint On PrestaShop",
-      "bytes": 3080
+      "bytes": 3389
+    },
+    "documentation/how-to-install-pitchprint-on-vb-media": {
+      "hash": "cb4d272455d85339",
+      "title": "How to Install Pitchprint on VB Media",
+      "bytes": 2514
     },
     "documentation/how-to-install-pitchprint-on-wix": {
       "hash": "33c443d276e494a6",
@@ -78,9 +83,9 @@
       "bytes": 3865
     },
     "documentation/how-to-install-pitchprint-on-wordpress": {
-      "hash": "bd4e1b338663413b",
+      "hash": "e23d8eefd8e540bd",
       "title": "How To Install PitchPrint On WordPress",
-      "bytes": 3930
+      "bytes": 4238
     },
     "documentation/magento-installation": {
       "hash": "1df2aba9cff6c56d",
@@ -98,9 +103,9 @@
       "bytes": 31
     },
     "documentation/pitchprint-for-shopify-getting-started": {
-      "hash": "09e73205d99f4cad",
+      "hash": "cc07b3f5cc967a69",
       "title": "PitchPrint For Shopify.. Getting Started",
-      "bytes": 4241
+      "bytes": 4551
     },
     "documentation/pitchprint-on-3dcart": {
       "hash": "ec439900f83cd4be",
@@ -148,9 +153,9 @@
       "bytes": 32
     },
     "tutorial/admin-settings": {
-      "hash": "970b0732695f3ae3",
+      "hash": "ff1ba88499b1792d",
       "title": "Admin Settings",
-      "bytes": 12091
+      "bytes": 12407
     },
     "tutorial/ai-image-generator": {
       "hash": "cb672f331df04d90",
@@ -508,9 +513,9 @@
       "bytes": 3343
     },
     "tutorial/spark": {
-      "hash": "7f887fefa2300597",
+      "hash": "51a179c514406674",
       "title": "Spark",
-      "bytes": 4943
+      "bytes": 5291
     },
     "tutorial/sticky-items": {
       "hash": "8abf8d6ca6ff5069",
@@ -666,12 +671,6 @@
       "hash": "6e37218457d42e3c",
       "title": "Render PDF & Raster",
       "bytes": 434
-    },
-    "documentation/how-to-install-pitchprint-on-vb-media": {
-      "hash": "cb4d272455d85339",
-      "title": "How to Install Pitchprint on VB Media",
-      "bytes": 3061,
-      "ingestedAt": "2026-10-14T09:28:04.520Z"
     }
   }
 }
