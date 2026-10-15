@@ -1,84 +1,397 @@
-# Publish blog release notes from docs articles.
+# Propose a draft release note for any release that doesn't have one yet.
 #
-# Each docs article is one topic. Articles that ship in a release carry a
-# `release: "wkXX-YY"` frontmatter value. This workflow groups every article
-# sharing a release into ONE blog release note (one section per topic) and
-# commits it into the Mintlify blog repo, which then auto-deploys. Mintlify has
-# no content-write API, so publishing = committing MDX into the blog's git repo.
+# WHAT THIS REPLACES
 #
-# ── BEFORE THIS WORKS, FILL IN THE PLACEHOLDERS BELOW ────────────────────────
-#   1. BLOG_REPO   -> "owner/blog-repo" of the Mintlify release site (once created)
-#   2. BLOG_PATH   -> folder inside the blog repo where release notes live
-#   3. Secret BLOG_REPO_TOKEN -> a PAT (or fine-grained token) with write access
-#      to the blog repo. Add it in: docs repo → Settings → Secrets → Actions.
-#   4. (optional) Secret MINTLIFY_API_KEY -> admin key (mint_...) to force+track a
-#      deploy via the Mintlify update API. Git push already auto-deploys, so this
-#      is only needed if you want deterministic deploy status.
-# ─────────────────────────────────────────────────────────────────────────────
+# The previous version of this file pushed generated posts to a separate blog
+# repository that was never created — BLOG_REPO was still set to the
+# "CHANGE-ME-blog-repo" placeholder — and it fired on every push to main. It
+# cannot ever have worked. The blog lives in this repository, under
+# blog/releases/<year>.mdx, so that is where this writes.
+#
+# WHAT IT DOES
+#
+# Once a week it looks for docs articles carrying a `release:` value whose
+# release has no <Update> block in the matching year file, and opens a pull
+# request adding a DRAFT block for each one.
+#
+#   release with a note already  ->  skipped, forever, however the note is edited
+#   release with no note         ->  draft block proposed in a pull request
+#
+# It is additive only. An existing release note is never regenerated, reordered
+# or reformatted — those are hand-written, several hundred words with annotated
+# screenshots, and all this knows is the one-line `release_summary` on each
+# article. The script verifies byte-for-byte after writing that every
+# pre-existing block survived, and the guard below checks again independently.
+#
+# So the draft is a reminder with the scaffolding filled in, not a finished
+# post. Nothing reaches the live blog without someone expanding it and merging.
+#
+# EVERY RUN WRITES A LOG to the `sync-logs` branch, pass or fail:
+#   git fetch origin sync-logs && git show origin/sync-logs:logs/blog-latest.md
+#
+# Setup: none. No secrets, no API keys — it reads only this repository.
+# The one requirement is Settings -> Actions -> General -> Workflow permissions
+# -> "Allow GitHub Actions to create and approve pull requests", which the
+# Help Scout sync already needs.
 
-name: Publish release notes to blog
+name: Release notes to blog
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - "documentation/**.mdx"
-      - "tutorial/**.mdx"
-      - "api-reference/**.mdx"
+  schedule:
+    # 02:00 UTC Friday = 04:00 SAST, the morning after Thursday's release.
+    - cron: "0 2 * * 5"
+    # For testing: uncomment to run every 5 minutes. A run on this schedule is
+    # always a DRY RUN (it matches TEST_CRON below). Comment it out again
+    # afterwards — it is noisy and it holds the concurrency group.
+    # - cron: "*/5 * * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Preview only — do not open a pull request"
+        type: boolean
+        default: false
 
-# Placeholders — replace these two values.
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: release-to-blog
+  cancel-in-progress: false
+
 env:
-  BLOG_REPO: "pitchprint/CHANGE-ME-blog-repo"
-  BLOG_PATH: "release-notes"
-  DOCS_BASE_URL: "https://docs.pitchprint.com"
+  TEST_CRON: "*/5 * * * *"
+  SYNC_BRANCH: release-notes-sync
+  LOG_BRANCH: sync-logs
+  BOT_EMAIL: "41898282+github-actions[bot]@users.noreply.github.com"
 
 jobs:
-  publish:
+  release-notes:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+
     steps:
-      - name: Check out docs repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          # Needed to see origin/$SYNC_BRANCH and compare its last author.
+          fetch-depth: 0
+
+      - name: Decide run mode
+        id: mode
+        run: |
+          dry=false; why="scheduled weekly run"
+          if [ "${{ github.event_name }}" = "schedule" ] && [ "${{ github.event.schedule }}" = "$TEST_CRON" ]; then
+            dry=true; why="test schedule — always a dry run"
+          elif [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            if [ "${{ inputs.dry_run }}" = "true" ]; then
+              dry=true; why="requested by hand with dry_run"
+            else
+              why="run by hand"
+            fi
+          fi
+          echo "dry=$dry" >> "$GITHUB_OUTPUT"
+          echo "why=$why" >> "$GITHUB_OUTPUT"
+          echo "Mode: $([ "$dry" = true ] && echo 'DRY RUN' || echo 'FULL RUN') ($why)"
 
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
+          cache: npm
 
-      # Scan all articles and (re)generate every release note. Only the ones
-      # whose articles changed will differ from what's already in the blog repo,
-      # so the commit step below is a no-op unless something actually changed.
-      - name: Generate release notes
-        run: node scripts/generate-blog-summaries.js
+      - name: Install dependencies
+        id: install
+        run: npm ci 2>&1 | tee "$RUNNER_TEMP/step-install.log"
 
-      - name: Check out blog repo
-        uses: actions/checkout@v4
-        with:
-          repository: ${{ env.BLOG_REPO }}
-          token: ${{ secrets.BLOG_REPO_TOKEN }}
-          path: blog-repo
-
-      - name: Sync release notes into the blog repo and push
+      # The scripts the rest of the job depends on. Failing here is clearer than
+      # a "module not found" halfway through.
+      - name: Preflight
+        id: preflight
         run: |
-          if ! compgen -G "dist/blog-posts/*.mdx" > /dev/null; then
-            echo "No release notes generated (no articles carry a release: value)."
-            exit 0
-          fi
-          mkdir -p "blog-repo/${BLOG_PATH}"
-          cp dist/blog-posts/*.mdx "blog-repo/${BLOG_PATH}/"
-          cd blog-repo
-          git config user.name "pitchprint-bot"
-          git config user.email "bot@pitchprint.com"
-          git add "${BLOG_PATH}"/*.mdx
-          if git diff --cached --quiet; then
-            echo "Blog release notes already up to date."
-            exit 0
-          fi
-          git commit -m "chore: sync release notes from docs (${{ github.sha }})"
-          git push
+          set -o pipefail
+          {
+            missing=0
+            for f in scripts/generate-blog-summaries.js scripts/ingest-release-notes.mjs blog/releases; do
+              if [ -e "$f" ]; then echo "ok       $f"
+              else echo "MISSING  $f"; missing=1; fi
+            done
+            exit $missing
+          } 2>&1 | tee "$RUNNER_TEMP/step-preflight.log"
 
-      # Optional: force + track a Mintlify deploy of the blog. Git push already
-      # triggers a deploy, so enable only if you want the API status back.
-      # - name: Trigger Mintlify deploy
-      #   run: |
-      #     curl -X POST https://api.mintlify.com/v1/update \
-      #       -H "Authorization: Bearer ${{ secrets.MINTLIFY_API_KEY }}" \
-      #       -H "Content-Type: application/json"
+      - name: Show what would be added
+        id: preview
+        run: |
+          set -o pipefail
+          node scripts/ingest-release-notes.mjs 2>&1 | tee "$RUNNER_TEMP/step-preview.log"
+
+      - name: Stop here on a dry run
+        if: steps.mode.outputs.dry == 'true'
+        run: |
+          echo "DRY RUN — nothing written, no pull request."
+          echo "### Dry run" >> "$GITHUB_STEP_SUMMARY"
+          echo "Nothing was written. See the log for what a full run would add." >> "$GITHUB_STEP_SUMMARY"
+
+      # Refuse to touch the sync branch if a reviewer has committed to it. The
+      # branch is rebuilt from scratch and force-pushed each run, which would
+      # silently destroy the prose someone wrote into the draft in the open PR.
+      # That is the whole point of the draft, so this guard matters more here
+      # than it does on the docs sync.
+      - name: Guard — do not clobber a reviewer's commit
+        id: guard_branch
+        if: steps.mode.outputs.dry != 'true'
+        run: |
+          if git ls-remote --exit-code --heads origin "$SYNC_BRANCH" >/dev/null 2>&1; then
+            git fetch --quiet origin "$SYNC_BRANCH"
+            author=$(git log -1 --format=%ae "origin/$SYNC_BRANCH")
+            if [ "$author" != "$BOT_EMAIL" ]; then
+              echo "::error::$SYNC_BRANCH was last committed to by $author, not the sync bot."
+              echo "This run rebuilds and force-pushes that branch, which would discard that work —"
+              echo "and on this workflow that work is the release note someone wrote."
+              echo "Merge or close the open pull request, then re-run."
+              exit 1
+            fi
+          fi
+          echo "Safe to rebuild $SYNC_BRANCH."
+
+      - name: Add draft release notes
+        id: ingest
+        if: steps.mode.outputs.dry != 'true'
+        run: |
+          set -o pipefail
+          # Exit 2 means "wrote changes", which is success here, not failure.
+          node scripts/ingest-release-notes.mjs --write 2>&1 | tee "$RUNNER_TEMP/step-ingest.log"
+          code=${PIPESTATUS[0]}
+          case "$code" in
+            0) echo "changed=false" >> "$GITHUB_OUTPUT"; echo "Nothing to add." ;;
+            2) echo "changed=true"  >> "$GITHUB_OUTPUT"; echo "Draft release note(s) written." ;;
+            *) echo "::error::ingest-release-notes.mjs refused (exit $code)."; exit "$code" ;;
+          esac
+
+      # Independent of the script's own verification: whatever it claims, only
+      # these paths may differ, and nothing may be deleted.
+      - name: Guard — blog/releases and docs.json only
+        id: guard_paths
+        if: steps.mode.outputs.dry != 'true'
+        run: |
+          set -o pipefail
+          {
+            offenders=$(git status --porcelain \
+              | grep -v '^??' \
+              | grep -v ' blog/releases/[0-9]\{4\}\.mdx$' \
+              | grep -v ' docs\.json$' || true)
+            if [ -n "$offenders" ]; then
+              echo "::error::This job modified files it must never touch:"
+              echo "$offenders"
+              exit 1
+            fi
+
+            deleted=$(git status --porcelain | grep '^ D\|^D ' || true)
+            if [ -n "$deleted" ]; then
+              echo "::error::Files were deleted:"; echo "$deleted"; exit 1
+            fi
+
+            # An existing year file may only GROW, and only by whole added lines.
+            # A removed line means a published release note was edited.
+            removed=$(git diff --numstat -- 'blog/releases/*.mdx' | awk '$2 > 0 {print}')
+            if [ -n "$removed" ]; then
+              echo "::error::Lines were REMOVED from a year file — an existing release note was altered:"
+              echo "$removed"
+              git diff -- 'blog/releases/*.mdx' | grep '^-' | grep -v '^---' | head -40
+              exit 1
+            fi
+
+            echo "Additions only — no published release note was modified or deleted."
+          } 2>&1 | tee "$RUNNER_TEMP/step-guard.log"
+
+      - name: Check for broken links
+        id: links
+        if: steps.mode.outputs.dry != 'true' && steps.ingest.outputs.changed == 'true'
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          npm run links 2>&1 | tee "$RUNNER_TEMP/step-links.log"
+
+      - name: Open or update the pull request
+        id: pr
+        if: steps.mode.outputs.dry != 'true' && steps.ingest.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -o pipefail
+          {
+            if [ -z "$(git status --porcelain)" ]; then
+              echo "Nothing changed on disk — no pull request needed."
+              exit 0
+            fi
+
+            git config user.name "release-notes[bot]"
+            git config user.email "$BOT_EMAIL"
+            git checkout -b "$SYNC_BRANCH"
+            git add blog/releases docs.json
+            git commit -m "Add draft release note(s)
+
+          Scaffolding only: the headings and one-line summaries from the docs
+          articles that shipped in each release. The opening paragraph, the
+          detail under each heading and the screenshots still need writing.
+
+          No existing release note was touched — verified byte for byte.
+
+          Workflow: ${{ github.workflow }} run ${{ github.run_number }}"
+
+            # Safe to force-push: the branch is rebuilt from main every run, and
+            # the guard above already refused if a human had committed to it.
+            git push --force origin "$SYNC_BRANCH"
+
+            {
+              echo "A release shipped without a blog note. Here is the scaffolding."
+              echo
+              echo "**This is a draft, not a finished post.** It has the headings and the"
+              echo "one-line summary from each docs article, and nothing else. Compare it with"
+              echo "any published note and the gap is obvious — that gap is the writing."
+              echo
+              echo "## Before merging"
+              echo
+              echo "- [ ] Write the opening paragraph, in the usual voice"
+              echo "- [ ] Expand each \`###\` section — what changed, why it matters, how to use it"
+              echo "- [ ] Add the screenshots, under \`/blog/images/<year>/<month>/\`, with real \`alt\` text"
+              echo "- [ ] Check the \`description=\` date is the day it actually shipped"
+              echo "- [ ] Rewrite the \`rss={{ title, description }}\` so it reads like a headline"
+              echo "- [ ] Delete the \`{/* DRAFT … */}\` comment"
+              echo
+              echo "Edit it here in the branch if nobody else is going to re-run the workflow,"
+              echo "or merge and edit on \`main\`. The next run refuses to touch this branch"
+              echo "once a human has committed to it, rather than overwriting your work."
+              echo
+              echo "## What the job did"
+              echo
+              echo '```'
+              cat "$RUNNER_TEMP/step-ingest.log"
+              echo '```'
+            } > "$RUNNER_TEMP/pr-body.md"
+
+            existing=$(gh pr list --head "$SYNC_BRANCH" --state open --json number --jq '.[0].number // empty')
+            if [ -n "$existing" ]; then
+              gh pr edit "$existing" --body-file "$RUNNER_TEMP/pr-body.md"
+              echo "Updated pull request #$existing."
+            else
+              gh pr create \
+                --base "$(gh repo view --json defaultBranchRef --jq .defaultBranchRef.name)" \
+                --head "$SYNC_BRANCH" \
+                --title "Draft release note(s) for the blog" \
+                --body-file "$RUNNER_TEMP/pr-body.md"
+            fi
+          } 2>&1 | tee "$RUNNER_TEMP/step-pr.log"
+
+      # ------------------------------------------------------------- the log
+      # Runs whatever happened above, including a failure. It must never be the
+      # reason a run goes red, so every step here tolerates its own errors.
+      - name: Publish the run log
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DRY: ${{ steps.mode.outputs.dry }}
+          WHY: ${{ steps.mode.outputs.why }}
+          O_INSTALL: ${{ steps.install.outcome }}
+          O_PREFLIGHT: ${{ steps.preflight.outcome }}
+          O_PREVIEW: ${{ steps.preview.outcome }}
+          O_GUARD_BRANCH: ${{ steps.guard_branch.outcome }}
+          O_INGEST: ${{ steps.ingest.outcome }}
+          O_GUARD_PATHS: ${{ steps.guard_paths.outcome }}
+          O_LINKS: ${{ steps.links.outcome }}
+          O_PR: ${{ steps.pr.outcome }}
+        run: |
+          set +e
+          L="$RUNNER_TEMP/run-log.md"
+          stamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          slug=$(date -u +"%Y-%m-%d_%H%M%S")
+          mode=$([ "$DRY" = "true" ] && echo "DRY RUN" || echo "FULL RUN")
+
+          {
+            echo "# Release notes to blog — run ${{ github.run_number }}"
+            echo
+            echo "| | |"
+            echo "| --- | --- |"
+            echo "| When | \`$stamp\` |"
+            echo "| Mode | **$mode** ($WHY) |"
+            echo "| Trigger | \`${{ github.event_name }}\` |"
+            echo "| Commit | \`${{ github.sha }}\` |"
+            echo "| Result | **${{ job.status }}** |"
+            echo "| Run | ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} |"
+            echo
+            echo "## Steps"
+            echo
+            echo "| Step | Outcome |"
+            echo "| --- | --- |"
+            for pair in "Install:$O_INSTALL" "Preflight:$O_PREFLIGHT" "Preview:$O_PREVIEW" \
+                        "Branch guard:$O_GUARD_BRANCH" "Ingest:$O_INGEST" \
+                        "Path guard:$O_GUARD_PATHS" "Broken links:$O_LINKS" \
+                        "Pull request:$O_PR"; do
+              name="${pair%%:*}"; out="${pair##*:}"
+              [ -z "$out" ] && out="skipped"
+              case "$out" in
+                success)  icon="ok" ;;
+                failure)  icon="**FAILED**" ;;
+                skipped)  icon="–" ;;
+                *)        icon="$out" ;;
+              esac
+              echo "| $name | $icon |"
+            done
+            echo
+            echo "## Output"
+            for f in install preflight preview ingest guard links pr; do
+              p="$RUNNER_TEMP/step-$f.log"
+              [ -s "$p" ] || continue
+              echo; echo "### $f"; echo; echo '```'
+              tail -n 200 "$p"
+              echo '```'
+            done
+          } > "$L"
+
+          # Defensive redaction. GitHub masks secrets in its own logs, but this
+          # file is committed to the repository, so never rely on that alone.
+          sed -i -E 's/(sk-[A-Za-z0-9_-]{8})[A-Za-z0-9_-]+/\1<redacted>/g; s/([A-Za-z0-9_]*(KEY|TOKEN|SECRET)[A-Za-z0-9_]*=)[^ ]+/\1<redacted>/gi' "$L"
+
+          # Shares the orphan log branch with the Help Scout sync, under a
+          # blog- prefix so the two never overwrite each other's latest.
+          work="$RUNNER_TEMP/logrepo"
+          rm -rf "$work"
+          remote="https://x-access-token:$GH_TOKEN@github.com/${{ github.repository }}.git"
+
+          if git clone --quiet --depth 1 --branch "$LOG_BRANCH" "$remote" "$work" 2>/dev/null; then
+            echo "Appending to existing $LOG_BRANCH branch."
+          else
+            echo "Creating $LOG_BRANCH branch."
+            mkdir -p "$work" && cd "$work"
+            git init --quiet
+            git checkout --quiet --orphan "$LOG_BRANCH"
+            git remote add origin "$remote"
+            mkdir -p logs
+            printf '# Sync logs\n\nOne file per run, newest in `logs/latest.md` (Help Scout) and `logs/blog-latest.md` (release notes).\nThis branch holds only logs. It is never merged into main.\n' > README.md
+          fi
+
+          cd "$work" || exit 0
+          mkdir -p logs
+          cp "$L" "logs/blog-${slug}-run${{ github.run_number }}.md"
+          cp "$L" "logs/blog-latest.md"
+
+          # Keep the 200 most recent release-note run logs.
+          ls -1 logs/blog-*-run*.md 2>/dev/null | sort | head -n -200 | xargs -r rm -f
+
+          git config user.name "release-notes[bot]"
+          git config user.email "$BOT_EMAIL"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Log unchanged; nothing to push."
+            exit 0
+          fi
+          git commit --quiet -m "Blog log: run ${{ github.run_number }} — ${{ job.status }} ($mode)"
+          git push --quiet origin "$LOG_BRANCH" 2>&1 | tail -3 || echo "Could not push the log (non-fatal)."
+          echo "Log written to $LOG_BRANCH:logs/blog-latest.md"
+          exit 0
+
+      - name: Log location
+        if: always()
+        run: |
+          echo "### Run log" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          echo 'git fetch origin sync-logs && git show origin/sync-logs:logs/blog-latest.md' >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"

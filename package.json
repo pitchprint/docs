@@ -14,7 +14,8 @@
     "links": "node scripts/check-links.mjs",
     "publish": "node scripts/publish-to-docs.js",
     "blog-summaries": "node scripts/generate-blog-summaries.js",
-    "test": "node scripts/test-tidy.mjs && node scripts/test-validate.mjs && node scripts/test-style-pass.mjs"
+    "release-notes": "node scripts/ingest-release-notes.mjs",
+    "test": "node scripts/test-tidy.mjs && node scripts/test-validate.mjs && node scripts/test-style-pass.mjs && node scripts/test-release-notes.mjs"
   },
   "engines": {
     "node": ">=20.6.0"
