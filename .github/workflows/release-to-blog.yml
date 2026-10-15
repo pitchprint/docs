@@ -1,38 +1,31 @@
-# Propose a draft release note for any release that doesn't have one yet.
+# Mirror the blog's release notes into the docs site.
 #
-# WHAT THIS REPLACES
+# The release notes are written in Ghost at blog.pitchprint.com. The year files
+# under blog/releases/ mirror them, and that mirroring was done by hand — which
+# is why WK40-26 shipped on 1 October 2026 and the docs site still stopped at
+# WK26-26 from June. This closes that gap.
 #
-# The previous version of this file pushed generated posts to a separate blog
-# repository that was never created — BLOG_REPO was still set to the
-# "CHANGE-ME-blog-repo" placeholder — and it fired on every push to main. It
-# cannot ever have worked. The blog lives in this repository, under
-# blog/releases/<year>.mdx, so that is where this writes.
-#
-# WHAT IT DOES
-#
-# Once a day it looks for docs articles carrying a `release:` value whose
-# release has no <Update> block in the matching year file, and opens a pull
-# request adding a DRAFT block for each one.
-#
-#   release with a note already  ->  skipped, forever, however the note is edited
-#   release with no note         ->  draft block proposed in a pull request
+#   a post already in the year file  ->  skipped, forever, however it was edited
+#   a post with no <Update> block    ->  converted, images pulled in, PR opened
 #
 # It is additive only. An existing release note is never regenerated, reordered
-# or reformatted — those are hand-written, several hundred words with annotated
-# screenshots, and all this knows is the one-line `release_summary` on each
-# article. The script verifies byte-for-byte after writing that every
-# pre-existing block survived, and the guard below checks again independently.
+# or reformatted — if someone improved a note after it was imported, that
+# improvement stands. The guards live in scripts/release-file.mjs, are shared
+# with the frontmatter pipeline, and are exercised by `npm test`, including two
+# cases that deliberately break the insert logic and assert nothing is written.
 #
-# So the draft is a reminder with the scaffolding filled in, not a finished
-# post. Nothing reaches the live blog without someone expanding it and merging.
+# THE LABEL COMES FROM THE DATE, NOT THE TITLE. Every label in the repo is
+# week-then-year. The post published 1 October 2026 is titled "Release WK26-40",
+# which taken literally is year 2040, so the week and year are derived from the
+# post's pubDate and a disagreement is reported in the pull request.
 #
 # EVERY RUN WRITES A LOG to the `sync-logs` branch, pass or fail:
 #   git fetch origin sync-logs && git show origin/sync-logs:logs/blog-latest.md
 #
-# Setup: none. No secrets, no API keys — it reads only this repository.
-# The one requirement is Settings -> Actions -> General -> Workflow permissions
-# -> "Allow GitHub Actions to create and approve pull requests", which the
-# Help Scout sync already needs.
+# Setup: none. No secrets — it reads a public RSS feed and this repository. It
+# needs Settings -> Actions -> General -> Workflow permissions -> "Allow GitHub
+# Actions to create and approve pull requests", which the Help Scout sync also
+# needs.
 
 name: Release notes to blog
 
@@ -107,39 +100,52 @@ jobs:
         id: install
         run: npm ci 2>&1 | tee "$RUNNER_TEMP/step-install.log"
 
-      # The scripts the rest of the job depends on. Failing here is clearer than
-      # a "module not found" halfway through.
-      - name: Preflight
-        id: preflight
+      # The guards that make "additive only" true. If they are broken, nothing
+      # else in this job should run.
+      - name: Test the guards
+        id: tests
         run: |
           set -o pipefail
-          {
-            missing=0
-            for f in scripts/generate-blog-summaries.js scripts/ingest-release-notes.mjs blog/releases; do
-              if [ -e "$f" ]; then echo "ok       $f"
-              else echo "MISSING  $f"; missing=1; fi
-            done
-            exit $missing
-          } 2>&1 | tee "$RUNNER_TEMP/step-preflight.log"
+          npm test 2>&1 | tee "$RUNNER_TEMP/step-tests.log"
+
+      - name: Fetch the blog's RSS feed
+        id: fetch
+        run: |
+          set -o pipefail
+          npm run blog-fetch 2>&1 | tee "$RUNNER_TEMP/step-fetch.log"
+
+      # Informational, never fatal: converts the posts that already have a
+      # hand-written block and reports how close the conversion gets. This is
+      # the only place that measurement can run — the feed is not reachable
+      # from a laptop behind the usual egress rules.
+      - name: Benchmark the conversion
+        id: benchmark
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          npm run blog-benchmark 2>&1 | tee "$RUNNER_TEMP/step-benchmark.log"
 
       - name: Show what would be added
         id: preview
         run: |
           set -o pipefail
-          node scripts/ingest-release-notes.mjs 2>&1 | tee "$RUNNER_TEMP/step-preview.log"
+          npm run blog-sync 2>&1 | tee "$RUNNER_TEMP/step-preview.log"
 
       - name: Stop here on a dry run
         if: steps.mode.outputs.dry == 'true'
         run: |
           echo "DRY RUN — nothing written, no pull request."
-          echo "### Dry run" >> "$GITHUB_STEP_SUMMARY"
-          echo "Nothing was written. See the log for what a full run would add." >> "$GITHUB_STEP_SUMMARY"
+          {
+            echo "### Dry run"
+            echo "Nothing was written. What a full run would add:"
+            echo '```'
+            cat "$RUNNER_TEMP/step-preview.log"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
 
-      # Refuse to touch the sync branch if a reviewer has committed to it. The
-      # branch is rebuilt from scratch and force-pushed each run, which would
-      # silently destroy the prose someone wrote into the draft in the open PR.
-      # That is the whole point of the draft, so this guard matters more here
-      # than it does on the docs sync.
+      # The branch is rebuilt and force-pushed each run. On this workflow the
+      # commit a reviewer makes to it IS the editing work — the alt text, the
+      # accordion — so destroying it would be worse than failing.
       - name: Guard — do not clobber a reviewer's commit
         id: guard_branch
         if: steps.mode.outputs.dry != 'true'
@@ -149,31 +155,30 @@ jobs:
             author=$(git log -1 --format=%ae "origin/$SYNC_BRANCH")
             if [ "$author" != "$BOT_EMAIL" ]; then
               echo "::error::$SYNC_BRANCH was last committed to by $author, not the sync bot."
-              echo "This run rebuilds and force-pushes that branch, which would discard that work —"
-              echo "and on this workflow that work is the release note someone wrote."
+              echo "This run rebuilds and force-pushes that branch, which would discard that work."
               echo "Merge or close the open pull request, then re-run."
               exit 1
             fi
           fi
           echo "Safe to rebuild $SYNC_BRANCH."
 
-      - name: Add draft release notes
+      - name: Import the new release notes
         id: ingest
         if: steps.mode.outputs.dry != 'true'
         run: |
           set -o pipefail
           # Exit 2 means "wrote changes", which is success here, not failure.
-          node scripts/ingest-release-notes.mjs --write 2>&1 | tee "$RUNNER_TEMP/step-ingest.log"
+          npm run blog-sync -- --write 2>&1 | tee "$RUNNER_TEMP/step-ingest.log"
           code=${PIPESTATUS[0]}
           case "$code" in
             0) echo "changed=false" >> "$GITHUB_OUTPUT"; echo "Nothing to add." ;;
-            2) echo "changed=true"  >> "$GITHUB_OUTPUT"; echo "Draft release note(s) written." ;;
-            *) echo "::error::ingest-release-notes.mjs refused (exit $code)."; exit "$code" ;;
+            2) echo "changed=true"  >> "$GITHUB_OUTPUT"; echo "Release note(s) imported." ;;
+            *) echo "::error::ingest-blog-releases.mjs refused (exit $code)."; exit "$code" ;;
           esac
 
-      # Independent of the script's own verification: whatever it claims, only
-      # these paths may differ, and nothing may be deleted.
-      - name: Guard — blog/releases and docs.json only
+      # Independent of whatever the script claims: only these paths may differ,
+      # nothing may be deleted, and no year file may LOSE a line.
+      - name: Guard — additions only
         id: guard_paths
         if: steps.mode.outputs.dry != 'true'
         run: |
@@ -182,7 +187,9 @@ jobs:
             offenders=$(git status --porcelain \
               | grep -v '^??' \
               | grep -v ' blog/releases/[0-9]\{4\}\.mdx$' \
-              | grep -v ' docs\.json$' || true)
+              | grep -v ' blog/images/' \
+              | grep -v ' docs\.json$' \
+              | grep -v ' data/blog-releases\.json$' || true)
             if [ -n "$offenders" ]; then
               echo "::error::This job modified files it must never touch:"
               echo "$offenders"
@@ -194,8 +201,7 @@ jobs:
               echo "::error::Files were deleted:"; echo "$deleted"; exit 1
             fi
 
-            # An existing year file may only GROW, and only by whole added lines.
-            # A removed line means a published release note was edited.
+            # A removed line in a year file means a published note was altered.
             removed=$(git diff --numstat -- 'blog/releases/*.mdx' | awk '$2 > 0 {print}')
             if [ -n "$removed" ]; then
               echo "::error::Lines were REMOVED from a year file — an existing release note was altered:"
@@ -205,6 +211,8 @@ jobs:
             fi
 
             echo "Additions only — no published release note was modified or deleted."
+            echo "New images:"
+            git status --porcelain -- blog/images | sed 's/^/  /' || true
           } 2>&1 | tee "$RUNNER_TEMP/step-guard.log"
 
       - name: Check for broken links
@@ -223,7 +231,7 @@ jobs:
         run: |
           set -o pipefail
           {
-            if [ -z "$(git status --porcelain)" ]; then
+            if [ -z "$(git status --porcelain -- blog docs.json)" ]; then
               echo "Nothing changed on disk — no pull request needed."
               exit 0
             fi
@@ -231,12 +239,13 @@ jobs:
             git config user.name "release-notes[bot]"
             git config user.email "$BOT_EMAIL"
             git checkout -b "$SYNC_BRANCH"
-            git add blog/releases docs.json
-            git commit -m "Add draft release note(s)
+            # Deliberately NOT data/ — that is a regenerated cache, not content.
+            git add blog/releases blog/images docs.json
+            git commit -m "Import release note(s) from the blog
 
-          Scaffolding only: the headings and one-line summaries from the docs
-          articles that shipped in each release. The opening paragraph, the
-          detail under each heading and the screenshots still need writing.
+          Converted from the posts at blog.pitchprint.com, with their images
+          pulled into blog/images/. Labels derive from each post's publication
+          date, not its title.
 
           No existing release note was touched — verified byte for byte.
 
@@ -247,30 +256,39 @@ jobs:
             git push --force origin "$SYNC_BRANCH"
 
             {
-              echo "A release shipped without a blog note. Here is the scaffolding."
+              echo "Release note(s) published on the blog but missing from the docs site."
               echo
-              echo "**This is a draft, not a finished post.** It has the headings and the"
-              echo "one-line summary from each docs article, and nothing else. Compare it with"
-              echo "any published note and the gap is obvious — that gap is the writing."
+              echo "The prose, headings and images come straight from the post, so this should"
+              echo "read close to right already. Two things the conversion deliberately does not"
+              echo "attempt, because guessing them wrong is worse than leaving them:"
               echo
               echo "## Before merging"
               echo
-              echo "- [ ] Write the opening paragraph, in the usual voice"
-              echo "- [ ] Expand each \`###\` section — what changed, why it matters, how to use it"
-              echo "- [ ] Add the screenshots, under \`/blog/images/<year>/<month>/\`, with real \`alt\` text"
-              echo "- [ ] Check the \`description=\` date is the day it actually shipped"
-              echo "- [ ] Rewrite the \`rss={{ title, description }}\` so it reads like a headline"
-              echo "- [ ] Delete the \`{/* DRAFT … */}\` comment"
-              echo
-              echo "Edit it here in the branch if nobody else is going to re-run the workflow,"
-              echo "or merge and edit on \`main\`. The next run refuses to touch this branch"
-              echo "once a human has committed to it, rather than overwriting your work."
+              echo "- [ ] **Bug fixes** — the post's \"We also fixed the following bugs\" section"
+              echo "      arrives as plain bold paragraphs. The published notes wrap it in an"
+              echo "      \`<AccordionGroup>\`. Where that section ends is ambiguous, so it is"
+              echo "      left alone rather than risk burying the sign-off inside a panel."
+              echo "- [ ] **Alt text** — any image the post had none for arrives with \`alt=\"\"\`."
+              echo "      The report below says how many."
+              echo "- [ ] Check the \`description=\` date and the \`rss={{ title }}\` read well."
+              echo "- [ ] Delete the \`{/* Imported from … */}\` comment."
               echo
               echo "## What the job did"
               echo
               echo '```'
               cat "$RUNNER_TEMP/step-ingest.log"
               echo '```'
+              echo
+              echo "## Conversion measured against the hand-written notes"
+              echo
+              echo '```'
+              cat "$RUNNER_TEMP/step-benchmark.log" 2>/dev/null || echo "(benchmark did not run)"
+              echo '```'
+              echo
+              echo "---"
+              echo "Re-running rebuilds this branch from scratch, but refuses once a human has"
+              echo "committed to it — so edits you make here are safe, and the next run will"
+              echo "tell you to merge or close first."
             } > "$RUNNER_TEMP/pr-body.md"
 
             existing=$(gh pr list --head "$SYNC_BRANCH" --state open --json number --jq '.[0].number // empty')
@@ -281,7 +299,7 @@ jobs:
               gh pr create \
                 --base "$(gh repo view --json defaultBranchRef --jq .defaultBranchRef.name)" \
                 --head "$SYNC_BRANCH" \
-                --title "Draft release note(s) for the blog" \
+                --title "Import release note(s) from the blog" \
                 --body-file "$RUNNER_TEMP/pr-body.md"
             fi
           } 2>&1 | tee "$RUNNER_TEMP/step-pr.log"
@@ -296,7 +314,9 @@ jobs:
           DRY: ${{ steps.mode.outputs.dry }}
           WHY: ${{ steps.mode.outputs.why }}
           O_INSTALL: ${{ steps.install.outcome }}
-          O_PREFLIGHT: ${{ steps.preflight.outcome }}
+          O_TESTS: ${{ steps.tests.outcome }}
+          O_FETCH: ${{ steps.fetch.outcome }}
+          O_BENCH: ${{ steps.benchmark.outcome }}
           O_PREVIEW: ${{ steps.preview.outcome }}
           O_GUARD_BRANCH: ${{ steps.guard_branch.outcome }}
           O_INGEST: ${{ steps.ingest.outcome }}
@@ -326,9 +346,10 @@ jobs:
             echo
             echo "| Step | Outcome |"
             echo "| --- | --- |"
-            for pair in "Install:$O_INSTALL" "Preflight:$O_PREFLIGHT" "Preview:$O_PREVIEW" \
-                        "Branch guard:$O_GUARD_BRANCH" "Ingest:$O_INGEST" \
-                        "Path guard:$O_GUARD_PATHS" "Broken links:$O_LINKS" \
+            for pair in "Install:$O_INSTALL" "Tests:$O_TESTS" "Fetch feed:$O_FETCH" \
+                        "Benchmark:$O_BENCH" "Preview:$O_PREVIEW" \
+                        "Branch guard:$O_GUARD_BRANCH" "Import:$O_INGEST" \
+                        "Additions-only guard:$O_GUARD_PATHS" "Broken links:$O_LINKS" \
                         "Pull request:$O_PR"; do
               name="${pair%%:*}"; out="${pair##*:}"
               [ -z "$out" ] && out="skipped"
@@ -342,7 +363,7 @@ jobs:
             done
             echo
             echo "## Output"
-            for f in install preflight preview ingest guard links pr; do
+            for f in install tests fetch benchmark preview ingest guard links pr; do
               p="$RUNNER_TEMP/step-$f.log"
               [ -s "$p" ] || continue
               echo; echo "### $f"; echo; echo '```'
@@ -370,7 +391,7 @@ jobs:
             git checkout --quiet --orphan "$LOG_BRANCH"
             git remote add origin "$remote"
             mkdir -p logs
-            printf '# Sync logs\n\nOne file per run, newest in `logs/latest.md` (Help Scout) and `logs/blog-latest.md` (release notes).\nThis branch holds only logs. It is never merged into main.\n' > README.md
+            printf '# Sync logs\n\nOne file per run: `logs/latest.md` (Help Scout) and `logs/blog-latest.md` (release notes).\nThis branch holds only logs. It is never merged into main.\n' > README.md
           fi
 
           cd "$work" || exit 0

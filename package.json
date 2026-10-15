@@ -13,9 +13,12 @@
     "registry": "node scripts/registry.js",
     "links": "node scripts/check-links.mjs",
     "publish": "node scripts/publish-to-docs.js",
+    "blog-fetch": "node scripts/fetch-blog-releases.js",
+    "blog-sync": "node scripts/ingest-blog-releases.mjs",
+    "blog-benchmark": "node scripts/ingest-blog-releases.mjs --benchmark",
     "blog-summaries": "node scripts/generate-blog-summaries.js",
     "release-notes": "node scripts/ingest-release-notes.mjs",
-    "test": "node scripts/test-tidy.mjs && node scripts/test-validate.mjs && node scripts/test-style-pass.mjs && node scripts/test-release-notes.mjs"
+    "test": "node scripts/test-tidy.mjs && node scripts/test-validate.mjs && node scripts/test-style-pass.mjs && node scripts/test-release-notes.mjs && node scripts/test-blog-releases.mjs"
   },
   "engines": {
     "node": ">=20.6.0"

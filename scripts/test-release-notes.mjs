@@ -120,7 +120,7 @@ async function fixture(articles) {
   for (const [name, content] of Object.entries(articles)) {
     await writeFile(join(dir, "docs", "documentation", name), content, "utf8");
   }
-  for (const f of ["generate-blog-summaries.js", "ingest-release-notes.mjs"]) {
+  for (const f of ["generate-blog-summaries.js", "ingest-release-notes.mjs", "release-file.mjs"]) {
     await cp(join(scriptDir, f), join(dir, "scripts", f));
   }
   return dir;
@@ -288,7 +288,9 @@ console.log("\nGuards (sabotaged insert logic)");
 
 async function sabotage(name, find, replace, expect) {
   const dir = await fixture({ "a.mdx": article("Thing", "wk44-26", "A thing.") });
-  const src = await read(dir, "scripts/ingest-release-notes.mjs");
+  // The guards live in release-file.mjs, shared with the blog pipeline, so
+  // that is what gets broken here — one implementation, one place to test.
+  const src = await read(dir, "scripts/release-file.mjs");
   if (!src.includes(find)) {
     check(`${name} — sabotage anchor still present in the script`, false,
       "the script changed; update this test's anchor text");
@@ -296,7 +298,7 @@ async function sabotage(name, find, replace, expect) {
     return;
   }
   await writeFile(
-    join(dir, "scripts", "ingest-release-notes.mjs"),
+    join(dir, "scripts", "release-file.mjs"),
     src.replace(find, replace),
     "utf8"
   );
@@ -310,15 +312,15 @@ async function sabotage(name, find, replace, expect) {
 
 await sabotage(
   "a published block is dropped",
-  'blocks: text.slice(m.index) };',
-  'blocks: text.slice(m.index).replace(/^<Update[^\\n]*\\n/, "") };',
+  'blocks: text.slice(m.index),',
+  'blocks: text.slice(m.index).replace(/^<Update[^\\n]*\\n/, ""),',
   /REFUSED/
 );
 
 await sabotage(
   "a published block's text is altered",
-  'if (blocks) parts.push(blocks.replace(/^\\s+/, ""));',
-  'if (blocks) parts.push(blocks.replace(/^\\s+/, "").replace("Show item dimensions", "Changed"));',
+  'if (tail) parts.push(tail.replace(/^\\s+/, ""));',
+  'if (tail) parts.push(tail.replace(/^\\s+/, "").replace("Show item dimensions", "Changed"));',
   /REFUSED/
 );
 
