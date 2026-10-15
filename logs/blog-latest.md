@@ -1,13 +1,14 @@
-# Release notes to blog — run 9
+# Release notes to blog — run 10
 
 | | |
 | --- | --- |
-| When | `2026-10-15T22:57:29Z` |
+| When | `2026-10-15T23:12:43Z` |
 | Mode | **DRY RUN** (requested by hand with dry_run) |
 | Trigger | `workflow_dispatch` |
-| Commit | `a827df0e08fdfd108c0c3a5ca0e7bda58603398b` |
+| Commit | `c5c9eeb2c1b9ff7b203eda02164fd1bbcd7297e4` |
 | Result | **success** |
-| Run | https://github.com/pitchprint/docs/actions/runs/38820515940 |
+| Quality gate | needs review |
+| Run | https://github.com/pitchprint/docs/actions/runs/38822156793 |
 
 ## Steps
 
@@ -23,6 +24,7 @@
 | Additions-only guard | – |
 | Broken links | – |
 | Pull request | – |
+| Auto-merge | – |
 
 ## Output
 
@@ -30,7 +32,7 @@
 
 ```
 
-added 3 packages, and audited 4 packages in 502ms
+added 3 packages, and audited 4 packages in 418ms
 
 found 0 vulnerabilities
 ```
@@ -38,63 +40,6 @@ found 0 vulnerabilities
 ### tests
 
 ```
-
-> helpscout-docs-client@1.0.0 test
-> node scripts/test-tidy.mjs && node scripts/test-validate.mjs && node scripts/test-style-pass.mjs && node scripts/test-release-notes.mjs && node scripts/test-blog-releases.mjs
-
-ok    an image glued to the next ordinal still becomes a step
-ok    no escaped ordinal survives
-ok    both images are kept
-ok    a bare image is wrapped in Frame
-ok    a missing alt is reported
-ok    a Note: prefix becomes a Note callout
-ok    an Important: prefix becomes a Warning
-ok    h5 is demoted to h3
-ok    escaped brackets are unescaped
-ok    a lone numbered item is left alone
-ok    prose after the last step stays outside Steps
-ok    a truncated description is cut at the sentence
-ok    an empty description stays null
-ok    an over-long description is capped
-
-All tidy() tests passed.
-ok    a legitimately restructured page is accepted
-ok    an image dropped entirely  (image dropped: https://s3.amazonaws.com/helpscout.net/docs/assets/file-BBB2)
-ok    an image URL rewritten (CDN swap)  (image dropped: https://s3.amazonaws.com/helpscout.net/docs/assets/file-AAA1)
-ok    an external link dropped  (link dropped: https://pitchprint.com/register)
-ok    frontmatter removed  (frontmatter missing)
-ok    an extra frontmatter key added  (extra frontmatter keys: sidebarTitle)
-ok    the title reworded  (title changed)
-ok    a component invented  (component not in the allowlist: Columns)
-ok    an unclosed component  (unbalanced <Steps>: 1 open, 0 closed)
-ok    the body summarised away  (content loss: output is 23% the length of the source (need 70%))
-ok    a whole step deleted  (image dropped: https://s3.amazonaws.com/helpscout.net/docs/assets/file-BBB2)
-ok    the model answering in prose instead of MDX  (frontmatter missing)
-ok    an image-free page passes unchanged
-ok    a middle step deleted with no image to betray it  (specifics dropped (1): "Modules → PitchPrint → Configure")
-ok    the last step deleted  (specifics dropped (1): "Advanced Parameters → Performance")
-ok    a whole section dropped  (specifics dropped (1): "443")
-ok    a 12-step procedure collapsed to 2 is rejected  (steps lost: 12 in source, 2 in output (floor 9))
-ok    demoting 1 of 14 steps to a callout is allowed
-ok    a version number changed  (specifics dropped (1): "1.7")
-ok    a UI path reworded away  (specifics dropped (1): "Advanced Parameters → Performance")
-ok    a code identifier de-emphasised but kept is accepted
-ok    a code identifier removed outright  (specifics dropped (1): "pitchprint.zip")
-ok    the port number dropped  (specifics dropped (1): "443")
-ok    bold reformatted but the label kept is accepted
-
-ok    132 real hand-written pages accepted (bar the known divergences)
-
-All validate() tests passed.
-ok    no API key keeps the mechanical version
-ok    no API key explains itself
-ok    a good response is applied
-ok    the applied output has no leading blank line
-ok    a fenced response is unwrapped and applied
-ok    a chatty preamble is rejected
-ok    a dropped step is rejected and the input kept
-ok    the rejection names the reason
-ok    a 429 falls back without throwing
 ok    the 429 is reported
 ok    a network failure falls back
 ok    the network failure is reported
@@ -235,6 +180,66 @@ End to end, against a year file
   ok    --preview with --write is refused
 
 All blog release-note tests passed.
+
+A correct block
+  ok    passes
+  ok    is clean — nothing for a person to do
+  ok    scores 100%
+  ok    no problems listed
+
+The import comment is prose, not markup
+  ok    a comment mentioning <AccordionGroup> is not read as a tag
+
+Content loss
+  ok    a whole heading and its section dropped — rejected
+  ok    a whole heading and its section dropped — says why
+  ok    an image dropped — rejected
+  ok    an image dropped — says why
+  ok    an external link dropped — rejected
+  ok    an external link dropped — says why
+  ok    half the prose cut away — rejected
+  ok    half the prose cut away — says why
+  ok    the body duplicated — rejected
+  ok    the body duplicated — says why
+
+House style
+  ok    a component that is not in the allowlist — rejected
+  ok    a component that is not in the allowlist — says why
+  ok    an unbalanced component — rejected
+  ok    an unbalanced component — says why
+  ok    a heading at the wrong level — rejected
+  ok    a heading at the wrong level — says why
+  ok    an image left pointing at the blog — rejected
+  ok    an image left pointing at the blog — says why
+  ok    an image outside a Frame — rejected
+  ok    an image outside a Frame — says why
+  ok    an unescaped brace in prose — rejected
+  ok    an unescaped brace in prose — says why
+  ok    the Update header mangled — rejected
+  ok    the Update header mangled — says why
+  ok    the rss line removed — rejected
+  ok    the rss line removed — says why
+
+Passes the gate but still needs a person
+  ok    missing alt text does not fail the gate
+  ok    but it is not clean
+  ok    and it says so
+  ok    an un-accordioned bug-fix section does not fail the gate
+  ok    but it is not clean
+  ok    and it says so
+
+The floor is a dial, not a constant
+  ok    rejected at 99%
+  ok    accepted at 50%
+  ok    same score either way
+  ok    the score is between 50 and 99
+
+proseWords ignores markup, not words
+  ok    strips tags
+  ok    keeps link text
+  ok    drops our import comment
+
+All release-note gate tests passed.
 ```
 
 ### fetch
@@ -364,8 +369,11 @@ gap, and is flagged on every run.
     title     Release WK26-40
     into      blog/releases/2026.mdx
     source    https://blog.pitchprint.com/release-wk26-40/
+    fidelity  100% of the post's prose (floor 95%)
     images    4
-    NEEDS     alt text on 4 image(s) — the post had none
+    NEEDS     4 image(s) have no alt text
+
+Needs review: at least one block was rejected or needs a person before merging.
 
 Dry run — nothing written. Re-run with --write to apply.
 ```
