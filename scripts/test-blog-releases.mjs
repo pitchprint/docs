@@ -8,7 +8,7 @@
 //
 //   node scripts/test-blog-releases.mjs
 
-import { mkdtemp, mkdir, writeFile, readFile, cp, rm, symlink } from "node:fs/promises";
+import { mkdtemp, mkdir, writeFile, readFile, readdir, cp, rm, symlink } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { existsSync } from "node:fs";
 import { spawnSync } from "node:child_process";
@@ -232,7 +232,12 @@ async function fixture(items) {
   await writeFile(join(dir, "docs.json"), DOCS_JSON, "utf8");
   await writeFile(join(dir, "package.json"), '{"type":"module"}\n', "utf8");
   await writeFile(join(dir, "data", "blog-releases.json"), feed(items), "utf8");
-  for (const f of ["blog-convert.mjs", "release-file.mjs", "ingest-blog-releases.mjs"]) {
+  // Copy every non-test module rather than an explicit list. The list was a
+  // hidden coupling: adding an import to ingest-blog-releases.mjs broke 15
+  // tests with ERR_MODULE_NOT_FOUND, which says nothing about the import.
+  for (const f of await readdir(scriptDir)) {
+    if (!f.endsWith(".mjs") && !f.endsWith(".js")) continue;
+    if (f.startsWith("test-")) continue;
     await cp(join(scriptDir, f), join(dir, "scripts", f));
   }
   await linkModules(dir);
@@ -291,7 +296,8 @@ const POST_EXISTING = {
   check("dry run exits 0 and writes nothing", dry.code === 0 && (await readFile(join(dir, "blog/releases/2026.mdx"), "utf8")) === YEAR);
   check("the transposed title is reported", /transposed/.test(dry.out));
   check("the accordion gap is reported", /AccordionGroup/.test(dry.out));
-  check("missing alt text is reported", /alt text on 1 image/.test(dry.out), dry.out);
+  // Wording comes from the gate's warnings now, not the ingest's own report.
+  check("missing alt text is reported", /1 image\(s\) have no alt text/.test(dry.out), dry.out);
 
   const r = run(dir, ["--write"]);
   const after = await readFile(join(dir, "blog/releases/2026.mdx"), "utf8");

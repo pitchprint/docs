@@ -59,6 +59,12 @@ concurrency:
 
 env:
   TEST_CRON: "*/5 * * * *"
+  # Auto-merge is attempted ONLY when the quality gate reports every block
+  # clean: nothing rejected, fidelity at or above the floor, no image missing
+  # alt text, no un-accordioned bug-fix section, and the link check green.
+  # Anything else waits for a person. Set this to "false" to always wait.
+  AUTO_MERGE: "true"
+  FIDELITY_FLOOR: "95"
   SYNC_BRANCH: release-notes-sync
   LOG_BRANCH: sync-logs
   BOT_EMAIL: "41898282+github-actions[bot]@users.noreply.github.com"
@@ -165,16 +171,24 @@ jobs:
       - name: Import the new release notes
         id: ingest
         if: steps.mode.outputs.dry != 'true'
+        env:
+          RESULT_PATH: ${{ runner.temp }}/gate.json
         run: |
           set -o pipefail
           # Exit 2 means "wrote changes", which is success here, not failure.
+          # Exit 1 means every candidate was rejected by the quality gate.
           npm run blog-sync -- --write 2>&1 | tee "$RUNNER_TEMP/step-ingest.log"
           code=${PIPESTATUS[0]}
           case "$code" in
             0) echo "changed=false" >> "$GITHUB_OUTPUT"; echo "Nothing to add." ;;
             2) echo "changed=true"  >> "$GITHUB_OUTPUT"; echo "Release note(s) imported." ;;
+            1) echo "::error::Every candidate was rejected by the quality gate — see the log."; exit 1 ;;
             *) echo "::error::ingest-blog-releases.mjs refused (exit $code)."; exit "$code" ;;
           esac
+
+          clean=$(node -e "try{console.log(JSON.parse(require('fs').readFileSync(process.env.RESULT_PATH,'utf8')).clean)}catch(e){console.log('false')}")
+          echo "clean=$clean" >> "$GITHUB_OUTPUT"
+          echo "Quality gate: $([ "$clean" = "true" ] && echo 'CLEAN' || echo 'NEEDS REVIEW')"
 
       # Independent of whatever the script claims: only these paths may differ,
       # nothing may be deleted, and no year file may LOSE a line.
@@ -255,14 +269,31 @@ jobs:
             # the guard above already refused if a human had committed to it.
             git push --force origin "$SYNC_BRANCH"
 
+            clean="${{ steps.ingest.outputs.clean }}"
             {
               echo "Release note(s) published on the blog but missing from the docs site."
+              echo
+              if [ "$clean" = "true" ]; then
+                echo "**The quality gate passed clean**, so this will merge itself once the"
+                echo "required checks go green. Every block met the ${FIDELITY_FLOOR}% fidelity floor,"
+                echo "obeyed the house-style rules, and left nothing for a person to fix."
+                echo "If you want to stop it, close the pull request or disable auto-merge on it."
+              else
+                echo "**Held for review.** Something here needs a person — see the gate verdict"
+                echo "below. It will not merge on its own."
+              fi
+              echo
+              echo "## Quality gate"
+              echo
+              echo '```json'
+              cat "${{ runner.temp }}/gate.json" 2>/dev/null || echo "{}"
+              echo '```'
               echo
               echo "The prose, headings and images come straight from the post, so this should"
               echo "read close to right already. Two things the conversion deliberately does not"
               echo "attempt, because guessing them wrong is worse than leaving them:"
               echo
-              echo "## Before merging"
+              echo "## What still needs doing"
               echo
               echo "- [ ] **Bug fixes** — the post's \"We also fixed the following bugs\" section"
               echo "      arrives as plain bold paragraphs. The published notes wrap it in an"
@@ -294,15 +325,74 @@ jobs:
             existing=$(gh pr list --head "$SYNC_BRANCH" --state open --json number --jq '.[0].number // empty')
             if [ -n "$existing" ]; then
               gh pr edit "$existing" --body-file "$RUNNER_TEMP/pr-body.md"
-              echo "Updated pull request #$existing."
+              number="$existing"
+              echo "Updated pull request #$number."
             else
               gh pr create \
                 --base "$(gh repo view --json defaultBranchRef --jq .defaultBranchRef.name)" \
                 --head "$SYNC_BRANCH" \
                 --title "Import release note(s) from the blog" \
                 --body-file "$RUNNER_TEMP/pr-body.md"
+              number=$(gh pr list --head "$SYNC_BRANCH" --state open --json number --jq '.[0].number // empty')
+              echo "Opened pull request #$number."
             fi
+            echo "number=$number" >> "$GITHUB_OUTPUT"
           } 2>&1 | tee "$RUNNER_TEMP/step-pr.log"
+
+      # Auto-merge, but only for an import with genuinely nothing to fix.
+      #
+      # CLEAN means: no block was rejected, every block met the fidelity floor,
+      # no image is missing alt text, no bug-fix section needs an accordion,
+      # and the link check passed. Anything else leaves the pull request open,
+      # which is the normal case — most weeks have an alt-text gap.
+      #
+      # --auto is deliberate: it hands the merge to GitHub, so branch
+      # protection and required checks still apply. Without protection it
+      # merges straight away; with it, it waits for the checks to go green.
+      - name: Merge it if there is nothing to fix
+        id: automerge
+        if: >-
+          steps.mode.outputs.dry != 'true' &&
+          steps.ingest.outputs.changed == 'true' &&
+          steps.ingest.outputs.clean == 'true' &&
+          steps.links.outcome == 'success' &&
+          steps.pr.outputs.number != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ steps.pr.outputs.number }}
+        run: |
+          set -o pipefail
+          {
+            if [ "$AUTO_MERGE" != "true" ]; then
+              echo "AUTO_MERGE is off — leaving #$PR for review."
+              exit 0
+            fi
+            echo "Every block passed the gate with nothing left for a person."
+            echo "Enabling auto-merge on #$PR."
+            if gh pr merge "$PR" --squash --auto --delete-branch; then
+              echo "Auto-merge enabled. GitHub will merge once required checks pass."
+            else
+              echo "::warning::Could not enable auto-merge on #$PR."
+              echo "The most likely cause is that 'Allow auto-merge' is off in"
+              echo "Settings -> General. The pull request is open and mergeable by hand."
+            fi
+          } 2>&1 | tee "$RUNNER_TEMP/step-automerge.log"
+
+      - name: Say why it was NOT merged
+        if: >-
+          steps.mode.outputs.dry != 'true' &&
+          steps.ingest.outputs.changed == 'true' &&
+          steps.ingest.outputs.clean != 'true'
+        run: |
+          {
+            echo "### Left for review"
+            echo
+            echo "The import did not qualify for auto-merge. From the gate:"
+            echo
+            echo '```'
+            cat "${{ runner.temp }}/gate.json" 2>/dev/null || echo "(no verdict file)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
 
       # ------------------------------------------------------------- the log
       # Runs whatever happened above, including a failure. It must never be the
@@ -323,6 +413,8 @@ jobs:
           O_GUARD_PATHS: ${{ steps.guard_paths.outcome }}
           O_LINKS: ${{ steps.links.outcome }}
           O_PR: ${{ steps.pr.outcome }}
+          O_MERGE: ${{ steps.automerge.outcome }}
+          CLEAN: ${{ steps.ingest.outputs.clean }}
         run: |
           set +e
           L="$RUNNER_TEMP/run-log.md"
@@ -340,6 +432,7 @@ jobs:
             echo "| Trigger | \`${{ github.event_name }}\` |"
             echo "| Commit | \`${{ github.sha }}\` |"
             echo "| Result | **${{ job.status }}** |"
+            echo "| Quality gate | $([ "$CLEAN" = "true" ] && echo '**CLEAN** — eligible to merge itself' || echo 'needs review') |"
             echo "| Run | ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} |"
             echo
             echo "## Steps"
@@ -350,7 +443,7 @@ jobs:
                         "Benchmark:$O_BENCH" "Preview:$O_PREVIEW" \
                         "Branch guard:$O_GUARD_BRANCH" "Import:$O_INGEST" \
                         "Additions-only guard:$O_GUARD_PATHS" "Broken links:$O_LINKS" \
-                        "Pull request:$O_PR"; do
+                        "Pull request:$O_PR" "Auto-merge:$O_MERGE"; do
               name="${pair%%:*}"; out="${pair##*:}"
               [ -z "$out" ] && out="skipped"
               case "$out" in
@@ -363,7 +456,7 @@ jobs:
             done
             echo
             echo "## Output"
-            for f in install tests fetch benchmark preview ingest guard links pr; do
+            for f in install tests fetch benchmark preview ingest guard links pr automerge; do
               p="$RUNNER_TEMP/step-$f.log"
               [ -s "$p" ] || continue
               echo; echo "### $f"; echo; echo '```'

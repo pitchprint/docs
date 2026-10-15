@@ -37,6 +37,7 @@ import {
   labelInTitle,
   prettyDate,
 } from "./blog-convert.mjs";
+import { validateReleaseNote } from "./validate-release-note.mjs";
 import {
   rootDir,
   RELEASES_DIR,
@@ -52,6 +53,11 @@ const argVal = (f) => {
   return i !== -1 ? process.argv[i + 1] : null;
 };
 const WRITE = process.argv.includes("--write");
+// The fidelity bar, as a percentage of the source post's prose that must
+// survive the conversion. Structure failures are not scored — they are flat.
+const FLOOR = Number(argVal("--floor") ?? process.env.FIDELITY_FLOOR ?? 95);
+// Where to leave a machine-readable verdict for the workflow to read.
+const RESULT_PATH = process.env.RESULT_PATH || null;
 const PREVIEW = argVal("--preview");
 const BENCHMARK = process.argv.includes("--benchmark");
 
@@ -135,6 +141,7 @@ if (BENCHMARK) {
 
 const planned = [];
 const skipped = [];
+const rejected = [];
 const warnings = [];
 
 for (const p of posts) {
@@ -157,6 +164,21 @@ for (const p of posts) {
   }
 
   const { markdown, images, hasFixes, missingAlt } = convertPost(p.html);
+  const block = renderBlock({ label: p.label, date: p.pretty, markdown, link: p.link });
+  const verdict = validateReleaseNote(
+    block,
+    { markdown, images, hasFixes, missingAlt },
+    { floor: FLOOR }
+  );
+
+  // A block that fails the gate is not imported at all. There is no weaker
+  // version to fall back to, as there is for a docs page, so the choice is
+  // between a missing release note and a wrong one.
+  if (!verdict.ok) {
+    rejected.push({ ...p, verdict });
+    continue;
+  }
+
   planned.push({
     ...p,
     year,
@@ -165,7 +187,8 @@ for (const p of posts) {
     images,
     hasFixes,
     missingAlt,
-    block: renderBlock({ label: p.label, date: p.pretty, markdown, link: p.link }),
+    verdict,
+    block,
   });
 }
 
@@ -177,8 +200,61 @@ if (warnings.length) {
   for (const w of warnings) console.log(`  NOTE  ${w}`);
 }
 
+/* ------------------------------------------------------ the verdict */
+
+// `clean` means: nothing failed the gate, and nothing needs a person. It is
+// what the workflow reads to decide whether the pull request may merge itself.
+const allClean = rejected.length === 0 && planned.every((p) => p.verdict.clean);
+
+async function writeResult() {
+  if (!RESULT_PATH) return;
+  await writeFile(
+    RESULT_PATH,
+    JSON.stringify(
+      {
+        floor: FLOOR,
+        clean: allClean,
+        imported: planned.map((p) => ({
+          label: p.label,
+          score: p.verdict.score,
+          warnings: p.verdict.warnings,
+        })),
+        rejected: rejected.map((r) => ({
+          label: r.label,
+          score: r.verdict.score,
+          problems: r.verdict.problems,
+        })),
+      },
+      null,
+      2
+    ) + "\n",
+    "utf8"
+  );
+}
+
+if (rejected.length) {
+  console.error(`\n${rejected.length} release note(s) REJECTED by the quality gate:\n`);
+  for (const r of rejected) {
+    console.error(`  ${r.label}  ${r.pretty}  —  fidelity ${r.verdict.score}% (floor ${FLOOR}%)`);
+    console.error(`    ${r.link}`);
+    for (const prob of r.verdict.problems) console.error(`    - ${prob}`);
+    console.error("");
+  }
+  console.error(
+    "These are not imported. There is no plainer fallback for a release note, so\n" +
+      "the choice is between a missing one and a wrong one — and a missing one gets\n" +
+      "noticed. Fix the post or the converter, then re-run.\n"
+  );
+}
+
 if (!planned.length) {
+  if (rejected.length) {
+    await writeResult();
+    console.error("Nothing was imported.");
+    process.exit(1);
+  }
   console.log("\nEvery release note on the blog is already in the docs. Nothing to add.");
+  await writeResult();
   process.exit(0);
 }
 
@@ -188,12 +264,18 @@ for (const p of planned) {
   console.log(`    title     ${p.title}`);
   console.log(`    into      blog/releases/${p.year}.mdx${p.exists ? "" : "  (NEW FILE)"}`);
   console.log(`    source    ${p.link}`);
+  console.log(`    fidelity  ${p.verdict.score}% of the post's prose (floor ${FLOOR}%)`);
   const foreign = p.images.filter((i) => !i.local).length;
   console.log(`    images    ${p.images.length}${foreign ? ` (${foreign} not on the blog CDN)` : ""}`);
-  if (p.missingAlt) console.log(`    NEEDS     alt text on ${p.missingAlt} image(s) — the post had none`);
-  if (p.hasFixes) console.log(`    NEEDS     the bug-fix section wrapping in an <AccordionGroup>`);
+  for (const w of p.verdict.warnings) console.log(`    NEEDS     ${w}`);
   console.log("");
 }
+
+console.log(
+  allClean
+    ? "All clean: every block passed the gate and none needs a person.\n"
+    : "Needs review: at least one block was rejected or needs a person before merging.\n"
+);
 
 /* ------------------------------------------------------------ preview */
 
@@ -205,11 +287,13 @@ if (PREVIEW) {
     console.log(`  preview ${PREVIEW}/${p.year}-${p.label}.mdx`);
   }
   console.log("\nPreview only — blog/releases/ untouched, no images downloaded.");
+  await writeResult();
   process.exit(0);
 }
 
 if (!WRITE) {
   console.log("Dry run — nothing written. Re-run with --write to apply.");
+  await writeResult();
   process.exit(0);
 }
 
@@ -287,7 +371,13 @@ for (const [year, group] of byYear) {
 
 console.log("\nWritten:");
 for (const w of written) console.log(`  ${w}`);
+await writeResult();
 console.log(
   "\nEvery pre-existing release note is byte-for-byte unchanged (verified after writing)."
+);
+console.log(
+  allClean
+    ? "Gate: CLEAN — safe to merge without review."
+    : "Gate: NEEDS REVIEW — a person must look at this before it merges."
 );
 process.exit(2);
