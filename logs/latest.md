@@ -1,13 +1,13 @@
-# Help Scout sync — run 11
+# Help Scout sync — run 12
 
 | | |
 | --- | --- |
-| When | `2026-10-14T11:45:07Z` |
-| Mode | **DRY RUN** (5-minute test schedule) |
+| When | `2026-10-15T05:40:12Z` |
+| Mode | **FULL RUN** (full run) |
 | Trigger | `schedule` |
-| Commit | `df4ac43097d8572d1b4dfda809fcff3d39d4d665` |
+| Commit | `e117fd609d75d7ddb3bfeded2e1ad1c0b16a2d27` |
 | Result | **success** |
-| Run | https://github.com/pitchprint/docs/actions/runs/38558740304 |
+| Run | https://github.com/pitchprint/docs/actions/runs/38687922376 |
 
 ## Steps
 
@@ -20,10 +20,10 @@
 | Convert | ok |
 | Drift | ok |
 | Registry | ok |
-| Preview | ok |
-| Ingest | – |
-| Broken links | – |
-| Pull request | – |
+| Preview | – |
+| Ingest | ok |
+| Broken links | **FAILED** |
+| Pull request | ok |
 
 ## Output
 
@@ -42,7 +42,7 @@ Preflight passed.
 
 ```
 
-added 3 packages, and audited 4 packages in 611ms
+added 3 packages, and audited 4 packages in 586ms
 
 found 0 vulnerabilities
 ```
@@ -197,7 +197,7 @@ Converted copies for comparison are under `data/markdown/` (not committed).
 
 # Help Scout → repo registry
 
-Generated 2026-10-14 from `data/markdown/` and `docs/`.
+Generated 2026-10-15 from `data/markdown/` and `docs/`.
 
 | State | Count |
 | --- | --- |
@@ -369,7 +369,7 @@ Normal for hand-authored pages. Anything unexpected here usually means an articl
 ```
 
 > helpscout-docs-client@1.0.0 ingest
-> node --env-file-if-exists=.env scripts/ingest-new.js
+> node --env-file-if-exists=.env scripts/ingest-new.js --write
 
 No new Help Scout articles to add.
   skipped documentation/how-to-install-pitchprint-on-ekm — deliberately not published — see scripts/unpublished.json
@@ -377,4 +377,23 @@ No new Help Scout articles to add.
   skipped documentation/how-to-install-pitchprint-on-wix — deliberately not published — see scripts/unpublished.json
   skipped documentation/magento-installation — deliberately not published — see scripts/unpublished.json
   skipped documentation/upgrading-to-version-9 — deliberately not published — see scripts/unpublished.json
+```
+
+### links
+
+```
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated glob@7.1.6: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated prebuild-install@7.1.3: No longer maintained. Please contact the author of the relevant native addon; alternatives are available.
+found 1 broken links in 1 files
+
+scripts/DEMO.md
+ ⎿  ./README.md
+
+```
+
+### pr
+
+```
+Nothing new from Help Scout — no pull request needed.
 ```
