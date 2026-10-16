@@ -174,11 +174,19 @@ jobs:
         env:
           RESULT_PATH: ${{ runner.temp }}/gate.json
         run: |
-          set -o pipefail
           # Exit 2 means "wrote changes", which is success here, not failure.
           # Exit 1 means every candidate was rejected by the quality gate.
+          #
+          # `set +e` is load-bearing. GitHub runs this block as `bash -e`, so a
+          # pipeline returning 2 aborts the script on the spot — the case
+          # statement below never runs and the step fails having done all the
+          # work correctly. That is exactly what happened on run 9: the note was
+          # written, every existing block verified, the gate reported, and then
+          # "Process completed with exit code 2".
+          set +e
           npm run blog-sync -- --write 2>&1 | tee "$RUNNER_TEMP/step-ingest.log"
           code=${PIPESTATUS[0]}
+          set -e
           case "$code" in
             0) echo "changed=false" >> "$GITHUB_OUTPUT"; echo "Nothing to add." ;;
             2) echo "changed=true"  >> "$GITHUB_OUTPUT"; echo "Release note(s) imported." ;;
