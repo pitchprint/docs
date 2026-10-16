@@ -1,14 +1,14 @@
-# Release notes to blog — run 12
+# Release notes to blog — run 13
 
 | | |
 | --- | --- |
-| When | `2026-10-16T04:44:04Z` |
-| Mode | **DRY RUN** (test schedule — always a dry run) |
+| When | `2026-10-16T06:38:51Z` |
+| Mode | **FULL RUN** (scheduled daily run) |
 | Trigger | `schedule` |
 | Commit | `98563a20ec2535441701af7e02d843883213d0b8` |
-| Result | **success** |
+| Result | **failure** |
 | Quality gate | needs review |
-| Run | https://github.com/pitchprint/docs/actions/runs/38852108914 |
+| Run | https://github.com/pitchprint/docs/actions/runs/38862360260 |
 
 ## Steps
 
@@ -19,8 +19,8 @@
 | Fetch feed | ok |
 | Benchmark | ok |
 | Preview | ok |
-| Branch guard | – |
-| Import | – |
+| Branch guard | ok |
+| Import | **FAILED** |
 | Additions-only guard | – |
 | Broken links | – |
 | Pull request | – |
@@ -32,7 +32,7 @@
 
 ```
 
-added 3 packages, and audited 4 packages in 627ms
+added 3 packages, and audited 4 packages in 611ms
 
 found 0 vulnerabilities
 ```
@@ -376,4 +376,51 @@ gap, and is flagged on every run.
 Needs review: at least one block was rejected or needs a person before merging.
 
 Dry run — nothing written. Re-run with --write to apply.
+```
+
+### ingest
+
+```
+
+> helpscout-docs-client@1.0.0 blog-sync
+> node scripts/ingest-blog-releases.mjs --write
+
+  skipped WK26-26 — already in blog/releases/2026.mdx
+  skipped WK19-26 — already in blog/releases/2026.mdx
+  skipped WK12-26 — already in blog/releases/2026.mdx
+  skipped WK09-26 — already in blog/releases/2026.mdx
+  skipped WK48-25 — already in blog/releases/2025.mdx
+  skipped WK45-25 — already in blog/releases/2025.mdx
+  skipped WK41-25 — already in blog/releases/2025.mdx
+  skipped WK35-25 — already in blog/releases/2025.mdx
+  skipped WK32-25 — already in blog/releases/2025.mdx
+  skipped WK30-25 — already in blog/releases/2025.mdx
+  skipped WK23-25 — already in blog/releases/2025.mdx
+  skipped WK17-25 — already in blog/releases/2025.mdx
+
+  NOTE  "Release WK26-40" was published 1 October 2026, which is WK40-26. Filed as WK40-26 — the digits in the post title look transposed.
+
+1 release note(s) on the blog but not in the docs:
+
+  WK40-26  1 October 2026
+    title     Release WK26-40
+    into      blog/releases/2026.mdx
+    source    https://blog.pitchprint.com/release-wk26-40/
+    fidelity  100% of the post's prose (floor 95%)
+    images    4
+    NEEDS     4 image(s) have no alt text
+
+Needs review: at least one block was rejected or needs a person before merging.
+
+Downloading images…
+  got  /blog/images/2026/10/image.png
+  got  /blog/images/2026/10/image-2.png
+  got  /blog/images/2026/10/image-3.png
+  got  /blog/images/2026/10/image-4.png
+
+Written:
+  blog/releases/2026.mdx (+1)
+
+Every pre-existing release note is byte-for-byte unchanged (verified after writing).
+Gate: NEEDS REVIEW — a person must look at this before it merges.
 ```
