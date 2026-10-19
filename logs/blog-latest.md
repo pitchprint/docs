@@ -1,14 +1,14 @@
-# Release notes to blog — run 41
+# Release notes to blog — run 42
 
 | | |
 | --- | --- |
-| When | `2026-10-19T07:12:49Z` |
-| Mode | **FULL RUN** (scheduled daily run) |
+| When | `2026-10-19T11:09:52Z` |
+| Mode | **DRY RUN** (test schedule — always a dry run) |
 | Trigger | `schedule` |
-| Commit | `ef164b6f324bc771ed091fdbac4f44d8588641df` |
+| Commit | `f49356a821a780bebd0bae78ade454c0f3348da1` |
 | Result | **success** |
 | Quality gate | needs review |
-| Run | https://github.com/pitchprint/docs/actions/runs/39214429022 |
+| Run | https://github.com/pitchprint/docs/actions/runs/39242600932 |
 
 ## Steps
 
@@ -19,11 +19,11 @@
 | Fetch feed | ok |
 | Benchmark | ok |
 | Preview | ok |
-| Branch guard | ok |
-| Import | ok |
-| Additions-only guard | ok |
-| Broken links | ok |
-| Pull request | ok |
+| Branch guard | – |
+| Import | – |
+| Additions-only guard | – |
+| Broken links | – |
+| Pull request | – |
 | Auto-merge | – |
 
 ## Output
@@ -32,7 +32,7 @@
 
 ```
 
-added 3 packages, and audited 4 packages in 586ms
+added 3 packages, and audited 4 packages in 592ms
 
 found 0 vulnerabilities
 ```
@@ -264,6 +264,12 @@ Fetching https://blog.pitchprint.com/rss/
 
 Conversion compared against the hand-written blocks.
 
+  WK40-26  (1 October 2026)
+    words     790 hand-written vs 790 converted  (100%)
+    headings  0 vs 0
+    images    4 vs 4  (4 in the post)
+    accordion yes vs yes
+
   WK26-26  (25 June 2026)
     words     668 hand-written vs 594 converted  (89%)
     headings  7 vs 0
@@ -336,7 +342,7 @@ Conversion compared against the hand-written blocks.
     images    4 vs 4  (4 in the post)
     accordion yes vs yes
 
-12 post(s) compared. Words near 100% with matching headings and images
+13 post(s) compared. Words near 100% with matching headings and images
 means the conversion carries the content. The accordion row is the known
 gap, and is flagged on every run.
 ```
@@ -348,6 +354,7 @@ gap, and is flagged on every run.
 > helpscout-docs-client@1.0.0 blog-sync
 > node scripts/ingest-blog-releases.mjs
 
+  skipped WK40-26 — already in blog/releases/2026.mdx
   skipped WK26-26 — already in blog/releases/2026.mdx
   skipped WK19-26 — already in blog/releases/2026.mdx
   skipped WK12-26 — already in blog/releases/2026.mdx
@@ -363,102 +370,5 @@ gap, and is flagged on every run.
 
   NOTE  "Release WK26-40" was published 1 October 2026, which is WK40-26. Filed as WK40-26 — the digits in the post title look transposed.
 
-1 release note(s) on the blog but not in the docs:
-
-  WK40-26  1 October 2026
-    title     Release WK26-40
-    into      blog/releases/2026.mdx
-    source    https://blog.pitchprint.com/release-wk26-40/
-    fidelity  100% of the post's prose (floor 95%)
-    images    4
-    NEEDS     4 image(s) have no alt text
-
-Needs review: at least one block was rejected or needs a person before merging.
-
-Dry run — nothing written. Re-run with --write to apply.
-```
-
-### ingest
-
-```
-
-> helpscout-docs-client@1.0.0 blog-sync
-> node scripts/ingest-blog-releases.mjs --write
-
-  skipped WK26-26 — already in blog/releases/2026.mdx
-  skipped WK19-26 — already in blog/releases/2026.mdx
-  skipped WK12-26 — already in blog/releases/2026.mdx
-  skipped WK09-26 — already in blog/releases/2026.mdx
-  skipped WK48-25 — already in blog/releases/2025.mdx
-  skipped WK45-25 — already in blog/releases/2025.mdx
-  skipped WK41-25 — already in blog/releases/2025.mdx
-  skipped WK35-25 — already in blog/releases/2025.mdx
-  skipped WK32-25 — already in blog/releases/2025.mdx
-  skipped WK30-25 — already in blog/releases/2025.mdx
-  skipped WK23-25 — already in blog/releases/2025.mdx
-  skipped WK17-25 — already in blog/releases/2025.mdx
-
-  NOTE  "Release WK26-40" was published 1 October 2026, which is WK40-26. Filed as WK40-26 — the digits in the post title look transposed.
-
-1 release note(s) on the blog but not in the docs:
-
-  WK40-26  1 October 2026
-    title     Release WK26-40
-    into      blog/releases/2026.mdx
-    source    https://blog.pitchprint.com/release-wk26-40/
-    fidelity  100% of the post's prose (floor 95%)
-    images    4
-    NEEDS     4 image(s) have no alt text
-
-Needs review: at least one block was rejected or needs a person before merging.
-
-Downloading images…
-  got  /blog/images/2026/10/image.png
-  got  /blog/images/2026/10/image-2.png
-  got  /blog/images/2026/10/image-3.png
-  got  /blog/images/2026/10/image-4.png
-
-Written:
-  blog/releases/2026.mdx (+1)
-
-Every pre-existing release note is byte-for-byte unchanged (verified after writing).
-Gate: NEEDS REVIEW — a person must look at this before it merges.
-```
-
-### guard
-
-```
-Additions only — no published release note was modified or deleted.
-New images:
-  ?? blog/images/2026/10/
-```
-
-### links
-
-```
-
-> helpscout-docs-client@1.0.0 links
-> node scripts/check-links.mjs
-
-Running mint broken-links…
-
-0 reported in published content, 1 ignored outside docs/ and blog/
-
-No new broken links.
-```
-
-### pr
-
-```
-Switched to a new branch 'release-notes-sync'
-[release-notes-sync b94eaaf] Import release note(s) from the blog
- 5 files changed, 68 insertions(+)
- create mode 100644 blog/images/2026/10/image-2.png
- create mode 100644 blog/images/2026/10/image-3.png
- create mode 100644 blog/images/2026/10/image-4.png
- create mode 100644 blog/images/2026/10/image.png
-To https://github.com/pitchprint/docs
- + 161c2fc...b94eaaf release-notes-sync -> release-notes-sync (forced update)
-https://github.com/pitchprint/docs/pull/19
-Updated pull request #19.
+Every release note on the blog is already in the docs. Nothing to add.
 ```
