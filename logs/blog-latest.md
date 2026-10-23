@@ -1,14 +1,14 @@
-# Release notes to blog — run 69
+# Release notes to blog — run 70
 
 | | |
 | --- | --- |
-| When | `2026-10-23T06:50:12Z` |
-| Mode | **FULL RUN** (scheduled daily run) |
+| When | `2026-10-23T10:15:27Z` |
+| Mode | **DRY RUN** (test schedule — always a dry run) |
 | Trigger | `schedule` |
 | Commit | `f49356a821a780bebd0bae78ade454c0f3348da1` |
 | Result | **success** |
-| Quality gate | **CLEAN** — eligible to merge itself |
-| Run | https://github.com/pitchprint/docs/actions/runs/39913906528 |
+| Quality gate | needs review |
+| Run | https://github.com/pitchprint/docs/actions/runs/39937766563 |
 
 ## Steps
 
@@ -19,9 +19,9 @@
 | Fetch feed | ok |
 | Benchmark | ok |
 | Preview | ok |
-| Branch guard | ok |
-| Import | ok |
-| Additions-only guard | ok |
+| Branch guard | – |
+| Import | – |
+| Additions-only guard | – |
 | Broken links | – |
 | Pull request | – |
 | Auto-merge | – |
@@ -32,7 +32,7 @@
 
 ```
 
-added 3 packages, and audited 4 packages in 637ms
+added 3 packages, and audited 4 packages in 453ms
 
 found 0 vulnerabilities
 ```
@@ -371,37 +371,4 @@ gap, and is flagged on every run.
   NOTE  "Release WK26-40" was published 1 October 2026, which is WK40-26. Filed as WK40-26 — the digits in the post title look transposed.
 
 Every release note on the blog is already in the docs. Nothing to add.
-```
-
-### ingest
-
-```
-
-> helpscout-docs-client@1.0.0 blog-sync
-> node scripts/ingest-blog-releases.mjs --write
-
-  skipped WK40-26 — already in blog/releases/2026.mdx
-  skipped WK26-26 — already in blog/releases/2026.mdx
-  skipped WK19-26 — already in blog/releases/2026.mdx
-  skipped WK12-26 — already in blog/releases/2026.mdx
-  skipped WK09-26 — already in blog/releases/2026.mdx
-  skipped WK48-25 — already in blog/releases/2025.mdx
-  skipped WK45-25 — already in blog/releases/2025.mdx
-  skipped WK41-25 — already in blog/releases/2025.mdx
-  skipped WK35-25 — already in blog/releases/2025.mdx
-  skipped WK32-25 — already in blog/releases/2025.mdx
-  skipped WK30-25 — already in blog/releases/2025.mdx
-  skipped WK23-25 — already in blog/releases/2025.mdx
-  skipped WK17-25 — already in blog/releases/2025.mdx
-
-  NOTE  "Release WK26-40" was published 1 October 2026, which is WK40-26. Filed as WK40-26 — the digits in the post title look transposed.
-
-Every release note on the blog is already in the docs. Nothing to add.
-```
-
-### guard
-
-```
-Additions only — no published release note was modified or deleted.
-New images:
 ```
