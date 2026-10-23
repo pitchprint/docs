@@ -1,14 +1,14 @@
-# Release notes to blog — run 70
+# Release notes to blog — run 71
 
 | | |
 | --- | --- |
-| When | `2026-10-23T10:15:27Z` |
+| When | `2026-10-23T15:05:40Z` |
 | Mode | **DRY RUN** (test schedule — always a dry run) |
 | Trigger | `schedule` |
 | Commit | `f49356a821a780bebd0bae78ade454c0f3348da1` |
 | Result | **success** |
 | Quality gate | needs review |
-| Run | https://github.com/pitchprint/docs/actions/runs/39937766563 |
+| Run | https://github.com/pitchprint/docs/actions/runs/39975234575 |
 
 ## Steps
 
@@ -32,7 +32,7 @@
 
 ```
 
-added 3 packages, and audited 4 packages in 453ms
+added 3 packages, and audited 4 packages in 591ms
 
 found 0 vulnerabilities
 ```
