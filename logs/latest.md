@@ -1,13 +1,13 @@
-# Help Scout sync — run 23
+# Help Scout sync — run 24
 
 | | |
 | --- | --- |
-| When | `2026-10-26T05:51:50Z` |
+| When | `2026-10-27T06:03:37Z` |
 | Mode | **FULL RUN** (full run) |
 | Trigger | `schedule` |
 | Commit | `f49356a821a780bebd0bae78ade454c0f3348da1` |
-| Result | **success** |
-| Run | https://github.com/pitchprint/docs/actions/runs/40276444392 |
+| Result | **failure** |
+| Run | https://github.com/pitchprint/docs/actions/runs/40458817637 |
 
 ## Steps
 
@@ -21,9 +21,9 @@
 | Drift | ok |
 | Registry | ok |
 | Preview | – |
-| Ingest | ok |
-| Broken links | **FAILED** |
-| Pull request | ok |
+| Ingest | **FAILED** |
+| Broken links | – |
+| Pull request | – |
 
 ## Output
 
@@ -42,7 +42,7 @@ Preflight passed.
 
 ```
 
-added 3 packages, and audited 4 packages in 348ms
+added 3 packages, and audited 4 packages in 437ms
 
 found 0 vulnerabilities
 ```
@@ -260,8 +260,8 @@ All release-note gate tests passed.
 > node --env-file=.env scripts/example.js
 
 Fetching all articles with content...
-  1/148 fetched  2/148 fetched  3/148 fetched  4/148 fetched  5/148 fetched  6/148 fetched  7/148 fetched  8/148 fetched  9/148 fetched  10/148 fetched  11/148 fetched  12/148 fetched  13/148 fetched  14/148 fetched  15/148 fetched  16/148 fetched  17/148 fetched  18/148 fetched  19/148 fetched  20/148 fetched  21/148 fetched  22/148 fetched  23/148 fetched  24/148 fetched  25/148 fetched  26/148 fetched  27/148 fetched  28/148 fetched  29/148 fetched  30/148 fetched  31/148 fetched  32/148 fetched  33/148 fetched  34/148 fetched  35/148 fetched  36/148 fetched  37/148 fetched  38/148 fetched  39/148 fetched  40/148 fetched  41/148 fetched  42/148 fetched  43/148 fetched  44/148 fetched  45/148 fetched  46/148 fetched  47/148 fetched  48/148 fetched  49/148 fetched  50/148 fetched  51/148 fetched  52/148 fetched  53/148 fetched  54/148 fetched  55/148 fetched  56/148 fetched  57/148 fetched  58/148 fetched  59/148 fetched  60/148 fetched  61/148 fetched  62/148 fetched  63/148 fetched  64/148 fetched  65/148 fetched  66/148 fetched  67/148 fetched  68/148 fetched  69/148 fetched  70/148 fetched  71/148 fetched  72/148 fetched  73/148 fetched  74/148 fetched  75/148 fetched  76/148 fetched  77/148 fetched  78/148 fetched  79/148 fetched  80/148 fetched  81/148 fetched  82/148 fetched  83/148 fetched  84/148 fetched  85/148 fetched  86/148 fetched  87/148 fetched  88/148 fetched  89/148 fetched  90/148 fetched  91/148 fetched  92/148 fetched  93/148 fetched  94/148 fetched  95/148 fetched  96/148 fetched  97/148 fetched  98/148 fetched  99/148 fetched  100/148 fetched  101/148 fetched  102/148 fetched  103/148 fetched  104/148 fetched  105/148 fetched  106/148 fetched  107/148 fetched  108/148 fetched  109/148 fetched  110/148 fetched  111/148 fetched  112/148 fetched  113/148 fetched  114/148 fetched  115/148 fetched  116/148 fetched  117/148 fetched  118/148 fetched  119/148 fetched  120/148 fetched  121/148 fetched  122/148 fetched  123/148 fetched  124/148 fetched  125/148 fetched  126/148 fetched  127/148 fetched  128/148 fetched  129/148 fetched  130/148 fetched  131/148 fetched  132/148 fetched  133/148 fetched  134/148 fetched  135/148 fetched  136/148 fetched  137/148 fetched  138/148 fetched  139/148 fetched  140/148 fetched  141/148 fetched  142/148 fetched  143/148 fetched  144/148 fetched  145/148 fetched  146/148 fetched  147/148 fetched  148/148 fetched
-Done. 148 articles fetched.
+  1/151 fetched  2/151 fetched  3/151 fetched  4/151 fetched  5/151 fetched  6/151 fetched  7/151 fetched  8/151 fetched  9/151 fetched  10/151 fetched  11/151 fetched  12/151 fetched  13/151 fetched  14/151 fetched  15/151 fetched  16/151 fetched  17/151 fetched  18/151 fetched  19/151 fetched  20/151 fetched  21/151 fetched  22/151 fetched  23/151 fetched  24/151 fetched  25/151 fetched  26/151 fetched  27/151 fetched  28/151 fetched  29/151 fetched  30/151 fetched  31/151 fetched  32/151 fetched  33/151 fetched  34/151 fetched  35/151 fetched  36/151 fetched  37/151 fetched  38/151 fetched  39/151 fetched  40/151 fetched  41/151 fetched  42/151 fetched  43/151 fetched  44/151 fetched  45/151 fetched  46/151 fetched  47/151 fetched  48/151 fetched  49/151 fetched  50/151 fetched  51/151 fetched  52/151 fetched  53/151 fetched  54/151 fetched  55/151 fetched  56/151 fetched  57/151 fetched  58/151 fetched  59/151 fetched  60/151 fetched  61/151 fetched  62/151 fetched  63/151 fetched  64/151 fetched  65/151 fetched  66/151 fetched  67/151 fetched  68/151 fetched  69/151 fetched  70/151 fetched  71/151 fetched  72/151 fetched  73/151 fetched  74/151 fetched  75/151 fetched  76/151 fetched  77/151 fetched  78/151 fetched  79/151 fetched  80/151 fetched  81/151 fetched  82/151 fetched  83/151 fetched  84/151 fetched  85/151 fetched  86/151 fetched  87/151 fetched  88/151 fetched  89/151 fetched  90/151 fetched  91/151 fetched  92/151 fetched  93/151 fetched  94/151 fetched  95/151 fetched  96/151 fetched  97/151 fetched  98/151 fetched  99/151 fetched  100/151 fetched  101/151 fetched  102/151 fetched  103/151 fetched  104/151 fetched  105/151 fetched  106/151 fetched  107/151 fetched  108/151 fetched  109/151 fetched  110/151 fetched  111/151 fetched  112/151 fetched  113/151 fetched  114/151 fetched  115/151 fetched  116/151 fetched  117/151 fetched  118/151 fetched  119/151 fetched  120/151 fetched  121/151 fetched  122/151 fetched  123/151 fetched  124/151 fetched  125/151 fetched  126/151 fetched  127/151 fetched  128/151 fetched  129/151 fetched  130/151 fetched  131/151 fetched  132/151 fetched  133/151 fetched  134/151 fetched  135/151 fetched  136/151 fetched  137/151 fetched  138/151 fetched  139/151 fetched  140/151 fetched  141/151 fetched  142/151 fetched  143/151 fetched  144/151 fetched  145/151 fetched  146/151 fetched  147/151 fetched  148/151 fetched  149/151 fetched  150/151 fetched  151/151 fetched
+Done. 151 articles fetched.
 Saved full content to /home/runner/work/docs/docs/data/articles.json
 
 Sample — #25 "Frequently asked questions":
@@ -275,11 +275,11 @@ Sample — #25 "Frequently asked questions":
 > helpscout-docs-client@1.0.0 convert
 > node scripts/convert-to-markdown.js
 
-Converted 134 articles into /home/runner/work/docs/docs/data/markdown
-  documentation/ — 25 pages
+Converted 137 articles into /home/runner/work/docs/docs/data/markdown
+  documentation/ — 28 pages
   tutorial/ — 90 pages
   api-reference/ — 19 pages
-Skipped 0 legacy article(s); 6 had no body content.
+Skipped 0 legacy article(s); 9 had no body content.
 Applied 37 section override(s) from scripts/sections.json.
 Excluded 14 article(s) via scripts/exclude.json.
     - backup-of-how-to-install-pitchprint-on-opencart-draft [Installation guide]
@@ -306,7 +306,17 @@ Injected 5/5 video embed(s) from scripts/videos.json.
 > helpscout-docs-client@1.0.0 drift
 > node scripts/report-drift.js
 
-No Help Scout changes since the last baseline.
+## Help Scout drift — 3 article(s) need attention
+
+These changed in Help Scout. The published docs are hand-written and were **not** modified — port anything worth keeping by hand, then run `npm run baseline` to acknowledge.
+
+### New in Help Scout (3)
+
+- **Colour Chain** — `documentation/colour-chain`
+- **Image Chain** — `documentation/image-chain`
+- **Item Chain** — `documentation/item-chain`
+
+Converted copies for comparison are under `data/markdown/` (not committed).
 ```
 
 ### registry
@@ -318,15 +328,23 @@ No Help Scout changes since the last baseline.
 
 # Help Scout → repo registry
 
-Generated 2026-10-26 from `data/markdown/` and `docs/`.
+Generated 2026-10-27 from `data/markdown/` and `docs/`.
 
 | State | Count |
 | --- | --- |
 | Published | 129 |
 | Deliberately not publishing | 5 |
 | Needs a decision | 0 |
-| **Untracked — would be proposed on the next sync** | **0** |
+| **Untracked — would be proposed on the next sync** | **3** |
 | Pages with no Help Scout article | 2 |
+
+## Untracked
+
+Not published, and no recorded decision. The next `npm run ingest -- --write` would propose these. Add an entry to `scripts/unpublished.json` to hold one back.
+
+- **Colour Chain** — `documentation/colour-chain` *(new since the baseline)*
+- **Image Chain** — `documentation/image-chain` *(new since the baseline)*
+- **Item Chain** — `documentation/item-chain` *(new since the baseline)*
 
 ## Deliberately not publishing
 
@@ -374,6 +392,7 @@ Normal for hand-authored pages. Anything unexpected here usually means an articl
 | 3D Views | `documentation/3d-views` | published |
 | BigCommerce user Guide | `documentation/bigcommerce` | published |
 | Browser Compatibility | `documentation/browser-compatibility` | published |
+| Colour Chain | `documentation/colour-chain` | UNTRACKED |
 | Frequently asked questions | `documentation/faq` | published |
 | How to Add a Placeholder image for Mask Shapes | `documentation/how-to-add-a-placeholder-image-for-mask-shapes` | published |
 | How to install PitchPrint on BigCommerce | `documentation/how-to-install-pitchprint-on-bigcommerce` | published |
@@ -385,6 +404,8 @@ Normal for hand-authored pages. Anything unexpected here usually means an articl
 | How to Install Pitchprint on VB Media | `documentation/how-to-install-pitchprint-on-vb-media` | published |
 | How to install PitchPrint on WIX | `documentation/how-to-install-pitchprint-on-wix` | not-publishing |
 | How To Install PitchPrint On WordPress | `documentation/how-to-install-pitchprint-on-wordpress` | published |
+| Image Chain | `documentation/image-chain` | UNTRACKED |
+| Item Chain | `documentation/item-chain` | UNTRACKED |
 | How To Install PitchPrint On Magento | `documentation/magento-installation` | not-publishing |
 | PDF Uploader | `documentation/pdf-uploader` | published |
 | Picture Editor | `documentation/picture-editor` | published |
@@ -492,29 +513,7 @@ Normal for hand-authored pages. Anything unexpected here usually means an articl
 > helpscout-docs-client@1.0.0 ingest
 > node --env-file-if-exists=.env scripts/ingest-new.js --write
 
-No new Help Scout articles to add.
-  skipped documentation/how-to-install-pitchprint-on-ekm — deliberately not published — see scripts/unpublished.json
-  skipped documentation/how-to-install-pitchprint-on-odoo — deliberately not published — see scripts/unpublished.json
-  skipped documentation/how-to-install-pitchprint-on-wix — deliberately not published — see scripts/unpublished.json
-  skipped documentation/magento-installation — deliberately not published — see scripts/unpublished.json
-  skipped documentation/upgrading-to-version-9 — deliberately not published — see scripts/unpublished.json
-```
-
-### links
-
-```
-npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
-npm warn deprecated glob@7.1.6: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
-npm warn deprecated prebuild-install@7.1.3: No longer maintained. Please contact the author of the relevant native addon; alternatives are available.
-found 1 broken links in 1 files
-
-scripts/DEMO.md
- ⎿  ./README.md
-
-```
-
-### pr
-
-```
-Nothing new from Help Scout — no pull request needed.
+Same slug in two Help Scout categories — cannot choose a group:
+  image-chain: "General" vs "Tips 'n Tricks"
+  item-chain: "General" vs "Tips 'n Tricks"
 ```
