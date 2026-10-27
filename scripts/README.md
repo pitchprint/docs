@@ -562,22 +562,30 @@ The list endpoints omit the `text` body, so `getAllArticlesWithContent()` fetche
 each article individually — using a bounded worker pool for speed while staying
 within Help Scout's rate limits. If you hit HTTP `429`, lower the concurrency.
 
-## Release notes → blog
+## Release notes → docs
 
-A separate, always-on pipeline publishes **blog release notes** from docs
-articles. It is independent of the Help Scout migration above.
+Release notes are authored on the Ghost blog at `blog.pitchprint.com`; this repo
+mirrors them and links them from the articles they affect. Independent of the
+Help Scout migration above.
 
-- **Source:** docs articles carrying a `release: "wkXX-YY"` frontmatter value
-  (see the "Release notes → blog" section in [`AGENTS.md`](../AGENTS.md) for the
-  authoring contract). Each article is one topic.
-- **Generator:** `scripts/generate-blog-summaries.js` (`npm run blog-summaries`)
-  scans `documentation/`, `tutorial/`, and `api-reference/`, **groups articles by
-  their `release` value**, and writes one `release-<id>.mdx` per release to
-  `dist/blog-posts/` (gitignored).
-- **Publish:** `.github/workflows/release-to-blog.yml` runs the generator on push
-  and commits the release notes into the blog repo, which auto-deploys.
-- **Back-link:** `snippets/release-link.jsx` renders the
-  `<ReleaseLink release="wkXX-YY" />` badge on the article.
+- **Source:** the blog's RSS feed. `scripts/fetch-blog-releases.js`
+  (`npm run blog-fetch`) caches it to `data/blog-releases.json`.
+- **Import:** `scripts/ingest-blog-releases.mjs` (`npm run blog-sync`) converts
+  each post to an `<Update>` block in `blog/releases/<year>.mdx` and downloads its
+  images to `blog/images/`. Additive only; the insert guards live in
+  `scripts/release-file.mjs`.
+- **Quality gate:** `scripts/validate-release-note.mjs` — house-style structure
+  plus a 95% fidelity floor against the source post. A block failing either is
+  not imported at all.
+- **Matching:** `scripts/match-release-topics.mjs` scores release headings against
+  article titles by how much of the *article's* identity the heading names.
+- **Linking:** `scripts/apply-release-links.mjs` writes the "What's new" cards
+  between `release-notes:start` / `release-notes:end`.
+  `scripts/release-topics.json` records which articles may update without review.
+- **Workflow:** `.github/workflows/release-to-blog.yml`, daily, pull-request
+  gated; auto-merges only when the gate reports everything clean.
+
+The old `<ReleaseLink>` badge and the `release:` frontmatter contract are gone.
 
 ## Security notes
 

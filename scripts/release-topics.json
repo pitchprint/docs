@@ -1,0 +1,80 @@
+{
+  "approved": {
+    "docs/tutorial/ai-smart-replace.mdx": {
+      "approvedBy": "pull request",
+      "firstPairedWith": "WK45-24",
+      "recordedAt": "2026-10-26"
+    },
+    "docs/tutorial/canvas-adjuster-module.mdx": {
+      "approvedBy": "pull request",
+      "firstPairedWith": "WK12-26",
+      "recordedAt": "2026-10-26"
+    },
+    "docs/tutorial/custom-mask.mdx": {
+      "approvedBy": "pull request",
+      "firstPairedWith": "WK21-39",
+      "recordedAt": "2026-10-26"
+    },
+    "docs/tutorial/design-configuration.mdx": {
+      "approvedBy": "pull request",
+      "firstPairedWith": "WK09-26",
+      "recordedAt": "2026-10-26"
+    },
+    "docs/tutorial/design-observables.mdx": {
+      "approvedBy": "pull request",
+      "firstPairedWith": "WK29-24",
+      "recordedAt": "2026-10-26"
+    },
+    "docs/tutorial/design-selector-module.mdx": {
+      "approvedBy": "pull request",
+      "firstPairedWith": "WK29-23",
+      "recordedAt": "2026-10-26"
+    },
+    "docs/tutorial/how-to-create-a-clickable-mask.mdx": {
+      "approvedBy": "pull request",
+      "firstPairedWith": "WK21-33",
+      "recordedAt": "2026-10-26"
+    },
+    "docs/tutorial/page-loader-module.mdx": {
+      "approvedBy": "pull request",
+      "firstPairedWith": "WK26-26",
+      "recordedAt": "2026-10-26"
+    },
+    "docs/tutorial/personalize-button-no-showing.mdx": {
+      "approvedBy": "pull request",
+      "firstPairedWith": "WK21-43",
+      "recordedAt": "2026-10-26"
+    },
+    "docs/tutorial/photo-print-module.mdx": {
+      "approvedBy": "pull request",
+      "firstPairedWith": "WK09-22",
+      "recordedAt": "2026-10-26"
+    },
+    "docs/tutorial/remi-module.mdx": {
+      "approvedBy": "pull request",
+      "firstPairedWith": "WK26-26",
+      "recordedAt": "2026-10-26"
+    },
+    "docs/tutorial/remove-background.mdx": {
+      "approvedBy": "pull request",
+      "firstPairedWith": "WK19-22",
+      "recordedAt": "2026-10-26"
+    },
+    "docs/tutorial/single-double-sided-module.mdx": {
+      "approvedBy": "pull request",
+      "firstPairedWith": "WK06-25",
+      "recordedAt": "2026-10-26"
+    },
+    "docs/tutorial/sticky-items.mdx": {
+      "approvedBy": "pull request",
+      "firstPairedWith": "WK21-40",
+      "recordedAt": "2026-10-26"
+    },
+    "docs/tutorial/text-styles.mdx": {
+      "approvedBy": "pull request",
+      "firstPairedWith": "WK09-22",
+      "recordedAt": "2026-10-26"
+    }
+  },
+  "_comment": "Articles the release-note automation may update without review. An entry lands here when someone merges the pull request that first paired that article with a release — merging IS the approval. Delete an entry to send that article back to review."
+}

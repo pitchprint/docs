@@ -32,33 +32,33 @@
 {/* Define what should and shouldn't be documented */}
 {/* Example: Don't document internal admin features */}
 
-## Release notes → blog
+## Release notes → docs
 
-Release notes live **only on the blog site**, not here. Each docs article is one
-topic; the blog groups the topics that shipped together into one release note.
+Release notes are written on the Ghost blog at `blog.pitchprint.com`. This repo
+mirrors them, and the articles a release touched link back to it. Both halves are
+automated — there is nothing to add to an article by hand.
 
-To include an article in a release, add two things:
+**Import.** `npm run blog-fetch` pulls the RSS feed; `npm run blog-sync` converts
+each post into an `<Update>` block in `blog/releases/<year>.mdx` and downloads its
+images into `blog/images/`. Additive only: an existing release note is never
+regenerated, reordered or reformatted.
 
-1. **Frontmatter** — the `release` value is the link between the article, the
-   blog release note, and the badge:
+A release's week and year come from the post's `pubDate`, never its title. The
+titles are not reliable — the post published 1 October 2026 is titled
+"Release WK26-40", which read literally is year 2040 — and the label convention
+itself changed: `WK21-46` is year-first (2021, week 46) while `WK48-25` is
+week-first (week 48 of 2025).
 
-   ```yaml
-   ---
-   title: "Canvas Adjuster Module"
-   release: "wk26-26"                 # groups this topic into Release WK26-26
-   release_summary: "One-line summary of what changed."   # optional; falls back to description
-   ---
-   ```
+**Link.** `node scripts/apply-release-links.mjs` matches each release heading
+against article titles and writes a "What's new" card grid at the foot of every
+article it is confident about. Everything it writes sits between
+`release-notes:start` and `release-notes:end`, and the rest of the article is
+verified byte-for-byte unchanged on every write.
 
-2. **Badge** — links the article to its release note (add both lines):
+A pairing nobody has seen goes to a pull request. Merging it records the article
+in `scripts/release-topics.json`, after which that article updates itself. Delete
+an entry to send it back to review.
 
-   ```mdx
-   import { ReleaseLink } from "/snippets/release-link.jsx";
-
-   <ReleaseLink release="wk26-26" />
-   ```
-
-On push, [`scripts/generate-blog-summaries.js`](https://github.com/pitchprint/docs/blob/main/scripts/generate-blog-summaries.js)
-groups every article sharing a `release` value into one `release-<id>.mdx` (one
-section per topic, each linking back here) and the workflow publishes it to the
-blog. See [`scripts/README.md`](https://github.com/pitchprint/docs/blob/main/scripts/README.md) for the pipeline details.
+There is no longer a badge or `release:` frontmatter to maintain. The badge built
+a blog URL from the label, and the slugs are not consistent
+(`release-week19-26` vs `release-wk26-26`), so it 404'd for most releases.
