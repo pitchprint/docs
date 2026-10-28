@@ -1,13 +1,13 @@
-# Help Scout sync — run 24
+# Help Scout sync — run 25
 
 | | |
 | --- | --- |
-| When | `2026-10-27T06:03:37Z` |
+| When | `2026-10-28T06:42:22Z` |
 | Mode | **FULL RUN** (full run) |
 | Trigger | `schedule` |
-| Commit | `f49356a821a780bebd0bae78ade454c0f3348da1` |
+| Commit | `4cc4e9580e1a68cb6fa6bfb78c6d3dd3e80f1959` |
 | Result | **failure** |
-| Run | https://github.com/pitchprint/docs/actions/runs/40458817637 |
+| Run | https://github.com/pitchprint/docs/actions/runs/40645440298 |
 
 ## Steps
 
@@ -42,7 +42,7 @@ Preflight passed.
 
 ```
 
-added 3 packages, and audited 4 packages in 437ms
+added 3 packages, and audited 4 packages in 576ms
 
 found 0 vulnerabilities
 ```
@@ -328,7 +328,7 @@ Converted copies for comparison are under `data/markdown/` (not committed).
 
 # Help Scout → repo registry
 
-Generated 2026-10-27 from `data/markdown/` and `docs/`.
+Generated 2026-10-28 from `data/markdown/` and `docs/`.
 
 | State | Count |
 | --- | --- |
