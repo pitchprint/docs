@@ -1,13 +1,13 @@
-# Help Scout sync — run 39
+# Help Scout sync — run 40
 
 | | |
 | --- | --- |
-| When | `2026-11-11T07:34:53Z` |
+| When | `2026-11-12T08:02:17Z` |
 | Mode | **FULL RUN** (full run) |
 | Trigger | `schedule` |
 | Commit | `4cc4e9580e1a68cb6fa6bfb78c6d3dd3e80f1959` |
 | Result | **failure** |
-| Run | https://github.com/pitchprint/docs/actions/runs/42980482642 |
+| Run | https://github.com/pitchprint/docs/actions/runs/43179661295 |
 
 ## Steps
 
@@ -42,7 +42,7 @@ Preflight passed.
 
 ```
 
-added 3 packages, and audited 4 packages in 562ms
+added 3 packages, and audited 4 packages in 540ms
 
 found 0 vulnerabilities
 ```
@@ -279,7 +279,7 @@ Converted 137 articles into /home/runner/work/docs/docs/data/markdown
   documentation/ — 28 pages
   tutorial/ — 90 pages
   api-reference/ — 19 pages
-Skipped 0 legacy article(s); 9 had no body content.
+Skipped 0 legacy article(s); 6 had no body content.
 Applied 37 section override(s) from scripts/sections.json.
 Excluded 14 article(s) via scripts/exclude.json.
     - backup-of-how-to-install-pitchprint-on-opencart-draft [Installation guide]
@@ -328,7 +328,7 @@ Converted copies for comparison are under `data/markdown/` (not committed).
 
 # Help Scout → repo registry
 
-Generated 2026-11-11 from `data/markdown/` and `docs/`.
+Generated 2026-11-12 from `data/markdown/` and `docs/`.
 
 | State | Count |
 | --- | --- |
